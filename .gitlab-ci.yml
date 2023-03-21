@@ -10,7 +10,7 @@ pages:
   script:
     - cd docs && make html
   after_script:
-    - mv docs/build/html/ ./public/
+    - mv docs/_build/html/ ./public/
   artifacts:
     paths:
     - public
