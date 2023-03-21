@@ -692,4 +692,3 @@ def apply_counterfactual(x, delta, feature_names, features_map=None, features_ma
 
     return xc
 
-

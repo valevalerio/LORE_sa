@@ -220,4 +220,3 @@ def prepare_fico_dataset(filename):
     class_name = 'RiskPerformance'
     df = pd.read_csv(filename, skipinitialspace=True, keep_default_na=True)
     return df, class_name
-

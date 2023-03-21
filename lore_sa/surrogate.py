@@ -821,4 +821,3 @@ class SuperTree(Surrogate):
             new_root = self.SuperNode(feat_num=Xf, intervals=np.array(If), children=children, level = level)
             return new_root
 
-

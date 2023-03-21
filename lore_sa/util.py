@@ -2,8 +2,7 @@ import numpy as np
 import pandas as pd
 import scipy.stats as st
 
-import SuperLore.encdec
-from .encdec import *
+from lore_sa.encdec import *
 from scipy.spatial.distance import jaccard
 import warnings
 
@@ -274,4 +273,3 @@ def neuclidean(x, y):
 
 def nmeandev(x, y):  # normalized mean deviation
     return np.mean(np.abs(x-y)/np.max([np.abs(x), np.abs(y)], axis=0))
-

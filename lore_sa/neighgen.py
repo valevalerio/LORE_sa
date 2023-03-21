@@ -2,11 +2,9 @@ import copy
 import pickle
 import numbers
 from scipy.stats import binned_statistic
-import pandas
-import multiprocessing
+
 import pandas as pd
 import sys
-import numpy as np
 from imblearn.under_sampling import RandomUnderSampler
 from sklearn.model_selection import train_test_split
 from abc import abstractmethod
@@ -23,6 +21,9 @@ warnings.filterwarnings("ignore")
 
 
 class NeighborhoodGenerator(object):
+    """
+    Abstract class
+    """
 
     def __init__(self, bb_predict=None,  bb_predict_proba=None, feature_values=None, features_map=None, nbr_features=None, nbr_real_features=None,
                  numeric_columns_index=None, ocr=0.1, encdec=None, original_data=None):
@@ -40,7 +41,22 @@ class NeighborhoodGenerator(object):
 
     @abstractmethod
     def generate(self, x, num_samples=1000):
-        return
+        """
+         Generates `num_samples' synthetic records starting from the orginal value `x'
+
+         :param x: Any, record instance to use as seed
+         :param num_samples: int, the size of the neighborhood to generate
+        """
+
+    def multi_generate(self, x, samples=1000, runs=1):
+        Z_list = list()
+        for i in range(runs):
+            # if self.verbose:
+            #     print('generating neighborhood [%s/%s] - %s' % (i, runs, self.neigh_gen.__class__))
+                #print(samples, x)
+            Z = self.generate(x, samples)
+            Z_list.append(Z)
+        return Z_list
 
     # qui dobbiamo prima decodificare
     def apply_bb_predict(self, X, encoded = None):
@@ -111,9 +127,12 @@ class NeighborhoodGenerator(object):
         Z = np.nan_to_num(Z)
         return Z
 
-#new class for the generation of the neighborhood based on the extraction of counterfactuals
-#here x is already coded, hence the generation of the neighbourhood is in the latent space
+
 class CounterGenerator(NeighborhoodGenerator):
+    """
+    New class for the generation of the neighborhood based on the extraction of counterfactuals
+    here x is already coded, hence the generation of the neighbourhood is in the latent space
+    """
     def __init__(self, bb_predict, bb_predict_proba, feature_values, features_map, nbr_features, nbr_real_features,
                  numeric_columns_index, ocr=0.1, original_data = None, encdec=None, alpha1=0.5, alpha2=0.5,
                  metric=neuclidean, ngen=100, mutpb=0.2, random_seed = None,
@@ -136,8 +155,12 @@ class CounterGenerator(NeighborhoodGenerator):
         if original_data is None:
             raise ValueError('This method can not be applied without a sample of the original data.')
 
-    #for every feature we define the bins and take the mean value
+
     def create_bins(self):
+        """
+        For every feature we define the bins and take the mean value
+        :return: feature_bins
+        """
         feature_bins = dict()
         #nel caso di variabili in one hot encoding allora le variabili sono binarie
         if type(self.encdec) is OneHotEnc:
@@ -174,9 +197,11 @@ class CounterGenerator(NeighborhoodGenerator):
         return feature_bins
     #todo sistemare find closest per quando si arriva da possibilties
     def find_closest_counter(self, counter_list, x):
-        #in closests inserisco un record per ogni combinazione di features, il record maggiormente vicino
-        #in clostes ho il record con le features che sono state cambiate
-        #quando ho trovato closests, cerco il record piu vicino, generando a caso records tra l'originale e il nuovo
+        """
+        in closests inserisco un record per ogni combinazione di features, il record maggiormente vicino
+        in clostes ho il record con le features che sono state cambiate
+        quando ho trovato closests, cerco il record piu vicino, generando a caso records tra l'originale e il nuovo
+        """
         closests = list()
         for feat in counter_list.keys():
             vals = list()
@@ -1011,14 +1036,3 @@ class CFSGenerator(NeighborhoodGenerator):
         """
         for axis in range(center.shape[-1]):
             X[..., axis] += center[..., axis]
-
-
-
-
-
-
-
-
-
-
-

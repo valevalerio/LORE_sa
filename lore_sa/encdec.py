@@ -254,4 +254,3 @@ class OneHotEnc(EncDec):
         #print(x_res.shape)
         return x_res
 
-

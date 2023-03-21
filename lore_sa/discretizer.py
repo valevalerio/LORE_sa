@@ -113,5 +113,3 @@ class RMEPDiscretizer():
                 new_val = np.mean(X_[idx_respecting_cond, i])
                 X_[idx_respecting_cond, i] = new_val
         return X_
-
-
