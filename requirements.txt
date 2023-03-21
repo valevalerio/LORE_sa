@@ -9,3 +9,4 @@ bitarray~=2.7.3
 sphinx
 furo
 sphinx_rtd_theme
+category_encoders
