@@ -1,96 +1,104 @@
-import numpy as np
-import time
 from joblib import Parallel, delayed
 import multiprocessing as ml
-import itertools
-from collections import Counter
-import multiprocessing as ml
-from joblib import parallel_backend
 import math
 import pickle
 from functools import partial
 from .surrogate import *
-from scipy.spatial.distance import cdist
 
-from sklearn.dummy import DummyClassifier
-from sklearn.metrics import accuracy_score
+from lore_sa.rule import get_counterfactual_rules_supert, get_rule_supert
 
-from lore_sa.rule import Rule, compact_premises, get_counterfactual_rules_supert, get_rule_supert
-
-from lore_sa.explanation import Explanation, MultilabelExplanation
-from lore_sa.neighgen import NeighborhoodGenerator
-from lore_sa.neighgen import RandomGenerator, GeneticGenerator, RandomGeneticGenerator, ClosestInstancesGenerator, CFSGenerator, CounterGenerator
-from lore_sa.neighgen import GeneticProbaGenerator, RandomGeneticProbaGenerator
+from lore_sa.explanation import Explanation
 from lore_sa.rule import get_rule, get_counterfactual_rules
-from lore_sa.util import calculate_feature_values, neuclidean, multilabel2str, multi_dt_predict, record2str
+from lore_sa.util import  neuclidean, record2str
 from lore_sa.discretizer import *
 from lore_sa.encdec import *
+from lore_sa.bbox import AbstractBBox
+from lore_sa.datamanager import DataSet
 
 
-def default_kernel(d, kernel_width):
-    return np.sqrt(np.exp(-(d ** 2) / kernel_width ** 2))
-
-
-# LOcal Rule-based Explanation Method
 class LOREM(object):
+    """
+    LOcal Rule-based Explanation Method Class
 
-    def __init__(self, K, bb_predict, predict_proba, feature_names, class_name, class_values, numeric_columns, features_map,
-                 neigh_gen:NeighborhoodGenerator=None, K_transformed=None, categorical_use_prob=True, continuous_fun_estimation=False,
-                 size=1000, ocr=0.1, multi_label=False, one_vs_rest=False, filter_crules=True,
-                 kernel_width=None, kernel=None, random_state=None, encdec = None, dataset = None, binary=False, discretize=True, verbose=False,
-                 extreme_fidelity = False, constraints = None, **kwargs):
+    LOREM is an explanator class initialized with a Dataset Object, a BlackBox Object, a config dictionary and a
+    class_name list of string.
 
-        self.random_state = random_state
-        self.bb_predict = bb_predict
-        self.bb_predict_proba = predict_proba
+    In config dictionary defines options:
+        - ``encdec`` :
+        - ``random_state``:
+        - ``unadmittible_features``:
+        - ``neigh_gen``:
+        - ``multi_label``:
+        - ``one_vs_rest``:
+        - ``filter_crules``:
+        - ``binary``:
+        - ``discretize``:
+        - ``extreme_fidelity``:
+        - ``verbose``:
+
+    :param Dataset dataset: Dataset Class that incapsulate the data and provides datamanager functions
+    :param AbstractBBox bb:  Black Box
+    :param dict config: a configuration dictionary
+    :param list class_name: list of class names.
+
+    """
+    def __init__(self, dataset: DataSet, bb: AbstractBBox, config: dict, class_name: list):
+
+        self.encdec = config.get('encodec')
+        if dataset is not None:
+            dataset.prepare_dataset(class_name,)
+
+        self.K = dataset.get_k()
+        self.random_state = np.random.seed(config['random_state']) if 'random_state' in config else None
+        self.bb_predict = bb.predict
+        self.bb_predict_proba = bb.predict_proba
         self.class_name = class_name
-        self.unadmittible_features = None
-        self.feature_names = feature_names
-        self.class_values = class_values
-        self.numeric_columns = numeric_columns
-        self.features_map = features_map
-        self.neigh_gen = neigh_gen
-        self.multi_label = multi_label
-        self.one_vs_rest = one_vs_rest
-        self.filter_crules = self.bb_predict if filter_crules else None
-        self.binary = binary
-        self.verbose = verbose
-        self.discretize = discretize
-        self.extreme_fidelity = extreme_fidelity
-        self.predict_proba = predict_proba
-        if encdec is not None:
-            print('che dataset passo qui', dataset)
-            self.dataset = dataset
-            if encdec == 'target':
-                print('preparo targetencoding')
+        self.unadmittible_features = config['unadmittible_features'] if 'unadmittible_features' in config else None
+        self.feature_names = dataset.get_feature_map()
+        self.class_values = dataset.get_class_values()
+        self.numeric_columns = dataset.get_numeric_columns()
+        self.features_map = dataset.get_features_map()
+        self.neigh_gen = config['neigh_gen'] if 'neigh_gen' in config else None
+        self.multi_label = config['multi_label'] if 'multi_label' in config else False
+        self.one_vs_rest = config['one_vs_rest'] if 'one_vs_rest' in config else False
+        self.filter_crules = self.bb_predict if config.get("filter_crules") else None
+        self.binary = config['binary'] if 'binary' in config else False
+        self.verbose = config['verbose'] if 'verbose' in config else False
+        self.discretize = config['discretize'] if 'discretize' in config else True
+        self.extreme_fidelity = config['extreme_fidelity'] if 'extreme_fidelity' in config else False
+
+        if self.encdec is not None:
+            self.dataset = dataset.get_original_dataset()
+            if config['encodec'] == 'target':
                 self.encdec = MyTargetEnc(self.dataset, self.class_name)
                 self.encdec.enc_fit_transform()
-            elif encdec == 'onehot':
+            elif config['encodec'] == 'onehot':
                 print('preparo onehotencoding')
                 self.encdec = OneHotEnc(self.dataset, self.class_name)
                 self.encdec.enc_fit_transform()
-            Y = self.bb_predict(K)
+
+            Y = self.bb_predict(self.K)
             print('la y calcolata ', Y)
-            self.K = self.encdec.enc(K, Y)
-        else:
-            self.encdec = None
-            self.K = K
-        self.K_original = K_transformed
+            self.K = self.encdec.enc(self.K, Y)
+
+        self.K_original = dataset.get_k()
         self.features_map_inv = None
-        if self.features_map:
+        if self.features_map is not None:
             self.features_map_inv = dict()
             for idx, idx_dict in self.features_map.items():
                 for k, v in idx_dict.items():
                     self.features_map_inv[v] = idx
-        self.constraints = constraints
 
-        kernel_width = np.sqrt(len(self.feature_names)) * .75 if kernel_width is None else kernel_width
+        self.constraints = config['constraints'] if 'constraints' in config else None
+
+        kernel_width = np.sqrt(len(self.feature_names)) * .75 if config.get('kernel_width') is None else config.get('kernel_width')
         self.kernel_width = float(kernel_width)
 
-        kernel = default_kernel if kernel is None else kernel
+        kernel = self.__default_kernel if config.get('kernel_width') is None else config.get('kernel_width')
         self.kernel = partial(kernel, kernel_width=kernel_width)
 
-        np.random.seed(self.random_state)
+    def __default_kernel(self,d, kernel_width):
+        return np.sqrt(np.exp(-(d ** 2) / kernel_width ** 2))
 
     def __calculate_weights__(self, Z, metric):
         if np.max(Z) != 1 and np.min(Z) != 0:
@@ -126,19 +134,27 @@ class LOREM(object):
         feature_importance_rule = {k: v for k, v in dict_feature_importance.items() if k in att_list}
         return feature_importance_rule, dict_feature_importance
 
-    '''Explain Instance Stable
-            x the instance to explain
-            samples the number of samples to generate during the neighbourhood generation
-            use weights True or False
-            metric default is neuclidean, it is the metric employed to measure the distance between records 
-            runs number of times the neighbourhood generation is done
-            exemplar_num number of examplars to retrieve
-            kwargs a dictionary in which add the parameters needed for cfs generation'''
+
 
       # qui l'istanza arriva originale
-    def explain_instance_stable(self, x, samples=100, use_weights=True, metric=neuclidean, runs=3, exemplar_num=5,
+    def explain_instance(self, x, samples=100, use_weights=True, metric=neuclidean, runs=3, exemplar_num=5,
                                 n_jobs=-1, prune_tree=False, single=False, kwargs=None):
 
+        """
+        This function provides an explanation expression
+
+        :param x: instance to explain
+        :param samples: number of samples to generate during the neighbourhood generation
+        :param use_weights: True or False
+        :param metric: default is neuclidean, it is the metric employed to measure the distance between records
+        :param runs: number of times the neighbourhood generation is done
+        :param exemplar_num: number of examplars to retrieve
+        :param n_jobs:
+        :param prune_tree:
+        :param single:
+        :param kwargs: a dictionary in which add the parameters needed for cfs generation
+        :return:
+        """
         if self.multi_label:
             print('Not yet implemented')
             raise Exception

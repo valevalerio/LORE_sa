@@ -50,6 +50,11 @@ class Explanation(object):
 class ExplanationEncoder(json.JSONEncoder):
     """ Special json encoder for Rule types """
     def default(self, obj):
+        """
+        Report information about an Explanation objgect
+        :param obj:
+        :return:
+        """
         if isinstance(obj, Explanation):
             re = RuleEncoder()
             ce = ConditionEncoder()

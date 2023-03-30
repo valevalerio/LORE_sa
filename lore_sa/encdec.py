@@ -5,10 +5,13 @@ import numpy as np
 from scipy.spatial.distance import cdist
 
 
-#EncDec is an abstract class
-#It is implemented by different classes, each of which must implements the functions: enc, dec, enc_fit_transform
-#the idea is that the user sends the complete record and here only the categorical variables are handled
+
 class EncDec():
+    """
+    EncDec is an abstract class
+    It is implemented by different classes, each of which must implements the functions: enc, dec, enc_fit_transform
+    the idea is that the user sends the complete record and here only the categorical variables are handled
+    """
     def __init__(self, dataset=None, class_name = None):
         self.dataset = dataset
         self.class_name = class_name
@@ -51,10 +54,18 @@ class MyTargetEnc(EncDec):
 
 
     #given a dataset and the class name, this function applies target encoder on the categorical variables
-    #self.encdec is the trained encoder
-    #self.dataset_enc is the encoded dataset
-    def enc_fit_transform(self, dataset=None, class_name=None, kwargs=None):
 
+    def enc_fit_transform(self, dataset=None, class_name=None, kwargs=None):
+        """
+        given a dataset and the class name, this function applies target encoder on the categorical variables
+        self.encdec is the trained encoder
+        self.dataset_enc is the encoded dataset
+
+        :param dataset:
+        :param class_name:
+        :param kwargs:
+        :return:
+        """
         if self.dataset is None:
             self.dataset = dataset
         if self.class_name is None:
@@ -175,11 +186,17 @@ class OneHotEnc(EncDec):
         self.dataset_enc = None
 
 
-    #select the categorical variable
-    #apply onehot encoding on them
-    #self.encdec is the encoder already fitted
-    #self.dataset_enc is the dataset encoded
+    #
     def enc_fit_transform(self, kwargs=None):
+        """
+        select the categorical variable
+        apply onehot encoding on them
+        self.encdec is the encoder already fitted
+        self.dataset_enc is the dataset encoded
+
+        :param kwargs:
+        :return:
+        """
         self.features = [c for c in self.dataset.columns if c not in [self.class_name]]
         self.cont_features_names = list(self.dataset[self.features]._get_numeric_data().columns)
         self.cate_features_names = [c for c in self.dataset.columns if

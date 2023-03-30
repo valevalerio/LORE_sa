@@ -35,15 +35,15 @@ def learn_local_decision_tree(Z, Yb, weights, class_values, multi_label=False, o
 
 
 def is_leaf(inner_tree, index):
-    # Check whether node is leaf node
+    """Check whether node is leaf node"""
     return (inner_tree.children_left[index] == TREE_LEAF and
             inner_tree.children_right[index] == TREE_LEAF)
 
 
 def prune_index(inner_tree, decisions, index=0):
-    # Start pruning from the bottom - if we start from the top, we might miss
+    """# Start pruning from the bottom - if we start from the top, we might miss
     # nodes that become leaves during pruning.
-    # Do not use this directly - use prune_duplicate_leaves instead.
+    # Do not use this directly - use prune_duplicate_leaves instead."""
     if not is_leaf(inner_tree, inner_tree.children_left[index]):
         prune_index(inner_tree, decisions, inner_tree.children_left[index])
     if not is_leaf(inner_tree, inner_tree.children_right[index]):
@@ -61,6 +61,6 @@ def prune_index(inner_tree, decisions, index=0):
 
 
 def prune_duplicate_leaves(dt):
-    # Remove leaves if both
+    """Remove leaves if both"""
     decisions = dt.tree_.value.argmax(axis=2).flatten().tolist()  # Decision for each node
     prune_index(dt.tree_, decisions)

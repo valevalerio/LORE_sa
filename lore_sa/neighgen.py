@@ -42,11 +42,12 @@ class NeighborhoodGenerator(object):
     @abstractmethod
     def generate(self, x, num_samples=1000):
         """
-         Generates `num_samples' synthetic records starting from the orginal value `x'
+         Generates ``num_samples`` synthetic records starting from the orginal value ``x``
 
          :param x: Any, record instance to use as seed
          :param num_samples: int, the size of the neighborhood to generate
         """
+        pass
 
     def multi_generate(self, x, samples=1000, runs=1):
         Z_list = list()
@@ -219,7 +220,7 @@ class CounterGenerator(NeighborhoodGenerator):
                     element = (feat, new_record)
             closests.append(element)
 
-            '''for v in counter_list[feat]:
+            """for v in counter_list[feat]:
                 temp = list()
                 for p in feat:
                     temp.append(v[:, p])
@@ -239,7 +240,7 @@ class CounterGenerator(NeighborhoodGenerator):
             #todo check che len(element[0]-1 == element[1])
             #in feat ho gli index delle feature che sono state cambiate
             #devo estrarre da x tutti gli elementi
-            closests.append((element, feat))'''
+            closests.append((element, feat))"""
         new_c = list()
         #print('CLOSEST ', len(closests))
         for c in closests:
@@ -264,7 +265,7 @@ class CounterGenerator(NeighborhoodGenerator):
                 if self.apply_bb_predict_proba(trial)[:, bb_x] > self.apply_bb_predict_proba(c[1])[:,bb_x]:
                     new_c.append(trial)
 
-            '''questo codice funziona solo nel caso di una sola variabile cambiata
+            """questo codice funziona solo nel caso di una sola variabile cambiata
             if c[1] > c[2]:
                 randoms = np.random.uniform(low=c[1],high=c[2],size=100)
             else:
@@ -294,7 +295,7 @@ class CounterGenerator(NeighborhoodGenerator):
             #to_append = arrays[ind[0][0],:]
             #print('valore di to append ', to_append)
             #if len(to_append) == 0:
-            #    new_c.append(to_append)'''
+            #    new_c.append(to_append)"""
         print('ELEMENTI trovati ', len(new_c))
         return new_c
 

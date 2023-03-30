@@ -20,7 +20,7 @@ class Discretizer():
 
 
 
-class RMEPDiscretizer():
+class RMEPDiscretizer(Discretizer):
     def __init__(self, to_discretize=None, proto_fn=None):
         super(RMEPDiscretizer, self).__init__()
         self.to_discretize = to_discretize
