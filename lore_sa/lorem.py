@@ -11,9 +11,9 @@ from lore_sa.explanation import Explanation
 from lore_sa.rule import get_rule, get_counterfactual_rules
 from lore_sa.util import  neuclidean, record2str
 from lore_sa.discretizer import *
-from lore_sa.encdec import *
+from lore_sa.encoder_decoder import *
 from lore_sa.bbox import AbstractBBox
-from lore_sa.datamanager import DataSet
+from lore_sa.dataset import DataSet
 
 
 class LOREM(object):

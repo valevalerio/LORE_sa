@@ -4,10 +4,10 @@ lore\_sa package
 Submodules
 ----------
 
-lore\_sa.datamanager module
----------------------------
+lore\_sa.dataset module
+-----------------------
 
-.. automodule:: lore_sa.datamanager
+.. automodule:: lore_sa.dataset
    :members:
    :undoc-members:
    :show-inheritance:
@@ -28,10 +28,10 @@ lore\_sa.discretizer module
    :undoc-members:
    :show-inheritance:
 
-lore\_sa.encdec module
-----------------------
+lore\_sa.encoder_decoder module
+-------------------------------
 
-.. automodule:: lore_sa.encdec
+.. automodule:: lore_sa.encoder_decoder
    :members:
    :undoc-members:
    :show-inheritance:

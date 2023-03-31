@@ -1,7 +1,7 @@
-﻿lore\_sa.encdec
-===============
+﻿lore\_sa.encoder\_decoder
+=========================
 
-.. automodule:: lore_sa.encdec
+.. automodule:: lore_sa.encoder_decoder
 
    
    

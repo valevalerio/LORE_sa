@@ -7,7 +7,7 @@ from collections import defaultdict
 import arff
 from skmultilearn.dataset import load_from_arff
 
-from lore_sa.encdec import EncDec
+from lore_sa.encoder_decoder import EncDec
 
 
 #TODO incapsulare le funzioni in una classe Dataset, in modo da far gestire il tutto in modo "automatico"

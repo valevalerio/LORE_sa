@@ -1,7 +1,7 @@
-﻿lore\_sa.datamanager
-====================
+﻿lore\_sa.dataset
+================
 
-.. automodule:: lore_sa.datamanager
+.. automodule:: lore_sa.dataset
 
    
    

@@ -34,7 +34,7 @@ Modules
    :nosignatures:
    :toctree:
 
-   datamanager
+   dataset
 
 .. currentmodule:: lore_sa
 
@@ -50,7 +50,7 @@ Modules
    :nosignatures:
    :toctree:
 
-   encdec
+   encoder_decoder
 
 .. currentmodule:: lore_sa
 

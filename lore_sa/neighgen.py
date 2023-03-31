@@ -10,7 +10,7 @@ from sklearn.model_selection import train_test_split
 from abc import abstractmethod
 from scipy.spatial.distance import cdist, hamming, cosine
 import math
-from .encdec import *
+from .encoder_decoder import *
 import random
 from deap import base, creator, tools, algorithms
 from .util import sigmoid, calculate_feature_values, neuclidean

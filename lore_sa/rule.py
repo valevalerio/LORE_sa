@@ -1,7 +1,7 @@
 import copy
 import json
 import numpy as np
-from .encdec import *
+from .encoder_decoder import *
 from .surrogate import *
 from .util import vector2dict, multilabel2str
 from collections import defaultdict

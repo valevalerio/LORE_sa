@@ -46,9 +46,9 @@
 <li class="toctree-l2"><a class="reference internal" href="lore_sa.lorem.html">lore_sa.lorem</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lore_sa.neighgen.html">lore_sa.neighgen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lore_sa.decision_tree.html">lore_sa.decision_tree</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lore_sa.datamanager.html">lore_sa.datamanager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lore_sa.dataset.html">lore_sa.dataset</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lore_sa.discretizer.html">lore_sa.discretizer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lore_sa.encdec.html">lore_sa.encdec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lore_sa.encoder_decoder.html">lore_sa.encoder_decoder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lore_sa.explanation.html">lore_sa.explanation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lore_sa.rule.html">lore_sa.rule</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lore_sa.surrogate.html">lore_sa.surrogate</a></li>
@@ -110,65 +110,65 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
 </section>
-<section id="module-lore_sa.datamanager">
-<span id="lore-sa-datamanager-module"></span><h2>lore_sa.datamanager module<a class="headerlink" href="#module-lore_sa.datamanager" title="Permalink to this heading"></a></h2>
+<section id="module-lore_sa.dataset">
+<span id="lore-sa-dataset-module"></span><h2>lore_sa.dataset module<a class="headerlink" href="#module-lore_sa.dataset" title="Permalink to this heading"></a></h2>
 <dl class="py class">
-<dt class="sig sig-object py" id="lore_sa.datamanager.DataSet">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lore_sa.datamanager.</span></span><span class="sig-name descname"><span class="pre">DataSet</span></span><a class="reference internal" href="../_modules/lore_sa/datamanager.html#DataSet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.datamanager.DataSet" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="lore_sa.dataset.DataSet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lore_sa.dataset.</span></span><span class="sig-name descname"><span class="pre">DataSet</span></span><a class="reference internal" href="../_modules/lore_sa/dataset.html#DataSet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.dataset.DataSet" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>This class provides an interface to handle dataset such as tabular, images etc…
 Dataset class incapsulates the data and expose methods to prepare the dataset.</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.datamanager.DataSet.get_class_values">
-<span class="sig-name descname"><span class="pre">get_class_values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/datamanager.html#DataSet.get_class_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.datamanager.DataSet.get_class_values" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="lore_sa.dataset.DataSet.get_class_values">
+<span class="sig-name descname"><span class="pre">get_class_values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/dataset.html#DataSet.get_class_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.dataset.DataSet.get_class_values" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.datamanager.DataSet.get_feature_map">
-<span class="sig-name descname"><span class="pre">get_feature_map</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/datamanager.html#DataSet.get_feature_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.datamanager.DataSet.get_feature_map" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="lore_sa.dataset.DataSet.get_feature_map">
+<span class="sig-name descname"><span class="pre">get_feature_map</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/dataset.html#DataSet.get_feature_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.dataset.DataSet.get_feature_map" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.datamanager.DataSet.get_k">
-<span class="sig-name descname"><span class="pre">get_k</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/datamanager.html#DataSet.get_k"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.datamanager.DataSet.get_k" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="lore_sa.dataset.DataSet.get_k">
+<span class="sig-name descname"><span class="pre">get_k</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/dataset.html#DataSet.get_k"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.dataset.DataSet.get_k" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.datamanager.DataSet.get_numeric_columns">
-<span class="sig-name descname"><span class="pre">get_numeric_columns</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/datamanager.html#DataSet.get_numeric_columns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.datamanager.DataSet.get_numeric_columns" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="lore_sa.dataset.DataSet.get_numeric_columns">
+<span class="sig-name descname"><span class="pre">get_numeric_columns</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/dataset.html#DataSet.get_numeric_columns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.dataset.DataSet.get_numeric_columns" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.datamanager.DataSet.get_original_dataset">
-<span class="sig-name descname"><span class="pre">get_original_dataset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/datamanager.html#DataSet.get_original_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.datamanager.DataSet.get_original_dataset" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="lore_sa.dataset.DataSet.get_original_dataset">
+<span class="sig-name descname"><span class="pre">get_original_dataset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/dataset.html#DataSet.get_original_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.dataset.DataSet.get_original_dataset" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.datamanager.DataSet.prepare_adult_dataset">
-<span class="sig-name descname"><span class="pre">prepare_adult_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/datamanager.html#DataSet.prepare_adult_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.datamanager.DataSet.prepare_adult_dataset" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="lore_sa.dataset.DataSet.prepare_adult_dataset">
+<span class="sig-name descname"><span class="pre">prepare_adult_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/dataset.html#DataSet.prepare_adult_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.dataset.DataSet.prepare_adult_dataset" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.datamanager.DataSet.prepare_bank_dataset">
-<span class="sig-name descname"><span class="pre">prepare_bank_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/datamanager.html#DataSet.prepare_bank_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.datamanager.DataSet.prepare_bank_dataset" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="lore_sa.dataset.DataSet.prepare_bank_dataset">
+<span class="sig-name descname"><span class="pre">prepare_bank_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/dataset.html#DataSet.prepare_bank_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.dataset.DataSet.prepare_bank_dataset" title="Permalink to this definition"></a></dt>
 <dd><p>from <a class="reference external" href="https://www.kaggle.com/aniruddhachoudhury/credit-risk-model#train.csv/home/riccardo/Scaricati/bank.csv">https://www.kaggle.com/aniruddhachoudhury/credit-risk-model#train.csv/home/riccardo/Scaricati/bank.csv</a>
 :param filename:
 :return:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.datamanager.DataSet.prepare_churn_dataset">
-<span class="sig-name descname"><span class="pre">prepare_churn_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/datamanager.html#DataSet.prepare_churn_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.datamanager.DataSet.prepare_churn_dataset" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="lore_sa.dataset.DataSet.prepare_churn_dataset">
+<span class="sig-name descname"><span class="pre">prepare_churn_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/dataset.html#DataSet.prepare_churn_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.dataset.DataSet.prepare_churn_dataset" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.datamanager.DataSet.prepare_compass_dataset">
-<span class="sig-name descname"><span class="pre">prepare_compass_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/datamanager.html#DataSet.prepare_compass_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.datamanager.DataSet.prepare_compass_dataset" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="lore_sa.dataset.DataSet.prepare_compass_dataset">
+<span class="sig-name descname"><span class="pre">prepare_compass_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/dataset.html#DataSet.prepare_compass_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.dataset.DataSet.prepare_compass_dataset" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.datamanager.DataSet.prepare_dataset">
-<span class="sig-name descname"><span class="pre">prepare_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encdec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/datamanager.html#DataSet.prepare_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.datamanager.DataSet.prepare_dataset" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="lore_sa.dataset.DataSet.prepare_dataset">
+<span class="sig-name descname"><span class="pre">prepare_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encdec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/dataset.html#DataSet.prepare_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.dataset.DataSet.prepare_dataset" title="Permalink to this definition"></a></dt>
 <dd><p>The method prepare_dataframe scans the dataset and extract the following information</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -193,33 +193,33 @@ Dataset class incapsulates the data and expose methods to prepare the dataset.</
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.datamanager.DataSet.prepare_fico_dataset">
-<span class="sig-name descname"><span class="pre">prepare_fico_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/datamanager.html#DataSet.prepare_fico_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.datamanager.DataSet.prepare_fico_dataset" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="lore_sa.dataset.DataSet.prepare_fico_dataset">
+<span class="sig-name descname"><span class="pre">prepare_fico_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/dataset.html#DataSet.prepare_fico_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.dataset.DataSet.prepare_fico_dataset" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.datamanager.DataSet.prepare_german_dataset">
-<span class="sig-name descname"><span class="pre">prepare_german_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/datamanager.html#DataSet.prepare_german_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.datamanager.DataSet.prepare_german_dataset" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="lore_sa.dataset.DataSet.prepare_german_dataset">
+<span class="sig-name descname"><span class="pre">prepare_german_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/dataset.html#DataSet.prepare_german_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.dataset.DataSet.prepare_german_dataset" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.datamanager.DataSet.prepare_iris_dataset">
-<span class="sig-name descname"><span class="pre">prepare_iris_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/datamanager.html#DataSet.prepare_iris_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.datamanager.DataSet.prepare_iris_dataset" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="lore_sa.dataset.DataSet.prepare_iris_dataset">
+<span class="sig-name descname"><span class="pre">prepare_iris_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/dataset.html#DataSet.prepare_iris_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.dataset.DataSet.prepare_iris_dataset" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.datamanager.DataSet.prepare_medical_dataset">
-<span class="sig-name descname"><span class="pre">prepare_medical_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/datamanager.html#DataSet.prepare_medical_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.datamanager.DataSet.prepare_medical_dataset" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="lore_sa.dataset.DataSet.prepare_medical_dataset">
+<span class="sig-name descname"><span class="pre">prepare_medical_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/dataset.html#DataSet.prepare_medical_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.dataset.DataSet.prepare_medical_dataset" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.datamanager.DataSet.prepare_wine_dataset">
-<span class="sig-name descname"><span class="pre">prepare_wine_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/datamanager.html#DataSet.prepare_wine_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.datamanager.DataSet.prepare_wine_dataset" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="lore_sa.dataset.DataSet.prepare_wine_dataset">
+<span class="sig-name descname"><span class="pre">prepare_wine_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/dataset.html#DataSet.prepare_wine_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.dataset.DataSet.prepare_wine_dataset" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.datamanager.DataSet.prepare_yeast_dataset">
-<span class="sig-name descname"><span class="pre">prepare_yeast_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/datamanager.html#DataSet.prepare_yeast_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.datamanager.DataSet.prepare_yeast_dataset" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="lore_sa.dataset.DataSet.prepare_yeast_dataset">
+<span class="sig-name descname"><span class="pre">prepare_yeast_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/dataset.html#DataSet.prepare_yeast_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.dataset.DataSet.prepare_yeast_dataset" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -298,44 +298,44 @@ Dataset class incapsulates the data and expose methods to prepare the dataset.</
 </dd></dl>
 
 </section>
-<section id="module-lore_sa.encdec">
-<span id="lore-sa-encdec-module"></span><h2>lore_sa.encdec module<a class="headerlink" href="#module-lore_sa.encdec" title="Permalink to this heading"></a></h2>
+<section id="module-lore_sa.encoder_decoder">
+<span id="lore-sa-encoder-decoder-module"></span><h2>lore_sa.encoder_decoder module<a class="headerlink" href="#module-lore_sa.encoder_decoder" title="Permalink to this heading"></a></h2>
 <dl class="py class">
-<dt class="sig sig-object py" id="lore_sa.encdec.EncDec">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lore_sa.encdec.</span></span><span class="sig-name descname"><span class="pre">EncDec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/encdec.html#EncDec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encdec.EncDec" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="lore_sa.encoder_decoder.EncDec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lore_sa.encoder_decoder.</span></span><span class="sig-name descname"><span class="pre">EncDec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/encoder_decoder.html#EncDec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.EncDec" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>EncDec is an abstract class
 It is implemented by different classes, each of which must implements the functions: enc, dec, enc_fit_transform
 the idea is that the user sends the complete record and here only the categorical variables are handled</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.encdec.EncDec.dec">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/encdec.html#EncDec.dec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encdec.EncDec.dec" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="lore_sa.encoder_decoder.EncDec.dec">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/encoder_decoder.html#EncDec.dec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.EncDec.dec" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.encdec.EncDec.enc">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">enc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/encdec.html#EncDec.enc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encdec.EncDec.enc" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="lore_sa.encoder_decoder.EncDec.enc">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">enc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/encoder_decoder.html#EncDec.enc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.EncDec.enc" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="lore_sa.encdec.MyTargetEnc">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lore_sa.encdec.</span></span><span class="sig-name descname"><span class="pre">MyTargetEnc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/encdec.html#MyTargetEnc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encdec.MyTargetEnc" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#lore_sa.encdec.EncDec" title="lore_sa.encdec.EncDec"><code class="xref py py-class docutils literal notranslate"><span class="pre">EncDec</span></code></a></p>
+<dt class="sig sig-object py" id="lore_sa.encoder_decoder.MyTargetEnc">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lore_sa.encoder_decoder.</span></span><span class="sig-name descname"><span class="pre">MyTargetEnc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/encoder_decoder.html#MyTargetEnc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.MyTargetEnc" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lore_sa.encoder_decoder.EncDec" title="lore_sa.encoder_decoder.EncDec"><code class="xref py py-class docutils literal notranslate"><span class="pre">EncDec</span></code></a></p>
 <dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.encdec.MyTargetEnc.dec">
-<span class="sig-name descname"><span class="pre">dec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/encdec.html#MyTargetEnc.dec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encdec.MyTargetEnc.dec" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="lore_sa.encoder_decoder.MyTargetEnc.dec">
+<span class="sig-name descname"><span class="pre">dec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/encoder_decoder.html#MyTargetEnc.dec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.MyTargetEnc.dec" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.encdec.MyTargetEnc.enc">
-<span class="sig-name descname"><span class="pre">enc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/encdec.html#MyTargetEnc.enc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encdec.MyTargetEnc.enc" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="lore_sa.encoder_decoder.MyTargetEnc.enc">
+<span class="sig-name descname"><span class="pre">enc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/encoder_decoder.html#MyTargetEnc.enc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.MyTargetEnc.enc" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.encdec.MyTargetEnc.enc_fit_transform">
-<span class="sig-name descname"><span class="pre">enc_fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/encdec.html#MyTargetEnc.enc_fit_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encdec.MyTargetEnc.enc_fit_transform" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="lore_sa.encoder_decoder.MyTargetEnc.enc_fit_transform">
+<span class="sig-name descname"><span class="pre">enc_fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/encoder_decoder.html#MyTargetEnc.enc_fit_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.MyTargetEnc.enc_fit_transform" title="Permalink to this definition"></a></dt>
 <dd><p>given a dataset and the class name, this function applies target encoder on the categorical variables
 self.encdec is the trained encoder
 self.dataset_enc is the encoded dataset</p>
@@ -354,39 +354,39 @@ self.dataset_enc is the encoded dataset</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.encdec.MyTargetEnc.get_cate_map">
-<span class="sig-name descname"><span class="pre">get_cate_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/encdec.html#MyTargetEnc.get_cate_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encdec.MyTargetEnc.get_cate_map" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="lore_sa.encoder_decoder.MyTargetEnc.get_cate_map">
+<span class="sig-name descname"><span class="pre">get_cate_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/encoder_decoder.html#MyTargetEnc.get_cate_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.MyTargetEnc.get_cate_map" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.encdec.MyTargetEnc.inverse_transform">
-<span class="sig-name descname"><span class="pre">inverse_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/encdec.html#MyTargetEnc.inverse_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encdec.MyTargetEnc.inverse_transform" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="lore_sa.encoder_decoder.MyTargetEnc.inverse_transform">
+<span class="sig-name descname"><span class="pre">inverse_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/encoder_decoder.html#MyTargetEnc.inverse_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.MyTargetEnc.inverse_transform" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.encdec.MyTargetEnc.retrieve_values">
-<span class="sig-name descname"><span class="pre">retrieve_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/encdec.html#MyTargetEnc.retrieve_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encdec.MyTargetEnc.retrieve_values" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="lore_sa.encoder_decoder.MyTargetEnc.retrieve_values">
+<span class="sig-name descname"><span class="pre">retrieve_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/encoder_decoder.html#MyTargetEnc.retrieve_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.MyTargetEnc.retrieve_values" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="lore_sa.encdec.OneHotEnc">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lore_sa.encdec.</span></span><span class="sig-name descname"><span class="pre">OneHotEnc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/encdec.html#OneHotEnc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encdec.OneHotEnc" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#lore_sa.encdec.EncDec" title="lore_sa.encdec.EncDec"><code class="xref py py-class docutils literal notranslate"><span class="pre">EncDec</span></code></a></p>
+<dt class="sig sig-object py" id="lore_sa.encoder_decoder.OneHotEnc">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lore_sa.encoder_decoder.</span></span><span class="sig-name descname"><span class="pre">OneHotEnc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/encoder_decoder.html#OneHotEnc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.OneHotEnc" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lore_sa.encoder_decoder.EncDec" title="lore_sa.encoder_decoder.EncDec"><code class="xref py py-class docutils literal notranslate"><span class="pre">EncDec</span></code></a></p>
 <dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.encdec.OneHotEnc.dec">
-<span class="sig-name descname"><span class="pre">dec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/encdec.html#OneHotEnc.dec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encdec.OneHotEnc.dec" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="lore_sa.encoder_decoder.OneHotEnc.dec">
+<span class="sig-name descname"><span class="pre">dec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/encoder_decoder.html#OneHotEnc.dec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.OneHotEnc.dec" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.encdec.OneHotEnc.enc">
-<span class="sig-name descname"><span class="pre">enc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/encdec.html#OneHotEnc.enc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encdec.OneHotEnc.enc" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="lore_sa.encoder_decoder.OneHotEnc.enc">
+<span class="sig-name descname"><span class="pre">enc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/encoder_decoder.html#OneHotEnc.enc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.OneHotEnc.enc" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.encdec.OneHotEnc.enc_fit_transform">
-<span class="sig-name descname"><span class="pre">enc_fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/encdec.html#OneHotEnc.enc_fit_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encdec.OneHotEnc.enc_fit_transform" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="lore_sa.encoder_decoder.OneHotEnc.enc_fit_transform">
+<span class="sig-name descname"><span class="pre">enc_fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/encoder_decoder.html#OneHotEnc.enc_fit_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.OneHotEnc.enc_fit_transform" title="Permalink to this definition"></a></dt>
 <dd><p>select the categorical variable
 apply onehot encoding on them
 self.encdec is the encoder already fitted
@@ -404,8 +404,8 @@ self.dataset_enc is the dataset encoded</p>
 </dd></dl>
 
 <dl class="py data">
-<dt class="sig sig-object py" id="lore_sa.encdec.extend">
-<span class="sig-prename descclassname"><span class="pre">lore_sa.encdec.</span></span><span class="sig-name descname"><span class="pre">extend</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">OneHotEncoder</span></em><a class="headerlink" href="#lore_sa.encdec.extend" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="lore_sa.encoder_decoder.extend">
+<span class="sig-prename descclassname"><span class="pre">lore_sa.encoder_decoder.</span></span><span class="sig-name descname"><span class="pre">extend</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">OneHotEncoder</span></em><a class="headerlink" href="#lore_sa.encoder_decoder.extend" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>
@@ -490,7 +490,7 @@ self.dataset_enc is the dataset encoded</p>
 <span id="lore-sa-lorem-module"></span><h2>lore_sa.lorem module<a class="headerlink" href="#module-lore_sa.lorem" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="lore_sa.lorem.LOREM">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lore_sa.lorem.</span></span><span class="sig-name descname"><span class="pre">LOREM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#lore_sa.datamanager.DataSet" title="lore_sa.datamanager.DataSet"><span class="pre">DataSet</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AbstractBBox</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/lorem.html#LOREM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.lorem.LOREM" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lore_sa.lorem.</span></span><span class="sig-name descname"><span class="pre">LOREM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#lore_sa.dataset.DataSet" title="lore_sa.dataset.DataSet"><span class="pre">DataSet</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AbstractBBox</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lore_sa/lorem.html#LOREM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.lorem.LOREM" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>LOcal Rule-based Explanation Method Class</p>
 <p>LOREM is an explanator class initialized with a Dataset Object, a BlackBox Object, a config dictionary and a

@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import scipy.stats as st
 
-from lore_sa.encdec import *
+from lore_sa.encoder_decoder import *
 from scipy.spatial.distance import jaccard
 import warnings
 
