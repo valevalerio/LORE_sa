@@ -2,6 +2,7 @@
 Modules
 =======
 
+
 .. currentmodule:: lore_sa
 
 .. autosummary::
@@ -9,6 +10,14 @@ Modules
    :toctree:
 
    lorem
+
+.. currentmodule:: lore_sa
+
+.. autosummary::
+   :nosignatures:
+   :toctree:
+
+   bbox
 
 .. currentmodule:: lore_sa
 

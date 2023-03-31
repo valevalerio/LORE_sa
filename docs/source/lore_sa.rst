@@ -4,6 +4,14 @@ lore\_sa package
 Submodules
 ----------
 
+lore\_sa.bbox module
+-----------------------
+
+.. automodule:: lore_sa.bbox
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 lore\_sa.dataset module
 -----------------------
 

@@ -1,7 +1,7 @@
-﻿lore\_sa.lorem
-==============
+﻿lore\_sa.bbox
+=============
 
-.. automodule:: lore_sa.lorem
+.. automodule:: lore_sa.bbox
 
    
    
@@ -17,7 +17,7 @@
 
    .. autosummary::
    
-      LOREM
+      AbstractBBox
    
    
 
