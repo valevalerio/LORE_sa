@@ -131,7 +131,8 @@ class NeighborhoodGenerator(object):
 
 class CounterGenerator(NeighborhoodGenerator):
     """
-    New class for the generation of the neighborhood based on the extraction of counterfactuals
+    Neighborhood generated based on the extraction of counterfactuals.
+
     here x is already coded, hence the generation of the neighbourhood is in the latent space
     """
     def __init__(self, bb_predict, bb_predict_proba, feature_values, features_map, nbr_features, nbr_real_features,

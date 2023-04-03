@@ -8,7 +8,8 @@ from scipy.spatial.distance import cdist
 
 class EncDec():
     """
-    EncDec is an abstract class
+    Generic class to implement an encoder/decoder
+
     It is implemented by different classes, each of which must implements the functions: enc, dec, enc_fit_transform
     the idea is that the user sends the complete record and here only the categorical variables are handled
     """

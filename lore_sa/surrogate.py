@@ -1,11 +1,12 @@
 import numpy as np
-from sklearn.model_selection import GridSearchCV
 from sklearn.tree._tree import TREE_LEAF
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.experimental import enable_halving_search_cv
-from sklearn.model_selection import HalvingGridSearchCV
+import sklearn.model_selection
 
 class Surrogate():
+    """
+    Generic surrogate class
+    """
     def __init__(self, kind = None, preprocessing=None):
         #decision tree, supertree
         self.kind = kind
@@ -38,7 +39,7 @@ class DecTree(Surrogate):
             else:
                 scoring = 'precision_samples'
 
-            dt_search = HalvingGridSearchCV(dt, param_grid=param_list, scoring=scoring, cv=cv, n_jobs=-1)
+            dt_search = sklearn.model_selection.HalvingGridSearchCV(dt, param_grid=param_list, scoring=scoring, cv=cv, n_jobs=-1)
             # print(datetime.datetime.now())
             dt_search.fit(Z, Yb, sample_weight=weights)
             # print(datetime.datetime.now())
@@ -533,7 +534,7 @@ class SuperTree(Surrogate):
         else:
             scoring = 'f1_samples'
 
-        dt_search = HalvingGridSearchCV(dt, param_grid=param_list, scoring=scoring, cv=cv, n_jobs=-1)
+        dt_search = sklearn.model_selection.HalvingGridSearchCV(dt, param_grid=param_list, scoring=scoring, cv=cv, n_jobs=-1)
         # print(datetime.datetime.now())
         labels = superT.predict(X)
         dt_search.fit(X, labels)

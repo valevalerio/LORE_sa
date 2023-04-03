@@ -9,7 +9,7 @@ lore_sa
 **Modules**
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 1
 
    source/modules
 
@@ -17,6 +17,8 @@ lore_sa
 **Examples**
 
 .. toctree::
+   :maxdepth: 1
+
    Tabular explanation <examples/tabular_explanations_example>
 
 

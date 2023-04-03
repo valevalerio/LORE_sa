@@ -28,10 +28,11 @@ class DataSet():
         self.features_map = None
         self.rdf = None
 
-    def prepare_dataset(self,filename: str, class_name: list, encdec: str):
+    def prepare_dataset(self, filename: str, class_name: list, encdec: str):
         """
         The method prepare_dataframe scans the dataset and extract the following information
 
+        :param filename:
         :param [str] class_name:
         :param str encdec:
         :return:
