@@ -11,7 +11,7 @@ from lore_sa.explanation import Explanation
 from lore_sa.rule import get_rule, get_counterfactual_rules
 from lore_sa.util import neuclidean, record2str
 from lore_sa.discretizer import *
-from lore_sa.encoder_decoder import *
+from lore_sa.encoder_decoder import encoder_decoder_dict
 from lore_sa.bbox import AbstractBBox
 from lore_sa.dataset import DataSet
 
@@ -68,19 +68,8 @@ class LOREM(object):
         self.discretize = config['discretize'] if 'discretize' in config else True
         self.extreme_fidelity = config['extreme_fidelity'] if 'extreme_fidelity' in config else False
 
-
-        if self.encdec is not None:
-            self.dataset = dataset.get_original_dataset()
-            if config['encodec'] == 'target':
-                self.encdec = MyTargetEnc(self.dataset, self.class_name)
-                self.encdec.enc_fit_transform()
-            elif config['encodec'] == 'onehot':
-                self.encdec = OneHotEnc(self.dataset, self.class_name)
-                self.encdec.enc_fit_transform()
-
-            Y = self.bb_predict(self.K)
-            print('la y calcolata ', Y)
-            self.K = self.encdec.enc(self.K, Y)
+        self.rdf = dataset.get_original_dataset()
+        self.encdec = self.get_encoder_decoder(config['encdec']) if 'encdec' in config else None
 
         self.K_original = dataset.get_k()
         self.features_map_inv = None
@@ -98,6 +87,20 @@ class LOREM(object):
         kernel = self._default_kernel if config.get('kernel_width') is None else config.get('kernel_width')
         self.kernel = partial(kernel, kernel_width=kernel_width)
 
+
+    def get_encoder_decoder(self, encdec_type):
+        """
+        Factory method for Encoder/Decoder object and initializing
+
+        :param str encdec_type: onehot, target
+        :return: EncDec Object
+        :rtype: OneHotEnc, MyTargetEnc
+        """
+        encdec = encoder_decoder_dict[encdec_type]
+        encdec_obj = encdec(self.rdf, self.class_name).enc_fit_transform()
+        Y = self.bb_predict(self.K)
+        self.K = encdec_obj.enc(self.K, Y)
+        return encdec_obj
 
     def get_neighborhood_generator(self, neigh_type):
         """

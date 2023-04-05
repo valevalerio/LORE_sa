@@ -274,3 +274,7 @@ class OneHotEnc(EncDec):
         #print(len(self.onehot_feature_idx))
         #print(len(self.cate_features_idx))
         return self.dataset_enc_complete
+
+
+encoder_decoder_dict = {"onehot": OneHotEnc,
+                        "target": MyTargetEnc}
