@@ -22,7 +22,7 @@ warnings.filterwarnings("ignore")
 
 class NeighborhoodGenerator(object):
     """
-    Abstract class
+    Generic class
     """
 
     def __init__(self, bb_predict=None,  bb_predict_proba=None, feature_values=None, features_map=None, nbr_features=None, nbr_real_features=None,
@@ -49,6 +49,7 @@ class NeighborhoodGenerator(object):
         """
         pass
 
+    #TODO refactor multi_generate method
     def multi_generate(self, x, samples=1000, runs=1):
         Z_list = list()
         for i in range(runs):
@@ -1038,3 +1039,17 @@ class CFSGenerator(NeighborhoodGenerator):
         """
         for axis in range(center.shape[-1]):
             X[..., axis] += center[..., axis]
+
+
+
+neighborhood_generator = {
+        "generic": NeighborhoodGenerator,
+        "cfs": CFSGenerator,
+        "closest_instances": ClosestInstancesGenerator,
+        "counter": CounterGenerator,
+        "genetic": GeneticGenerator,
+        "genetic_proba": GeneticProbaGenerator,
+        "random": RandomGenerator,
+        "random_genetic": RandomGeneticGenerator,
+        "random_genetic_proba": RandomGeneticProbaGenerator
+    }

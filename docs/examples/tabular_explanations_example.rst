@@ -1,23 +1,27 @@
+Tabular explanations example
+============================
+
+Learning and explaining German Credit Dataset
+=============================================
+
 .. code:: ipython3
 
     import pandas as pd
     import numpy as np
-    
+
     from sklearn import preprocessing
     from sklearn.ensemble import RandomForestClassifier
     from sklearn.model_selection import train_test_split
     from sklearn.linear_model import LogisticRegression
-    
+
     from xailib.data_loaders.dataframe_loader import prepare_dataframe
-    
+
     from xailib.explainers.lime_explainer import LimeXAITabularExplainer
     from xailib.explainers.lore_explainer import LoreTabularExplainer
     from xailib.explainers.shap_explainer_tab import ShapXAITabularExplainer
-    
+
     from xailib.models.sklearn_classifier_wrapper import sklearn_classifier_wrapper
 
-Learning and explaining German Credit Dataset
-=============================================
 
 Loading and preparation of data
 -------------------------------

@@ -3,13 +3,13 @@ import multiprocessing as ml
 import math
 import pickle
 from functools import partial
-from .surrogate import *
+from lore_sa.surrogate import *
 
 from lore_sa.rule import get_counterfactual_rules_supert, get_rule_supert
-
+from lore_sa.neighgen import neighborhood_generator
 from lore_sa.explanation import Explanation
 from lore_sa.rule import get_rule, get_counterfactual_rules
-from lore_sa.util import  neuclidean, record2str
+from lore_sa.util import neuclidean, record2str
 from lore_sa.discretizer import *
 from lore_sa.encoder_decoder import *
 from lore_sa.bbox import AbstractBBox
@@ -24,17 +24,17 @@ class LOREM(object):
     class_name list of string.
 
     In config dictionary defines options:
-        - ``encdec`` :
-        - ``random_state``:
-        - ``unadmittible_features``:
-        - ``neigh_gen``:
-        - ``multi_label``:
-        - ``one_vs_rest``:
-        - ``filter_crules``:
-        - ``binary``:
-        - ``discretize``:
-        - ``extreme_fidelity``:
-        - ``verbose``:
+        - ``encdec`` :  target, onehot or None
+        - ``random_state`` :
+        - ``unadmittible_features`` :
+        - ``neigh_gen`` : generic, cfs, closest_instances, counter, genetic, genetic_proba, random,random_genetic, random_genetic_proba
+        - ``multi_label`` :
+        - ``one_vs_rest`` :
+        - ``filter_crules`` :
+        - ``binary`` :
+        - ``discretize`` :
+        - ``extreme_fidelity`` :
+        - ``verbose`` :
 
     :param Dataset dataset: Dataset Class that incapsulate the data and provides datamanager functions
     :param AbstractBBox bb:  Black Box
@@ -48,6 +48,7 @@ class LOREM(object):
         if dataset is not None:
             dataset.prepare_dataset(class_name,)
 
+        self.config = config
         self.K = dataset.get_k()
         self.random_state = np.random.seed(config['random_state']) if 'random_state' in config else None
         self.bb_predict = bb.predict
@@ -58,7 +59,7 @@ class LOREM(object):
         self.class_values = dataset.get_class_values()
         self.numeric_columns = dataset.get_numeric_columns()
         self.features_map = dataset.get_features_map()
-        self.neigh_gen = config['neigh_gen'] if 'neigh_gen' in config else None
+        self.neigh_gen = self.get_neighborhood_generator(config['neigh_gen']) if 'neigh_gen' in config else None
         self.multi_label = config['multi_label'] if 'multi_label' in config else False
         self.one_vs_rest = config['one_vs_rest'] if 'one_vs_rest' in config else False
         self.filter_crules = self.bb_predict if config.get("filter_crules") else None
@@ -67,13 +68,13 @@ class LOREM(object):
         self.discretize = config['discretize'] if 'discretize' in config else True
         self.extreme_fidelity = config['extreme_fidelity'] if 'extreme_fidelity' in config else False
 
+
         if self.encdec is not None:
             self.dataset = dataset.get_original_dataset()
             if config['encodec'] == 'target':
                 self.encdec = MyTargetEnc(self.dataset, self.class_name)
                 self.encdec.enc_fit_transform()
             elif config['encodec'] == 'onehot':
-                print('preparo onehotencoding')
                 self.encdec = OneHotEnc(self.dataset, self.class_name)
                 self.encdec.enc_fit_transform()
 
@@ -94,13 +95,26 @@ class LOREM(object):
         kernel_width = np.sqrt(len(self.feature_names)) * .75 if config.get('kernel_width') is None else config.get('kernel_width')
         self.kernel_width = float(kernel_width)
 
-        kernel = self.__default_kernel if config.get('kernel_width') is None else config.get('kernel_width')
+        kernel = self._default_kernel if config.get('kernel_width') is None else config.get('kernel_width')
         self.kernel = partial(kernel, kernel_width=kernel_width)
 
-    def __default_kernel(self,d, kernel_width):
+
+    def get_neighborhood_generator(self, neigh_type):
+        """
+        Factory method for Neighborhood Generator
+
+        :param str neigh_type: generic, cfs, closest_instances, counter, genetic, genetic_proba, random,random_genetic, random_genetic_proba
+        :return: NeighborhoodGenerator Object
+        :rtype:  NeighborhoodGenerator, CFSGenerator, ClosestInstancesGenerator, CounterGenerator, GeneticGenerator, GeneticProbaGenerator, RandomGenerator, RandomGeneticGenerator, RandomGeneticProbaGenerator
+        """
+        neighgen = neighborhood_generator[neigh_type]
+        return neighgen()
+
+
+    def _default_kernel(self,d, kernel_width):
         return np.sqrt(np.exp(-(d ** 2) / kernel_width ** 2))
 
-    def __calculate_weights__(self, Z, metric):
+    def _calculate_weights(self, Z, metric):
         if np.max(Z) != 1 and np.min(Z) != 0:
             Zn = (Z - np.min(Z)) / (np.max(Z) - np.min(Z))
             distances = cdist(Zn, Zn[0].reshape(1, -1), metric=metric).ravel()
@@ -134,16 +148,19 @@ class LOREM(object):
         feature_importance_rule = {k: v for k, v in dict_feature_importance.items() if k in att_list}
         return feature_importance_rule, dict_feature_importance
 
+    def get_config(self):
+        """
+        Provides the configuration dictionary
+        """
+        return self.config
 
-
-      # qui l'istanza arriva originale
-    def explain_instance(self, x, samples=100, use_weights=True, metric=neuclidean, runs=3, exemplar_num=5,
+    def explain_instance(self, x: np.ndarray, samples=100, use_weights=True, metric=neuclidean, runs=3, exemplar_num=5,
                                 n_jobs=-1, prune_tree=False, single=False, kwargs=None):
 
         """
         This function provides an explanation expression
 
-        :param x: instance to explain
+        :param x: instance to explain as numpy array
         :param samples: number of samples to generate during the neighbourhood generation
         :param use_weights: True or False
         :param metric: default is neuclidean, it is the metric employed to measure the distance between records

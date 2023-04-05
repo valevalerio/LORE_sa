@@ -7,19 +7,15 @@ from collections import defaultdict
 import arff
 from skmultilearn.dataset import load_from_arff
 
-from lore_sa.encoder_decoder import EncDec
-
-
-#TODO incapsulare le funzioni in una classe Dataset, in modo da far gestire il tutto in modo "automatico"
-
 class DataSet():
     """
     This class provides an interface to handle dataset such as tabular, images etc...
     Dataset class incapsulates the data and expose methods to prepare the dataset.
     """
-    def __init__(self):
-        self.original_filename = None
-        self.df_original = None
+    def __init__(self,filename: str, class_name: list, encdec: str = None):
+        self.original_filename = filename
+        self.class_name = class_name
+        self.encdec = encdec
         self.df = None
         self.feature_names = None
         self.class_values = None
@@ -28,7 +24,7 @@ class DataSet():
         self.features_map = None
         self.rdf = None
 
-    def prepare_dataset(self, filename: str, class_name: list, encdec: str):
+    def prepare_dataset(self):
         """
         The method prepare_dataframe scans the dataset and extract the following information
 
@@ -45,31 +41,28 @@ class DataSet():
             -   features_map - it is a dictionary pointing each feature to the original one before the transformation.
         """
 
-        self.original_filename = filename
-        self.df_original = pd.read_csv(filename, skipinitialspace=True, na_values='?', keep_default_na=True)
+        df_original = pd.read_csv(self.original_filename, skipinitialspace=True, na_values='?', keep_default_na=True)
 
-        self.df = self.__remove_missing_values(self.df_original)
-
+        self.df = self.__remove_missing_values(df_original)
+        self.rdf = self.df
         numeric_columns = self.__get_numeric_columns(self.df)
 
-        if class_name in numeric_columns:
-            numeric_columns.remove(class_name)
+        if self.class_name in numeric_columns:
+            numeric_columns.remove(self.class_name)
 
-        self.rdf = self.df
-
-        if encdec == 'onehot' or encdec == 'none':
-            df, feature_names, class_values = self.__one_hot_encoding(self.df, class_name)
-            real_feature_names = self.__get_real_feature_names(self.rdf, numeric_columns, class_name)
-            self.rdf = self.rdf[real_feature_names + (class_values if isinstance(class_name, list) else [class_name])]
+        if self.encdec == 'onehot' or self.encdec is None:
+            df, feature_names, class_values = self.__one_hot_encoding(self.df, self.class_name)
+            real_feature_names = self.__get_real_feature_names(self.rdf, numeric_columns, self.class_name)
+            self.rdf = self.rdf[real_feature_names + (class_values if isinstance(self.class_name, list) else [self.class_name])]
             features_map = self.__get_features_map(feature_names, real_feature_names)
 
-        elif encdec == 'target':
+        elif self.encdec == 'target':
             feature_names = self.df.columns.values
-            feature_names = np.delete(feature_names, np.where(feature_names == class_name))
-            class_values = np.unique(self.df[class_name]).tolist()
+            feature_names = np.delete(feature_names, np.where(feature_names == self.class_name))
+            class_values = np.unique(self.df[self.class_name]).tolist()
             numeric_columns = list(self.df._get_numeric_data().columns)
-            real_feature_names = [c for c in self.df.columns if c in numeric_columns and c != class_name]
-            real_feature_names += [c for c in self.df.columns if c not in numeric_columns and c != class_name]
+            real_feature_names = [c for c in self.df.columns if c in numeric_columns and c != self.class_name]
+            real_feature_names += [c for c in self.df.columns if c not in numeric_columns and c != self.class_name]
             features_map = dict()
             for f in range(0, len(real_feature_names)):
                 features_map[f] = dict()
@@ -138,7 +131,7 @@ class DataSet():
             df =df.reindex(dfX.index)
             feature_names = list(dfX.columns)
             class_values = sorted(class_name_map)
-        else: # isinstance(class_name, list)
+        else:
             dfX = pd.get_dummies(df[[c for c in df.columns if c not in class_name]], prefix_sep='=')
             # class_name_map = {v: k for k, v in enumerate(sorted(class_name))}
             class_values = sorted(class_name)
@@ -161,7 +154,7 @@ class DataSet():
         return self.numeric_columns
 
     def get_original_dataset(self):
-        return self.df_original
+        return self.rdf
 
     def prepare_iris_dataset(self,filename):
         self.original_filename = filename
