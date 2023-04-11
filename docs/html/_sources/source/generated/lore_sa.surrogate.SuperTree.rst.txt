@@ -1,0 +1,35 @@
+﻿lore\_sa.surrogate.SuperTree
+============================
+
+.. currentmodule:: lore_sa.surrogate
+
+.. autoclass:: SuperTree
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SuperTree.__init__
+      ~SuperTree.check_size
+      ~SuperTree.complexitiSuperTree
+      ~SuperTree.complexityDecisionTree
+      ~SuperTree.computeBranch
+      ~SuperTree.is_leaf
+      ~SuperTree.mergeDecisionTrees
+      ~SuperTree.pruneRedundant
+      ~SuperTree.prune_duplicate_leaves
+      ~SuperTree.prune_index
+      ~SuperTree.prune_tree
+      ~SuperTree.rec_buildTree
+      ~SuperTree.supert2b
+      ~SuperTree.supert2binary
+   
+   
+
+   
+   
+   

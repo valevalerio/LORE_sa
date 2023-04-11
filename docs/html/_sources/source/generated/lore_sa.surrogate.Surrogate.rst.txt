@@ -1,0 +1,22 @@
+﻿lore\_sa.surrogate.Surrogate
+============================
+
+.. currentmodule:: lore_sa.surrogate
+
+.. autoclass:: Surrogate
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Surrogate.__init__
+   
+   
+
+   
+   
+   
