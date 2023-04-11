@@ -1,0 +1,23 @@
+﻿lore\_sa.rule.Rule
+==================
+
+.. currentmodule:: lore_sa.rule
+
+.. autoclass:: Rule
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Rule.__init__
+      ~Rule.is_covered
+   
+   
+
+   
+   
+   
