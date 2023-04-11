@@ -1,6 +1,0 @@
-﻿lore\_sa.decision\_tree.is\_leaf
-================================
-
-.. currentmodule:: lore_sa.decision_tree
-
-.. autofunction:: is_leaf
