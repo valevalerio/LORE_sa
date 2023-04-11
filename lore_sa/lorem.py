@@ -15,8 +15,20 @@ from lore_sa.encoder_decoder import encoder_decoder_dict
 from lore_sa.bbox import AbstractBBox
 from lore_sa.dataset import DataSet
 
+class Explainer():
 
-class LOREM(object):
+    def __init__(self, dataset: DataSet, bb: AbstractBBox, config: dict, class_name: list):
+        pass
+
+    @abstractmethod
+    def fit(self, X, y, config):
+        pass
+
+    @abstractmethod
+    def explain(self, b, x):
+        pass
+
+class LOREM(Explainer):
     """
     LOcal Rule-based Explanation Method Class
 
@@ -43,7 +55,7 @@ class LOREM(object):
 
     """
     def __init__(self, dataset: DataSet, bb: AbstractBBox, config: dict, class_name: list):
-
+        super().__init__()
         self.encdec = config.get('encodec')
         if dataset is not None:
             dataset.prepare_dataset(class_name,)
@@ -157,7 +169,7 @@ class LOREM(object):
         """
         return self.config
 
-    def explain_instance(self, x: np.ndarray, samples=100, use_weights=True, metric=neuclidean, runs=3, exemplar_num=5,
+    def explain(self, x: np.ndarray, samples=100, use_weights=True, metric=neuclidean, runs=3, exemplar_num=5,
                                 n_jobs=-1, prune_tree=False, single=False, kwargs=None):
 
         """
