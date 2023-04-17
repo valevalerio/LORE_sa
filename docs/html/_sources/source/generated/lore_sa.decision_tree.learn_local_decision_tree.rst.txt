@@ -1,0 +1,6 @@
+﻿lore\_sa.decision\_tree.learn\_local\_decision\_tree
+====================================================
+
+.. currentmodule:: lore_sa.decision_tree
+
+.. autofunction:: learn_local_decision_tree
