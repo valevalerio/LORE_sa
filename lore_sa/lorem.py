@@ -3,17 +3,21 @@ import multiprocessing as ml
 import math
 import pickle
 from functools import partial
-from lore_sa.surrogate import *
+
+from scipy.spatial.distance import cdist
+
+from lore_sa.surrogate import Surrogate
 
 from lore_sa.rule import get_counterfactual_rules_supert, get_rule_supert
-from lore_sa.neighgen import neighborhood_generator
+from lore_sa.neighgen import NeighborhoodGenerator
 from lore_sa.explanation import Explanation
 from lore_sa.rule import get_rule, get_counterfactual_rules
 from lore_sa.util import neuclidean, record2str
 from lore_sa.discretizer import *
-from lore_sa.encoder_decoder import encoder_decoder_dict
+from lore_sa.encoder_decoder import EncDec
 from lore_sa.bbox import AbstractBBox
 from lore_sa.dataset import DataSet
+from lore_sa.rule import Rule
 
 class Explainer():
 
@@ -35,101 +39,65 @@ class LOREM(Explainer):
     LOREM is an explanator class initialized with a Dataset Object, a BlackBox Object, a config dictionary and a
     class_name list of string.
 
-    In config dictionary defines options:
-        - ``encdec`` :  target, onehot or None
-        - ``random_state`` :
-        - ``unadmittible_features`` :
-        - ``neigh_gen`` : generic, cfs, closest_instances, counter, genetic, genetic_proba, random,random_genetic, random_genetic_proba
-        - ``multi_label`` :
-        - ``one_vs_rest`` :
-        - ``filter_crules`` :
-        - ``binary`` :
-        - ``discretize`` :
-        - ``extreme_fidelity`` :
-        - ``verbose`` :
-
     :param Dataset dataset: Dataset Class that incapsulate the data and provides datamanager functions
     :param AbstractBBox bb:  Black Box
-    :param dict config: a configuration dictionary
+
     :param list class_name: list of class names.
 
     """
-    def __init__(self, dataset: DataSet, bb: AbstractBBox, config: dict, class_name: list):
-        super().__init__()
-        self.encdec = config.get('encodec')
-        if dataset is not None:
-            dataset.prepare_dataset(class_name,)
+    def __init__(self, dataset: DataSet, bb: AbstractBBox, encdec: EncDec, neigh_gen: NeighborhoodGenerator, surrogate: Surrogate, rule: Rule,class_name: list, ** kwargs):
 
-        self.config = config
-        self.K = dataset.get_k()
-        self.random_state = np.random.seed(config['random_state']) if 'random_state' in config else None
+        self.dataset = dataset
+        self.surrogate = surrogate
+        self.neigh_gen = neigh_gen
+        self.class_name = class_name
         self.bb_predict = bb.predict
         self.bb_predict_proba = bb.predict_proba
-        self.class_name = class_name
-        self.unadmittible_features = config['unadmittible_features'] if 'unadmittible_features' in config else None
-        self.feature_names = dataset.get_feature_map()
-        self.class_values = dataset.get_class_values()
-        self.numeric_columns = dataset.get_numeric_columns()
-        self.features_map = dataset.get_features_map()
-        self.neigh_gen = self.get_neighborhood_generator(config['neigh_gen']) if 'neigh_gen' in config else None
-        self.multi_label = config['multi_label'] if 'multi_label' in config else False
-        self.one_vs_rest = config['one_vs_rest'] if 'one_vs_rest' in config else False
-        self.filter_crules = self.bb_predict if config.get("filter_crules") else None
-        self.binary = config['binary'] if 'binary' in config else False
-        self.verbose = config['verbose'] if 'verbose' in config else False
-        self.discretize = config['discretize'] if 'discretize' in config else True
-        self.extreme_fidelity = config['extreme_fidelity'] if 'extreme_fidelity' in config else False
+        self.rule = rule
 
-        self.rdf = dataset.get_original_dataset()
-        self.encdec = self.get_encoder_decoder(config['encdec']) if 'encdec' in config else None
+        if encdec is not None:
+            Y = self.bb_predict(self.dataset.get_original_dataset())
+            self.K = self.encdec.enc(self.dataset.get_original_dataset(), Y)
+            self.encdec = encdec
+        else:
+            self.encdec = None
+            self.K = self.dataset.get_original_dataset()
 
-        self.K_original = dataset.get_k()
+        self.unadmittible_features = None
+        self.feature_names = feature_names
+        self.class_values = class_values
+        self.numeric_columns = numeric_columns
+        self.features_map = features_map
+        self.neigh_gen = neigh_gen
+        self.multi_label = multi_label
+        self.one_vs_rest = one_vs_rest
+        self.filter_crules = self.bb_predict if filter_crules else None
+        self.binary = binary
+        self.verbose = verbose
+        self.discretize = discretize
+        self.extreme_fidelity = extreme_fidelity
+        self.predict_proba = predict_proba
+        if encdec is not None:
+            self.encdec.enc_fit_transform()
+
+        self.K_original = K_transformed
         self.features_map_inv = None
-        if self.features_map is not None:
+        if self.features_map:
             self.features_map_inv = dict()
             for idx, idx_dict in self.features_map.items():
                 for k, v in idx_dict.items():
                     self.features_map_inv[v] = idx
+        self.constraints = constraints
 
-        self.constraints = config['constraints'] if 'constraints' in config else None
-
-        kernel_width = np.sqrt(len(self.feature_names)) * .75 if config.get('kernel_width') is None else config.get('kernel_width')
+        kernel_width = np.sqrt(len(self.feature_names)) * .75 if kernel_width is None else kernel_width
         self.kernel_width = float(kernel_width)
 
-        kernel = self._default_kernel if config.get('kernel_width') is None else config.get('kernel_width')
+        kernel = default_kernel if kernel is None else kernel
         self.kernel = partial(kernel, kernel_width=kernel_width)
 
+        np.random.seed(self.random_state)
 
-    def get_encoder_decoder(self, encdec_type):
-        """
-        Factory method for Encoder/Decoder object and initializing
-
-        :param str encdec_type: onehot, target
-        :return: EncDec Object
-        :rtype: OneHotEnc, MyTargetEnc
-        """
-        encdec = encoder_decoder_dict[encdec_type]
-        encdec_obj = encdec(self.rdf, self.class_name).enc_fit_transform()
-        Y = self.bb_predict(self.K)
-        self.K = encdec_obj.enc(self.K, Y)
-        return encdec_obj
-
-    def get_neighborhood_generator(self, neigh_type):
-        """
-        Factory method for Neighborhood Generator
-
-        :param str neigh_type: generic, cfs, closest_instances, counter, genetic, genetic_proba, random,random_genetic, random_genetic_proba
-        :return: NeighborhoodGenerator Object
-        :rtype:  NeighborhoodGenerator, CFSGenerator, ClosestInstancesGenerator, CounterGenerator, GeneticGenerator, GeneticProbaGenerator, RandomGenerator, RandomGeneticGenerator, RandomGeneticProbaGenerator
-        """
-        neighgen = neighborhood_generator[neigh_type]
-        return neighgen()
-
-
-    def _default_kernel(self,d, kernel_width):
-        return np.sqrt(np.exp(-(d ** 2) / kernel_width ** 2))
-
-    def _calculate_weights(self, Z, metric):
+    def __calculate_weights__(self, Z, metric):
         if np.max(Z) != 1 and np.min(Z) != 0:
             Zn = (Z - np.min(Z)) / (np.max(Z) - np.min(Z))
             distances = cdist(Zn, Zn[0].reshape(1, -1), metric=metric).ravel()
@@ -163,17 +131,11 @@ class LOREM(Explainer):
         feature_importance_rule = {k: v for k, v in dict_feature_importance.items() if k in att_list}
         return feature_importance_rule, dict_feature_importance
 
-    def get_config(self):
-        """
-        Provides the configuration dictionary
-        """
-        return self.config
 
-    def explain(self, x: np.ndarray, samples=100, use_weights=True, metric=neuclidean, runs=3, exemplar_num=5,
-                                n_jobs=-1, prune_tree=False, single=False, kwargs=None):
-
+    # qui l'istanza arriva originale
+    def explain_instance_stable(self, x, samples=100, use_weights=True, metric=neuclidean, runs=3, exemplar_num=5, n_jobs=-1, prune_tree=False, single=False, kwargs=None):
         """
-        This function provides an explanation expression
+        This function explain Instance Stable
 
         :param x: instance to explain as numpy array
         :param samples: number of samples to generate during the neighbourhood generation
@@ -187,6 +149,7 @@ class LOREM(Explainer):
         :param kwargs: a dictionary in which add the parameters needed for cfs generation
         :return:
         """
+
         if self.multi_label:
             print('Not yet implemented')
             raise Exception
@@ -198,14 +161,14 @@ class LOREM(Explainer):
         Z_list = self.neigh_gen.multi_generate(x, samples, runs)
 
         Yb_list = list()
-        #print('la Z creata ', len(Z_list), Z_list[0])
+        # print('la Z creata ', len(Z_list), Z_list[0])
         if self.encdec is not None:
             for Z in Z_list:
                 Z = self.encdec.dec(Z)
-                #print('Z decodificata ', Z)
+                # print('Z decodificata ', Z)
                 Z = np.nan_to_num(Z)
                 Yb = self.bb_predict(Z)
-                #print('la yb ', Counter(Yb))
+                # print('la yb ', Counter(Yb))
                 Yb_list.append(Yb)
         else:
             if single:
@@ -230,10 +193,10 @@ class LOREM(Explainer):
         if single:
             weights = None if not use_weights else self.__calculate_weights__(Z_list, metric)
             weights_list.append(weights)
-        #print('la shape di z e come e fatta ', len(Z_list), Z[0].dtype)
+        # print('la shape di z e come e fatta ', len(Z_list), Z[0].dtype)
         else:
             for Z in Z_list:
-                #print('nel calcolo del peso', Z.dtype, Z.shape)
+                # print('nel calcolo del peso', Z.dtype, Z.shape)
                 weights = None if not use_weights else self.__calculate_weights__(Z, metric)
                 weights_list.append(weights)
 
@@ -258,7 +221,7 @@ class LOREM(Explainer):
                 Z_list = temp
         # caso binario da Z e Y da bb
         if self.binary == 'binary_from_bb':
-            surr = DecTree()
+            surr = self.surrogate
             weights = None if not use_weights else self.__calculate_weights__(Z, metric)
             superT = surr.learn_local_decision_tree(Z, Yb, weights, self.class_values)
             fidelity = superT.score(Z, Yb, sample_weight=weights)
@@ -267,9 +230,9 @@ class LOREM(Explainer):
         # caso n ario
         # caso binario da albero n ario
         else:
-            #qui prima creo tutti i dt, che servono sia per unirli con metodo classico o altri
-            dt_list = [DecTree() for i in range(runs)]
-            dt_list = Parallel(n_jobs=n_jobs, verbose=self.verbose,prefer='threads')(
+            # qui prima creo tutti i dt, che servono sia per unirli con metodo classico o altri
+            dt_list = [self.surrogate for i in range(runs)]
+            dt_list = Parallel(n_jobs=n_jobs, verbose=self.verbose, prefer='threads')(
                 delayed(t.learn_local_decision_tree)(Zl, Yb, weights, self.class_values, prune_tree=prune_tree)
                 for Zl, Yb, weights, t in zip(Z_list, Yb_list, weights_list, dt_list))
 
@@ -280,7 +243,7 @@ class LOREM(Explainer):
             # caso binario da Z e Yb dei vari dt
             if self.binary == 'binary_from_dts':
                 weights = None if not use_weights else self.__calculate_weights__(Z, metric)
-                surr = DecTree()
+                surr = self.surrogate
                 superT = surr.learn_local_decision_tree(Z, Yb, weights, self.class_values)
                 fidelity = superT.score(Z, Yb, sample_weight=weights)
 
@@ -289,7 +252,7 @@ class LOREM(Explainer):
             else:
                 if self.verbose:
                     print('Pruning decision trees')
-                surr = SuperTree()
+                surr = self.surrogate
                 for t in dt_list:
                     surr.prune_duplicate_leaves(t)
                 if self.verbose:
@@ -325,25 +288,26 @@ class LOREM(Explainer):
         x = x.flatten()
         Yc = superT.predict(X=Z)
         if self.binary == 'binary_from_nari' or self.binary == 'binary_from_dts' or self.binary == 'binary_from_bb':
-            rule = get_rule(x, self.bb_predict(x.reshape(1, -1)), superT, self.feature_names, self.class_name, self.class_values,
-                                self.numeric_columns, encdec=self.encdec,
-                                multi_label=self.multi_label)
+            rule = get_rule(x, self.bb_predict(x.reshape(1, -1)), superT, self.feature_names, self.class_name,
+                            self.class_values,
+                            self.numeric_columns, encdec=self.encdec,
+                            multi_label=self.multi_label)
         else:
             rule = get_rule_supert(x, superT, self.feature_names, self.class_name, self.class_values,
-                                       self.numeric_columns,
-                                       self.multi_label, encdec=self.encdec)
+                                   self.numeric_columns,
+                                   self.multi_label, encdec=self.encdec)
         if self.binary == 'binary_from_nari' or self.binary == 'binary_from_dts' or self.binary == 'binary_from_bb':
-            #print('la shape di x che arriva fino alla get counter ', x, x.shape)
+            # print('la shape di x che arriva fino alla get counter ', x, x.shape)
             crules, deltas = get_counterfactual_rules(x, Yc[0], superT, Z, Yc, self.feature_names,
-                                                          self.class_name, self.class_values, self.numeric_columns,
-                                                          self.features_map, self.features_map_inv, encdec=self.encdec,
-                                                          filter_crules = self.filter_crules, constraints= self.constraints)
+                                                      self.class_name, self.class_values, self.numeric_columns,
+                                                      self.features_map, self.features_map_inv, encdec=self.encdec,
+                                                      filter_crules=self.filter_crules, constraints=self.constraints)
         else:
-            #print('la shaoe di x che arriva a get counter con super t', x, x.shape)
+            # print('la shaoe di x che arriva a get counter con super t', x, x.shape)
             crules, deltas = get_counterfactual_rules_supert(x, Yc[0], superT, Z, Yc, self.feature_names,
-                                                                 self.class_name, self.class_values, self.numeric_columns,
-                                                                 self.features_map, self.features_map_inv,
-                                                                 filter_crules = self.filter_crules)
+                                                             self.class_name, self.class_values, self.numeric_columns,
+                                                             self.features_map, self.features_map_inv,
+                                                             filter_crules=self.filter_crules)
 
         exp = Explanation()
         exp.bb_pred = Yb[0]
@@ -377,9 +341,9 @@ class LOREM(Explainer):
         exp.cexemplars = cexemplars
         return exp
 
-
     def get_exemplars_str(self, exemplars_rec):
-        exemplars = '\n'.join([record2str(s, self.feature_names, self.numeric_columns, encdec=self.encdec) for s in exemplars_rec])
+        exemplars = '\n'.join(
+            [record2str(s, self.feature_names, self.numeric_columns, encdec=self.encdec) for s in exemplars_rec])
         return exemplars
 
     def get_exemplars_cexemplars_binary(self, dt, x, n):
@@ -412,10 +376,10 @@ class LOREM(Explainer):
         if idx_to_remove is not None:
             exemplar_vals = np.delete(exemplar_vals, idx_to_remove, axis=0)
         print('exemplars ', exemplar_vals, cexemplar_vals)
-        if len(exemplar_vals)==0 and len(cexemplar_vals)==0:
+        if len(exemplar_vals) == 0 and len(cexemplar_vals) == 0:
             print('IN CASO NONE NONE vals', exemplar_vals, cexemplar_vals)
             return None, None
-        elif len(exemplar_vals)==0:
+        elif len(exemplar_vals) == 0:
             print('CASO DI C EX E NONE')
             distance_x_cexemplar = cdist(x.reshape(1, -1), cexemplar_vals, metric='euclidean').ravel()
             n = len(cexemplar_vals)
@@ -436,8 +400,8 @@ class LOREM(Explainer):
         if len(exemplar_vals) < n or len(cexemplar_vals) < n:
             if self.verbose:
                 print('maximum number of exemplars and counter-exemplars founded is : %s, %s', len(exemplar_vals),
-                  len(cexemplar_vals))
-            n = min(len(cexemplar_vals),len(exemplar_vals))
+                      len(cexemplar_vals))
+            n = min(len(cexemplar_vals), len(exemplar_vals))
         first_n_dist_id = distance_x_exemplar.argsort()[:n]
         first_n_exemplar = exemplar_vals[first_n_dist_id]
 
@@ -445,7 +409,6 @@ class LOREM(Explainer):
         first_n_cexemplar = cexemplar_vals[first_n_dist_id_c]
 
         return first_n_exemplar, first_n_cexemplar
-
 
     def get_exemplars_cexemplars_supert(self, dt, x, n):
         if self.encdec is not None:
@@ -459,7 +422,6 @@ class LOREM(Explainer):
         print('leave id applied ', leave_id_K)
 
         leave_id_x = dt.apply(x.reshape(1, -1))
-
 
         exemplar_idx = np.where(leave_id_K == leave_id_x)
         print('exemplar idx ', len(exemplar_idx))
@@ -490,8 +452,8 @@ class LOREM(Explainer):
         if len(exemplar_vals) < n or len(cexemplar_vals) < n:
             if self.verbose:
                 print('maximum number of exemplars and counter-exemplars founded is : %s, %s', len(exemplar_vals),
-                  len(cexemplar_vals))
-            n = min(len(cexemplar_vals),len(exemplar_vals))
+                      len(cexemplar_vals))
+            n = min(len(cexemplar_vals), len(exemplar_vals))
         first_n_dist_id = distance_x_exemplar.argsort()[:n]
         first_n_exemplar = exemplar_vals[first_n_dist_id]
 
@@ -500,9 +462,10 @@ class LOREM(Explainer):
 
         return first_n_exemplar, first_n_cexemplar
 
-    def explain_set_instances_stable(self, X, n_workers, title, runs=3, n_jobs =4, n_samples=1000, exemplar_num=5, use_weights=True, metric=neuclidean, kwargs=None):
+    def explain_set_instances_stable(self, X, n_workers, title, runs=3, n_jobs=4, n_samples=1000, exemplar_num=5,
+                                     use_weights=True, metric=neuclidean, kwargs=None):
         # for parallelization
-        items_for_worker = math.ceil( len(X)/ float(n_workers))
+        items_for_worker = math.ceil(len(X) / float(n_workers))
         start = 0
         print(items_for_worker)
         end = int(items_for_worker)
@@ -512,11 +475,12 @@ class LOREM(Explainer):
         for i in range(0, n_workers):
             print('start, end ', start, end)
             dataset = X[start:end]
-            process = ml.Process(target=self.explain_workers_stable, args=(i, dataset, title, n_samples, use_weights, metric, runs, n_jobs, exemplar_num, kwargs))
+            process = ml.Process(target=self.explain_workers_stable, args=(
+            i, dataset, title, n_samples, use_weights, metric, runs, n_jobs, exemplar_num, kwargs))
             processes.append(process)
             process.start()
 
-            if end > (len(X)-1):
+            if end > (len(X) - 1):
                 workers = n_workers - 1
                 break
             start = end
@@ -527,7 +491,8 @@ class LOREM(Explainer):
             processes[i].join()
         print("All workers joint.\n")
 
-    def explain_workers_stable(self, i, dataset, title, n_samples, use_wieghts, metric, runs=3, n_jobs =4, exemplar_num=5, kwargs=None):
+    def explain_workers_stable(self, i, dataset, title, n_samples, use_wieghts, metric, runs=3, n_jobs=4,
+                               exemplar_num=5, kwargs=None):
         count = 0
         results = list()
         title = 'explanations_lore' + title + '_' + str(i) + '.p'
@@ -535,12 +500,12 @@ class LOREM(Explainer):
             print(i, count)
             count += 1
             d = np.array(d)
-            exp = self.explain_instance_stable(d, samples=n_samples, use_weights=use_wieghts, metric=metric, runs=runs, exemplar_num=exemplar_num, n_jobs=n_jobs, kwargs=kwargs)
-            results.append((d,exp))
+            exp = self.explain_instance_stable(d, samples=n_samples, use_weights=use_wieghts, metric=metric, runs=runs,
+                                               exemplar_num=exemplar_num, n_jobs=n_jobs, kwargs=kwargs)
+            results.append((d, exp))
 
         with open(title, "ab") as pickle_file:
             pickle.dump(results, pickle_file)
-
 
         return
 

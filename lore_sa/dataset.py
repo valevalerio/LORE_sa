@@ -12,7 +12,7 @@ class DataSet():
     This class provides an interface to handle dataset such as tabular, images etc...
     Dataset class incapsulates the data and expose methods to prepare the dataset.
     """
-    def __init__(self,filename: str, class_name: list, encdec: str = None):
+    def __init__(self,filename: str, class_name: list):
         self.original_filename = filename
         self.class_name = class_name
         self.encdec = encdec
@@ -30,7 +30,6 @@ class DataSet():
 
         :param filename:
         :param [str] class_name:
-        :param str encdec:
         :return:
             -   df  - is a trasformed version of the original dataframe, where discrete attributes are transformed into numerical attributes by using one hot encoding strategy;
             -   feature_names - is a list containint the names of the features after the transformation;

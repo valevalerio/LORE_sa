@@ -125,6 +125,7 @@ Modules
    :toctree: generated/
 
    rule.Rule
+   rule.Condition
 
 
 :mod:`lore_sa.surrogate`: Surrogate classes and functions

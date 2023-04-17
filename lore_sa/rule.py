@@ -148,7 +148,6 @@ class RuleEncoder(json.JSONEncoder):
 '''def map_categorical(encoder, ):
     if encoder == 'target':
         #qui devo mappare la variabile all'intero più vicino
-
     elif encoder == 'onehot':
         #qui mi devo assicurare che per ogni mappa di una variabile, ci sia solo un valore ad uno
     else:
@@ -691,4 +690,3 @@ def apply_counterfactual(x, delta, feature_names, features_map=None, features_ma
         xc[i] = xcd[fn]
 
     return xc
-

@@ -16,9 +16,8 @@ class AbstractBBox(ABC):
         Wrap of sklearn predict method, that predict the class labels for the provided data.
 
         :param sample_matrix: {array-like, sparse matrix} of shape (n_queries, n_features) samples.
-        :return: ndarray of shape (n_queries, n_classes), or a list of n_outputs
-        of such arrays if n_outputs > 1.
-        The class probabilities of the input samples. Classes are ordered by lexicographic order.
+        :return: ndarray of shape (n_queries, n_classes), or a list of n_outputs of such arrays if n_outputs > 1.
+
         """
         pass
 
@@ -29,6 +28,6 @@ class AbstractBBox(ABC):
 
         :param sample_matrix: {array-like, sparse matrix} of shape (n_queries, n_features) samples
         :return: ndarray of shape (n_queries, n_classes), or a list of n_outputs of such arrays if n_outputs > 1.
-        The class probabilities of the input samples. Classes are ordered by lexicographic order.
+
         """
         pass
