@@ -41,7 +41,9 @@ class LOREM(Explainer):
 
     :param Dataset dataset: Dataset Class that incapsulate the data and provides datamanager functions
     :param AbstractBBox bb:  Black Box
-
+    :param NeighborhoodGenerator encdec: NeighborhoodGenerator object
+    :param Surrogate surrogate: Surrogate object
+    :param Rule rule: rule object
     :param list class_name: list of class names.
 
     """
@@ -60,7 +62,7 @@ class LOREM(Explainer):
             self.K = self.encdec.enc(self.dataset.get_original_dataset(), Y)
             self.encdec = encdec
         else:
-            self.encdec = None
+            self.encdec = encdec
             self.K = self.dataset.get_original_dataset()
 
         self.unadmittible_features = None
@@ -77,8 +79,6 @@ class LOREM(Explainer):
         self.discretize = discretize
         self.extreme_fidelity = extreme_fidelity
         self.predict_proba = predict_proba
-        if encdec is not None:
-            self.encdec.enc_fit_transform()
 
         self.K_original = K_transformed
         self.features_map_inv = None
