@@ -15,7 +15,6 @@ class DataSet():
     def __init__(self,filename: str, class_name: list):
         self.original_filename = filename
         self.class_name = class_name
-        self.encdec = encdec
         self.df = None
         self.feature_names = None
         self.class_values = None

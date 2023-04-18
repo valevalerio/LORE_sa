@@ -51,6 +51,13 @@ class NeighborhoodGenerator(object):
 
     #TODO refactor multi_generate method
     def multi_generate(self, x, samples=1000, runs=1):
+        """
+         Multi threads version of generate method
+
+         :param x: Any, record instance to use as seed
+         :param int num_samples: size of the neighborhood to generate
+         :param int runs: number of threads
+        """
         Z_list = list()
         for i in range(runs):
             # if self.verbose:
@@ -1039,17 +1046,3 @@ class CFSGenerator(NeighborhoodGenerator):
         """
         for axis in range(center.shape[-1]):
             X[..., axis] += center[..., axis]
-
-
-
-neighborhood_generator = {
-        "generic": NeighborhoodGenerator,
-        "cfs": CFSGenerator,
-        "closest_instances": ClosestInstancesGenerator,
-        "counter": CounterGenerator,
-        "genetic": GeneticGenerator,
-        "genetic_proba": GeneticProbaGenerator,
-        "random": RandomGenerator,
-        "random_genetic": RandomGeneticGenerator,
-        "random_genetic_proba": RandomGeneticProbaGenerator
-    }
