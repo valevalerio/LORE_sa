@@ -180,6 +180,10 @@
 <li class="toctree-l4"><a class="reference internal" href="../source/generated/lore_sa.rule.Rule.html#lore_sa.rule.Rule"><code class="docutils literal notranslate"><span class="pre">Rule</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../source/generated/lore_sa.rule.Condition.html">lore_sa.rule.Condition</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../source/generated/lore_sa.rule.Condition.html#lore_sa.rule.Condition"><code class="docutils literal notranslate"><span class="pre">Condition</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../source/modules.html#lore-sa-surrogate-surrogate-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.surrogate</span></code>: Surrogate classes and functions</a><ul>
@@ -209,8 +213,8 @@
 </li>
 </ul>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Tabular explanations example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#learning-and-explaining-german-credit-dataset">Learning and explaining German Credit Dataset</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tabular explanation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#learning-and-explaining-german-credit-dataset">Learning and explaining German Credit Dataset</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#loading-and-preparation-of-data">Loading and preparation of data</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#learning-a-random-forest-classfier">Learning a Random Forest classfier</a></li>
 </ul>
@@ -260,9 +264,8 @@
              
   <section id="tabular-explanations-example">
 <h1>Tabular explanations example<a class="headerlink" href="#tabular-explanations-example" title="Permalink to this heading"></a></h1>
-</section>
 <section id="learning-and-explaining-german-credit-dataset">
-<h1>Learning and explaining German Credit Dataset<a class="headerlink" href="#learning-and-explaining-german-credit-dataset" title="Permalink to this heading"></a></h1>
+<h2>Learning and explaining German Credit Dataset<a class="headerlink" href="#learning-and-explaining-german-credit-dataset" title="Permalink to this heading"></a></h2>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
@@ -280,6 +283,7 @@
 <span class="kn">from</span> <span class="nn">xailib.models.sklearn_classifier_wrapper</span> <span class="kn">import</span> <span class="n">sklearn_classifier_wrapper</span>
 </pre></div>
 </div>
+</section>
 <section id="loading-and-preparation-of-data">
 <h2>Loading and preparation of data<a class="headerlink" href="#loading-and-preparation-of-data" title="Permalink to this heading"></a></h2>
 <p>We start by reading from a CSV file the dataset to analyze. The table is

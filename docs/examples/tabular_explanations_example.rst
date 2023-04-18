@@ -2,7 +2,7 @@ Tabular explanations example
 ============================
 
 Learning and explaining German Credit Dataset
-=============================================
+---------------------------------------------
 
 .. code:: ipython3
 
