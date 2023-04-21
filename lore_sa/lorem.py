@@ -1,3 +1,5 @@
+from abc import abstractmethod
+
 from joblib import Parallel, delayed
 import multiprocessing as ml
 import math
@@ -13,11 +15,13 @@ from lore_sa.neighgen import NeighborhoodGenerator
 from lore_sa.explanation import Explanation
 from lore_sa.rule import get_rule, get_counterfactual_rules
 from lore_sa.util import neuclidean, record2str
-from lore_sa.discretizer import *
+from lore_sa.discretizer import Discretizer
 from lore_sa.encoder_decoder import EncDec
 from lore_sa.bbox import AbstractBBox
 from lore_sa.dataset import DataSet
 from lore_sa.rule import Rule
+import numpy as np
+
 
 class Explainer():
 
@@ -32,6 +36,10 @@ class Explainer():
     def explain(self, b, x):
         pass
 
+
+def default_kernel(d, kernel_width):
+    return np.sqrt(np.exp(-(d ** 2) / kernel_width ** 2))
+
 class LOREM(Explainer):
     """
     LOcal Rule-based Explanation Method Class
@@ -45,9 +53,22 @@ class LOREM(Explainer):
     :param Surrogate surrogate: Surrogate object
     :param Rule rule: rule object
     :param list class_name: list of class names.
+    :param K_transformed:
+    :param bool multi_label:
+    :param bool filter_crules:
+    :param int kernel_width:
+    :param kernel:
+    :param int random_state:
+    :param bool binary:
+    :param Discretized discretize:
+    :param bool extreme_fidelity:
+    :param constraints:
+    :param bool verbose:
 
     """
-    def __init__(self, dataset: DataSet, bb: AbstractBBox, encdec: EncDec, neigh_gen: NeighborhoodGenerator, surrogate: Surrogate, rule: Rule,class_name: list, ** kwargs):
+    def __init__(self, dataset: DataSet, bb: AbstractBBox, encdec: EncDec, neigh_gen: NeighborhoodGenerator, surrogate: Surrogate, rule: Rule, class_name: list,
+                 K_transformed=None, multi_label=False, filter_crules=True, kernel_width=None, kernel=None, random_state=None, binary=False, discretize: Discretizer = None,
+                 extreme_fidelity: bool = False, constraints = None, verbose:bool = False,** kwargs):
 
         self.dataset = dataset
         self.surrogate = surrogate
@@ -56,6 +77,7 @@ class LOREM(Explainer):
         self.bb_predict = bb.predict
         self.bb_predict_proba = bb.predict_proba
         self.rule = rule
+        self.verbose = verbose
 
         if encdec is not None:
             Y = self.bb_predict(self.dataset.get_original_dataset())
@@ -66,19 +88,14 @@ class LOREM(Explainer):
             self.K = self.dataset.get_original_dataset()
 
         self.unadmittible_features = None
-        self.feature_names = feature_names
-        self.class_values = class_values
-        self.numeric_columns = numeric_columns
-        self.features_map = features_map
+        self.df, self.feature_names, self.class_values, self.numeric_columns, self.rdf,self.real_feature_names, self.features_map = dataset.prepare_dataset(self.encdec)
+
         self.neigh_gen = neigh_gen
         self.multi_label = multi_label
-        self.one_vs_rest = one_vs_rest
         self.filter_crules = self.bb_predict if filter_crules else None
         self.binary = binary
-        self.verbose = verbose
         self.discretize = discretize
         self.extreme_fidelity = extreme_fidelity
-        self.predict_proba = predict_proba
 
         self.K_original = K_transformed
         self.features_map_inv = None
@@ -95,6 +112,7 @@ class LOREM(Explainer):
         kernel = default_kernel if kernel is None else kernel
         self.kernel = partial(kernel, kernel_width=kernel_width)
 
+        self.random_state = random_state
         np.random.seed(self.random_state)
 
     def __calculate_weights__(self, Z, metric):
@@ -204,21 +222,22 @@ class LOREM(Explainer):
             print('Learning local decision trees')
 
         # discretize the data employed for learning decision tree
-        if self.discretize:
+        if self.discretize is not None:
             if single:
-                discr = RMEPDiscretizer()
+                discr = self.discretize
                 discr.fit(Z, Yb)
                 Z_list = discr.transform(Z_list)
             else:
                 Z = np.concatenate(Z_list)
                 Yb = np.concatenate(Yb_list)
 
-                discr = RMEPDiscretizer()
+                discr = self.discretize
                 discr.fit(Z, Yb)
                 temp = list()
                 for Zl in Z_list:
                     temp.append(discr.transform(Zl))
                 Z_list = temp
+
         # caso binario da Z e Y da bb
         if self.binary == 'binary_from_bb':
             surr = self.surrogate

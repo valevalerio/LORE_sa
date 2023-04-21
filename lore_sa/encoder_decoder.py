@@ -20,6 +20,7 @@ class EncDec():
         self.features = None
         self.cate_features_names = None
         self.cate_features_idx = None
+        self.type = None
 
     @abstractmethod
     def enc(self, x: list, y: list, kwargs=None):
@@ -42,6 +43,7 @@ class MyTargetEnc(EncDec):
 
     def __init__(self, dataset, class_name):
         super(MyTargetEnc, self).__init__(dataset, class_name)
+        self.type = "target"
         self.dataset_enc = None
         self.cate_map = dict()
         self.inverse_cate_map = list()
@@ -189,6 +191,7 @@ class OneHotEnc(EncDec):
     def __init__(self, dataset, class_name):
         super(OneHotEnc, self).__init__(dataset, class_name)
         self.dataset_enc = None
+        self.type="onehot"
 
 
     def enc(self, x, y, kwargs=None):

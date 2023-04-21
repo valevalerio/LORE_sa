@@ -8,7 +8,7 @@ import sys
 from imblearn.under_sampling import RandomUnderSampler
 from sklearn.model_selection import train_test_split
 from abc import abstractmethod
-from scipy.spatial.distance import cdist, hamming, cosine
+from scipy.spatial.distance import hamming, cosine
 import math
 from .encoder_decoder import *
 import random
@@ -26,7 +26,7 @@ class NeighborhoodGenerator(object):
     """
 
     def __init__(self, bb_predict=None,  bb_predict_proba=None, feature_values=None, features_map=None, nbr_features=None, nbr_real_features=None,
-                 numeric_columns_index=None, ocr=0.1, encdec=None, original_data=None):
+                 numeric_columns_index=None, ocr=0.1, encdec: EncDec = None, original_data=None):
         self.bb_predict = bb_predict
 
         self.bb_predict_proba = bb_predict_proba

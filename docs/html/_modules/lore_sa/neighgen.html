@@ -178,6 +178,10 @@
 <li class="toctree-l4"><a class="reference internal" href="../../source/generated/lore_sa.rule.Rule.html#lore_sa.rule.Rule"><code class="docutils literal notranslate"><span class="pre">Rule</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.Condition.html">lore_sa.rule.Condition</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../source/generated/lore_sa.rule.Condition.html#lore_sa.rule.Condition"><code class="docutils literal notranslate"><span class="pre">Condition</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../source/modules.html#lore-sa-surrogate-surrogate-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.surrogate</span></code>: Surrogate classes and functions</a><ul>
@@ -207,8 +211,8 @@
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../examples/tabular_explanations_example.html">Tabular explanations example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../examples/tabular_explanations_example.html#learning-and-explaining-german-credit-dataset">Learning and explaining German Credit Dataset</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/tabular_explanations_example.html">Tabular explanation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/tabular_explanations_example.html#learning-and-explaining-german-credit-dataset">Learning and explaining German Credit Dataset</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../examples/tabular_explanations_example.html#loading-and-preparation-of-data">Loading and preparation of data</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../examples/tabular_explanations_example.html#learning-a-random-forest-classfier">Learning a Random Forest classfier</a></li>
 </ul>
@@ -267,7 +271,7 @@
 <span class="kn">from</span> <span class="nn">imblearn.under_sampling</span> <span class="kn">import</span> <span class="n">RandomUnderSampler</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 <span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">abstractmethod</span>
-<span class="kn">from</span> <span class="nn">scipy.spatial.distance</span> <span class="kn">import</span> <span class="n">cdist</span><span class="p">,</span> <span class="n">hamming</span><span class="p">,</span> <span class="n">cosine</span>
+<span class="kn">from</span> <span class="nn">scipy.spatial.distance</span> <span class="kn">import</span> <span class="n">hamming</span><span class="p">,</span> <span class="n">cosine</span>
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">from</span> <span class="nn">.encoder_decoder</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">import</span> <span class="nn">random</span>
@@ -285,7 +289,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="NeighborhoodGenerator.__init__"><a class="viewcode-back" href="../../source/generated/lore_sa.neighgen.NeighborhoodGenerator.html#lore_sa.neighgen.NeighborhoodGenerator.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bb_predict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="n">bb_predict_proba</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">feature_values</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">features_map</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nbr_features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nbr_real_features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">numeric_columns_index</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ocr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">encdec</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">original_data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+                 <span class="n">numeric_columns_index</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ocr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">encdec</span><span class="p">:</span> <span class="n">EncDec</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">original_data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bb_predict</span> <span class="o">=</span> <span class="n">bb_predict</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">bb_predict_proba</span> <span class="o">=</span> <span class="n">bb_predict_proba</span>
@@ -309,7 +313,14 @@
         <span class="k">pass</span></div>
 
     <span class="c1">#TODO refactor multi_generate method</span>
-    <span class="k">def</span> <span class="nf">multi_generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">runs</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="NeighborhoodGenerator.multi_generate"><a class="viewcode-back" href="../../source/generated/lore_sa.neighgen.NeighborhoodGenerator.html#lore_sa.neighgen.NeighborhoodGenerator.multi_generate">[docs]</a>    <span class="k">def</span> <span class="nf">multi_generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">runs</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">         Multi threads version of generate method</span>
+
+<span class="sd">         :param x: Any, record instance to use as seed</span>
+<span class="sd">         :param int num_samples: size of the neighborhood to generate</span>
+<span class="sd">         :param int runs: number of threads</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">Z_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">runs</span><span class="p">):</span>
             <span class="c1"># if self.verbose:</span>
@@ -317,7 +328,7 @@
                 <span class="c1">#print(samples, x)</span>
             <span class="n">Z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">samples</span><span class="p">)</span>
             <span class="n">Z_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">Z_list</span>
+        <span class="k">return</span> <span class="n">Z_list</span></div>
 
     <span class="c1"># qui dobbiamo prima decodificare</span>
     <span class="k">def</span> <span class="nf">apply_bb_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">encoded</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
@@ -1298,20 +1309,6 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">center</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
             <span class="n">X</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">axis</span><span class="p">]</span> <span class="o">+=</span> <span class="n">center</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">axis</span><span class="p">]</span></div></div>
-
-
-
-<span class="n">neighborhood_generator</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;generic&quot;</span><span class="p">:</span> <span class="n">NeighborhoodGenerator</span><span class="p">,</span>
-        <span class="s2">&quot;cfs&quot;</span><span class="p">:</span> <span class="n">CFSGenerator</span><span class="p">,</span>
-        <span class="s2">&quot;closest_instances&quot;</span><span class="p">:</span> <span class="n">ClosestInstancesGenerator</span><span class="p">,</span>
-        <span class="s2">&quot;counter&quot;</span><span class="p">:</span> <span class="n">CounterGenerator</span><span class="p">,</span>
-        <span class="s2">&quot;genetic&quot;</span><span class="p">:</span> <span class="n">GeneticGenerator</span><span class="p">,</span>
-        <span class="s2">&quot;genetic_proba&quot;</span><span class="p">:</span> <span class="n">GeneticProbaGenerator</span><span class="p">,</span>
-        <span class="s2">&quot;random&quot;</span><span class="p">:</span> <span class="n">RandomGenerator</span><span class="p">,</span>
-        <span class="s2">&quot;random_genetic&quot;</span><span class="p">:</span> <span class="n">RandomGeneticGenerator</span><span class="p">,</span>
-        <span class="s2">&quot;random_genetic_proba&quot;</span><span class="p">:</span> <span class="n">RandomGeneticProbaGenerator</span>
-    <span class="p">}</span>
 </pre></div>
 
            </div>

@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 
 from collections import defaultdict
+from lore_sa.encoder_decoder import EncDec
 
 #from scipy.io import arff
 import arff
@@ -23,7 +24,7 @@ class DataSet():
         self.features_map = None
         self.rdf = None
 
-    def prepare_dataset(self):
+    def prepare_dataset(self, encdec: EncDec = None):
         """
         The method prepare_dataframe scans the dataset and extract the following information
 
@@ -41,20 +42,22 @@ class DataSet():
 
         df_original = pd.read_csv(self.original_filename, skipinitialspace=True, na_values='?', keep_default_na=True)
 
-        self.df = self.__remove_missing_values(df_original)
-        self.rdf = self.df
+        df = self.__remove_missing_values(df_original)
+        rdf = df
+        self.df = df
+        self.rdf = rdf
         numeric_columns = self.__get_numeric_columns(self.df)
 
         if self.class_name in numeric_columns:
             numeric_columns.remove(self.class_name)
 
-        if self.encdec == 'onehot' or self.encdec is None:
+        if encdec.type == 'onehot' or encdec is None:
             df, feature_names, class_values = self.__one_hot_encoding(self.df, self.class_name)
             real_feature_names = self.__get_real_feature_names(self.rdf, numeric_columns, self.class_name)
             self.rdf = self.rdf[real_feature_names + (class_values if isinstance(self.class_name, list) else [self.class_name])]
             features_map = self.__get_features_map(feature_names, real_feature_names)
 
-        elif self.encdec == 'target':
+        elif encdec.type == 'target':
             feature_names = self.df.columns.values
             feature_names = np.delete(feature_names, np.where(feature_names == self.class_name))
             class_values = np.unique(self.df[self.class_name]).tolist()
@@ -73,6 +76,7 @@ class DataSet():
         self.real_feature_names = real_feature_names
         self.features_map = features_map
 
+        return df, feature_names, class_values, numeric_columns, rdf, real_feature_names, features_map
 
     def __remove_missing_values(self,df):
         for column_name, nbr_missing in df.isna().sum().to_dict().items():
