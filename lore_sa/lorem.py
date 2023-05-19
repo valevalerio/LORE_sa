@@ -7,6 +7,7 @@ import pickle
 from functools import partial
 
 from scipy.spatial.distance import cdist
+from sklearn.metrics import accuracy_score
 
 from lore_sa.surrogate import Surrogate
 
