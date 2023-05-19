@@ -35,6 +35,7 @@ Modules
    :toctree: generated/
 
    dataset.DataSet
+   dataset.utils
 
 :mod:`lore_sa.neighgen`: Neighborhood Generator classes
 =======================================================

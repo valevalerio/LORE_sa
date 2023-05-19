@@ -19,17 +19,7 @@
       ~DataSet.get_k
       ~DataSet.get_numeric_columns
       ~DataSet.get_original_dataset
-      ~DataSet.prepare_adult_dataset
-      ~DataSet.prepare_bank_dataset
-      ~DataSet.prepare_churn_dataset
-      ~DataSet.prepare_compass_dataset
       ~DataSet.prepare_dataset
-      ~DataSet.prepare_fico_dataset
-      ~DataSet.prepare_german_dataset
-      ~DataSet.prepare_iris_dataset
-      ~DataSet.prepare_medical_dataset
-      ~DataSet.prepare_wine_dataset
-      ~DataSet.prepare_yeast_dataset
    
    
 

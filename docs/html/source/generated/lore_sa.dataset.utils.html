@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lore_sa.neighgen.RandomGeneticGenerator &mdash; LORE_sa  documentation</title>
+  <title>lore_sa.dataset.utils &mdash; LORE_sa  documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="lore_sa.neighgen.RandomGeneticProbaGenerator" href="lore_sa.neighgen.RandomGeneticProbaGenerator.html" />
-    <link rel="prev" title="lore_sa.neighgen.RandomGenerator" href="lore_sa.neighgen.RandomGenerator.html" />
+    <link rel="next" title="lore_sa.neighgen.NeighborhoodGenerator" href="lore_sa.neighgen.NeighborhoodGenerator.html" />
+    <link rel="prev" title="lore_sa.dataset.DataSet" href="lore_sa.dataset.DataSet.html" />
     <link href="../../_static/style.css" rel="stylesheet" type="text/css">
 
 </head>
@@ -54,11 +54,12 @@
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.bbox.AbstractBBox.html">lore_sa.bbox.AbstractBBox</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-dataset-dataset-class"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.dataset</span></code>: Dataset class</a><ul>
+<li class="toctree-l2 current"><a class="reference internal" href="../modules.html#lore-sa-dataset-dataset-class"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.dataset</span></code>: Dataset class</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.dataset.DataSet.html">lore_sa.dataset.DataSet</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">lore_sa.dataset.utils</a></li>
 </ul>
 </li>
-<li class="toctree-l2 current"><a class="reference internal" href="../modules.html#lore-sa-neighgen-neighborhood-generator-classes"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.neighgen</span></code>: Neighborhood Generator classes</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-neighgen-neighborhood-generator-classes"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.neighgen</span></code>: Neighborhood Generator classes</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.NeighborhoodGenerator.html">lore_sa.neighgen.NeighborhoodGenerator</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.CFSGenerator.html">lore_sa.neighgen.CFSGenerator</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.ClosestInstancesGenerator.html">lore_sa.neighgen.ClosestInstancesGenerator</a></li>
@@ -66,7 +67,7 @@
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.GeneticGenerator.html">lore_sa.neighgen.GeneticGenerator</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.GeneticProbaGenerator.html">lore_sa.neighgen.GeneticProbaGenerator</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.RandomGenerator.html">lore_sa.neighgen.RandomGenerator</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">lore_sa.neighgen.RandomGeneticGenerator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.RandomGeneticGenerator.html">lore_sa.neighgen.RandomGeneticGenerator</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.RandomGeneticProbaGenerator.html">lore_sa.neighgen.RandomGeneticProbaGenerator</a></li>
 </ul>
 </li>
@@ -156,9 +157,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../modules.html">Modules</a></li>
-      <li class="breadcrumb-item active">lore_sa.neighgen.RandomGeneticGenerator</li>
+      <li class="breadcrumb-item active">lore_sa.dataset.utils</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../_sources/source/generated/lore_sa.neighgen.RandomGeneticGenerator.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/source/generated/lore_sa.dataset.utils.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -166,101 +167,49 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="lore-sa-neighgen-randomgeneticgenerator">
-<h1>lore_sa.neighgen.RandomGeneticGenerator<a class="headerlink" href="#lore-sa-neighgen-randomgeneticgenerator" title="Permalink to this heading"></a></h1>
-<dl class="py class">
-<dt class="sig sig-object py" id="lore_sa.neighgen.RandomGeneticGenerator">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lore_sa.neighgen.</span></span><span class="sig-name descname"><span class="pre">RandomGeneticGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bb_predict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features_map</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbr_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbr_real_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numeric_columns_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ocr=0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha1=0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha2=0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric=&lt;function</span> <span class="pre">neuclidean&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ngen=100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutpb=0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cxpb=0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tournsize=3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">halloffame_ratio=0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_seed=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encdec=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose=False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/neighgen.html#RandomGeneticGenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.neighgen.RandomGeneticGenerator" title="Permalink to this definition"></a></dt>
-<dd><dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.neighgen.RandomGeneticGenerator.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bb_predict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features_map</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbr_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbr_real_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numeric_columns_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ocr=0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha1=0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha2=0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric=&lt;function</span> <span class="pre">neuclidean&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ngen=100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutpb=0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cxpb=0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tournsize=3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">halloffame_ratio=0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_seed=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encdec=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose=False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/neighgen.html#RandomGeneticGenerator.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.neighgen.RandomGeneticGenerator.__init__" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<p class="rubric">Methods</p>
+  <section id="module-lore_sa.dataset.utils">
+<span id="lore-sa-dataset-utils"></span><h1>lore_sa.dataset.utils<a class="headerlink" href="#module-lore_sa.dataset.utils" title="Permalink to this heading"></a></h1>
+<p class="rubric">Functions</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.neighgen.RandomGeneticGenerator.__init__" title="lore_sa.neighgen.RandomGeneticGenerator.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(bb_predict, feature_values, ...[, ...])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">prepare_adult_dataset</span></code>(self, filename)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_halloffame</span></code>(population, halloffame)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lore_sa.dataset.utils.prepare_bank_dataset" title="lore_sa.dataset.utils.prepare_bank_dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">prepare_bank_dataset</span></code></a>(self, filename)</p></td>
+<td><p>from <a class="reference external" href="https://www.kaggle.com/aniruddhachoudhury/credit-risk-model#train.csv/home/riccardo/Scaricati/bank.csv">https://www.kaggle.com/aniruddhachoudhury/credit-risk-model#train.csv/home/riccardo/Scaricati/bank.csv</a> :param filename: :return:</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">prepare_churn_dataset</span></code>(self, filename)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_bb_predict</span></code>(X[, encoded])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">prepare_compass_dataset</span></code>(self, filename[, binary])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_bb_predict_proba</span></code>(X[, encoded])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">prepare_fico_dataset</span></code>(self, filename)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">balance_neigh</span></code>(x, Z, num_samples)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">prepare_german_dataset</span></code>(self, filename)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">clone</span></code>(x)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">prepare_iris_dataset</span></code>(self, filename)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code>(toolbox, population_size)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">prepare_medical_dataset</span></code>(self, filename)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">fitness_equal</span></code>(x, x1)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">prepare_wine_dataset</span></code>(self, filename)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">fitness_notequal</span></code>(x, x1)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lore_sa.neighgen.RandomGeneticGenerator.generate" title="lore_sa.neighgen.RandomGeneticGenerator.generate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate</span></code></a>(x[, num_samples])</p></td>
-<td><p>Generates <code class="docutils literal notranslate"><span class="pre">num_samples</span></code> synthetic records starting from the orginal value <code class="docutils literal notranslate"><span class="pre">x</span></code></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_synthetic_instance</span></code>([from_z, mutpb])</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lore_sa.neighgen.RandomGeneticGenerator.multi_generate" title="lore_sa.neighgen.RandomGeneticGenerator.multi_generate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">multi_generate</span></code></a>(x[, samples, runs])</p></td>
-<td><p>Multi threads version of generate method</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">mutate</span></code>(toolbox, x)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">random_init</span></code>()</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">record_init</span></code>(x)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_toolbox</span></code>(x, evaluate, population_size)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_toolbox_noteq</span></code>(x, x1, evaluate, ...)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">prepare_yeast_dataset</span></code>(self, filename)</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
 </table>
-<dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.neighgen.RandomGeneticGenerator.generate">
-<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/neighgen.html#RandomGeneticGenerator.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.neighgen.RandomGeneticGenerator.generate" title="Permalink to this definition"></a></dt>
-<dd><p>Generates <code class="docutils literal notranslate"><span class="pre">num_samples</span></code> synthetic records starting from the orginal value <code class="docutils literal notranslate"><span class="pre">x</span></code></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> – Any, record instance to use as seed</p></li>
-<li><p><strong>num_samples</strong> – int, the size of the neighborhood to generate</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.neighgen.RandomGeneticGenerator.multi_generate">
-<span class="sig-name descname"><span class="pre">multi_generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lore_sa.neighgen.RandomGeneticGenerator.multi_generate" title="Permalink to this definition"></a></dt>
-<dd><p>Multi threads version of generate method</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> – Any, record instance to use as seed</p></li>
-<li><p><strong>num_samples</strong> (<em>int</em>) – size of the neighborhood to generate</p></li>
-<li><p><strong>runs</strong> (<em>int</em>) – number of threads</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
+<dl class="py function">
+<dt class="sig sig-object py" id="lore_sa.dataset.utils.prepare_bank_dataset">
+<span class="sig-prename descclassname"><span class="pre">lore_sa.dataset.utils.</span></span><span class="sig-name descname"><span class="pre">prepare_bank_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/dataset/utils.html#prepare_bank_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.dataset.utils.prepare_bank_dataset" title="Permalink to this definition"></a></dt>
+<dd><p>from <a class="reference external" href="https://www.kaggle.com/aniruddhachoudhury/credit-risk-model#train.csv/home/riccardo/Scaricati/bank.csv">https://www.kaggle.com/aniruddhachoudhury/credit-risk-model#train.csv/home/riccardo/Scaricati/bank.csv</a>
+:param filename:
+:return:</p>
 </dd></dl>
 
 </section>
@@ -269,8 +218,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="lore_sa.neighgen.RandomGenerator.html" class="btn btn-neutral float-left" title="lore_sa.neighgen.RandomGenerator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="lore_sa.neighgen.RandomGeneticProbaGenerator.html" class="btn btn-neutral float-right" title="lore_sa.neighgen.RandomGeneticProbaGenerator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="lore_sa.dataset.DataSet.html" class="btn btn-neutral float-left" title="lore_sa.dataset.DataSet" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="lore_sa.neighgen.NeighborhoodGenerator.html" class="btn btn-neutral float-right" title="lore_sa.neighgen.NeighborhoodGenerator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
