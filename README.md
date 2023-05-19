@@ -13,3 +13,6 @@ make html
 ```
 
 Open `docs/_build/html/index.html` to read the documentation.
+
+
+Online documentation avalaible here: https://kdd-lab.github.io/LORE_sa/html/index.html
