@@ -14,12 +14,14 @@
    .. autosummary::
    
       ~DataSet.__init__
+      ~DataSet.from_csv
+      ~DataSet.from_dict
       ~DataSet.get_class_values
       ~DataSet.get_feature_map
-      ~DataSet.get_k
       ~DataSet.get_numeric_columns
       ~DataSet.get_original_dataset
       ~DataSet.prepare_dataset
+      ~DataSet.set_class_name
    
    
 

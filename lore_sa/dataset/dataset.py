@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from pandas import DataFrame
 
 from collections import defaultdict
 from lore_sa.encoder_decoder import EncDec
@@ -11,36 +12,49 @@ class DataSet():
     This class provides an interface to handle dataset such as tabular, images etc...
     Dataset class incapsulates the data and expose methods to prepare the dataset.
     """
-    def __init__(self,filename: str, class_name: list):
-        self.original_filename = filename
-        self.class_name = class_name
-        self.df = None
+    def __init__(self,data: DataFrame):
+        self.class_name = None
+        self.df = data
         self.feature_names = None
         self.class_values = None
         self.numeric_columns = None
         self.real_feature_names = None
         self.features_map = None
         self.rdf = None
+        self.filename = None
+
+    @classmethod
+    def from_csv(cls, filename: str):
+        """
+        Read a comma-separated values (csv) file into Dataset object.
+        :param [str] filename:
+        :return:
+        """
+        df = pd.read_csv(filename, skipinitialspace=True, na_values='?', keep_default_na=True)
+        dataset_obj = cls(df)
+        dataset_obj.filename = filename
+        return dataset_obj
+
+    @classmethod
+    def from_dict(cls, data: dict):
+        """
+        From dicts of Series, arrays, or dicts.
+        :param [dict] data:
+        :return:
+        """
+        return cls(pd.DataFrame(data))
+
+    def set_class_name(self,class_name: str):
+        self.class_name = class_name
 
     def prepare_dataset(self, encdec: EncDec = None):
         """
         The method prepare_dataframe scans the dataset and extract the following information
 
-        :param filename:
-        :param [str] class_name:
-        :return:
-            -   df  - is a trasformed version of the original dataframe, where discrete attributes are transformed into numerical attributes by using one hot encoding strategy;
-            -   feature_names - is a list containint the names of the features after the transformation;
-            -   class_values - the list of all the possible values for the class_field column;
-            -   numeric_columns - a list of the original features that contain numeric (i.e. continuous) values;
-            -   rdf -  the original dataframe, before the transformation;
-            -   real_feature_names - the list of the features of the dataframe before the transformation;
-            -   features_map - it is a dictionary pointing each feature to the original one before the transformation.
+        :param [EncDec] encdec: Encoder Object
         """
 
-        df_original = pd.read_csv(self.original_filename, skipinitialspace=True, na_values='?', keep_default_na=True)
-
-        df = self.__remove_missing_values(df_original)
+        df = self.__remove_missing_values(self.df)
         rdf = df
         self.df = df
         self.rdf = rdf
@@ -73,8 +87,6 @@ class DataSet():
         self.numeric_columns = numeric_columns
         self.real_feature_names = real_feature_names
         self.features_map = features_map
-
-        return df, feature_names, class_values, numeric_columns, rdf, real_feature_names, features_map
 
     def __remove_missing_values(self,df):
         for column_name, nbr_missing in df.isna().sum().to_dict().items():
@@ -140,9 +152,6 @@ class DataSet():
             df = df.reindex(dfX.index)
             feature_names = list(dfX.columns)
         return df, feature_names, class_values
-
-    def get_k(self):
-        return self.df
 
     def get_feature_map(self):
         return self.feature_map

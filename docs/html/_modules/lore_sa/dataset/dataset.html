@@ -53,6 +53,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../source/modules.html#lore-sa-dataset-dataset-class"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.dataset</span></code>: Dataset class</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.dataset.DataSet.html">lore_sa.dataset.DataSet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.dataset.utils.html">lore_sa.dataset.utils</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../source/modules.html#lore-sa-neighgen-neighborhood-generator-classes"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.neighgen</span></code>: Neighborhood Generator classes</a><ul>
@@ -165,6 +166,7 @@
   <h1>Source code for lore_sa.dataset.dataset</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">DataFrame</span>
 
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
 <span class="kn">from</span> <span class="nn">lore_sa.encoder_decoder</span> <span class="kn">import</span> <span class="n">EncDec</span>
@@ -176,36 +178,49 @@
 <span class="sd">    This class provides an interface to handle dataset such as tabular, images etc...</span>
 <span class="sd">    Dataset class incapsulates the data and expose methods to prepare the dataset.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="DataSet.__init__"><a class="viewcode-back" href="../../../source/generated/lore_sa.dataset.DataSet.html#lore_sa.dataset.DataSet.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">class_name</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">original_filename</span> <span class="o">=</span> <span class="n">filename</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">class_name</span> <span class="o">=</span> <span class="n">class_name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="kc">None</span>
+<div class="viewcode-block" id="DataSet.__init__"><a class="viewcode-back" href="../../../source/generated/lore_sa.dataset.DataSet.html#lore_sa.dataset.DataSet.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_name</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">data</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">feature_names</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">class_values</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">numeric_columns</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">real_feature_names</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">features_map</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">rdf</span> <span class="o">=</span> <span class="kc">None</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rdf</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="DataSet.from_csv"><a class="viewcode-back" href="../../../source/generated/lore_sa.dataset.DataSet.html#lore_sa.dataset.DataSet.from_csv">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_csv</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read a comma-separated values (csv) file into Dataset object.</span>
+<span class="sd">        :param [str] filename:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">skipinitialspace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">na_values</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="n">keep_default_na</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">dataset_obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+        <span class="n">dataset_obj</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+        <span class="k">return</span> <span class="n">dataset_obj</span></div>
+
+<div class="viewcode-block" id="DataSet.from_dict"><a class="viewcode-back" href="../../../source/generated/lore_sa.dataset.DataSet.html#lore_sa.dataset.DataSet.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        From dicts of Series, arrays, or dicts.</span>
+<span class="sd">        :param [dict] data:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">))</span></div>
+
+    <span class="k">def</span> <span class="nf">set_class_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">class_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_name</span> <span class="o">=</span> <span class="n">class_name</span>
 
 <div class="viewcode-block" id="DataSet.prepare_dataset"><a class="viewcode-back" href="../../../source/generated/lore_sa.dataset.DataSet.html#lore_sa.dataset.DataSet.prepare_dataset">[docs]</a>    <span class="k">def</span> <span class="nf">prepare_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">encdec</span><span class="p">:</span> <span class="n">EncDec</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The method prepare_dataframe scans the dataset and extract the following information</span>
 
-<span class="sd">        :param filename:</span>
-<span class="sd">        :param [str] class_name:</span>
-<span class="sd">        :return:</span>
-<span class="sd">            -   df  - is a trasformed version of the original dataframe, where discrete attributes are transformed into numerical attributes by using one hot encoding strategy;</span>
-<span class="sd">            -   feature_names - is a list containint the names of the features after the transformation;</span>
-<span class="sd">            -   class_values - the list of all the possible values for the class_field column;</span>
-<span class="sd">            -   numeric_columns - a list of the original features that contain numeric (i.e. continuous) values;</span>
-<span class="sd">            -   rdf -  the original dataframe, before the transformation;</span>
-<span class="sd">            -   real_feature_names - the list of the features of the dataframe before the transformation;</span>
-<span class="sd">            -   features_map - it is a dictionary pointing each feature to the original one before the transformation.</span>
+<span class="sd">        :param [EncDec] encdec: Encoder Object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">df_original</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">original_filename</span><span class="p">,</span> <span class="n">skipinitialspace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">na_values</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="n">keep_default_na</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__remove_missing_values</span><span class="p">(</span><span class="n">df_original</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__remove_missing_values</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">)</span>
         <span class="n">rdf</span> <span class="o">=</span> <span class="n">df</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rdf</span> <span class="o">=</span> <span class="n">rdf</span>
@@ -237,9 +252,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">class_values</span> <span class="o">=</span> <span class="n">class_values</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">numeric_columns</span> <span class="o">=</span> <span class="n">numeric_columns</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">real_feature_names</span> <span class="o">=</span> <span class="n">real_feature_names</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">features_map</span> <span class="o">=</span> <span class="n">features_map</span>
-
-        <span class="k">return</span> <span class="n">df</span><span class="p">,</span> <span class="n">feature_names</span><span class="p">,</span> <span class="n">class_values</span><span class="p">,</span> <span class="n">numeric_columns</span><span class="p">,</span> <span class="n">rdf</span><span class="p">,</span> <span class="n">real_feature_names</span><span class="p">,</span> <span class="n">features_map</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">features_map</span> <span class="o">=</span> <span class="n">features_map</span></div>
 
     <span class="k">def</span> <span class="nf">__remove_missing_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">column_name</span><span class="p">,</span> <span class="n">nbr_missing</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -305,9 +318,6 @@
             <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">dfX</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
             <span class="n">feature_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">dfX</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">df</span><span class="p">,</span> <span class="n">feature_names</span><span class="p">,</span> <span class="n">class_values</span>
-
-    <span class="k">def</span> <span class="nf">get_k</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span>
 
     <span class="k">def</span> <span class="nf">get_feature_map</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_map</span>
