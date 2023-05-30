@@ -9,10 +9,23 @@ __all__ = ["DataSet"]
 
 class DataSet():
     """
-    This class provides an interface to handle dataset such as tabular, images etc...
-    Dataset class incapsulates the data and expose methods to prepare the dataset.
+    It provides an interface to handle datasets, including some essential information on the structure and
+    semantic of the dataset.
+
+    
     """
     def __init__(self,data: DataFrame):
+        """
+
+
+        :param [str] class_name: name of the column containing the class values (i.e. the target of the classification process)
+        :param [DataFrame] df: current working dataframe. It is usually transformed during the encoding phase
+        :param [List] feature_names: list of strings representing dataframe columns which contain the dataset features
+        :param [numpyArray] class_values: the values corresponding to the class_name columns
+        :param [List] numeric_columns: list of strings representing dataframe columns which contain numeric features (i.e. features that are not categorical/string)
+        :param [List] real_features_name: list of original feature names, used as a buffer when the original dataset is transformed through encoding
+        :param [DataFrame] rdf: real data frame, i.e. the original dataframe. used as a buffer when the original dataset is transformed through encoding
+        """
         self.class_name = None
         self.df = data
         self.feature_names = None
@@ -21,7 +34,7 @@ class DataSet():
         self.real_feature_names = None
         self.features_map = None
         self.rdf = None
-        self.filename = None
+        
 
     @classmethod
     def from_csv(cls, filename: str):
@@ -49,7 +62,8 @@ class DataSet():
 
     def prepare_dataset(self, encdec: EncDec = None):
         """
-        The method prepare_dataframe scans the dataset and extract the following information
+        It tranforms the dataset in order to be ready for neighborhood generation, eventually applying 
+        the input encoder
 
         :param [EncDec] encdec: Encoder Object
         """
