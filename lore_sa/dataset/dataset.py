@@ -8,8 +8,8 @@ __all__ = ["DataSet"]
 
 class DataSet():
     """
-    This class provides an interface to handle dataset such as tabular, images etc...
-    Dataset class incapsulates the data and expose methods to prepare the dataset.
+    It provides an interface to handle datasets, including some essential information on the structure and
+    semantic of the dataset.
     """
     def __init__(self,data: DataFrame):
         self.encdec = None
@@ -21,7 +21,7 @@ class DataSet():
         self.real_feature_names = None
         self.features_map = None
         self.rdf = None
-        self.filename = None
+        
 
     @classmethod
     def from_csv(cls, filename: str):
@@ -49,7 +49,8 @@ class DataSet():
 
     def prepare_dataset(self, encdec: EncDec = None):
         """
-        The method prepare_dataframe scans the dataset and extract the following information
+        It tranforms the dataset in order to be ready for neighborhood generation, eventually applying 
+        the input encoder
 
         :param [EncDec] encdec: Encoder Object
         """

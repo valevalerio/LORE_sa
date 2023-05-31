@@ -9,9 +9,9 @@ class DatasetTest(unittest.TestCase):
 
     def test_dataset_class_init_from_csv(self):
         # when
-        dataset = DataSet.from_csv("resources/adult.csv")
+        dataset = DataSet.from_csv("test/resources/adult.csv")
         # then
-        self.assertIs(dataset.filename,"resources/adult.csv")
+        self.assertIs(dataset.filename,"test/resources/adult.csv")
         self.assertIsInstance(dataset.df, pandas.DataFrame)
 
     def test_dataset_class_init_from_dict(self):
