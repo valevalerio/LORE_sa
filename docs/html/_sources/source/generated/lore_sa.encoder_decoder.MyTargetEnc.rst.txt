@@ -18,6 +18,7 @@
       ~MyTargetEnc.enc
       ~MyTargetEnc.enc_fit_transform
       ~MyTargetEnc.get_cate_map
+      ~MyTargetEnc.prepare_dataset
       ~MyTargetEnc.retrieve_values
    
    

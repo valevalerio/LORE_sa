@@ -17,6 +17,7 @@
       ~OneHotEnc.dec
       ~OneHotEnc.enc
       ~OneHotEnc.enc_fit_transform
+      ~OneHotEnc.prepare_dataset
    
    
 

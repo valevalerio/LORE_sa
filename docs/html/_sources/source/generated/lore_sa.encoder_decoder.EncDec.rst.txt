@@ -17,6 +17,7 @@
       ~EncDec.dec
       ~EncDec.enc
       ~EncDec.enc_fit_transform
+      ~EncDec.prepare_dataset
    
    
 

@@ -5,13 +5,14 @@ from scipy.spatial.distance import cdist
 
 __all__ = ["EncDec","MyTargetEnc"]
 
+from ..dataset import DataSet
+
 extend: TargetEncoder
 class MyTargetEnc(EncDec):
     """
     Extend TargetEncoder from category_encoders
 
     """
-
     def __init__(self, dataset, class_name):
         super(MyTargetEnc, self).__init__(dataset, class_name)
         self.type = "target"
@@ -155,3 +156,25 @@ class MyTargetEnc(EncDec):
         else:
             print('questo e un numero')
             return value
+
+    def prepare_dataset(self,df, class_name, numeric_columns, rdf):
+        feature_names = df.columns.values
+        feature_names = np.delete(feature_names, np.where(feature_names == class_name))
+        class_values = np.unique(df[class_name]).tolist()
+        numeric_columns = list(df._get_numeric_data().columns)
+        real_feature_names = self.__get_real_feature_names(rdf, numeric_columns, class_name)
+        features_map = dict()
+        for f in range(0, len(real_feature_names)):
+            features_map[f] = dict()
+            features_map[f][real_feature_names[f]] = np.where(feature_names == real_feature_names[f])[0][0]
+        return df, feature_names, features_map, numeric_columns, class_values, rdf, real_feature_names
+
+
+    def __get_real_feature_names(self,rdf, numeric_columns, class_name):
+        if isinstance(class_name, list):
+            real_feature_names = [c for c in rdf.columns if c in numeric_columns and c not in class_name]
+            real_feature_names += [c for c in rdf.columns if c not in numeric_columns and c not in class_name]
+        else:
+            real_feature_names = [c for c in rdf.columns if c in numeric_columns and c != class_name]
+            real_feature_names += [c for c in rdf.columns if c not in numeric_columns and c != class_name]
+        return real_feature_names

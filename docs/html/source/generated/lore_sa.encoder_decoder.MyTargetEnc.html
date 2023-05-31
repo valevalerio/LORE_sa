@@ -196,7 +196,10 @@
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_cate_map</span></code>(i, value)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">retrieve_values</span></code>(index, interval, op)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lore_sa.encoder_decoder.MyTargetEnc.prepare_dataset" title="lore_sa.encoder_decoder.MyTargetEnc.prepare_dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">prepare_dataset</span></code></a>(df, class_name, ...)</p></td>
+<td><p>This function prepare the dataset in a way to use the encoder with the function enc.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">retrieve_values</span></code>(index, interval, op)</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -218,6 +221,37 @@ self.dataset_enc is the encoded dataset</p>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p></p>
 </dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lore_sa.encoder_decoder.MyTargetEnc.prepare_dataset">
+<span class="sig-name descname"><span class="pre">prepare_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numeric_columns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rdf</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/my_target_enc.html#MyTargetEnc.prepare_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.MyTargetEnc.prepare_dataset" title="Permalink to this definition"></a></dt>
+<dd><p>This function prepare the dataset in a way to use the encoder with the function enc.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>[</em><em>Dataframe</em><em>]</em>) – the original dataframe</p></li>
+<li><p><strong>class_name</strong> (<em>[</em><em>str</em><em>]</em>) – class name target</p></li>
+<li><p><strong>numeric_columns</strong> (<em>[</em><em>int</em><em>]</em>) – list of numeric columns indexes</p></li>
+<li><p><strong>rdf</strong> (<em>[</em><em>Dataframe</em><em>]</em>) – original dataframe ?</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return [Dataframe] df_dummy<span class="colon">:</span></dt>
+<dd class="field-even"><p>encoded dataframe</p>
+</dd>
+<dt class="field-odd">Return feature_names<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">Return features_map<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">Return numeric_columns<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">Return class_values<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">Return rdf<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">Return real_feature_names<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
 </dl>
 </dd></dl>
 

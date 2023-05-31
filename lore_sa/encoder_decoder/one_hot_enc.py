@@ -1,5 +1,8 @@
+from collections import defaultdict
+
 from .enc_dec import EncDec
 import numpy as np
+import pandas as pd
 
 from sklearn.preprocessing import OneHotEncoder
 
@@ -10,7 +13,7 @@ class OneHotEnc(EncDec):
     def __init__(self, dataset, class_name):
         super(OneHotEnc, self).__init__(dataset, class_name)
         self.dataset_enc = None
-        self.type="onehot"
+        self.type= "onehot"
 
 
     def enc(self, x, y, kwargs=None):
@@ -96,3 +99,54 @@ class OneHotEnc(EncDec):
         #print(len(self.onehot_feature_idx))
         #print(len(self.cate_features_idx))
         return self.dataset_enc_complete
+
+    def prepare_dataset(self, df, class_name:str, numeric_columns: list, rdf: pd.DataFrame):
+        # faccio il one hot encoding, tramite pd.get_dummies, di tutte le variabili diverse da class_name
+        df_dummy_not_class_name = pd.get_dummies(df[[c for c in df.columns if c != class_name]], prefix_sep='=')
+
+        # faccio un encoding dei valori che assume la variabile target class_name
+        class_name_map = {v: k for k, v in enumerate(sorted(df[class_name].unique()))}
+        df_dummy_class_name = df[class_name].map(class_name_map)
+
+        # unisco il tutto
+        df_dummy = pd.concat([df_dummy_not_class_name, df_dummy_class_name], axis=1)
+        df_dummy = df_dummy.reindex(df_dummy_not_class_name.index)
+
+        feature_names = list(df_dummy_not_class_name.columns)
+        class_values = sorted(class_name_map)
+
+        real_feature_names = self.__get_real_feature_names(rdf, numeric_columns, class_name)
+        features_map = self.__get_features_map(feature_names, real_feature_names)
+
+        rdf = rdf[real_feature_names + [class_name]]
+
+        return df_dummy, feature_names, features_map, numeric_columns, class_values, rdf, real_feature_names
+
+    def __get_real_feature_names(self,rdf, numeric_columns: list, class_name: str):
+        if isinstance(class_name, list):
+            real_feature_names = [c for c in rdf.columns if c in numeric_columns and c not in class_name]
+            real_feature_names += [c for c in rdf.columns if c not in numeric_columns and c not in class_name]
+        else:
+            real_feature_names = [c for c in rdf.columns if c in numeric_columns and c != class_name]
+            real_feature_names += [c for c in rdf.columns if c not in numeric_columns and c != class_name]
+        return real_feature_names
+
+    def __get_features_map(slef,feature_names, real_feature_names):
+        features_map = defaultdict(dict)
+        i = 0
+        j = 0
+
+        while i < len(feature_names) and j < len(real_feature_names):
+            if feature_names[i] == real_feature_names[j]:
+                #print('in if ', feature_names[i], real_feature_names[j])
+                features_map[j][feature_names[i].replace('%s=' % real_feature_names[j], '')] = i
+                i += 1
+                j += 1
+
+            elif feature_names[i].startswith(real_feature_names[j]):
+                #print('in elif ', feature_names[i], real_feature_names[j])
+                features_map[j][feature_names[i].replace('%s=' % real_feature_names[j], '')] = i
+                i += 1
+            else:
+                j += 1
+        return features_map

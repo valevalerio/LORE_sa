@@ -1,8 +1,7 @@
-import numpy as np
+
 import pandas as pd
 from pandas import DataFrame
 
-from collections import defaultdict
 from lore_sa.encoder_decoder import EncDec
 
 __all__ = ["DataSet"]
@@ -13,6 +12,7 @@ class DataSet():
     Dataset class incapsulates the data and expose methods to prepare the dataset.
     """
     def __init__(self,data: DataFrame):
+        self.encdec = None
         self.class_name = None
         self.df = data
         self.feature_names = None
@@ -53,40 +53,20 @@ class DataSet():
 
         :param [EncDec] encdec: Encoder Object
         """
-
+        self.encdec = encdec
         df = self.__remove_missing_values(self.df)
         rdf = df
         self.df = df
         self.rdf = rdf
-        numeric_columns = self.__get_numeric_columns(self.df)
+        self.numeric_columns = self.__get_numeric_columns(self.df)
 
-        if self.class_name in numeric_columns:
-            numeric_columns.remove(self.class_name)
+        if self.class_name is None:
+            raise ValueError("class_name is None. Set it with objects.set_class_name('target')")
 
-        if encdec.type == 'onehot' or encdec is None:
-            df, feature_names, class_values = self.__one_hot_encoding(self.df, self.class_name)
-            real_feature_names = self.__get_real_feature_names(self.rdf, numeric_columns, self.class_name)
-            self.rdf = self.rdf[real_feature_names + (class_values if isinstance(self.class_name, list) else [self.class_name])]
-            features_map = self.__get_features_map(feature_names, real_feature_names)
+        if self.class_name in self.numeric_columns:
+            self.numeric_columns.remove(self.class_name)
 
-        elif encdec.type == 'target':
-            feature_names = self.df.columns.values
-            feature_names = np.delete(feature_names, np.where(feature_names == self.class_name))
-            class_values = np.unique(self.df[self.class_name]).tolist()
-            numeric_columns = list(self.df._get_numeric_data().columns)
-            real_feature_names = [c for c in self.df.columns if c in numeric_columns and c != self.class_name]
-            real_feature_names += [c for c in self.df.columns if c not in numeric_columns and c != self.class_name]
-            features_map = dict()
-            for f in range(0, len(real_feature_names)):
-                features_map[f] = dict()
-                features_map[f][real_feature_names[f]] = np.where(feature_names == real_feature_names[f])[0][0]
-
-
-        self.feature_names = feature_names
-        self.class_values = class_values
-        self.numeric_columns = numeric_columns
-        self.real_feature_names = real_feature_names
-        self.features_map = features_map
+        self.df, self.feature_names, self.features_map, self.numeric_columns, self.class_values, self.rdf, self.real_feature_names = self.encdec.prepare_dataset(self.df, self.class_name, self.numeric_columns, self.rdf)
 
     def __remove_missing_values(self,df):
         for column_name, nbr_missing in df.isna().sum().to_dict().items():
@@ -102,56 +82,6 @@ class DataSet():
     def __get_numeric_columns(self,df):
         numeric_columns = list(df._get_numeric_data().columns)
         return numeric_columns
-
-    def __get_features_map(slef,feature_names, real_feature_names):
-        features_map = defaultdict(dict)
-        i = 0
-        j = 0
-
-        while i < len(feature_names) and j < len(real_feature_names):
-            if feature_names[i] == real_feature_names[j]:
-                #print('in if ', feature_names[i], real_feature_names[j])
-                features_map[j][feature_names[i].replace('%s=' % real_feature_names[j], '')] = i
-                i += 1
-                j += 1
-
-            elif feature_names[i].startswith(real_feature_names[j]):
-                #print('in elif ', feature_names[i], real_feature_names[j])
-                features_map[j][feature_names[i].replace('%s=' % real_feature_names[j], '')] = i
-                i += 1
-            else:
-                j += 1
-        return features_map
-
-
-    def __get_real_feature_names(self,rdf, numeric_columns, class_name):
-        if isinstance(class_name, list):
-            real_feature_names = [c for c in rdf.columns if c in numeric_columns and c not in class_name]
-            real_feature_names += [c for c in rdf.columns if c not in numeric_columns and c not in class_name]
-        else:
-            real_feature_names = [c for c in rdf.columns if c in numeric_columns and c != class_name]
-            real_feature_names += [c for c in rdf.columns if c not in numeric_columns and c != class_name]
-        return real_feature_names
-
-
-    def __one_hot_encoding(self, df, class_name):
-        if not isinstance(class_name, list):
-            dfX = pd.get_dummies(df[[c for c in df.columns if c != class_name]], prefix_sep='=')
-            class_name_map = {v: k for k, v in enumerate(sorted(df[class_name].unique()))}
-            dfY = df[class_name].map(class_name_map)
-            df = pd.concat([dfX, dfY], axis=1)
-            df =df.reindex(dfX.index)
-            feature_names = list(dfX.columns)
-            class_values = sorted(class_name_map)
-        else:
-            dfX = pd.get_dummies(df[[c for c in df.columns if c not in class_name]], prefix_sep='=')
-            # class_name_map = {v: k for k, v in enumerate(sorted(class_name))}
-            class_values = sorted(class_name)
-            dfY = df[class_values]
-            df = pd.concat([dfX, dfY], axis=1)
-            df = df.reindex(dfX.index)
-            feature_names = list(dfX.columns)
-        return df, feature_names, class_values
 
     def get_feature_map(self):
         return self.feature_map
