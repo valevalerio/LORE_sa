@@ -5,8 +5,6 @@ from scipy.spatial.distance import cdist
 
 __all__ = ["EncDec","MyTargetEnc"]
 
-from ..dataset import DataSet
-
 extend: TargetEncoder
 class MyTargetEnc(EncDec):
     """
