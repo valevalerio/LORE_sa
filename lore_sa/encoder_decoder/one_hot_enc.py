@@ -10,13 +10,20 @@ __all__ = ["EncDec","OneHotEnc"]
 
 extend: OneHotEncoder
 class OneHotEnc(EncDec):
+    """
+    It provides an interface to access One Hot enconding (https://en.wikipedia.org/wiki/One-hot) functions. 
+    """
     def __init__(self, dataset, class_name):
         super(OneHotEnc, self).__init__(dataset, class_name)
         self.dataset_enc = None
         self.type= "onehot"
 
 
-    def enc(self, x, y, kwargs=None):
+    def enc(self, x, kwargs=None):
+        """
+        :param [numpyArray] x: feature values to be encoded. It could be either a vector or a matrix. Each column represents the values 
+        of a feature 
+        """
         if len(x.shape) == 1:
             x_cat = x[self.cate_features_idx]
             x_cat = x_cat.reshape(1, -1)
