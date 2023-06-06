@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 
+__all__ = ["AbstractBBox"]
+
 class AbstractBBox(ABC):
     """
     Generic Black Box class witch provides two sklearn-like methods.
