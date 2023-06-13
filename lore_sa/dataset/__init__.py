@@ -1,7 +1,6 @@
-from .dataset import DataSet
+from .dataset import Dataset
 
 
 __all__ = [
-    "DataSet",
-   
-]
+    "Dataset",
+   ]

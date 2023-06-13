@@ -2,11 +2,9 @@
 import pandas as pd
 from pandas import DataFrame
 
-from lore_sa.encoder_decoder import EncDec
+__all__ = ["Dataset"]
 
-__all__ = ["DataSet"]
-
-class DataSet():
+class Dataset():
     """
     It provides an interface to handle datasets, including some essential information on the structure and
     semantic of the dataset.
@@ -47,27 +45,27 @@ class DataSet():
     def set_class_name(self,class_name: str):
         self.class_name = class_name
 
-    def prepare_dataset(self, encdec: EncDec = None):
-        """
-        It tranforms the dataset in order to be ready for neighborhood generation, eventually applying 
-        the input encoder
-
-        :param [EncDec] encdec: Encoder Object
-        """
-        self.encdec = encdec
-        df = self.__remove_missing_values(self.df)
-        rdf = df
-        self.df = df
-        self.rdf = rdf
-        self.numeric_columns = self.__get_numeric_columns(self.df)
-
-        if self.class_name is None:
-            raise ValueError("class_name is None. Set it with objects.set_class_name('target')")
-
-        if self.class_name in self.numeric_columns:
-            self.numeric_columns.remove(self.class_name)
-
-        self.df, self.feature_names, self.features_map, self.numeric_columns, self.class_values, self.rdf, self.real_feature_names = self.encdec.prepare_dataset(self.df, self.class_name, self.numeric_columns, self.rdf)
+    # def prepare_dataset(self, encdec: EncDec = None):
+    #     """
+    #     It tranforms the dataset in order to be ready for neighborhood generation, eventually applying
+    #     the input encoder
+    #
+    #     :param [EncDec] encdec: Encoder Object
+    #     """
+    #     self.encdec = encdec
+    #     df = self.__remove_missing_values(self.df)
+    #     rdf = df
+    #     self.df = df
+    #     self.rdf = rdf
+    #     self.numeric_columns = self.__get_numeric_columns(self.df)
+    #
+    #     if self.class_name is None:
+    #         raise ValueError("class_name is None. Set it with objects.set_class_name('target')")
+    #
+    #     if self.class_name in self.numeric_columns:
+    #         self.numeric_columns.remove(self.class_name)
+    #
+    #     self.df, self.feature_names, self.features_map, self.numeric_columns, self.class_values, self.rdf, self.real_feature_names = self.encdec.prepare_dataset(self.df, self.class_name, self.numeric_columns, self.rdf)
 
     def __remove_missing_values(self,df):
         for column_name, nbr_missing in df.isna().sum().to_dict().items():
