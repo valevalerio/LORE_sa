@@ -29,7 +29,6 @@ class EncDec():
         return
 
     @abstractmethod
-<<<<<<< HEAD
     def enc_fit_transform(self, dataset=None, class_name=None):
         return
 
@@ -50,9 +49,6 @@ class EncDec():
         :return rdf:
         :return real_feature_names:
         """
-=======
-    def enc_fit_transform(self, dataset: Dataset =None, class_name: str =None):
->>>>>>> a810731827e6e0c057a9f76839db328bc9b391d8
         return
 
 
