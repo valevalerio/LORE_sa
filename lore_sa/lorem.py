@@ -19,14 +19,14 @@ from lore_sa.util import neuclidean, record2str
 from lore_sa.discretizer import Discretizer
 from lore_sa.encoder_decoder import EncDec
 from lore_sa.bbox import AbstractBBox
-from lore_sa.dataset import DataSet
+from lore_sa.dataset import Dataset
 from lore_sa.rule import Rule
 import numpy as np
 
 
 class Explainer():
 
-    def __init__(self, dataset: DataSet, bb: AbstractBBox, config: dict, class_name: list):
+    def __init__(self, dataset: Dataset, bb: AbstractBBox, config: dict, class_name: list):
         pass
 
     @abstractmethod
@@ -67,7 +67,7 @@ class LOREM(Explainer):
     :param bool verbose:
 
     """
-    def __init__(self, dataset: DataSet, bb: AbstractBBox, encdec: EncDec, neigh_gen: NeighborhoodGenerator, surrogate: Surrogate, rule: Rule, class_name: list,
+    def __init__(self, dataset: Dataset, bb: AbstractBBox, encdec: EncDec, neigh_gen: NeighborhoodGenerator, surrogate: Surrogate, rule: Rule, class_name: list,
                  K_transformed=None, multi_label=False, filter_crules=True, kernel_width=None, kernel=None, random_state=None, binary=False, discretize: Discretizer = None,
                  extreme_fidelity: bool = False, constraints = None, verbose:bool = False,** kwargs):
 

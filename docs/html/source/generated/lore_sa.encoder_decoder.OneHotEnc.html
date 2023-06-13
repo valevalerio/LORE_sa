@@ -55,7 +55,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-dataset-dataset-class"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.dataset</span></code>: Dataset class</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.dataset.DataSet.html">lore_sa.dataset.DataSet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.dataset.Dataset.html">lore_sa.dataset.Dataset</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.dataset.utils.html">lore_sa.dataset.utils</a></li>
 </ul>
 </li>
@@ -171,35 +171,41 @@
 <h1>lore_sa.encoder_decoder.OneHotEnc<a class="headerlink" href="#lore-sa-encoder-decoder-onehotenc" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="lore_sa.encoder_decoder.OneHotEnc">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lore_sa.encoder_decoder.</span></span><span class="sig-name descname"><span class="pre">OneHotEnc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/one_hot_enc.html#OneHotEnc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.OneHotEnc" title="Permalink to this definition"></a></dt>
-<dd><dl class="py method">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lore_sa.encoder_decoder.</span></span><span class="sig-name descname"><span class="pre">OneHotEnc</span></span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/one_hot_enc.html#OneHotEnc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.OneHotEnc" title="Permalink to this definition"></a></dt>
+<dd><p>It provides an interface to access One Hot enconding (<a class="reference external" href="https://en.wikipedia.org/wiki/One-hot">https://en.wikipedia.org/wiki/One-hot</a>) functions.</p>
+<dl class="py method">
 <dt class="sig sig-object py" id="lore_sa.encoder_decoder.OneHotEnc.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/one_hot_enc.html#OneHotEnc.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.OneHotEnc.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/one_hot_enc.html#OneHotEnc.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.OneHotEnc.__init__" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <p class="rubric">Methods</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.encoder_decoder.OneHotEnc.__init__" title="lore_sa.encoder_decoder.OneHotEnc.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(dataset, class_name)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.encoder_decoder.OneHotEnc.__init__" title="lore_sa.encoder_decoder.OneHotEnc.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dec</span></code>(x[, kwargs])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">enc</span></code>(x, y[, kwargs])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">decode</span></code>(x[, kwargs])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lore_sa.encoder_decoder.OneHotEnc.enc_fit_transform" title="lore_sa.encoder_decoder.OneHotEnc.enc_fit_transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enc_fit_transform</span></code></a>([kwargs])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lore_sa.encoder_decoder.OneHotEnc.enc_fit_transform" title="lore_sa.encoder_decoder.OneHotEnc.enc_fit_transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enc_fit_transform</span></code></a>(dataset[, kwargs])</p></td>
 <td><p>select the categorical variable apply onehot encoding on them self.encdec is the encoder already fitted self.dataset_enc is the dataset encoded</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.encoder_decoder.OneHotEnc.prepare_dataset" title="lore_sa.encoder_decoder.OneHotEnc.prepare_dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">prepare_dataset</span></code></a>(df, class_name, ...)</p></td>
-<td><p>This function prepare the dataset in a way to use the encoder with the function enc.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.encoder_decoder.OneHotEnc.encode" title="lore_sa.encoder_decoder.OneHotEnc.encode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encode</span></code></a>(dataset, class_name[, kwargs])</p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">param [numpyArray] x<span class="colon">:</span></dt>
+<dd class="field-odd"><p>feature values to be encoded. It could be either a vector or a matrix. Each column represents the values</p>
+</dd>
+</dl>
+</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py method">
 <dt class="sig sig-object py" id="lore_sa.encoder_decoder.OneHotEnc.enc_fit_transform">
-<span class="sig-name descname"><span class="pre">enc_fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/one_hot_enc.html#OneHotEnc.enc_fit_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.OneHotEnc.enc_fit_transform" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">enc_fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="lore_sa.dataset.Dataset.html#lore_sa.dataset.Dataset" title="lore_sa.dataset.dataset.Dataset"><span class="pre">Dataset</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/one_hot_enc.html#OneHotEnc.enc_fit_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.OneHotEnc.enc_fit_transform" title="Permalink to this definition"></a></dt>
 <dd><p>select the categorical variable
 apply onehot encoding on them
 self.encdec is the encoder already fitted
@@ -215,34 +221,14 @@ self.dataset_enc is the dataset encoded</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.encoder_decoder.OneHotEnc.prepare_dataset">
-<span class="sig-name descname"><span class="pre">prepare_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numeric_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rdf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/one_hot_enc.html#OneHotEnc.prepare_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.OneHotEnc.prepare_dataset" title="Permalink to this definition"></a></dt>
-<dd><p>This function prepare the dataset in a way to use the encoder with the function enc.</p>
-<dl class="field-list simple">
+<dt class="sig sig-object py" id="lore_sa.encoder_decoder.OneHotEnc.encode">
+<span class="sig-name descname"><span class="pre">encode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="lore_sa.dataset.Dataset.html#lore_sa.dataset.Dataset" title="lore_sa.dataset.dataset.Dataset"><span class="pre">Dataset</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/one_hot_enc.html#OneHotEnc.encode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.OneHotEnc.encode" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>df</strong> (<em>[</em><em>Dataframe</em><em>]</em>) – the original dataframe</p></li>
-<li><p><strong>class_name</strong> (<em>[</em><em>str</em><em>]</em>) – class name target</p></li>
-<li><p><strong>numeric_columns</strong> (<em>[</em><em>int</em><em>]</em>) – list of numeric columns indexes</p></li>
-<li><p><strong>rdf</strong> (<em>[</em><em>Dataframe</em><em>]</em>) – original dataframe ?</p></li>
-</ul>
+<dd class="field-odd"><p><strong>x</strong> (<em>[</em><em>numpyArray</em><em>]</em>) – feature values to be encoded. It could be either a vector or a matrix. Each column represents the values</p>
 </dd>
-<dt class="field-even">Return [Dataframe] df_dummy<span class="colon">:</span></dt>
-<dd class="field-even"><p>encoded dataframe</p>
-</dd>
-<dt class="field-odd">Return feature_names<span class="colon">:</span></dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">Return features_map<span class="colon">:</span></dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">Return numeric_columns<span class="colon">:</span></dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">Return class_values<span class="colon">:</span></dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">Return rdf<span class="colon">:</span></dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">Return real_feature_names<span class="colon">:</span></dt>
-<dd class="field-even"><p></p></dd>
 </dl>
+<p>of a feature</p>
 </dd></dl>
 
 </dd></dl>

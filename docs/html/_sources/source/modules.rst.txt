@@ -34,7 +34,7 @@ Modules
    :nosignatures:
    :toctree: generated/
 
-   dataset.DataSet
+   dataset.Dataset
    dataset.utils
 
 :mod:`lore_sa.neighgen`: Neighborhood Generator classes

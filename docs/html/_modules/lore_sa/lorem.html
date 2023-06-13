@@ -52,7 +52,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../source/modules.html#lore-sa-dataset-dataset-class"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.dataset</span></code>: Dataset class</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.dataset.DataSet.html">lore_sa.dataset.DataSet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.dataset.Dataset.html">lore_sa.dataset.Dataset</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.dataset.utils.html">lore_sa.dataset.utils</a></li>
 </ul>
 </li>
@@ -185,14 +185,14 @@
 <span class="kn">from</span> <span class="nn">lore_sa.discretizer</span> <span class="kn">import</span> <span class="n">Discretizer</span>
 <span class="kn">from</span> <span class="nn">lore_sa.encoder_decoder</span> <span class="kn">import</span> <span class="n">EncDec</span>
 <span class="kn">from</span> <span class="nn">lore_sa.bbox</span> <span class="kn">import</span> <span class="n">AbstractBBox</span>
-<span class="kn">from</span> <span class="nn">lore_sa.dataset</span> <span class="kn">import</span> <span class="n">DataSet</span>
+<span class="kn">from</span> <span class="nn">lore_sa.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
 <span class="kn">from</span> <span class="nn">lore_sa.rule</span> <span class="kn">import</span> <span class="n">Rule</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
 <span class="k">class</span> <span class="nc">Explainer</span><span class="p">():</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">DataSet</span><span class="p">,</span> <span class="n">bb</span><span class="p">:</span> <span class="n">AbstractBBox</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">class_name</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">bb</span><span class="p">:</span> <span class="n">AbstractBBox</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">class_name</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
         <span class="k">pass</span>
 
     <span class="nd">@abstractmethod</span>
@@ -233,7 +233,7 @@
 <span class="sd">    :param bool verbose:</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="LOREM.__init__"><a class="viewcode-back" href="../../source/generated/lore_sa.lorem.LOREM.html#lore_sa.lorem.LOREM.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">DataSet</span><span class="p">,</span> <span class="n">bb</span><span class="p">:</span> <span class="n">AbstractBBox</span><span class="p">,</span> <span class="n">encdec</span><span class="p">:</span> <span class="n">EncDec</span><span class="p">,</span> <span class="n">neigh_gen</span><span class="p">:</span> <span class="n">NeighborhoodGenerator</span><span class="p">,</span> <span class="n">surrogate</span><span class="p">:</span> <span class="n">Surrogate</span><span class="p">,</span> <span class="n">rule</span><span class="p">:</span> <span class="n">Rule</span><span class="p">,</span> <span class="n">class_name</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+<div class="viewcode-block" id="LOREM.__init__"><a class="viewcode-back" href="../../source/generated/lore_sa.lorem.LOREM.html#lore_sa.lorem.LOREM.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">bb</span><span class="p">:</span> <span class="n">AbstractBBox</span><span class="p">,</span> <span class="n">encdec</span><span class="p">:</span> <span class="n">EncDec</span><span class="p">,</span> <span class="n">neigh_gen</span><span class="p">:</span> <span class="n">NeighborhoodGenerator</span><span class="p">,</span> <span class="n">surrogate</span><span class="p">:</span> <span class="n">Surrogate</span><span class="p">,</span> <span class="n">rule</span><span class="p">:</span> <span class="n">Rule</span><span class="p">,</span> <span class="n">class_name</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
                  <span class="n">K_transformed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">multi_label</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">filter_crules</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">kernel_width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">binary</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">discretize</span><span class="p">:</span> <span class="n">Discretizer</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">extreme_fidelity</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">constraints</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span><span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span><span class="o">**</span> <span class="n">kwargs</span><span class="p">):</span>
 

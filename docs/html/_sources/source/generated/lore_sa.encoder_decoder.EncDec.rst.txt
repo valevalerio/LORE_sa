@@ -14,10 +14,9 @@
    .. autosummary::
    
       ~EncDec.__init__
-      ~EncDec.dec
-      ~EncDec.enc
+      ~EncDec.decode
       ~EncDec.enc_fit_transform
-      ~EncDec.prepare_dataset
+      ~EncDec.encode
    
    
 
