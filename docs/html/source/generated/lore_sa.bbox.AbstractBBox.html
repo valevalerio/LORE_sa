@@ -19,7 +19,7 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="lore_sa.dataset.DataSet" href="lore_sa.dataset.DataSet.html" />
+    <link rel="next" title="lore_sa.dataset.Dataset" href="lore_sa.dataset.Dataset.html" />
     <link rel="prev" title="lore_sa.lorem.LOREM" href="lore_sa.lorem.LOREM.html" />
     <link href="../../_static/style.css" rel="stylesheet" type="text/css">
 
@@ -55,7 +55,8 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-dataset-dataset-class"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.dataset</span></code>: Dataset class</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.dataset.DataSet.html">lore_sa.dataset.DataSet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.dataset.Dataset.html">lore_sa.dataset.Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.dataset.utils.html">lore_sa.dataset.utils</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-neighgen-neighborhood-generator-classes"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.neighgen</span></code>: Neighborhood Generator classes</a><ul>
@@ -170,12 +171,12 @@
 <h1>lore_sa.bbox.AbstractBBox<a class="headerlink" href="#lore-sa-bbox-abstractbbox" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="lore_sa.bbox.AbstractBBox">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lore_sa.bbox.</span></span><span class="sig-name descname"><span class="pre">AbstractBBox</span></span><a class="reference internal" href="../../_modules/lore_sa/bbox.html#AbstractBBox"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.bbox.AbstractBBox" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lore_sa.bbox.</span></span><span class="sig-name descname"><span class="pre">AbstractBBox</span></span><a class="reference internal" href="../../_modules/lore_sa/bbox/bbox.html#AbstractBBox"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.bbox.AbstractBBox" title="Permalink to this definition"></a></dt>
 <dd><p>Generic Black Box class witch provides two sklearn-like methods.</p>
 <p>pass</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="lore_sa.bbox.AbstractBBox.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/bbox.html#AbstractBBox.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.bbox.AbstractBBox.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/bbox/bbox.html#AbstractBBox.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.bbox.AbstractBBox.__init__" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <p class="rubric">Methods</p>
@@ -194,7 +195,7 @@
 </table>
 <dl class="py method">
 <dt class="sig sig-object py" id="lore_sa.bbox.AbstractBBox.predict">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/bbox.html#AbstractBBox.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.bbox.AbstractBBox.predict" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/bbox/bbox.html#AbstractBBox.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.bbox.AbstractBBox.predict" title="Permalink to this definition"></a></dt>
 <dd><p>Wrap of sklearn predict method, that predict the class labels for the provided data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -208,7 +209,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="lore_sa.bbox.AbstractBBox.predict_proba">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">predict_proba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/bbox.html#AbstractBBox.predict_proba"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.bbox.AbstractBBox.predict_proba" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">predict_proba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/bbox/bbox.html#AbstractBBox.predict_proba"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.bbox.AbstractBBox.predict_proba" title="Permalink to this definition"></a></dt>
 <dd><p>Wrap of sklearn predict_proba method, that return probability estimates for the test data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -229,7 +230,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="lore_sa.lorem.LOREM.html" class="btn btn-neutral float-left" title="lore_sa.lorem.LOREM" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="lore_sa.dataset.DataSet.html" class="btn btn-neutral float-right" title="lore_sa.dataset.DataSet" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="lore_sa.dataset.Dataset.html" class="btn btn-neutral float-right" title="lore_sa.dataset.Dataset" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

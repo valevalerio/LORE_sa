@@ -52,7 +52,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="source/modules.html#lore-sa-dataset-dataset-class"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.dataset</span></code>: Dataset class</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="source/generated/lore_sa.dataset.DataSet.html">lore_sa.dataset.DataSet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="source/generated/lore_sa.dataset.Dataset.html">lore_sa.dataset.Dataset</a></li>
 <li class="toctree-l3"><a class="reference internal" href="source/generated/lore_sa.dataset.utils.html">lore_sa.dataset.utils</a></li>
 </ul>
 </li>
@@ -193,7 +193,7 @@
       <li><a href="source/generated/lore_sa.bbox.AbstractBBox.html#lore_sa.bbox.AbstractBBox.__init__">__init__() (lore_sa.bbox.AbstractBBox method)</a>
 
       <ul>
-        <li><a href="source/generated/lore_sa.dataset.DataSet.html#lore_sa.dataset.DataSet.__init__">(lore_sa.dataset.DataSet method)</a>
+        <li><a href="source/generated/lore_sa.dataset.Dataset.html#lore_sa.dataset.Dataset.__init__">(lore_sa.dataset.Dataset method)</a>
 </li>
         <li><a href="source/generated/lore_sa.discretizer.Discretizer.html#lore_sa.discretizer.Discretizer.__init__">(lore_sa.discretizer.Discretizer method)</a>
 </li>
@@ -284,7 +284,7 @@
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="source/generated/lore_sa.dataset.DataSet.html#lore_sa.dataset.DataSet">DataSet (class in lore_sa.dataset)</a>
+      <li><a href="source/generated/lore_sa.dataset.Dataset.html#lore_sa.dataset.Dataset">Dataset (class in lore_sa.dataset)</a>
 </li>
       <li><a href="source/generated/lore_sa.surrogate.DecTree.html#lore_sa.surrogate.DecTree">DecTree (class in lore_sa.surrogate)</a>
 </li>
@@ -308,10 +308,14 @@
       </ul></li>
       <li><a href="source/generated/lore_sa.encoder_decoder.EncDec.html#lore_sa.encoder_decoder.EncDec">EncDec (class in lore_sa.encoder_decoder)</a>
 </li>
+      <li><a href="source/generated/lore_sa.encoder_decoder.OneHotEnc.html#lore_sa.encoder_decoder.OneHotEnc.encode">encode() (lore_sa.encoder_decoder.OneHotEnc method)</a>
+
+      <ul>
+        <li><a href="source/generated/lore_sa.explanation.ExplanationEncoder.html#lore_sa.explanation.ExplanationEncoder.encode">(lore_sa.explanation.ExplanationEncoder method)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="source/generated/lore_sa.explanation.ExplanationEncoder.html#lore_sa.explanation.ExplanationEncoder.encode">encode() (lore_sa.explanation.ExplanationEncoder method)</a>
-</li>
       <li><a href="source/generated/lore_sa.lorem.LOREM.html#lore_sa.lorem.LOREM.explain_instance_stable">explain_instance_stable() (lore_sa.lorem.LOREM method)</a>
 </li>
       <li><a href="source/generated/lore_sa.explanation.Explanation.html#lore_sa.explanation.Explanation">Explanation (class in lore_sa.explanation)</a>
@@ -324,11 +328,11 @@
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="source/generated/lore_sa.dataset.DataSet.html#lore_sa.dataset.DataSet.from_csv">from_csv() (lore_sa.dataset.DataSet class method)</a>
+      <li><a href="source/generated/lore_sa.dataset.Dataset.html#lore_sa.dataset.Dataset.from_csv">from_csv() (lore_sa.dataset.Dataset class method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="source/generated/lore_sa.dataset.DataSet.html#lore_sa.dataset.DataSet.from_dict">from_dict() (lore_sa.dataset.DataSet class method)</a>
+      <li><a href="source/generated/lore_sa.dataset.Dataset.html#lore_sa.dataset.Dataset.from_dict">from_dict() (lore_sa.dataset.Dataset class method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -457,20 +461,10 @@
 </li>
       <li><a href="source/generated/lore_sa.bbox.AbstractBBox.html#lore_sa.bbox.AbstractBBox.predict_proba">predict_proba() (lore_sa.bbox.AbstractBBox method)</a>
 </li>
-      <li><a href="source/generated/lore_sa.dataset.utils.html#lore_sa.dataset.utils.prepare_bank_dataset">prepare_bank_dataset() (in module lore_sa.dataset.utils)</a>
-</li>
-      <li><a href="source/generated/lore_sa.dataset.DataSet.html#lore_sa.dataset.DataSet.prepare_dataset">prepare_dataset() (lore_sa.dataset.DataSet method)</a>
-
-      <ul>
-        <li><a href="source/generated/lore_sa.encoder_decoder.EncDec.html#lore_sa.encoder_decoder.EncDec.prepare_dataset">(lore_sa.encoder_decoder.EncDec method)</a>
-</li>
-        <li><a href="source/generated/lore_sa.encoder_decoder.MyTargetEnc.html#lore_sa.encoder_decoder.MyTargetEnc.prepare_dataset">(lore_sa.encoder_decoder.MyTargetEnc method)</a>
-</li>
-        <li><a href="source/generated/lore_sa.encoder_decoder.OneHotEnc.html#lore_sa.encoder_decoder.OneHotEnc.prepare_dataset">(lore_sa.encoder_decoder.OneHotEnc method)</a>
-</li>
-      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="source/generated/lore_sa.dataset.utils.html#lore_sa.dataset.utils.prepare_bank_dataset">prepare_bank_dataset() (in module lore_sa.dataset.utils)</a>
+</li>
       <li><a href="source/generated/lore_sa.decision_tree.prune_duplicate_leaves.html#lore_sa.decision_tree.prune_duplicate_leaves">prune_duplicate_leaves() (in module lore_sa.decision_tree)</a>
 </li>
       <li><a href="source/generated/lore_sa.decision_tree.prune_index.html#lore_sa.decision_tree.prune_index">prune_index() (in module lore_sa.decision_tree)</a>

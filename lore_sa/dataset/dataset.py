@@ -2,11 +2,9 @@
 import pandas as pd
 from pandas import DataFrame
 
-from lore_sa.encoder_decoder import EncDec
+__all__ = ["Dataset"]
 
-__all__ = ["DataSet"]
-
-class DataSet():
+class Dataset():
     """
     It provides an interface to handle datasets, including some essential information on the structure and
     semantic of the dataset.

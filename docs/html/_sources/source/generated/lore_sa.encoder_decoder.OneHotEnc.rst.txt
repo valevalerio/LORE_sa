@@ -15,9 +15,9 @@
    
       ~OneHotEnc.__init__
       ~OneHotEnc.dec
-      ~OneHotEnc.enc
+      ~OneHotEnc.decode
       ~OneHotEnc.enc_fit_transform
-      ~OneHotEnc.prepare_dataset
+      ~OneHotEnc.encode
    
    
 

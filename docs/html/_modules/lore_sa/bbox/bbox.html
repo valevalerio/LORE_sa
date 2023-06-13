@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lore_sa.dataset.dataset &mdash; LORE_sa  documentation</title>
+  <title>lore_sa.bbox.bbox &mdash; LORE_sa  documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -154,7 +154,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
-      <li class="breadcrumb-item active">lore_sa.dataset.dataset</li>
+      <li class="breadcrumb-item active">lore_sa.bbox.bbox</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -163,115 +163,42 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for lore_sa.dataset.dataset</h1><div class="highlight"><pre>
-<span></span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">DataFrame</span>
+  <h1>Source code for lore_sa.bbox.bbox</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Dataset&quot;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;AbstractBBox&quot;</span><span class="p">]</span>
 
-<div class="viewcode-block" id="Dataset"><a class="viewcode-back" href="../../../source/generated/lore_sa.dataset.Dataset.html#lore_sa.dataset.Dataset">[docs]</a><span class="k">class</span> <span class="nc">Dataset</span><span class="p">():</span>
+<div class="viewcode-block" id="AbstractBBox"><a class="viewcode-back" href="../../../source/generated/lore_sa.bbox.AbstractBBox.html#lore_sa.bbox.AbstractBBox">[docs]</a><span class="k">class</span> <span class="nc">AbstractBBox</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    It provides an interface to handle datasets, including some essential information on the structure and</span>
-<span class="sd">    semantic of the dataset.</span>
+<span class="sd">    Generic Black Box class witch provides two sklearn-like methods.</span>
+
+<span class="sd">    pass</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="Dataset.__init__"><a class="viewcode-back" href="../../../source/generated/lore_sa.dataset.Dataset.html#lore_sa.dataset.Dataset.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">encdec</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">class_name</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">data</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">feature_names</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">class_values</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">numeric_columns</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">real_feature_names</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">features_map</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">rdf</span> <span class="o">=</span> <span class="kc">None</span></div>
-        
 
-<div class="viewcode-block" id="Dataset.from_csv"><a class="viewcode-back" href="../../../source/generated/lore_sa.dataset.Dataset.html#lore_sa.dataset.Dataset.from_csv">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_csv</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<div class="viewcode-block" id="AbstractBBox.__init__"><a class="viewcode-back" href="../../../source/generated/lore_sa.bbox.AbstractBBox.html#lore_sa.bbox.AbstractBBox.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractBBox.predict"><a class="viewcode-back" href="../../../source/generated/lore_sa.bbox.AbstractBBox.html#lore_sa.bbox.AbstractBBox.predict">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sample_matrix</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Read a comma-separated values (csv) file into Dataset object.</span>
-<span class="sd">        :param [str] filename:</span>
-<span class="sd">        :return:</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">skipinitialspace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">na_values</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="n">keep_default_na</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">dataset_obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-        <span class="n">dataset_obj</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
-        <span class="k">return</span> <span class="n">dataset_obj</span></div>
+<span class="sd">        Wrap of sklearn predict method, that predict the class labels for the provided data.</span>
 
-<div class="viewcode-block" id="Dataset.from_dict"><a class="viewcode-back" href="../../../source/generated/lore_sa.dataset.Dataset.html#lore_sa.dataset.Dataset.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="sd">        :param sample_matrix: {array-like, sparse matrix} of shape (n_queries, n_features) samples.</span>
+<span class="sd">        :return: ndarray of shape (n_queries, n_classes), or a list of n_outputs of such arrays if n_outputs &gt; 1.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractBBox.predict_proba"><a class="viewcode-back" href="../../../source/generated/lore_sa.bbox.AbstractBBox.html#lore_sa.bbox.AbstractBBox.predict_proba">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sample_matrix</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        From dicts of Series, arrays, or dicts.</span>
-<span class="sd">        :param [dict] data:</span>
-<span class="sd">        :return:</span>
+<span class="sd">        Wrap of sklearn predict_proba method, that return probability estimates for the test data.</span>
+
+<span class="sd">        :param sample_matrix: {array-like, sparse matrix} of shape (n_queries, n_features) samples</span>
+<span class="sd">        :return: ndarray of shape (n_queries, n_classes), or a list of n_outputs of such arrays if n_outputs &gt; 1.</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">))</span></div>
-
-    <span class="k">def</span> <span class="nf">set_class_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">class_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-         <span class="bp">self</span><span class="o">.</span><span class="n">class_name</span> <span class="o">=</span> <span class="n">class_name</span>
-
-    <span class="c1"># def prepare_dataset(self, encdec: EncDec = None):</span>
-    <span class="c1">#     &quot;&quot;&quot;</span>
-    <span class="c1">#     It tranforms the dataset in order to be ready for neighborhood generation, eventually applying </span>
-    <span class="c1">#     the input encoder</span>
-
-    <span class="c1">#     :param [EncDec] encdec: Encoder Object</span>
-    <span class="c1">#     &quot;&quot;&quot;</span>
-    <span class="c1">#     self.encdec = encdec</span>
-    <span class="c1">#     df = self.__remove_missing_values(self.df)</span>
-    <span class="c1">#     rdf = df</span>
-    <span class="c1">#     self.df = df</span>
-    <span class="c1">#     self.rdf = rdf</span>
-    <span class="c1">#     self.numeric_columns = self.__get_numeric_columns(self.df)</span>
-
-    <span class="c1">#     if self.class_name is None:</span>
-    <span class="c1">#         raise ValueError(&quot;class_name is None. Set it with objects.set_class_name(&#39;target&#39;)&quot;)</span>
-
-    <span class="c1">#     if self.class_name in self.numeric_columns:</span>
-    <span class="c1">#         self.numeric_columns.remove(self.class_name)</span>
-
-    <span class="c1">#     self.df, self.feature_names, self.features_map, self.numeric_columns, self.class_values, self.rdf, self.real_feature_names = self.encdec.prepare_dataset(self.df, self.class_name, self.numeric_columns, self.rdf)</span>
-
-    <span class="c1"># def __remove_missing_values(self,df):</span>
-    <span class="c1">#     for column_name, nbr_missing in df.isna().sum().to_dict().items():</span>
-    <span class="c1">#         if nbr_missing &gt; 0:</span>
-    <span class="c1">#             if column_name in df._get_numeric_data().columns:</span>
-    <span class="c1">#                 mean = df[column_name].mean()</span>
-    <span class="c1">#                 df[column_name].fillna(mean, inplace=True)</span>
-    <span class="c1">#             else:</span>
-    <span class="c1">#                 mode = df[column_name].mode().values[0]</span>
-    <span class="c1">#                 df[column_name].fillna(mode, inplace=True)</span>
-    <span class="c1">#     return df</span>
-
-    <span class="c1"># def __get_numeric_columns(self,df):</span>
-    <span class="c1">#     numeric_columns = list(df._get_numeric_data().columns)</span>
-    <span class="c1">#     return numeric_columns</span>
-
-    <span class="c1"># def get_feature_map(self):</span>
-    <span class="c1">#     &quot;&quot;&quot;</span>
-    <span class="c1">#     feature_map is a dictionary to track one-hot-encoded features, implemented as dataframe columns. An example of the format of suct a dictionary is: </span>
-            <span class="c1"># {</span>
-            <span class="c1">#   0: {&#39;age&#39;: 0},</span>
-            <span class="c1">#   2: {&#39;sex = Male&#39;: 2,</span>
-            <span class="c1">#       &#39;sex = Female&#39;: 3,</span>
-            <span class="c1">#   }</span>
-            <span class="c1"># ...},</span>
-    <span class="c1">#     Here, the key of the dictionary is the column index of the feature, while the value is a further dictionary cointaining</span>
-    <span class="c1">#     single column name or eventually features grouped after the trasformation of a feature through one hot encoding</span>
-    <span class="c1">#     &quot;&quot;&quot;</span>
-    <span class="c1">#     return self.feature_map</span>
-
-    <span class="k">def</span> <span class="nf">get_class_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_values</span>
-
-    <span class="k">def</span> <span class="nf">get_numeric_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">numeric_columns</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">_get_numeric_data</span><span class="p">()</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">numeric_columns</span>
-
-    <span class="k">def</span> <span class="nf">get_original_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rdf</span></div>
-
+        <span class="k">pass</span></div></div>
 </pre></div>
 
            </div>

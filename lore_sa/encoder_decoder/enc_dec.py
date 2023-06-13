@@ -1,4 +1,5 @@
 from abc import abstractmethod
+from lore_sa.dataset.dataset import Dataset
 
 import pandas as pd
 
@@ -10,9 +11,9 @@ class EncDec():
     It is implemented by different classes, each of which must implements the functions: enc, dec, enc_fit_transform
     the idea is that the user sends the complete record and here only the categorical variables are handled
     """
-    def __init__(self, dataset=None, class_name = None):
-        self.dataset = dataset
-        self.class_name = class_name
+    def __init__(self,):
+        self.dataset = None
+        self.class_name = None
         self.encdec = None
         self.features = None
         self.cate_features_names = None
@@ -20,14 +21,15 @@ class EncDec():
         self.type = None
 
     @abstractmethod
-    def enc(self, x: list, y: list, kwargs=None):
+    def encode(self, x: Dataset, kwargs=None):
         return
 
     @abstractmethod
-    def dec(self, x: list, kwargs=None):
+    def decode(self, x: Dataset, kwargs=None):
         return
 
     @abstractmethod
+<<<<<<< HEAD
     def enc_fit_transform(self, dataset=None, class_name=None):
         return
 
@@ -48,6 +50,10 @@ class EncDec():
         :return rdf:
         :return real_feature_names:
         """
+=======
+    def enc_fit_transform(self, dataset: Dataset =None, class_name: str =None):
+>>>>>>> a810731827e6e0c057a9f76839db328bc9b391d8
         return
+
 
 
