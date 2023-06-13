@@ -39,7 +39,7 @@ class EncDec():
         :param [Dataframe] df: the original dataframe
         :param [str] class_name: class name target
         :param [int] numeric_columns: list of numeric columns indexes
-        :param [Dataframe] rdf: original dataframe ?
+        :param [Dataframe] rdf: original dataframe 
         :return [Dataframe] df_dummy:  encoded dataframe
         :return feature_names:
         :return features_map:
