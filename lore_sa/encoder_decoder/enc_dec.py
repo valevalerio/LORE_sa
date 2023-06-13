@@ -21,16 +21,22 @@ class EncDec():
         self.type = None
 
     @abstractmethod
-    def encode(self, x: Dataset, kwargs=None):
+    def encode(self, x: Dataset, features_to_encode):
+        """
+        It applies the encoder to the input features
+
+        :param[Dataset] x: the Dataset containing the features to be encoded
+        :param[list] features_to_encode: list of columns of Dataset.df dataframe to be encoded
+        """
         return
 
     @abstractmethod
     def decode(self, x: Dataset, kwargs=None):
         return
 
-    @abstractmethod
-    def enc_fit_transform(self, dataset=None, class_name=None):
-        return
+    # @abstractmethod
+    # def enc_fit_transform(self, dataset=None, class_name=None):
+    #     return
 
 
     # removed to improve flexibility for the user

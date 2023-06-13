@@ -87,7 +87,11 @@ class OneHotEnc(EncDec):
         self.new_cont_idx = list()
 
         for f in self.categorical_features_idx:
-            uniques = len(np.unique(dataset_features_values[:, f]))
+            print ("processing: ",f)
+            for val in dataset_features_values[ :,f]:
+                if type(val) == float:
+                    print (val)
+            uniques = len(np.unique(dataset_features_values[ :,f]))
             for u in range(0,uniques):
                 self.onehot_feature_idx.append(f+u)
 
