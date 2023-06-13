@@ -32,24 +32,26 @@ class EncDec():
     def enc_fit_transform(self, dataset=None, class_name=None):
         return
 
-    @abstractmethod
-    def prepare_dataset(self, df: pd.DataFrame, class_name, numeric_columns, rdf):
-        """
-        This function prepare the dataset in a way to use the encoder with the function enc.
 
-        :param [Dataframe] df: the original dataframe
-        :param [str] class_name: class name target
-        :param [int] numeric_columns: list of numeric columns indexes
-        :param [Dataframe] rdf: original dataframe 
-        :return [Dataframe] df_dummy:  encoded dataframe
-        :return feature_names:
-        :return features_map:
-        :return numeric_columns:
-        :return class_values:
-        :return rdf:
-        :return real_feature_names:
-        """
-        return
+    # removed to improve flexibility for the user
+    # @abstractmethod
+    # def prepare_dataset(self, df: pd.DataFrame, class_name, numeric_columns, rdf):
+    #     """
+    #     This function prepare the dataset in a way to use the encoder with the function enc.
+
+    #     :param [Dataframe] df: the original dataframe
+    #     :param [str] class_name: class name target
+    #     :param [int] numeric_columns: list of numeric columns indexes
+    #     :param [Dataframe] rdf: original dataframe 
+    #     :return [Dataframe] df_dummy:  encoded dataframe
+    #     :return feature_names:
+    #     :return features_map:
+    #     :return numeric_columns:
+    #     :return class_values:
+    #     :return rdf:
+    #     :return real_feature_names:
+    #     """
+    #     return
 
 
 
