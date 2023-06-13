@@ -17,7 +17,6 @@
       ~Dataset.from_csv
       ~Dataset.from_dict
       ~Dataset.get_class_values
-      ~Dataset.get_feature_map
       ~Dataset.get_numeric_columns
       ~Dataset.get_original_dataset
       ~Dataset.set_class_name

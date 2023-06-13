@@ -209,13 +209,13 @@
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">))</span></div>
 
     <span class="k">def</span> <span class="nf">set_class_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">class_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">class_name</span> <span class="o">=</span> <span class="n">class_name</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">class_name</span> <span class="o">=</span> <span class="n">class_name</span>
 
     <span class="c1"># def prepare_dataset(self, encdec: EncDec = None):</span>
     <span class="c1">#     &quot;&quot;&quot;</span>
-    <span class="c1">#     It tranforms the dataset in order to be ready for neighborhood generation, eventually applying</span>
+    <span class="c1">#     It tranforms the dataset in order to be ready for neighborhood generation, eventually applying </span>
     <span class="c1">#     the input encoder</span>
-    <span class="c1">#</span>
+
     <span class="c1">#     :param [EncDec] encdec: Encoder Object</span>
     <span class="c1">#     &quot;&quot;&quot;</span>
     <span class="c1">#     self.encdec = encdec</span>
@@ -224,38 +224,50 @@
     <span class="c1">#     self.df = df</span>
     <span class="c1">#     self.rdf = rdf</span>
     <span class="c1">#     self.numeric_columns = self.__get_numeric_columns(self.df)</span>
-    <span class="c1">#</span>
+
     <span class="c1">#     if self.class_name is None:</span>
     <span class="c1">#         raise ValueError(&quot;class_name is None. Set it with objects.set_class_name(&#39;target&#39;)&quot;)</span>
-    <span class="c1">#</span>
+
     <span class="c1">#     if self.class_name in self.numeric_columns:</span>
     <span class="c1">#         self.numeric_columns.remove(self.class_name)</span>
-    <span class="c1">#</span>
+
     <span class="c1">#     self.df, self.feature_names, self.features_map, self.numeric_columns, self.class_values, self.rdf, self.real_feature_names = self.encdec.prepare_dataset(self.df, self.class_name, self.numeric_columns, self.rdf)</span>
 
-    <span class="k">def</span> <span class="nf">__remove_missing_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">column_name</span><span class="p">,</span> <span class="n">nbr_missing</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="k">if</span> <span class="n">nbr_missing</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">column_name</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">_get_numeric_data</span><span class="p">()</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-                    <span class="n">mean</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">column_name</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-                    <span class="n">df</span><span class="p">[</span><span class="n">column_name</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">mode</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">column_name</span><span class="p">]</span><span class="o">.</span><span class="n">mode</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-                    <span class="n">df</span><span class="p">[</span><span class="n">column_name</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">mode</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">df</span>
+    <span class="c1"># def __remove_missing_values(self,df):</span>
+    <span class="c1">#     for column_name, nbr_missing in df.isna().sum().to_dict().items():</span>
+    <span class="c1">#         if nbr_missing &gt; 0:</span>
+    <span class="c1">#             if column_name in df._get_numeric_data().columns:</span>
+    <span class="c1">#                 mean = df[column_name].mean()</span>
+    <span class="c1">#                 df[column_name].fillna(mean, inplace=True)</span>
+    <span class="c1">#             else:</span>
+    <span class="c1">#                 mode = df[column_name].mode().values[0]</span>
+    <span class="c1">#                 df[column_name].fillna(mode, inplace=True)</span>
+    <span class="c1">#     return df</span>
 
-    <span class="k">def</span> <span class="nf">__get_numeric_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
-        <span class="n">numeric_columns</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">_get_numeric_data</span><span class="p">()</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">numeric_columns</span>
+    <span class="c1"># def __get_numeric_columns(self,df):</span>
+    <span class="c1">#     numeric_columns = list(df._get_numeric_data().columns)</span>
+    <span class="c1">#     return numeric_columns</span>
 
-    <span class="k">def</span> <span class="nf">get_feature_map</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_map</span>
+    <span class="c1"># def get_feature_map(self):</span>
+    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#     feature_map is a dictionary to track one-hot-encoded features, implemented as dataframe columns. An example of the format of suct a dictionary is: </span>
+            <span class="c1"># {</span>
+            <span class="c1">#   0: {&#39;age&#39;: 0},</span>
+            <span class="c1">#   2: {&#39;sex = Male&#39;: 2,</span>
+            <span class="c1">#       &#39;sex = Female&#39;: 3,</span>
+            <span class="c1">#   }</span>
+            <span class="c1"># ...},</span>
+    <span class="c1">#     Here, the key of the dictionary is the column index of the feature, while the value is a further dictionary cointaining</span>
+    <span class="c1">#     single column name or eventually features grouped after the trasformation of a feature through one hot encoding</span>
+    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#     return self.feature_map</span>
 
     <span class="k">def</span> <span class="nf">get_class_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_values</span>
 
     <span class="k">def</span> <span class="nf">get_numeric_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">numeric_columns</span>
+        <span class="n">numeric_columns</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">_get_numeric_data</span><span class="p">()</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">numeric_columns</span>
 
     <span class="k">def</span> <span class="nf">get_original_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rdf</span></div>
