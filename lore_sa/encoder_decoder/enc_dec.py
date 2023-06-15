@@ -12,12 +12,10 @@ class EncDec():
     the idea is that the user sends the complete record and here only the categorical variables are handled
     """
     def __init__(self,):
-        self.dataset = None
-        self.class_name = None
-        self.encdec = None
-        self.features = None
-        self.cate_features_names = None
-        self.cate_features_idx = None
+        self.dataset_encoded = None
+        self.original_features = None
+        self.original_data = None
+        self.encoded_features = None
         self.type = None
 
     @abstractmethod
