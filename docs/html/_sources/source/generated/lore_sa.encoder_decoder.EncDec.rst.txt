@@ -15,7 +15,6 @@
    
       ~EncDec.__init__
       ~EncDec.decode
-      ~EncDec.enc_fit_transform
       ~EncDec.encode
    
    

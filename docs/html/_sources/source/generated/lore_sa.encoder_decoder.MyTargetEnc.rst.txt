@@ -14,14 +14,8 @@
    .. autosummary::
    
       ~MyTargetEnc.__init__
-      ~MyTargetEnc.dec
       ~MyTargetEnc.decode
-      ~MyTargetEnc.enc
-      ~MyTargetEnc.enc_fit_transform
       ~MyTargetEnc.encode
-      ~MyTargetEnc.get_cate_map
-      ~MyTargetEnc.prepare_dataset
-      ~MyTargetEnc.retrieve_values
    
    
 
