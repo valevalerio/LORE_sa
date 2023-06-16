@@ -41,7 +41,11 @@ class OneHotEnc(EncDec):
             return "OneHotEncoder - no features encoded"
 
     def decode(self, dataset: Dataset, kwargs=None):
+
         if self.encoded_features is not None:
+            if self.original_data is None:
+                raise Exception("ERROR! To decode a dataset it must be firstly encoded by the same encoder object.")
+
             return pd.concat([dataset.df.drop(columns=self.encoded_features), self.original_data], axis=1)
         else:
             return dataset.df
