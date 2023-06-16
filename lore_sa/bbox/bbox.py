@@ -9,8 +9,15 @@ class AbstractBBox(ABC):
     pass
     """
 
-    def __init__(self):
+    def __init__(self, classifier):
         pass
+
+
+    def model(self):
+        """
+        Provides the bbox.
+        """
+        return self.model()
 
     @abstractmethod
     def predict(self, sample_matrix: list):

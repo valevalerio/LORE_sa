@@ -8,9 +8,6 @@ class keras_ts_classifier_wrapper(AbstractBBox):
         super().__init__()
         self.bbox = classifier
 
-    def model(self):
-        return self.bbox
-
     def predict(self, X):
         #here the input is 3 dimensions
         y = self.bbox.predict(X)
