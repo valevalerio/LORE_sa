@@ -16,7 +16,7 @@ class EncDec():
         self.original_features = None
         self.original_data = None
         self.encoded_features = None
-        self.type = None
+        
 
     @abstractmethod
     def encode(self, x: Dataset, features_to_encode):
