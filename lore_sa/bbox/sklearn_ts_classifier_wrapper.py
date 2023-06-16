@@ -7,8 +7,6 @@ class sklearn_ts_classifier_wrapper(AbstractBBox):
         super().__init__()
         self.bbox = classifier
 
-    def model(self):
-        return self.bbox
 
     def predict(self, X):
         #change the input shape of the time series, from 3 dimensions to 2.

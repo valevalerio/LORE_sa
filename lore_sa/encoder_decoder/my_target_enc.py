@@ -14,7 +14,6 @@ class TargetEnc(EncDec):
     def __init__(self):
         super().__init__()
 
-
     def encode(self, dataset: Dataset, features_to_encode: list, target):
         """
         It applies the encoder to the input categorical features
