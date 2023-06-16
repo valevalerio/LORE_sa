@@ -18,7 +18,14 @@ class NeighborhoodGenerator(object):
         return
     
     @abstractmethod
-    def generate(self):
+    def generate(self, x, num_samples, features_domain = None):
+        """
+        It generate similar instances 
+
+        :param x[dict]: the starting instance from the real dataset
+        :param num_samples[int]: the number of instances to generate
+        :param features_domain[dict]: dictionary in the format {"feature name": List | Range}, representing the domain range for each feature
+        """
         return
 
     @abstractmethod
@@ -26,6 +33,6 @@ class NeighborhoodGenerator(object):
         """
         It contains the logic to check the requirements for generated data
         """
-
+        return
         
     
