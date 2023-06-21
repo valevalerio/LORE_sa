@@ -57,6 +57,12 @@ class DatasetTest(unittest.TestCase):
             dataset.get_class_values()
             self.assertEqual("ERR: class_name is None. Set class_name with set_class_name('<column name>')", str(context.exception))
 
+    def test_get_self_feature_map(self):
+        dataset = Dataset.from_dict({'col1': [1, 2], 'col2': [3, 4], 'col3': ['America', 'Europe']})
+        self.assertEqual(len(dataset.get_numeric_columns()),2)
+        self.assertEqual(dataset.get_numeric_columns(),['col1','col2'])
+        self.assertEqual(dataset.get_self_feature_map(),dict(numeric_columns=['col1','col2'], categorical_columns=['col3']))
+
 
 if __name__ == '__main__':
     unittest.main()
