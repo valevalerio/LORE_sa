@@ -46,7 +46,7 @@ class LabelEnc(EncDec):
         else:
             return "LabelEncoder - no features encoded"
 
-    def decode(self, dataset: Dataset, feature_encoding: dict):
+    def decode(self, dataset: Dataset, feature_encoding: dict = None):
         """
         Provides a new dataframe decoded from dictionary of encoding features
         :param [Dataset] dataset: Dataset to decode
@@ -54,6 +54,8 @@ class LabelEnc(EncDec):
         :return:
         """
         self.dataset_decoded = pd.DataFrame()
+        if feature_encoding is None:
+            feature_encoding = self.feature_encoding
         for feature in feature_encoding:
             self.dataset_decoded[feature] = dataset.df[feature].apply(lambda x: feature_encoding[feature][x])
 

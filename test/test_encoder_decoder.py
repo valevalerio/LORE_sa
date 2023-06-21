@@ -77,6 +77,17 @@ class EncDecTest(unittest.TestCase):
         self.assertTrue('race' in dataset_decoded.columns)
         self.assertEqual(dataset_decoded['race'].unique().tolist(),['White', 'Black', 'Asian-Pac-Islander', 'Amer-Indian-Eskimo', 'Other'])
 
+    def test_label_decode_without_feature_encoding(self):
+        dataset = Dataset.from_csv("resources/adult.csv")
+        label_enc = LabelEnc()
+        dataset_encoded = Dataset(label_enc.encode(dataset,['race','sex']))
+        dataset_decoded = label_enc.decode(dataset_encoded)
+
+        self.assertTrue('sex' in dataset_decoded.columns)
+        self.assertEqual(dataset_decoded['sex'].unique().tolist(),['Male', 'Female'])
+        self.assertTrue('race' in dataset_decoded.columns)
+        self.assertEqual(dataset_decoded['race'].unique().tolist(),['White', 'Black', 'Asian-Pac-Islander', 'Amer-Indian-Eskimo', 'Other'])
+
 
 if __name__ == '__main__':
     unittest.main()
