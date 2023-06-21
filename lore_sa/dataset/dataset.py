@@ -74,6 +74,10 @@ class Dataset():
         return self.rdf
 
     def get_self_feature_map(self):
+        """
+        Provides a dictionary with the list of numeric and categorical columns.
+        :return:
+        """
         self.features_map = dict()
         self.features_map["numeric_columns"] = self.get_numeric_columns()
         self.features_map["categorical_columns"] = [c for c in self.df.columns if c not in self.get_numeric_columns()]
