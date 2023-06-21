@@ -54,6 +54,8 @@ class EncDecTest(unittest.TestCase):
     def test_label_encoder_init_with_features_encoder(self):
         dataset = Dataset.from_csv("resources/adult.csv")
 
+        features_encoding = {'race': {0: 'Amer-Indian-Eskimo', 1: 'Asian-Pac-Islander', 2: 'Black', 3: 'Other', 4: 'White'}, 'sex': {0: 'Female', 1: 'Male'}}
+
         label_enc = LabelEnc()
         dataset_encoded = label_enc.encode(dataset,['race','sex'])
         self.assertEqual(label_enc.__str__(),"LabelEncoder - features encoded: race,sex")
@@ -61,6 +63,19 @@ class EncDecTest(unittest.TestCase):
         self.assertTrue(dataset_encoded['race'].all() in [0,6])
         self.assertTrue('sex' in dataset_encoded.columns )
         self.assertTrue(dataset_encoded['sex'].all() in [0,6])
+        self.assertTrue(label_enc.get_feature_encoding(),features_encoding)
+
+    def test_label_decode(self):
+        dataset = Dataset.from_csv("resources/adult.csv")
+        features_encoding = {'race': {0: 'Amer-Indian-Eskimo', 1: 'Asian-Pac-Islander', 2: 'Black', 3: 'Other', 4: 'White'}, 'sex': {0: 'Female', 1: 'Male'}}
+        label_enc = LabelEnc()
+        dataset_encoded = Dataset(label_enc.encode(dataset,['race','sex']))
+        dataset_decoded = label_enc.decode(dataset_encoded,features_encoding)
+
+        self.assertTrue('sex' in dataset_decoded.columns)
+        self.assertEqual(dataset_decoded['sex'].unique().tolist(),['Male', 'Female'])
+        self.assertTrue('race' in dataset_decoded.columns)
+        self.assertEqual(dataset_decoded['race'].unique().tolist(),['White', 'Black', 'Asian-Pac-Islander', 'Amer-Indian-Eskimo', 'Other'])
 
 
 if __name__ == '__main__':

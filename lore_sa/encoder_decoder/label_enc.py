@@ -13,6 +13,7 @@ class LabelEnc(EncDec):
     def __init__(self):
         super().__init__()
         self.type = "label"
+        self.feature_encoding = {}
 
     def encode(self, dataset: Dataset, features_to_encode: list):
         """
@@ -23,8 +24,11 @@ class LabelEnc(EncDec):
         """
         # creating instance of labelencoder
         labelencoder = LabelEncoder()
+        self.dataset_encoded = pd.DataFrame()
+        for feature in features_to_encode:
+            self.dataset_encoded[feature] = labelencoder.fit_transform(dataset.df[feature])
+            self.feature_encoding[feature] = {i:v for i,v in enumerate(labelencoder.classes_)}
 
-        self.dataset_encoded = dataset.df[features_to_encode].apply(labelencoder.fit_transform)
 
         # buffering original features to get them eventually decoded
         self.original_data = dataset.df[features_to_encode]
@@ -41,3 +45,17 @@ class LabelEnc(EncDec):
             return "LabelEncoder - features encoded: %s" % (",".join(self.original_features))
         else:
             return "LabelEncoder - no features encoded"
+
+    def decode(self, dataset: Dataset, feature_encoding: dict):
+        """
+        Provides a new dataframe decoded from dictionary of encoding features
+        :param [Dataset] dataset: Dataset to decode
+        :param feature_encoding: a dictionary to convert the values from numeric to string.
+        :return:
+        """
+        self.dataset_decoded = pd.DataFrame()
+        for feature in feature_encoding:
+            self.dataset_decoded[feature] = dataset.df[feature].apply(lambda x: feature_encoding[feature][x])
+
+        dataset.df = pd.concat([dataset.df.drop(columns=feature_encoding.keys()), self.dataset_decoded], axis=1)
+        return dataset.df
