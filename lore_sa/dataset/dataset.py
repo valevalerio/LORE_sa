@@ -73,7 +73,7 @@ class Dataset():
         """
         return self.rdf
 
-    def get_self_feature_map(self):
+    def create_feature_map(self):
         """
         Provides a dictionary with the list of numeric and categorical columns.
         :return:
