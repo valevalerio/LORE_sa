@@ -1,5 +1,5 @@
 import unittest
-from lore_sa.encoder_decoder import OneHotEnc, TargetEnc
+from lore_sa.encoder_decoder import OneHotEnc, TargetEnc, LabelEnc
 from lore_sa.dataset import Dataset
 
 
@@ -49,6 +49,18 @@ class EncDecTest(unittest.TestCase):
         with  self.assertRaises(Exception) as context:
             one_hot_enc.decode(dataset)
             self.assertEqual("ERROR! To decode a dataset it must be firstly encoded by the same encoder object.", str(context.exception))
+
+
+    def test_label_encoder_init_with_features_encoder(self):
+        dataset = Dataset.from_csv("resources/adult.csv")
+
+        label_enc = LabelEnc()
+        dataset_encoded = label_enc.encode(dataset,['race','sex'])
+        self.assertEqual(label_enc.__str__(),"LabelEncoder - features encoded: race,sex")
+        self.assertTrue('race' in dataset_encoded.columns )
+        self.assertTrue(dataset_encoded['race'].all() in [0,6])
+        self.assertTrue('sex' in dataset_encoded.columns )
+        self.assertTrue(dataset_encoded['sex'].all() in [0,6])
 
 
 if __name__ == '__main__':
