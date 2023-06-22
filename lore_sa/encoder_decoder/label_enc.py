@@ -7,7 +7,7 @@ from sklearn.preprocessing import LabelEncoder
 __all__ = ["EncDec", "LabelEnc"]
 class LabelEnc(EncDec):
     """
-    It provides an interface to access Label enconding (https://en.wikipedia.org/wiki/One-hot) functions.
+    It provides an interface to access Label enconding functions.
     """
 
     def __init__(self):
@@ -49,6 +49,7 @@ class LabelEnc(EncDec):
     def decode(self, dataset: Dataset, feature_encoding: dict = None):
         """
         Provides a new dataframe decoded from dictionary of encoding features
+
         :param [Dataset] dataset: Dataset to decode
         :param feature_encoding: a dictionary to convert the values from numeric to string.
         :return:
