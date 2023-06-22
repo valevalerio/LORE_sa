@@ -15,9 +15,7 @@
    
       ~GeneticProbaGenerator.__init__
       ~GeneticProbaGenerator.add_halloffame
-      ~GeneticProbaGenerator.apply_bb_predict
-      ~GeneticProbaGenerator.apply_bb_predict_proba
-      ~GeneticProbaGenerator.balance_neigh
+      ~GeneticProbaGenerator.check_generated
       ~GeneticProbaGenerator.clone
       ~GeneticProbaGenerator.fit
       ~GeneticProbaGenerator.fitness_equal
@@ -25,8 +23,6 @@
       ~GeneticProbaGenerator.fitness_notequal
       ~GeneticProbaGenerator.fitness_notequal_proba
       ~GeneticProbaGenerator.generate
-      ~GeneticProbaGenerator.generate_synthetic_instance
-      ~GeneticProbaGenerator.multi_generate
       ~GeneticProbaGenerator.mutate
       ~GeneticProbaGenerator.random_init
       ~GeneticProbaGenerator.record_init

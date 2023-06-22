@@ -14,16 +14,12 @@
    .. autosummary::
    
       ~CFSGenerator.__init__
-      ~CFSGenerator.apply_bb_predict
-      ~CFSGenerator.apply_bb_predict_proba
-      ~CFSGenerator.balance_neigh
       ~CFSGenerator.binary_sampling_search
+      ~CFSGenerator.check_generated
       ~CFSGenerator.counterfactual_search
       ~CFSGenerator.gaussian_global_sampling
       ~CFSGenerator.gaussian_vicinity_sampling
       ~CFSGenerator.generate
-      ~CFSGenerator.generate_synthetic_instance
-      ~CFSGenerator.multi_generate
       ~CFSGenerator.neighborhood_sampling
       ~CFSGenerator.translate
       ~CFSGenerator.uniform_sphere_origin

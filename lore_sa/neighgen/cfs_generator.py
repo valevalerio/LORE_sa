@@ -1,7 +1,7 @@
 from imblearn.under_sampling import RandomUnderSampler
 from sklearn.model_selection import train_test_split
 
-from lore_sa.neighgen.neighgen import NeighborhoodGenerator
+from lore_sa.neighgen.neighborhood_generator import NeighborhoodGenerator
 import numpy as np
 
 import warnings

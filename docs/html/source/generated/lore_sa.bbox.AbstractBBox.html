@@ -61,14 +61,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-neighgen-neighborhood-generator-classes"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.neighgen</span></code>: Neighborhood Generator classes</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.NeighborhoodGenerator.html">lore_sa.neighgen.NeighborhoodGenerator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.CFSGenerator.html">lore_sa.neighgen.CFSGenerator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.ClosestInstancesGenerator.html">lore_sa.neighgen.ClosestInstancesGenerator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.CounterGenerator.html">lore_sa.neighgen.CounterGenerator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.GeneticGenerator.html">lore_sa.neighgen.GeneticGenerator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.GeneticProbaGenerator.html">lore_sa.neighgen.GeneticProbaGenerator</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.RandomGenerator.html">lore_sa.neighgen.RandomGenerator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.RandomGeneticGenerator.html">lore_sa.neighgen.RandomGeneticGenerator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.RandomGeneticProbaGenerator.html">lore_sa.neighgen.RandomGeneticProbaGenerator</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-decision-tree-decision-tree-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.decision_tree</span></code>: Decision tree functions</a><ul>
@@ -85,8 +78,9 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-encoder-decoder-encoder-decoder-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.encoder_decoder</span></code>: Encoder/Decoder classes and functions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.EncDec.html">lore_sa.encoder_decoder.EncDec</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.MyTargetEnc.html">lore_sa.encoder_decoder.MyTargetEnc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.TargetEnc.html">lore_sa.encoder_decoder.TargetEnc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.OneHotEnc.html">lore_sa.encoder_decoder.OneHotEnc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.LabelEnc.html">lore_sa.encoder_decoder.LabelEnc</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-explanation-explanation-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.explanation</span></code>: Explanation classes and functions</a><ul>
@@ -171,28 +165,37 @@
 <h1>lore_sa.bbox.AbstractBBox<a class="headerlink" href="#lore-sa-bbox-abstractbbox" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="lore_sa.bbox.AbstractBBox">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lore_sa.bbox.</span></span><span class="sig-name descname"><span class="pre">AbstractBBox</span></span><a class="reference internal" href="../../_modules/lore_sa/bbox/bbox.html#AbstractBBox"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.bbox.AbstractBBox" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lore_sa.bbox.</span></span><span class="sig-name descname"><span class="pre">AbstractBBox</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">classifier</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/bbox/bbox.html#AbstractBBox"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.bbox.AbstractBBox" title="Permalink to this definition"></a></dt>
 <dd><p>Generic Black Box class witch provides two sklearn-like methods.</p>
 <p>pass</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="lore_sa.bbox.AbstractBBox.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/bbox/bbox.html#AbstractBBox.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.bbox.AbstractBBox.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">classifier</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/bbox/bbox.html#AbstractBBox.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.bbox.AbstractBBox.__init__" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <p class="rubric">Methods</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.bbox.AbstractBBox.__init__" title="lore_sa.bbox.AbstractBBox.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.bbox.AbstractBBox.__init__" title="lore_sa.bbox.AbstractBBox.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(classifier)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lore_sa.bbox.AbstractBBox.predict" title="lore_sa.bbox.AbstractBBox.predict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">predict</span></code></a>(sample_matrix)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lore_sa.bbox.AbstractBBox.model" title="lore_sa.bbox.AbstractBBox.model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">model</span></code></a>()</p></td>
+<td><p>Provides the bbox.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.bbox.AbstractBBox.predict" title="lore_sa.bbox.AbstractBBox.predict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">predict</span></code></a>(sample_matrix)</p></td>
 <td><p>Wrap of sklearn predict method, that predict the class labels for the provided data.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.bbox.AbstractBBox.predict_proba" title="lore_sa.bbox.AbstractBBox.predict_proba"><code class="xref py py-obj docutils literal notranslate"><span class="pre">predict_proba</span></code></a>(sample_matrix)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lore_sa.bbox.AbstractBBox.predict_proba" title="lore_sa.bbox.AbstractBBox.predict_proba"><code class="xref py py-obj docutils literal notranslate"><span class="pre">predict_proba</span></code></a>(sample_matrix)</p></td>
 <td><p>Wrap of sklearn predict_proba method, that return probability estimates for the test data.</p></td>
 </tr>
 </tbody>
 </table>
+<dl class="py method">
+<dt class="sig sig-object py" id="lore_sa.bbox.AbstractBBox.model">
+<span class="sig-name descname"><span class="pre">model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/bbox/bbox.html#AbstractBBox.model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.bbox.AbstractBBox.model" title="Permalink to this definition"></a></dt>
+<dd><p>Provides the bbox.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="lore_sa.bbox.AbstractBBox.predict">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/bbox/bbox.html#AbstractBBox.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.bbox.AbstractBBox.predict" title="Permalink to this definition"></a></dt>

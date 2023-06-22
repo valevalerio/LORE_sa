@@ -14,6 +14,7 @@
    .. autosummary::
    
       ~AbstractBBox.__init__
+      ~AbstractBBox.model
       ~AbstractBBox.predict
       ~AbstractBBox.predict_proba
    

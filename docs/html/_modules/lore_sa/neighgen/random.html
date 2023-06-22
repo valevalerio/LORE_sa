@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lore_sa.encoder_decoder.my_target_enc &mdash; LORE_sa  documentation</title>
+  <title>lore_sa.neighgen.random &mdash; LORE_sa  documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -75,9 +75,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../source/modules.html#lore-sa-encoder-decoder-encoder-decoder-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.encoder_decoder</span></code>: Encoder/Decoder classes and functions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.encoder_decoder.EncDec.html">lore_sa.encoder_decoder.EncDec</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.encoder_decoder.TargetEnc.html">lore_sa.encoder_decoder.TargetEnc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.encoder_decoder.OneHotEnc.html">lore_sa.encoder_decoder.OneHotEnc</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.encoder_decoder.LabelEnc.html">lore_sa.encoder_decoder.LabelEnc</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../source/modules.html#lore-sa-explanation-explanation-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.explanation</span></code>: Explanation classes and functions</a><ul>
@@ -148,7 +146,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
-      <li class="breadcrumb-item active">lore_sa.encoder_decoder.my_target_enc</li>
+      <li class="breadcrumb-item active">lore_sa.neighgen.random</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -157,67 +155,57 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for lore_sa.encoder_decoder.my_target_enc</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">.enc_dec</span> <span class="kn">import</span> <span class="n">EncDec</span>
-<span class="kn">from</span> <span class="nn">category_encoders</span> <span class="kn">import</span> <span class="n">TargetEncoder</span>
-<span class="kn">from</span> <span class="nn">lore_sa.dataset.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+  <h1>Source code for lore_sa.neighgen.random</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">lore_sa.neighgen.neighborhood_generator</span> <span class="kn">import</span> <span class="n">NeighborhoodGenerator</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;EncDec&quot;</span><span class="p">,</span> <span class="s2">&quot;TargetEnc&quot;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;NeighborhoodGenerator&quot;</span><span class="p">,</span><span class="s2">&quot;RandomGenerator&quot;</span><span class="p">]</span>
 
-<span class="n">extend</span><span class="p">:</span> <span class="n">TargetEncoder</span>
-<div class="viewcode-block" id="TargetEnc"><a class="viewcode-back" href="../../../source/generated/lore_sa.encoder_decoder.TargetEnc.html#lore_sa.encoder_decoder.TargetEnc">[docs]</a><span class="k">class</span> <span class="nc">TargetEnc</span><span class="p">(</span><span class="n">EncDec</span><span class="p">):</span>
+<div class="viewcode-block" id="RandomGenerator"><a class="viewcode-back" href="../../../source/generated/lore_sa.neighgen.RandomGenerator.html#lore_sa.neighgen.RandomGenerator">[docs]</a><span class="k">class</span> <span class="nc">RandomGenerator</span><span class="p">(</span><span class="n">NeighborhoodGenerator</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Target encoding for categorical features.</span>
-<span class="sd">    Extend TargetEncoder from category_encoders.</span>
+<span class="sd">    Random Generator creates neighbor instances by generating random values starting from the instance to explain</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="TargetEnc.__init__"><a class="viewcode-back" href="../../../source/generated/lore_sa.encoder_decoder.TargetEnc.html#lore_sa.encoder_decoder.TargetEnc.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="s1">&#39;target&#39;</span></div>
+<div class="viewcode-block" id="RandomGenerator.__init__"><a class="viewcode-back" href="../../../source/generated/lore_sa.neighgen.RandomGenerator.html#lore_sa.neighgen.RandomGenerator.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">generated_data</span> <span class="o">=</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="TargetEnc.encode"><a class="viewcode-back" href="../../../source/generated/lore_sa.encoder_decoder.TargetEnc.html#lore_sa.encoder_decoder.TargetEnc.encode">[docs]</a>    <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">features_to_encode</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+
+<div class="viewcode-block" id="RandomGenerator.generate"><a class="viewcode-back" href="../../../source/generated/lore_sa.neighgen.RandomGenerator.html#lore_sa.neighgen.RandomGenerator.generate">[docs]</a>    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">x</span><span class="p">,</span> <span class="n">num_instances</span><span class="p">,</span> <span class="n">features_domain</span> <span class="o">=</span> <span class="p">{}):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        It applies the encoder to the input categorical features</span>
-
-<span class="sd">        :param[Dataset] x: the Dataset containing the features to be encoded</span>
-<span class="sd">        :param[list] features_to_encode: list of columns of Dataset.df dataframe to be encoded</span>
-<span class="sd">        :param[str] target: target name column</span>
+<span class="sd">        random generation of new instances. The starting instance x is only used to detect the value type of each feature, in order</span>
+<span class="sd">        to generate new values only for numeric features.</span>
+<span class="sd">        </span>
+<span class="sd">        :param x[dict]: the starting instance from the real dataset</span>
+<span class="sd">        :param num_instances[int]: the number of instances to generate</span>
+<span class="sd">        :param features_domain[dict]: dictionary in the format {&quot;feature name&quot;: List | Range}, representing the domain range for each feature. </span>
+<span class="sd">        The list (or range) associated to each key is used to randomly choice an element within the list. </span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span>
 
-        <span class="n">y</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="n">target</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dataset_encoded</span> <span class="o">=</span> <span class="n">TargetEncoder</span><span class="p">(</span><span class="n">return_df</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cols</span> <span class="o">=</span> <span class="n">features_to_encode</span><span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">df</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
-
-        <span class="c1"># buffering original features to get them eventually decoded</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">original_data</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">df</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">original_features</span> <span class="o">=</span> <span class="n">features_to_encode</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">encoded_features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_encoded</span><span class="o">.</span><span class="n">columns</span>
         
+        <span class="n">generated_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">num_instances</span><span class="p">:</span>
+            <span class="n">instance</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span>
+                <span class="n">feature_value</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">features_domain</span><span class="p">:</span> 
+                    <span class="c1">#feature_value is a list or a range</span>
+                    <span class="n">instance</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">feature_value</span><span class="p">))</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">feature_value</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">feature_value</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                    
+                    <span class="c1">#no information on the dataset, generation of random instances only for the numeric features of the input real instance</span>
 
-        <span class="c1"># substituing old features with encoded</span>
-        <span class="n">dataset</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">dataset</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">features_to_encode</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_encoded</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="n">cast</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">feature_value</span><span class="p">)</span>
+                    <span class="n">instance</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">())</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1">#feature is a string/category, it is impossibile to generate random values</span>
+                    <span class="n">instance</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span> <span class="o">=</span> <span class="n">feature_value</span>
+            <span class="n">generated_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">dataset</span><span class="o">.</span><span class="n">df</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">generated_data</span> <span class="o">=</span> <span class="n">generated_list</span>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoded_features</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;TargetEncoder - features encoded: </span><span class="si">{0}</span><span class="s2"> - target feature: </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">original_features</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;TargetEncoder - no features encoded&quot;</span>
-
-    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoded_features</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">original_data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;ERROR! To decode a dataset it must be firstly encoded by the same encoder object.&quot;</span><span class="p">)</span>
-
-            <span class="n">decoded_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">original_data</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dataset_encoded</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">original_features</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">original_data</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">encoded_features</span> <span class="o">=</span> <span class="kc">None</span>        
-            <span class="k">return</span> <span class="n">decoded_data</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">dataset</span><span class="o">.</span><span class="n">df</span></div>
+        <span class="k">return</span> <span class="n">generated_list</span></div></div>
+                        
+    
+                    
 </pre></div>
 
            </div>

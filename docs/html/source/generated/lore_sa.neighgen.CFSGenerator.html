@@ -19,8 +19,6 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="lore_sa.neighgen.ClosestInstancesGenerator" href="lore_sa.neighgen.ClosestInstancesGenerator.html" />
-    <link rel="prev" title="lore_sa.neighgen.NeighborhoodGenerator" href="lore_sa.neighgen.NeighborhoodGenerator.html" />
     <link href="../../_static/style.css" rel="stylesheet" type="text/css">
 
 </head>
@@ -44,8 +42,8 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../modules.html">Modules</a><ul class="current">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">Modules</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-lorem-lorem-class"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.lorem</span></code>: LOREM class</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.lorem.LOREM.html">lore_sa.lorem.LOREM</a></li>
 </ul>
@@ -59,16 +57,9 @@
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.dataset.utils.html">lore_sa.dataset.utils</a></li>
 </ul>
 </li>
-<li class="toctree-l2 current"><a class="reference internal" href="../modules.html#lore-sa-neighgen-neighborhood-generator-classes"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.neighgen</span></code>: Neighborhood Generator classes</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-neighgen-neighborhood-generator-classes"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.neighgen</span></code>: Neighborhood Generator classes</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.NeighborhoodGenerator.html">lore_sa.neighgen.NeighborhoodGenerator</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">lore_sa.neighgen.CFSGenerator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.ClosestInstancesGenerator.html">lore_sa.neighgen.ClosestInstancesGenerator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.CounterGenerator.html">lore_sa.neighgen.CounterGenerator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.GeneticGenerator.html">lore_sa.neighgen.GeneticGenerator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.GeneticProbaGenerator.html">lore_sa.neighgen.GeneticProbaGenerator</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.RandomGenerator.html">lore_sa.neighgen.RandomGenerator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.RandomGeneticGenerator.html">lore_sa.neighgen.RandomGeneticGenerator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.RandomGeneticProbaGenerator.html">lore_sa.neighgen.RandomGeneticProbaGenerator</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-decision-tree-decision-tree-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.decision_tree</span></code>: Decision tree functions</a><ul>
@@ -85,8 +76,9 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-encoder-decoder-encoder-decoder-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.encoder_decoder</span></code>: Encoder/Decoder classes and functions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.EncDec.html">lore_sa.encoder_decoder.EncDec</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.MyTargetEnc.html">lore_sa.encoder_decoder.MyTargetEnc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.TargetEnc.html">lore_sa.encoder_decoder.TargetEnc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.OneHotEnc.html">lore_sa.encoder_decoder.OneHotEnc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.LabelEnc.html">lore_sa.encoder_decoder.LabelEnc</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-explanation-explanation-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.explanation</span></code>: Explanation classes and functions</a><ul>
@@ -156,7 +148,6 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="../modules.html">Modules</a></li>
       <li class="breadcrumb-item active">lore_sa.neighgen.CFSGenerator</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/source/generated/lore_sa.neighgen.CFSGenerator.rst.txt" rel="nofollow"> View page source</a>
@@ -218,17 +209,11 @@
 </dl>
 </p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_bb_predict</span></code>(X[, encoded])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">binary_sampling_search</span></code>(x, x_label[, ...])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_bb_predict_proba</span></code>(X[, encoded])</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">balance_neigh</span></code>(x, Z, num_samples)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">binary_sampling_search</span></code>(x, x_label[, ...])</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.neighgen.CFSGenerator.check_generated" title="lore_sa.neighgen.CFSGenerator.check_generated"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_generated</span></code></a>([filter_function, check_fuction])</p></td>
+<td><p>It contains the logic to check the requirements for generated data</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">counterfactual_search</span></code>(x, x_label, **kwargs)</p></td>
 <td><p></p></td>
@@ -245,12 +230,6 @@
 <dd class="field-odd"><p></p></dd>
 </dl>
 </p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_synthetic_instance</span></code>([from_z, mutpb])</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">multi_generate</span></code>(x[, samples, runs])</p></td>
-<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">neighborhood_sampling</span></code>(x, x_label[, ...])</p></td>
 <td><p></p></td>
@@ -272,6 +251,12 @@
 </tr>
 </tbody>
 </table>
+<dl class="py method">
+<dt class="sig sig-object py" id="lore_sa.neighgen.CFSGenerator.check_generated">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_generated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter_function</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_fuction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lore_sa.neighgen.CFSGenerator.check_generated" title="Permalink to this definition"></a></dt>
+<dd><p>It contains the logic to check the requirements for generated data</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="lore_sa.neighgen.CFSGenerator.generate">
 <span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/neighgen/cfs_generator.html#CFSGenerator.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.neighgen.CFSGenerator.generate" title="Permalink to this definition"></a></dt>
@@ -335,10 +320,7 @@ by “radius” (length of points are in range [0, “radius”]).</p>
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="lore_sa.neighgen.NeighborhoodGenerator.html" class="btn btn-neutral float-left" title="lore_sa.neighgen.NeighborhoodGenerator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="lore_sa.neighgen.ClosestInstancesGenerator.html" class="btn btn-neutral float-right" title="lore_sa.neighgen.ClosestInstancesGenerator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          <footer>
 
   <hr/>
 

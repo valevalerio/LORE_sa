@@ -1,5 +1,5 @@
 from lore_sa.encoder_decoder import OneHotEnc
-from lore_sa.neighgen.neighgen import NeighborhoodGenerator
+from lore_sa.neighgen.neighborhood_generator import NeighborhoodGenerator
 from lore_sa.util import neuclidean
 
 from scipy.stats import binned_statistic

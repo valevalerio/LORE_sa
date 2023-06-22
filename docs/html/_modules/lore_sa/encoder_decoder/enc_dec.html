@@ -58,14 +58,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../source/modules.html#lore-sa-neighgen-neighborhood-generator-classes"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.neighgen</span></code>: Neighborhood Generator classes</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.neighgen.NeighborhoodGenerator.html">lore_sa.neighgen.NeighborhoodGenerator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.neighgen.CFSGenerator.html">lore_sa.neighgen.CFSGenerator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.neighgen.ClosestInstancesGenerator.html">lore_sa.neighgen.ClosestInstancesGenerator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.neighgen.CounterGenerator.html">lore_sa.neighgen.CounterGenerator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.neighgen.GeneticGenerator.html">lore_sa.neighgen.GeneticGenerator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.neighgen.GeneticProbaGenerator.html">lore_sa.neighgen.GeneticProbaGenerator</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.neighgen.RandomGenerator.html">lore_sa.neighgen.RandomGenerator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.neighgen.RandomGeneticGenerator.html">lore_sa.neighgen.RandomGeneticGenerator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.neighgen.RandomGeneticProbaGenerator.html">lore_sa.neighgen.RandomGeneticProbaGenerator</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../source/modules.html#lore-sa-decision-tree-decision-tree-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.decision_tree</span></code>: Decision tree functions</a><ul>
@@ -82,7 +75,6 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../source/modules.html#lore-sa-encoder-decoder-encoder-decoder-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.encoder_decoder</span></code>: Encoder/Decoder classes and functions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.encoder_decoder.EncDec.html">lore_sa.encoder_decoder.EncDec</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.encoder_decoder.MyTargetEnc.html">lore_sa.encoder_decoder.MyTargetEnc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.encoder_decoder.OneHotEnc.html">lore_sa.encoder_decoder.OneHotEnc</a></li>
 </ul>
 </li>
@@ -181,8 +173,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">dataset_encoded</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">original_features</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">original_data</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">encoded_features</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="kc">None</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">encoded_features</span> <span class="o">=</span> <span class="kc">None</span></div>
+        
 
 <div class="viewcode-block" id="EncDec.encode"><a class="viewcode-back" href="../../../source/generated/lore_sa.encoder_decoder.EncDec.html#lore_sa.encoder_decoder.EncDec.encode">[docs]</a>    <span class="nd">@abstractmethod</span>
     <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">features_to_encode</span><span class="p">):</span>
@@ -197,34 +189,6 @@
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">return</span></div>
-
-    <span class="c1"># @abstractmethod</span>
-    <span class="c1"># def enc_fit_transform(self, dataset=None, class_name=None):</span>
-    <span class="c1">#     return</span>
-
-
-    <span class="c1"># removed to improve flexibility for the user</span>
-    <span class="c1"># @abstractmethod</span>
-    <span class="c1"># def prepare_dataset(self, df: pd.DataFrame, class_name, numeric_columns, rdf):</span>
-    <span class="c1">#     &quot;&quot;&quot;</span>
-    <span class="c1">#     This function prepare the dataset in a way to use the encoder with the function enc.</span>
-
-    <span class="c1">#     :param [Dataframe] df: the original dataframe</span>
-    <span class="c1">#     :param [str] class_name: class name target</span>
-    <span class="c1">#     :param [int] numeric_columns: list of numeric columns indexes</span>
-    <span class="c1">#     :param [Dataframe] rdf: original dataframe </span>
-    <span class="c1">#     :return [Dataframe] df_dummy:  encoded dataframe</span>
-    <span class="c1">#     :return feature_names:</span>
-    <span class="c1">#     :return features_map:</span>
-    <span class="c1">#     :return numeric_columns:</span>
-    <span class="c1">#     :return class_values:</span>
-    <span class="c1">#     :return rdf:</span>
-    <span class="c1">#     :return real_feature_names:</span>
-    <span class="c1">#     &quot;&quot;&quot;</span>
-    <span class="c1">#     return</span>
-
-
-
 </pre></div>
 
            </div>

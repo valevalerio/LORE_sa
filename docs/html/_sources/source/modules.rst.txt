@@ -94,8 +94,9 @@ Modules
    :toctree: generated/
 
    encoder_decoder.EncDec
-   encoder_decoder.MyTargetEnc
+   encoder_decoder.TargetEnc
    encoder_decoder.OneHotEnc
+   encoder_decoder.LabelEnc
 
 
 :mod:`lore_sa.explanation`: Explanation classes and functions

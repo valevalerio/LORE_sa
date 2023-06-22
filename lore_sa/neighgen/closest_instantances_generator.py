@@ -1,4 +1,4 @@
-from lore_sa.neighgen.neighgen import NeighborhoodGenerator
+from lore_sa.neighgen.neighborhood_generator import NeighborhoodGenerator
 from lore_sa.util import calculate_feature_values, neuclidean
 from lore_sa.neighgen.random_generator import RandomGenerator
 

@@ -15,16 +15,12 @@
    
       ~RandomGeneticGenerator.__init__
       ~RandomGeneticGenerator.add_halloffame
-      ~RandomGeneticGenerator.apply_bb_predict
-      ~RandomGeneticGenerator.apply_bb_predict_proba
-      ~RandomGeneticGenerator.balance_neigh
+      ~RandomGeneticGenerator.check_generated
       ~RandomGeneticGenerator.clone
       ~RandomGeneticGenerator.fit
       ~RandomGeneticGenerator.fitness_equal
       ~RandomGeneticGenerator.fitness_notequal
       ~RandomGeneticGenerator.generate
-      ~RandomGeneticGenerator.generate_synthetic_instance
-      ~RandomGeneticGenerator.multi_generate
       ~RandomGeneticGenerator.mutate
       ~RandomGeneticGenerator.random_init
       ~RandomGeneticGenerator.record_init

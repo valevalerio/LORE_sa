@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lore_sa.util &mdash; LORE_sa  documentation</title>
+  <title>lore_sa.encoder_decoder.TargetEnc &mdash; LORE_sa  documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Tabular explanations example" href="../../examples/tabular_explanations_example.html" />
-    <link rel="prev" title="lore_sa.surrogate.SuperTree" href="lore_sa.surrogate.SuperTree.html" />
+    <link rel="next" title="lore_sa.encoder_decoder.OneHotEnc" href="lore_sa.encoder_decoder.OneHotEnc.html" />
+    <link rel="prev" title="lore_sa.encoder_decoder.EncDec" href="lore_sa.encoder_decoder.EncDec.html" />
     <link href="../../_static/style.css" rel="stylesheet" type="text/css">
 
 </head>
@@ -76,9 +76,9 @@
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.discretizer.RMEPDiscretizer.html">lore_sa.discretizer.RMEPDiscretizer</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-encoder-decoder-encoder-decoder-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.encoder_decoder</span></code>: Encoder/Decoder classes and functions</a><ul>
+<li class="toctree-l2 current"><a class="reference internal" href="../modules.html#lore-sa-encoder-decoder-encoder-decoder-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.encoder_decoder</span></code>: Encoder/Decoder classes and functions</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.EncDec.html">lore_sa.encoder_decoder.EncDec</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.TargetEnc.html">lore_sa.encoder_decoder.TargetEnc</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">lore_sa.encoder_decoder.TargetEnc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.OneHotEnc.html">lore_sa.encoder_decoder.OneHotEnc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.LabelEnc.html">lore_sa.encoder_decoder.LabelEnc</a></li>
 </ul>
@@ -103,8 +103,8 @@
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.surrogate.SuperTree.html">lore_sa.surrogate.SuperTree</a></li>
 </ul>
 </li>
-<li class="toctree-l2 current"><a class="reference internal" href="../modules.html#lore-sa-util-util-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.util</span></code>: Util functions</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">lore_sa.util</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-util-util-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.util</span></code>: Util functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.util.html">lore_sa.util</a></li>
 </ul>
 </li>
 </ul>
@@ -151,9 +151,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../modules.html">Modules</a></li>
-      <li class="breadcrumb-item active">lore_sa.util</li>
+      <li class="breadcrumb-item active">lore_sa.encoder_decoder.TargetEnc</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../_sources/source/generated/lore_sa.util.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/source/generated/lore_sa.encoder_decoder.TargetEnc.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -161,78 +161,49 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-lore_sa.util">
-<span id="lore-sa-util"></span><h1>lore_sa.util<a class="headerlink" href="#module-lore_sa.util" title="Permalink to this heading"></a></h1>
-<p class="rubric">Functions</p>
+  <section id="lore-sa-encoder-decoder-targetenc">
+<h1>lore_sa.encoder_decoder.TargetEnc<a class="headerlink" href="#lore-sa-encoder-decoder-targetenc" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="lore_sa.encoder_decoder.TargetEnc">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lore_sa.encoder_decoder.</span></span><span class="sig-name descname"><span class="pre">TargetEnc</span></span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/my_target_enc.html#TargetEnc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.TargetEnc" title="Permalink to this definition"></a></dt>
+<dd><p>Target encoding for categorical features.
+Extend TargetEncoder from category_encoders.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="lore_sa.encoder_decoder.TargetEnc.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/my_target_enc.html#TargetEnc.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.TargetEnc.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<p class="rubric">Methods</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.util.best_fit_distribution" title="lore_sa.util.best_fit_distribution"><code class="xref py py-obj docutils literal notranslate"><span class="pre">best_fit_distribution</span></code></a>(data[, bins, ax])</p></td>
-<td><p>Model data by finding best fit distribution to data</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_feature_values</span></code>(X, ...[, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.encoder_decoder.TargetEnc.__init__" title="lore_sa.encoder_decoder.TargetEnc.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">estimate_nbr_bins</span></code>(x)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">decode</span></code>(dataset[, kwargs])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">freedman_diaconis</span></code>(x)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_distr_values</span></code>(x[, size])</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">mixed_distance_idx</span></code>(x, y, idx[, ddist, cdist])</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">multi_dt_predict</span></code>(X, dt_list)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">multilabel2str</span></code>(y, class_name)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">neuclidean</span></code>(x, y)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">nmeandev</span></code>(x, y)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">record2str</span></code>(x, feature_names, numeric_columns)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lore_sa.util.sigmoid" title="lore_sa.util.sigmoid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sigmoid</span></code></a>(x[, x0, k, L])</p></td>
-<td><p>A logistic function or logistic curve is a common &quot;S&quot; shape (sigmoid curve</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">struges</span></code>(x)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">vector2dict</span></code>(x, feature_names)</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.encoder_decoder.TargetEnc.encode" title="lore_sa.encoder_decoder.TargetEnc.encode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encode</span></code></a>(dataset, features_to_encode, target)</p></td>
+<td><p>It applies the encoder to the input categorical features</p></td>
 </tr>
 </tbody>
 </table>
-<dl class="py function">
-<dt class="sig sig-object py" id="lore_sa.util.best_fit_distribution">
-<span class="sig-prename descclassname"><span class="pre">lore_sa.util.</span></span><span class="sig-name descname"><span class="pre">best_fit_distribution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/util.html#best_fit_distribution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.util.best_fit_distribution" title="Permalink to this definition"></a></dt>
-<dd><p>Model data by finding best fit distribution to data</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="lore_sa.util.sigmoid">
-<span class="sig-prename descclassname"><span class="pre">lore_sa.util.</span></span><span class="sig-name descname"><span class="pre">sigmoid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">L</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/util.html#sigmoid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.util.sigmoid" title="Permalink to this definition"></a></dt>
-<dd><p>A logistic function or logistic curve is a common “S” shape (sigmoid curve</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="lore_sa.encoder_decoder.TargetEnc.encode">
+<span class="sig-name descname"><span class="pre">encode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="lore_sa.dataset.Dataset.html#lore_sa.dataset.Dataset" title="lore_sa.dataset.dataset.Dataset"><span class="pre">Dataset</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">features_to_encode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/my_target_enc.html#TargetEnc.encode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.TargetEnc.encode" title="Permalink to this definition"></a></dt>
+<dd><p>It applies the encoder to the input categorical features</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> – value to transform</p></li>
-<li><p><strong>x0</strong> – the x-value of the sigmoid’s midpoint</p></li>
-<li><p><strong>k</strong> – the curve’s maximum value</p></li>
-<li><p><strong>L</strong> – the steepness of the curve</p></li>
-</ul>
+<dt class="field-odd">Param[Dataset] x<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the Dataset containing the features to be encoded</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>sigmoid of x</p>
+<dt class="field-even">Param[list] features_to_encode<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of columns of Dataset.df dataframe to be encoded</p>
+</dd>
+<dt class="field-odd">Param[str] target<span class="colon">:</span></dt>
+<dd class="field-odd"><p>target name column</p>
 </dd>
 </dl>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -241,8 +212,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="lore_sa.surrogate.SuperTree.html" class="btn btn-neutral float-left" title="lore_sa.surrogate.SuperTree" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../../examples/tabular_explanations_example.html" class="btn btn-neutral float-right" title="Tabular explanations example" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="lore_sa.encoder_decoder.EncDec.html" class="btn btn-neutral float-left" title="lore_sa.encoder_decoder.EncDec" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="lore_sa.encoder_decoder.OneHotEnc.html" class="btn btn-neutral float-right" title="lore_sa.encoder_decoder.OneHotEnc" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

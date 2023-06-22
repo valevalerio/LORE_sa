@@ -14,16 +14,12 @@
    .. autosummary::
    
       ~CounterGenerator.__init__
-      ~CounterGenerator.apply_bb_predict
-      ~CounterGenerator.apply_bb_predict_proba
-      ~CounterGenerator.balance_neigh
+      ~CounterGenerator.check_generated
       ~CounterGenerator.create_bins
       ~CounterGenerator.find_closest_counter
       ~CounterGenerator.find_in_possibilities
       ~CounterGenerator.for_loop_counter
       ~CounterGenerator.generate
-      ~CounterGenerator.generate_synthetic_instance
-      ~CounterGenerator.multi_generate
    
    
 

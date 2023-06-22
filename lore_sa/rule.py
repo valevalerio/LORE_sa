@@ -176,7 +176,7 @@ def get_rule(x, y, dt, feature_names, class_name, class_values, numeric_columns,
                         op = '<=' if x[0][feature[node_id]] <= threshold[node_id] else '>'
                         thr = threshold[node_id]
                     iscont = att in numeric_columns
-                elif isinstance(encdec, MyTargetEnc):
+                elif isinstance(encdec, TargetEnc):
                     att = feature_names[feature[node_id]]
                     if att not in numeric_columns:
                         #caso di variabile categorica
@@ -479,7 +479,7 @@ def get_rule_supert(x, dt, feature_names, class_name, class_values, numeric_colu
                     if i == 0:
                         if x[Xf] <= node.intervals[i]:
                             if encdec:
-                                if isinstance(encdec, MyTargetEnc):
+                                if isinstance(encdec, TargetEnc):
                                     if att not in numeric_columns:
                                         # caso di variabile categorica
                                         op = '<' if x[Xf] <= node.intervals[i] else '>'
@@ -508,7 +508,7 @@ def get_rule_supert(x, dt, feature_names, class_name, class_values, numeric_colu
                         #print('entro qui qui qui')
                         if x[Xf] > node.intervals[i-1]:
                             if encdec:
-                                if isinstance(encdec, MyTargetEnc):
+                                if isinstance(encdec, TargetEnc):
                                     if att not in numeric_columns:
                                         # caso di variabile categorica
                                         op = '<' if x[Xf] <= node.intervals[-2] else '>'
@@ -536,7 +536,7 @@ def get_rule_supert(x, dt, feature_names, class_name, class_values, numeric_colu
                         if x[Xf] <= node.intervals[i] and x[Xf] > node.intervals[i-1]:
 
                             if encdec:
-                                if isinstance(encdec, MyTargetEnc):
+                                if isinstance(encdec, TargetEnc):
                                     if att not in numeric_columns:
                                         # caso di variabile categorica
                                         op = 'range'

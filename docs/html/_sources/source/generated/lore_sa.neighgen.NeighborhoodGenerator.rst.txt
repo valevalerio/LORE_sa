@@ -14,12 +14,8 @@
    .. autosummary::
    
       ~NeighborhoodGenerator.__init__
-      ~NeighborhoodGenerator.apply_bb_predict
-      ~NeighborhoodGenerator.apply_bb_predict_proba
-      ~NeighborhoodGenerator.balance_neigh
+      ~NeighborhoodGenerator.check_generated
       ~NeighborhoodGenerator.generate
-      ~NeighborhoodGenerator.generate_synthetic_instance
-      ~NeighborhoodGenerator.multi_generate
    
    
 

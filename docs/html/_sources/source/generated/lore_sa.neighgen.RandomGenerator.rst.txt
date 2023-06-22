@@ -14,12 +14,8 @@
    .. autosummary::
    
       ~RandomGenerator.__init__
-      ~RandomGenerator.apply_bb_predict
-      ~RandomGenerator.apply_bb_predict_proba
-      ~RandomGenerator.balance_neigh
+      ~RandomGenerator.check_generated
       ~RandomGenerator.generate
-      ~RandomGenerator.generate_synthetic_instance
-      ~RandomGenerator.multi_generate
    
    
 

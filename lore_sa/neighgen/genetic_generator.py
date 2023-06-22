@@ -1,4 +1,4 @@
-from lore_sa.neighgen.neighgen import NeighborhoodGenerator
+from lore_sa.neighgen.neighborhood_generator import NeighborhoodGenerator
 from lore_sa.util import neuclidean, sigmoid
 from scipy.spatial.distance import cdist, hamming
 from deap import base, creator, tools, algorithms

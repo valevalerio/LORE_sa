@@ -14,12 +14,8 @@
    .. autosummary::
    
       ~ClosestInstancesGenerator.__init__
-      ~ClosestInstancesGenerator.apply_bb_predict
-      ~ClosestInstancesGenerator.apply_bb_predict_proba
-      ~ClosestInstancesGenerator.balance_neigh
+      ~ClosestInstancesGenerator.check_generated
       ~ClosestInstancesGenerator.generate
-      ~ClosestInstancesGenerator.generate_synthetic_instance
-      ~ClosestInstancesGenerator.multi_generate
    
    
 

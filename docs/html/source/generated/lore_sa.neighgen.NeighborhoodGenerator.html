@@ -19,7 +19,7 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="lore_sa.neighgen.CFSGenerator" href="lore_sa.neighgen.CFSGenerator.html" />
+    <link rel="next" title="lore_sa.neighgen.RandomGenerator" href="lore_sa.neighgen.RandomGenerator.html" />
     <link rel="prev" title="lore_sa.dataset.utils" href="lore_sa.dataset.utils.html" />
     <link href="../../_static/style.css" rel="stylesheet" type="text/css">
 
@@ -61,14 +61,7 @@
 </li>
 <li class="toctree-l2 current"><a class="reference internal" href="../modules.html#lore-sa-neighgen-neighborhood-generator-classes"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.neighgen</span></code>: Neighborhood Generator classes</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">lore_sa.neighgen.NeighborhoodGenerator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.CFSGenerator.html">lore_sa.neighgen.CFSGenerator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.ClosestInstancesGenerator.html">lore_sa.neighgen.ClosestInstancesGenerator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.CounterGenerator.html">lore_sa.neighgen.CounterGenerator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.GeneticGenerator.html">lore_sa.neighgen.GeneticGenerator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.GeneticProbaGenerator.html">lore_sa.neighgen.GeneticProbaGenerator</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.RandomGenerator.html">lore_sa.neighgen.RandomGenerator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.RandomGeneticGenerator.html">lore_sa.neighgen.RandomGeneticGenerator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.RandomGeneticProbaGenerator.html">lore_sa.neighgen.RandomGeneticProbaGenerator</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-decision-tree-decision-tree-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.decision_tree</span></code>: Decision tree functions</a><ul>
@@ -85,8 +78,9 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-encoder-decoder-encoder-decoder-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.encoder_decoder</span></code>: Encoder/Decoder classes and functions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.EncDec.html">lore_sa.encoder_decoder.EncDec</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.MyTargetEnc.html">lore_sa.encoder_decoder.MyTargetEnc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.TargetEnc.html">lore_sa.encoder_decoder.TargetEnc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.OneHotEnc.html">lore_sa.encoder_decoder.OneHotEnc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.LabelEnc.html">lore_sa.encoder_decoder.LabelEnc</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-explanation-explanation-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.explanation</span></code>: Explanation classes and functions</a><ul>
@@ -171,65 +165,46 @@
 <h1>lore_sa.neighgen.NeighborhoodGenerator<a class="headerlink" href="#lore-sa-neighgen-neighborhoodgenerator" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="lore_sa.neighgen.NeighborhoodGenerator">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lore_sa.neighgen.</span></span><span class="sig-name descname"><span class="pre">NeighborhoodGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bb_predict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bb_predict_proba</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features_map</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbr_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbr_real_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numeric_columns_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ocr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encdec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">original_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/neighgen/neighgen.html#NeighborhoodGenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.neighgen.NeighborhoodGenerator" title="Permalink to this definition"></a></dt>
-<dd><p>This is a class generator</p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lore_sa.neighgen.</span></span><span class="sig-name descname"><span class="pre">NeighborhoodGenerator</span></span><a class="reference internal" href="../../_modules/lore_sa/neighgen/neighborhood_generator.html#NeighborhoodGenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.neighgen.NeighborhoodGenerator" title="Permalink to this definition"></a></dt>
+<dd><p>Abstract class for Neighborhood generator. It defines the basic</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="lore_sa.neighgen.NeighborhoodGenerator.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bb_predict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bb_predict_proba</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features_map</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbr_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbr_real_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numeric_columns_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ocr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encdec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">original_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/neighgen/neighgen.html#NeighborhoodGenerator.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.neighgen.NeighborhoodGenerator.__init__" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>bb_predict</strong> – </p></li>
-<li><p><strong>bb_predict_proba</strong> – </p></li>
-<li><p><strong>feature_values</strong> – </p></li>
-<li><p><strong>features_map</strong> – </p></li>
-<li><p><strong>nbr_features</strong> – </p></li>
-<li><p><strong>nbr_real_features</strong> – </p></li>
-<li><p><strong>numeric_columns_index</strong> – </p></li>
-<li><p><strong>ocr</strong> – </p></li>
-<li><p><strong>encdec</strong> – </p></li>
-<li><p><strong>original_data</strong> – </p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/neighgen/neighborhood_generator.html#NeighborhoodGenerator.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.neighgen.NeighborhoodGenerator.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
 
 <p class="rubric">Methods</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.neighgen.NeighborhoodGenerator.__init__" title="lore_sa.neighgen.NeighborhoodGenerator.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>([bb_predict, bb_predict_proba, ...])</p></td>
-<td><p><dl class="field-list simple">
-<dt class="field-odd">param bb_predict<span class="colon">:</span></dt>
-<dd class="field-odd"><p></p></dd>
-</dl>
-</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_bb_predict</span></code>(X[, encoded])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.neighgen.NeighborhoodGenerator.__init__" title="lore_sa.neighgen.NeighborhoodGenerator.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_bb_predict_proba</span></code>(X[, encoded])</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lore_sa.neighgen.NeighborhoodGenerator.check_generated" title="lore_sa.neighgen.NeighborhoodGenerator.check_generated"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_generated</span></code></a>([filter_function, check_fuction])</p></td>
+<td><p>It contains the logic to check the requirements for generated data</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">balance_neigh</span></code>(x, Z, num_samples)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.neighgen.NeighborhoodGenerator.generate" title="lore_sa.neighgen.NeighborhoodGenerator.generate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate</span></code></a>(x[, num_samples])</p></td>
-<td><p>Generates <a href="#id1"><span class="problematic" id="id2">`</span></a>num_samples' synthetic records starting from the orginal value <a href="#id3"><span class="problematic" id="id4">`</span></a>x'</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_synthetic_instance</span></code>([from_z, mutpb])</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">multi_generate</span></code>(x[, samples, runs])</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.neighgen.NeighborhoodGenerator.generate" title="lore_sa.neighgen.NeighborhoodGenerator.generate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate</span></code></a>(x, num_instances[, features_domain])</p></td>
+<td><p>It generates similar instances</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py method">
+<dt class="sig sig-object py" id="lore_sa.neighgen.NeighborhoodGenerator.check_generated">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_generated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter_function</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_fuction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/neighgen/neighborhood_generator.html#NeighborhoodGenerator.check_generated"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.neighgen.NeighborhoodGenerator.check_generated" title="Permalink to this definition"></a></dt>
+<dd><p>It contains the logic to check the requirements for generated data</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="lore_sa.neighgen.NeighborhoodGenerator.generate">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/neighgen/neighgen.html#NeighborhoodGenerator.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.neighgen.NeighborhoodGenerator.generate" title="Permalink to this definition"></a></dt>
-<dd><p>Generates <a href="#id5"><span class="problematic" id="id6">`</span></a>num_samples’ synthetic records starting from the orginal value <a href="#id7"><span class="problematic" id="id8">`</span></a>x’</p>
-<p>x: Any, record instance to use as seed
-num_sample: int, the size of the neighborhood to generate</p>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_instances</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features_domain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/neighgen/neighborhood_generator.html#NeighborhoodGenerator.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.neighgen.NeighborhoodGenerator.generate" title="Permalink to this definition"></a></dt>
+<dd><p>It generates similar instances</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong><strong>[</strong><strong>dict</strong><strong>]</strong> – the starting instance from the real dataset</p></li>
+<li><p><strong>num_instances</strong><strong>[</strong><strong>int</strong><strong>]</strong> – the number of instances to generate</p></li>
+<li><p><strong>features_domain</strong><strong>[</strong><strong>dict</strong><strong>]</strong> – dictionary in the format {“feature name”: List | Range}, representing the domain range for each feature</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -241,7 +216,7 @@ num_sample: int, the size of the neighborhood to generate</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="lore_sa.dataset.utils.html" class="btn btn-neutral float-left" title="lore_sa.dataset.utils" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="lore_sa.neighgen.CFSGenerator.html" class="btn btn-neutral float-right" title="lore_sa.neighgen.CFSGenerator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="lore_sa.neighgen.RandomGenerator.html" class="btn btn-neutral float-right" title="lore_sa.neighgen.RandomGenerator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
