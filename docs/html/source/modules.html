@@ -61,7 +61,14 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#lore-sa-neighgen-neighborhood-generator-classes"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.neighgen</span></code>: Neighborhood Generator classes</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="generated/lore_sa.neighgen.NeighborhoodGenerator.html">lore_sa.neighgen.NeighborhoodGenerator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/lore_sa.neighgen.CFSGenerator.html">lore_sa.neighgen.CFSGenerator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/lore_sa.neighgen.ClosestInstancesGenerator.html">lore_sa.neighgen.ClosestInstancesGenerator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/lore_sa.neighgen.CounterGenerator.html">lore_sa.neighgen.CounterGenerator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/lore_sa.neighgen.GeneticGenerator.html">lore_sa.neighgen.GeneticGenerator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/lore_sa.neighgen.GeneticProbaGenerator.html">lore_sa.neighgen.GeneticProbaGenerator</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generated/lore_sa.neighgen.RandomGenerator.html">lore_sa.neighgen.RandomGenerator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/lore_sa.neighgen.RandomGeneticGenerator.html">lore_sa.neighgen.RandomGeneticGenerator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/lore_sa.neighgen.RandomGeneticProbaGenerator.html">lore_sa.neighgen.RandomGeneticProbaGenerator</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#lore-sa-decision-tree-decision-tree-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.decision_tree</span></code>: Decision tree functions</a><ul>
@@ -202,8 +209,29 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/lore_sa.neighgen.NeighborhoodGenerator.html#lore_sa.neighgen.NeighborhoodGenerator" title="lore_sa.neighgen.NeighborhoodGenerator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">neighgen.NeighborhoodGenerator</span></code></a></p></td>
 <td><p>Abstract class for Neighborhood generator.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/lore_sa.neighgen.RandomGenerator.html#lore_sa.neighgen.RandomGenerator" title="lore_sa.neighgen.RandomGenerator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">neighgen.RandomGenerator</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/lore_sa.neighgen.CFSGenerator.html#lore_sa.neighgen.CFSGenerator" title="lore_sa.neighgen.CFSGenerator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">neighgen.CFSGenerator</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/lore_sa.neighgen.ClosestInstancesGenerator.html#lore_sa.neighgen.ClosestInstancesGenerator" title="lore_sa.neighgen.ClosestInstancesGenerator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">neighgen.ClosestInstancesGenerator</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/lore_sa.neighgen.CounterGenerator.html#lore_sa.neighgen.CounterGenerator" title="lore_sa.neighgen.CounterGenerator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">neighgen.CounterGenerator</span></code></a></p></td>
+<td><p>Class for the generation of the neighborhood based on the extraction of counterfactuals here x is already coded, hence the generation of the neighbourhood is in the latent space</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/lore_sa.neighgen.GeneticGenerator.html#lore_sa.neighgen.GeneticGenerator" title="lore_sa.neighgen.GeneticGenerator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">neighgen.GeneticGenerator</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/lore_sa.neighgen.GeneticProbaGenerator.html#lore_sa.neighgen.GeneticProbaGenerator" title="lore_sa.neighgen.GeneticProbaGenerator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">neighgen.GeneticProbaGenerator</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/lore_sa.neighgen.RandomGenerator.html#lore_sa.neighgen.RandomGenerator" title="lore_sa.neighgen.RandomGenerator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">neighgen.RandomGenerator</span></code></a></p></td>
 <td><p>Random Generator creates neighbor instances by generating random values starting from the instance to explain</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/lore_sa.neighgen.RandomGeneticGenerator.html#lore_sa.neighgen.RandomGeneticGenerator" title="lore_sa.neighgen.RandomGeneticGenerator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">neighgen.RandomGeneticGenerator</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/lore_sa.neighgen.RandomGeneticProbaGenerator.html#lore_sa.neighgen.RandomGeneticProbaGenerator" title="lore_sa.neighgen.RandomGeneticProbaGenerator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">neighgen.RandomGeneticProbaGenerator</span></code></a></p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
@@ -254,7 +282,7 @@
 <td><p>It provides an interface to access One Hot enconding (<a class="reference external" href="https://en.wikipedia.org/wiki/One-hot">https://en.wikipedia.org/wiki/One-hot</a>) functions.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="generated/lore_sa.encoder_decoder.LabelEnc.html#lore_sa.encoder_decoder.LabelEnc" title="lore_sa.encoder_decoder.LabelEnc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encoder_decoder.LabelEnc</span></code></a></p></td>
-<td><p>It provides an interface to access Label enconding (<a class="reference external" href="https://en.wikipedia.org/wiki/One-hot">https://en.wikipedia.org/wiki/One-hot</a>) functions.</p></td>
+<td><p>It provides an interface to access Label enconding functions.</p></td>
 </tr>
 </tbody>
 </table>

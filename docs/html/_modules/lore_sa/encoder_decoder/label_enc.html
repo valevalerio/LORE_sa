@@ -58,7 +58,14 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../source/modules.html#lore-sa-neighgen-neighborhood-generator-classes"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.neighgen</span></code>: Neighborhood Generator classes</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.neighgen.NeighborhoodGenerator.html">lore_sa.neighgen.NeighborhoodGenerator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.neighgen.CFSGenerator.html">lore_sa.neighgen.CFSGenerator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.neighgen.ClosestInstancesGenerator.html">lore_sa.neighgen.ClosestInstancesGenerator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.neighgen.CounterGenerator.html">lore_sa.neighgen.CounterGenerator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.neighgen.GeneticGenerator.html">lore_sa.neighgen.GeneticGenerator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.neighgen.GeneticProbaGenerator.html">lore_sa.neighgen.GeneticProbaGenerator</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.neighgen.RandomGenerator.html">lore_sa.neighgen.RandomGenerator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.neighgen.RandomGeneticGenerator.html">lore_sa.neighgen.RandomGeneticGenerator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.neighgen.RandomGeneticProbaGenerator.html">lore_sa.neighgen.RandomGeneticProbaGenerator</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../source/modules.html#lore-sa-decision-tree-decision-tree-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.decision_tree</span></code>: Decision tree functions</a><ul>
@@ -167,7 +174,7 @@
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;EncDec&quot;</span><span class="p">,</span> <span class="s2">&quot;LabelEnc&quot;</span><span class="p">]</span>
 <div class="viewcode-block" id="LabelEnc"><a class="viewcode-back" href="../../../source/generated/lore_sa.encoder_decoder.LabelEnc.html#lore_sa.encoder_decoder.LabelEnc">[docs]</a><span class="k">class</span> <span class="nc">LabelEnc</span><span class="p">(</span><span class="n">EncDec</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    It provides an interface to access Label enconding (https://en.wikipedia.org/wiki/One-hot) functions.</span>
+<span class="sd">    It provides an interface to access Label enconding functions.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="LabelEnc.__init__"><a class="viewcode-back" href="../../../source/generated/lore_sa.encoder_decoder.LabelEnc.html#lore_sa.encoder_decoder.LabelEnc.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -209,6 +216,7 @@
 <div class="viewcode-block" id="LabelEnc.decode"><a class="viewcode-back" href="../../../source/generated/lore_sa.encoder_decoder.LabelEnc.html#lore_sa.encoder_decoder.LabelEnc.decode">[docs]</a>    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">feature_encoding</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Provides a new dataframe decoded from dictionary of encoding features</span>
+
 <span class="sd">        :param [Dataset] dataset: Dataset to decode</span>
 <span class="sd">        :param feature_encoding: a dictionary to convert the values from numeric to string.</span>
 <span class="sd">        :return:</span>
