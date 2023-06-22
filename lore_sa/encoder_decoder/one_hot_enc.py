@@ -22,7 +22,7 @@ class OneHotEnc(EncDec):
         It applies the encoder to the input features. It also modifies the input dataset object, adding the
         encoded version of the dataset
 
-        :param[Dataset] x: the Dataset containing the features to be encoded
+        :param[Dataset] dataset: the Dataset containing the features to be encoded
         :param[list] features_to_encode: list of columns of Dataset.df dataframe to be encoded
         """
         
@@ -52,10 +52,11 @@ class OneHotEnc(EncDec):
 
     def decode(self, dataset: Dataset):
         """
-        It decodes the input (encoded) dataset using onehotencoder inverse_transform. 
+        It decodes the input dataset using onehotencoder inverse_transform. The input dataset must be encoded, with the encoded
+        part contained into the property dataset.dataset_encoded
         
 
-        :param 
+        :param dataset: the Dataset containing the features to be encoded
         """
 
         if dataset.dataset_encoded is None:
