@@ -32,7 +32,7 @@ class OneHotEnc(EncDec):
         self.original_features_skipped = original.columns
         original = original.to_numpy()
 
-        dataset.dataset_encoded = pd.DataFrame(encoded, columns = self.encoder.get_feature_names_out(dataset.df[features_to_encode].columns))
+        dataset.dataset_encoded = pd.DataFrame(encoded.astype(int), columns = self.encoder.get_feature_names_out(dataset.df[features_to_encode].columns))
         # buffering original features
         self.original_data = dataset.df[features_to_encode]
    
