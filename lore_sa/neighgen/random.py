@@ -32,14 +32,15 @@ class RandomGenerator(NeighborhoodGenerator):
             instance = {}
             for feature in x:
                 feature_value = x[feature]
-                if type(feature_value) in [float,int]:
+                if type(feature_value) ==float :
                     
                     #no information on the dataset, generation of random instances only for the numeric features of the input real instance
 
-                    cast = type(feature_value)
-                    instance[feature] = cast(np.random.randn())
+                    instance[feature] = (np.random.randn())
 
-                
+                elif type(feature_value) == int:
+                    instance[feature] = np.random.randint(0,np.iinfo(np.int16).max)
+
                 else:
                     #feature is a string/category, it is impossibile to generate random values
                     instance[feature] = feature_value

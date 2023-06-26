@@ -21,6 +21,9 @@ class DecTree(Surrogate):
 
     def learn_local_decision_tree(self, Z, Yb, weights, class_values, multi_label=False, one_vs_rest=False, cv=3,
                                   prune_tree=False):
+        """
+        It fits a decision tree model on the provided generated dataset, in order
+        """
         dt = DecisionTreeClassifier()
         if prune_tree:
             param_list = {'min_samples_split': [ 0.01, 0.05, 0.1, 0.2, 3, 2],
