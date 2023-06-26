@@ -26,7 +26,6 @@ class RandomGenerator(NeighborhoodGenerator):
         :return [Dataset]: a dataset instance with the new data generated
         """
 
-        
         generated_list = []
         for n in range(num_instances):
             instance = {}

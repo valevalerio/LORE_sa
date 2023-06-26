@@ -16,6 +16,7 @@ class EncDec():
         self.original_features = None
         self.original_data = None
         self.encoded_features = None
+        self.original_features_encoded = None
         
 
     @abstractmethod

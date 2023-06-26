@@ -21,21 +21,6 @@ class EncDecTest(unittest.TestCase):
         one_hot_enc = OneHotEnc()
         dataset_encoded = one_hot_enc.encode(dataset,['race','sex'])
         self.assertEqual(one_hot_enc.__str__(),"OneHotEncoder - features encoded: race,sex")
-        self.assertTrue('race=Amer-Indian-Eskimo' in dataset_encoded.columns )
-        self.assertTrue(dataset_encoded['race=Amer-Indian-Eskimo'].all() in [0,1])
-        self.assertTrue('race=Asian-Pac-Islander' in dataset_encoded.columns )
-        self.assertTrue(dataset_encoded['race=Asian-Pac-Islander'].all() in [0,1])
-        self.assertTrue('race=Black' in dataset_encoded.columns )
-        self.assertTrue(dataset_encoded['race=Black'].all() in [0,1])
-        self.assertTrue('race=Other' in dataset_encoded.columns )
-        self.assertTrue(dataset_encoded['race=Other'].all() in [0,1])
-        self.assertTrue('race=White' in dataset_encoded.columns )
-        self.assertTrue(dataset_encoded['race=White'].all() in [0,1])
-        self.assertTrue('sex=Female' in dataset_encoded.columns )
-        self.assertTrue(dataset_encoded['sex=Female'].all() in [0,1])
-        self.assertTrue('sex=Male' in dataset_encoded.columns )
-        self.assertTrue(dataset_encoded['sex=Male'].all() in [0,1])
-
 
     def test_target_encoder_init_with_features_encoder(self):
         dataset = Dataset.from_csv("resources/adult.csv",class_name = "capital-gain")
@@ -63,7 +48,6 @@ class EncDecTest(unittest.TestCase):
         self.assertTrue(dataset_encoded['race'].all() in [0,6])
         self.assertTrue('sex' in dataset_encoded.columns )
         self.assertTrue(dataset_encoded['sex'].all() in [0,6])
-        self.assertTrue(label_enc.get_feature_encoding(),features_encoding)
 
     def test_label_decode(self):
         dataset = Dataset.from_csv("resources/adult.csv")

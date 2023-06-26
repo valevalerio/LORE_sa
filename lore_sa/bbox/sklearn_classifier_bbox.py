@@ -1,6 +1,6 @@
 from lore_sa.bbox.bbox import AbstractBBox
 
-__all__ = ["AbstractBBox","sklearn_bboxs"]
+__all__ = ["AbstractBBox","sklearn_bbox"]
 class sklearn_bbox(AbstractBBox):
     def __init__(self, classifier):
         self.bbox = classifier

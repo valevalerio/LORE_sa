@@ -16,6 +16,7 @@ class OneHotEnc(EncDec):
     def __init__(self):
         super().__init__()
         self.encoder = OneHotEncoder()
+        self.type='one-hot'
 
     def encode(self, dataset: Dataset, features_to_encode: list):
         """
@@ -46,7 +47,7 @@ class OneHotEnc(EncDec):
 
     def __str__(self):
         if self.encoded_features is not None:
-            return "OneHotEncoder - features encoded: %s" % (",".join(self.original_features))
+            return "OneHotEncoder - features encoded: %s" % (",".join(self.original_features_encoded))
         else:
             return "OneHotEncoder - no features encoded"
 
