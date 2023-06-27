@@ -57,20 +57,6 @@ Modules
    neighgen.RandomGeneticProbaGenerator
 
 
-:mod:`lore_sa.decision_tree`: Decision tree functions
-=================================================================
-
-.. currentmodule:: lore_sa
-
-.. autosummary::
-   :nosignatures:
-   :toctree: generated/
-
-   decision_tree.is_leaf
-   decision_tree.learn_local_decision_tree
-   decision_tree.prune_duplicate_leaves
-   decision_tree.prune_index
-
 
 :mod:`lore_sa.discretizer`: Discretizer classes and functions
 =============================================================
@@ -141,7 +127,7 @@ Modules
 
    surrogate.Surrogate
    surrogate.DecTree
-   surrogate.SuperTree
+
 
 :mod:`lore_sa.util`: Util functions
 ===================================

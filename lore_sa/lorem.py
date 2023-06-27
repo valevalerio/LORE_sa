@@ -9,12 +9,10 @@ from functools import partial
 from scipy.spatial.distance import cdist
 from sklearn.metrics import accuracy_score
 
-from lore_sa.surrogate import Surrogate
-
-from lore_sa.rule import get_counterfactual_rules_supert, get_rule_supert
-from lore_sa.neighgen import NeighborhoodGenerator
 from lore_sa.explanation import Explanation
+from lore_sa.neighgen.neighborhood_generator import NeighborhoodGenerator
 from lore_sa.rule import get_rule, get_counterfactual_rules
+from lore_sa.surrogate.surrogate import Surrogate
 from lore_sa.util import neuclidean, record2str
 from lore_sa.discretizer import Discretizer
 from lore_sa.encoder_decoder import EncDec
@@ -307,27 +305,14 @@ class LOREM(Explainer):
                     print('Retrieving explanation')
         x = x.flatten()
         Yc = superT.predict(X=Z)
-        if self.binary == 'binary_from_nari' or self.binary == 'binary_from_dts' or self.binary == 'binary_from_bb':
-            rule = get_rule(x, self.bb_predict(x.reshape(1, -1)), superT, self.feature_names, self.class_name,
-                            self.class_values,
-                            self.numeric_columns, encdec=self.encdec,
+        rule = get_rule(x, self.bb_predict(x.reshape(1, -1)), superT , encdec=self.encdec,
                             multi_label=self.multi_label)
-        else:
-            rule = get_rule_supert(x, superT, self.feature_names, self.class_name, self.class_values,
-                                   self.numeric_columns,
-                                   self.multi_label, encdec=self.encdec)
-        if self.binary == 'binary_from_nari' or self.binary == 'binary_from_dts' or self.binary == 'binary_from_bb':
-            # print('la shape di x che arriva fino alla get counter ', x, x.shape)
-            crules, deltas = get_counterfactual_rules(x, Yc[0], superT, Z, Yc, self.feature_names,
+
+        crules, deltas = get_counterfactual_rules(x, Yc[0], superT, Z, Yc, self.feature_names,
                                                       self.class_name, self.class_values, self.numeric_columns,
                                                       self.features_map, self.features_map_inv, encdec=self.encdec,
                                                       filter_crules=self.filter_crules, constraints=self.constraints)
-        else:
-            # print('la shaoe di x che arriva a get counter con super t', x, x.shape)
-            crules, deltas = get_counterfactual_rules_supert(x, Yc[0], superT, Z, Yc, self.feature_names,
-                                                             self.class_name, self.class_values, self.numeric_columns,
-                                                             self.features_map, self.features_map_inv,
-                                                             filter_crules=self.filter_crules)
+
 
         exp = Explanation()
         exp.bb_pred = Yb[0]

@@ -1,3 +1,3 @@
-from lore_sa.surrogate.surrogate import DecTree
+from lore_sa.surrogate.surrogate import DecisionTreeSurrogate
 
-__all__ = ["DecTree"]
+__all__ = ["DecisionTreeSurrogate"]
