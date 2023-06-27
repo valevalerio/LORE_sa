@@ -1,8 +1,18 @@
 
 import pandas as pd
 from pandas import DataFrame
+import logging
 
 __all__ = ["Dataset"]
+
+
+logger = logging.getLogger()
+handler = logging.StreamHandler()
+formatter = logging.Formatter('%(asctime)s %(name)-12s %(levelname)-8s %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+logger.setLevel(logging.DEBUG)
+
 
 class Dataset():
     """
@@ -32,6 +42,7 @@ class Dataset():
         df = pd.read_csv(filename, skipinitialspace=True, na_values='?', keep_default_na=True)
         dataset_obj = cls(df, class_name=class_name)
         dataset_obj.filename = filename
+        logger.info('{0} file imported'.format(filename))
         return dataset_obj
 
     @classmethod
