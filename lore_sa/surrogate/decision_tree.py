@@ -93,11 +93,3 @@ class DecisionTreeSurrogate(Surrogate):
         decisions = dt.tree_.value.argmax(axis=2).flatten().tolist()  # Decision for each node
         self.prune_index(dt.tree_, decisions)
 
-    def predict(self,x):
-        return self.dt.predict(x)
-
-    def get_features(self):
-        return self.dt.tree_.feature
-
-    def get_threshold(self):
-        return self.dt.tree_.threshold

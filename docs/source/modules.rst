@@ -101,7 +101,6 @@ Modules
    explanation.TextExplanation
    explanation.json2explanation
 
-
 :mod:`lore_sa.rule`: Rule classes and functions
 ===============================================
 
@@ -114,6 +113,8 @@ Modules
 
    rule.Rule
    rule.Condition
+   rule.RuleGetter
+   rule.RuleGetterBinary
 
 
 :mod:`lore_sa.surrogate`: Surrogate classes and functions
@@ -126,7 +127,7 @@ Modules
    :toctree: generated/
 
    surrogate.Surrogate
-   surrogate.DecTree
+   surrogate.DecisionTreeSurrogate
 
 
 :mod:`lore_sa.util`: Util functions

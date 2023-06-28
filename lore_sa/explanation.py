@@ -3,8 +3,7 @@ import pickle
 import bitarray
 import numpy as np
 
-from .rule import RuleEncoder, ConditionEncoder, NumpyEncoder
-from .rule import json2rule, json2cond
+from lore_sa.rule.rule import json2rule, json2cond, RuleEncoder, ConditionEncoder, NumpyEncoder
 
 
 class Explanation(object):

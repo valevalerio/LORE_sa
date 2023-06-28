@@ -11,14 +11,13 @@ from sklearn.metrics import accuracy_score
 
 from lore_sa.explanation import Explanation
 from lore_sa.neighgen.neighborhood_generator import NeighborhoodGenerator
-from lore_sa.rule import get_rule, get_counterfactual_rules
-from lore_sa.surrogate.surrogate import Surrogate
+from lore_sa.surrogate import Surrogate
 from lore_sa.util import neuclidean, record2str
 from lore_sa.discretizer import Discretizer
 from lore_sa.encoder_decoder import EncDec
 from lore_sa.bbox import AbstractBBox
 from lore_sa.dataset import Dataset
-from lore_sa.rule import Rule
+from lore_sa.rule import Rule, RuleGetterBinary
 import numpy as np
 
 
@@ -65,10 +64,13 @@ class LOREM(Explainer):
     :param bool verbose:
 
     """
-    def __init__(self, dataset: Dataset, bb: AbstractBBox, encdec: EncDec, neigh_gen: NeighborhoodGenerator, surrogate: Surrogate, rule: Rule, class_name: list,
-                 K_transformed=None, multi_label=False, filter_crules=True, kernel_width=None, kernel=None, random_state=None, binary=False, discretize: Discretizer = None,
-                 extreme_fidelity: bool = False, constraints = None, verbose:bool = False,** kwargs):
+    def __init__(self, dataset: Dataset, bb: AbstractBBox, encdec: EncDec, neigh_gen: NeighborhoodGenerator,
+                 surrogate: Surrogate, rule: Rule, class_name: str, config: dict, K_transformed=None,
+                 multi_label=False, filter_crules=True, kernel_width=None, kernel=None, random_state=None, binary=False,
+                 discretize: Discretizer = None, extreme_fidelity: bool = False, constraints=None,
+                 verbose: bool = False, **kwargs):
 
+        super().__init__(dataset, bb, config, class_name)
         self.dataset = dataset
         self.surrogate = surrogate
         self.neigh_gen = neigh_gen
@@ -78,13 +80,12 @@ class LOREM(Explainer):
         self.rule = rule
         self.verbose = verbose
 
-        if encdec is not None:
-            Y = self.bb_predict(self.dataset.get_original_dataset())
-            self.K = self.encdec.enc(self.dataset.get_original_dataset(), Y)
-            self.encdec = encdec
+        self.encdec = encdec
+        if self.encdec is not None:
+            Y = self.bb_predict(self.dataset.df)
+            self.K = self.encdec.enc(self.dataset.df, Y)
         else:
-            self.encdec = encdec
-            self.K = self.dataset.get_original_dataset()
+            self.K = self.dataset.df
 
         self.unadmittible_features = None
         self.df, self.feature_names, self.class_values, self.numeric_columns, self.rdf,self.real_feature_names, self.features_map = dataset.prepare_dataset(self.encdec)
@@ -305,10 +306,10 @@ class LOREM(Explainer):
                     print('Retrieving explanation')
         x = x.flatten()
         Yc = superT.predict(X=Z)
-        rule = get_rule(x, self.bb_predict(x.reshape(1, -1)), superT , encdec=self.encdec,
+        rule = RuleGetterBinary().get_rule(x, self.bb_predict(x.reshape(1, -1)), superT , encdec=self.encdec,
                             multi_label=self.multi_label)
 
-        crules, deltas = get_counterfactual_rules(x, Yc[0], superT, Z, Yc, self.feature_names,
+        crules, deltas = RuleGetterBinary().get_counterfactual_rules(x, Yc[0], superT, Z, Yc, self.feature_names,
                                                       self.class_name, self.class_values, self.numeric_columns,
                                                       self.features_map, self.features_map_inv, encdec=self.encdec,
                                                       filter_crules=self.filter_crules, constraints=self.constraints)

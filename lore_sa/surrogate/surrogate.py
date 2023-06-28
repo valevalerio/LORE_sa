@@ -16,19 +16,3 @@ class Surrogate(ABC):
     def train(self, Z, Yb, weights):
         pass
 
-    @abstractmethod
-    def predict(self,x):
-        """
-        Wrapper of predict surrogate method
-        :param x:
-        :return:
-        """
-        pass
-
-    @abstractmethod
-    def get_features(self):
-        pass
-
-    @abstractmethod
-    def get_threshold(self):
-        pass
