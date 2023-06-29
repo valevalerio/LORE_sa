@@ -17,13 +17,14 @@ from lore_sa.discretizer import Discretizer
 from lore_sa.encoder_decoder import EncDec
 from lore_sa.bbox import AbstractBBox
 from lore_sa.dataset import Dataset
-from lore_sa.rule import Rule, RuleGetterBinary
+from lore_sa.rule import Rule
+from lore_sa.rule import RuleGetterBinary
 import numpy as np
 
 
 class Explainer():
 
-    def __init__(self, dataset: Dataset, bb: AbstractBBox, config: dict, class_name: list):
+    def __init__(self, dataset: Dataset, bb: AbstractBBox):
         pass
 
     @abstractmethod
@@ -64,13 +65,13 @@ class LOREM(Explainer):
     :param bool verbose:
 
     """
-    def __init__(self, dataset: Dataset, bb: AbstractBBox, encdec: EncDec, neigh_gen: NeighborhoodGenerator,
-                 surrogate: Surrogate, rule: Rule, class_name: str, config: dict, K_transformed=None,
+    def __init__(self, dataset: Dataset, bb: AbstractBBox, encdec: EncDec,neigh_gen: NeighborhoodGenerator,
+                 surrogate: Surrogate, rule: Rule, class_name: str, K_transformed=None,
                  multi_label=False, filter_crules=True, kernel_width=None, kernel=None, random_state=None, binary=False,
                  discretize: Discretizer = None, extreme_fidelity: bool = False, constraints=None,
                  verbose: bool = False, **kwargs):
 
-        super().__init__(dataset, bb, config, class_name)
+        super().__init__(dataset=dataset, bb=bb)
         self.dataset = dataset
         self.surrogate = surrogate
         self.neigh_gen = neigh_gen
@@ -83,7 +84,7 @@ class LOREM(Explainer):
         self.encdec = encdec
         if self.encdec is not None:
             Y = self.bb_predict(self.dataset.df)
-            self.K = self.encdec.enc(self.dataset.df, Y)
+            self.K = self.encdec.encode(self.dataset.df, Y)
         else:
             self.K = self.dataset.df
 

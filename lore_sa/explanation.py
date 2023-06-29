@@ -3,7 +3,8 @@ import pickle
 import bitarray
 import numpy as np
 
-from lore_sa.rule.rule import json2rule, json2cond, RuleEncoder, ConditionEncoder, NumpyEncoder
+from .rule.rule import RuleEncoder, ConditionEncoder, NumpyEncoder
+from .rule.rule import json2rule, json2cond
 
 
 class Explanation(object):
@@ -49,11 +50,6 @@ class Explanation(object):
 class ExplanationEncoder(json.JSONEncoder):
     """ Special json encoder for Rule types """
     def default(self, obj):
-        """
-        Report information about an Explanation objgect
-        :param obj:
-        :return:
-        """
         if isinstance(obj, Explanation):
             re = RuleEncoder()
             ce = ConditionEncoder()

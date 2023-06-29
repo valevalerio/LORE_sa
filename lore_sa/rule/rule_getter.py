@@ -2,10 +2,10 @@ from abc import ABC, abstractmethod
 
 from lore_sa.dataset import Dataset
 from lore_sa.encoder_decoder import EncDec
-from lore_sa.rule import Rule
 from lore_sa.surrogate.surrogate import Surrogate
 
-__all__ = ["Rule", "RuleGetter"]
+__all__ = ["RuleGetter"]
+
 class RuleGetter(ABC):
 
     """
