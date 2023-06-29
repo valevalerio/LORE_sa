@@ -25,6 +25,7 @@ class TabularDataset():
                                 'median': <median value>,
                                 'q1': <first quartile of the distribution>,
                                 'q3': <third quartile of the distribution,
+                                
                             },
                         ...,
                         ...,
@@ -57,6 +58,7 @@ class TabularDataset():
         """
         it creates the dataset descriptor dictionary
         """
+        self.descriptor = {'numeric':{}, 'categoric':{}}
         for feature in self.df.columns:
             if feature in self.df.select_dtypes(include=np.number).columns.tolist():
                 #numerical
@@ -66,7 +68,8 @@ class TabularDataset():
                         'std':self.df[feature].std(),
                         'median':self.df[feature].median(),
                         'q1':self.df[feature].quantile(0.25),
-                        'q3':self.df[feature].quantile(0.75)}
+                        'q3':self.df[feature].quantile(0.75),
+                        }
                 self.descriptor['numeric'][feature] = desc
             else:
                 #categorical feature
@@ -74,7 +77,7 @@ class TabularDataset():
                         'count' : {x : len(self.df[self.df[feature] == x]) for x in list(self.df[feature].unique())}}
                 self.descriptor['categoric'][feature] = desc
         
-
+    
     @classmethod
     def from_csv(cls, filename: str, class_name: str=None):
         """
