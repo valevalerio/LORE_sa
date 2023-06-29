@@ -55,7 +55,7 @@ class DecisionTreeSurrogate(Surrogate):
             logger.info('Pruning')
             self.prune_duplicate_leaves(self.dt)
         else:
-            self.dt.fit(Z, Yb, sample_weight=weights)
+            self.dt.fit(Z, Yb)
 
         return self.dt
 
