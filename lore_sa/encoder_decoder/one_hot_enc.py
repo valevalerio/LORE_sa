@@ -2,7 +2,7 @@ from .enc_dec import EncDec
 import pandas as pd
 from sklearn.preprocessing import OneHotEncoder
 
-from lore_sa.dataset.dataset import Dataset
+from lore_sa.dataset.dataset import TabularDataset
 
 __all__ = ["EncDec", "OneHotEnc"]
 
@@ -18,7 +18,7 @@ class OneHotEnc(EncDec):
         self.encoder = OneHotEncoder()
         self.type='one-hot'
 
-    def encode(self, dataset: Dataset, features_to_encode: list):
+    def encode(self, dataset: TabularDataset, features_to_encode: list):
         """
         It applies the encoder to the input features. It also modifies the input dataset object, adding the
         encoded version of the dataset
@@ -51,7 +51,7 @@ class OneHotEnc(EncDec):
         else:
             return "OneHotEncoder - no features encoded"
 
-    def decode(self, dataset: Dataset):
+    def decode(self, dataset: TabularDataset):
         """
         It decodes the input dataset using onehotencoder inverse_transform. The input dataset must be encoded, with the encoded
         part contained into the property dataset.dataset_encoded
@@ -74,4 +74,4 @@ class OneHotEnc(EncDec):
                                      pd.DataFrame(decoded, columns = self.original_features_encoded)], axis=1)
 
             
-            return dataset.df.to_numpy()
+            return dataset.df

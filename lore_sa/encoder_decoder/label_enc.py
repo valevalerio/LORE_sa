@@ -1,7 +1,7 @@
 from .enc_dec import EncDec
 import pandas as pd
 
-from lore_sa.dataset.dataset import Dataset
+from lore_sa.dataset.dataset import TabularDataset
 from sklearn.preprocessing import LabelEncoder
 
 __all__ = ["EncDec", "LabelEnc"]
@@ -15,7 +15,7 @@ class LabelEnc(EncDec):
         self.type = "label"
         self.feature_encoding = {}
 
-    def encode(self, dataset: Dataset, features_to_encode: list):
+    def encode(self, dataset: TabularDataset, features_to_encode: list):
         """
         It applies the encoder to the input features
 
@@ -46,7 +46,7 @@ class LabelEnc(EncDec):
         else:
             return "LabelEncoder - no features encoded"
 
-    def decode(self, dataset: Dataset, feature_encoding: dict = None):
+    def decode(self, dataset: TabularDataset, feature_encoding: dict = None):
         """
         Provides a new dataframe decoded from dictionary of encoding features
 
