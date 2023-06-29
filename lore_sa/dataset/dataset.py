@@ -1,25 +1,76 @@
 from lore_sa.logger import logger
 import pandas as pd
 from pandas import DataFrame
+import numpy as np
 
-__all__ = ["Dataset"]
+__all__ = ["TabularDataset"]
 
 
-class Dataset():
+class TabularDataset():
     """
     It provides an interface to handle datasets, including some essential information on the structure and
     semantic of the dataset.
+
+    :attribute[pandas.DataFrame] df : dataframe containing the whole dataset
+    :attribute[dict] descriptor: it contains the essential informationregarding each feature. Format:
+            {'numeric': {'feature name' : 
+                            {
+                                
+                                'min' : <min value>,
+                                'max' : <max value>,
+                                'mean': <mean value>,
+                                'std': <standard deviation>,
+                                'median': <median value>,
+                                'q1': <first quartile of the distribution>,
+                                'q3': <third quartile of the distribution,
+                            },
+                        ...,
+                        ...,
+                        },
+             'categorical: {'feature name': 
+                                {
+                                    'distinct_values' : <distinct categorical values>,
+                                    'value_counts' : {'distinct value' : <elements count>,
+                                                    ... }
+                
+                                }
+                            },
+                            ...
+                            ...
+                            ...     
+             }
     """
     def __init__(self,data: DataFrame, class_name:str = None):
-        self.encdec = None
+        
         self.class_name = class_name
         self.df = data
-        self.feature_names = None
-        self.class_values = None
-        self.numeric_columns = None
-        self.real_feature_names = None
-        self.features_map = None
-        self.rdf = data
+        
+        self.descriptor = {'numeric':{}, 'categoric':{}}
+
+        #creation of a default version of descriptor
+
+        self.update_descriptor()
+        
+    def update_descriptor(self):
+        """
+        it creates the dataset descriptor dictionary
+        """
+        for feature in self.df.columns:
+            if feature in self.df.select_dtypes(include=np.number).columns.tolist():
+                #numerical
+                desc = {'min' : self.df[feature].min(),
+                        'max' : self.df[feature].max(),
+                        'mean':self.df[feature].mean(),
+                        'std':self.df[feature].std(),
+                        'median':self.df[feature].median(),
+                        'q1':self.df[feature].quantile(0.25),
+                        'q3':self.df[feature].quantile(0.75)}
+                self.descriptor['numeric'][feature] = desc
+            else:
+                #categorical feature
+                desc = {'distinct_values' : list(self.df[feature].unique()),
+                        'count' : {x : len(self.df[self.df[feature] == x]) for x in list(self.df[feature].unique())}}
+                self.descriptor['categoric'][feature] = desc
         
 
     @classmethod
