@@ -1,6 +1,0 @@
-﻿lore\_sa.decision\_tree.prune\_index
-====================================
-
-.. currentmodule:: lore_sa.decision_tree
-
-.. autofunction:: prune_index

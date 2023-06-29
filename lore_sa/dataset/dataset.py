@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from lore_sa.logger import logger
 import pandas as pd
 from pandas import DataFrame
@@ -126,12 +128,7 @@ class TabularDataset():
         """
         return self.rdf
 
-    def create_feature_map(self):
-        """
-        Provides a dictionary with the list of numeric and categorical columns.
-        :return:
-        """
-        self.features_map = dict()
-        self.features_map["numeric_columns"] = self.get_numeric_columns()
-        self.features_map["categorical_columns"] = [c for c in self.df.columns if c not in self.get_numeric_columns()]
-        return self.features_map
+    def get_features_names(self):
+        return list(self.df.columns)
+
+

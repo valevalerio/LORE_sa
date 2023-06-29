@@ -11,5 +11,5 @@ furo
 sphinx_rtd_theme
 sphinx_material
 category_encoders
-scikit-multilearn
-arff
+scikit-multilearn~=0.2.0
+arff~=0.9

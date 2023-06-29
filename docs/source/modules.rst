@@ -46,15 +46,8 @@ Modules
    :nosignatures:
    :toctree: generated/
 
-   neighgen.NeighborhoodGenerator
-   neighgen.CFSGenerator
-   neighgen.ClosestInstancesGenerator
-   neighgen.CounterGenerator
-   neighgen.GeneticGenerator
-   neighgen.GeneticProbaGenerator
    neighgen.RandomGenerator
-   neighgen.RandomGeneticGenerator
-   neighgen.RandomGeneticProbaGenerator
+
 
 
 
@@ -84,7 +77,6 @@ Modules
    encoder_decoder.OneHotEnc
    encoder_decoder.LabelEnc
 
-
 :mod:`lore_sa.explanation`: Explanation classes and functions
 =============================================================
 
@@ -101,7 +93,6 @@ Modules
    explanation.TextExplanation
    explanation.json2explanation
 
-
 :mod:`lore_sa.rule`: Rule classes and functions
 ===============================================
 
@@ -113,7 +104,15 @@ Modules
    :toctree: generated/
 
    rule.Rule
-   rule.Condition
+   rule.RuleGetter
+   rule.RuleGetterBinary
+   rule.rule.NumpyEncoder
+   rule.rule.ConditionEncoder
+   rule.rule.RuleEncoder
+   rule.rule.json2rule
+   rule.rule.json2cond
+   rule.rule.Condition
+
 
 
 :mod:`lore_sa.surrogate`: Surrogate classes and functions
@@ -126,7 +125,7 @@ Modules
    :toctree: generated/
 
    surrogate.Surrogate
-   surrogate.DecTree
+   surrogate.DecisionTreeSurrogate
 
 
 :mod:`lore_sa.util`: Util functions
