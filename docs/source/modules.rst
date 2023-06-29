@@ -34,7 +34,7 @@ Modules
    :nosignatures:
    :toctree: generated/
 
-   dataset.Dataset
+   dataset.TabularDataset
    dataset.utils
 
 :mod:`lore_sa.neighgen`: Neighborhood Generator classes
@@ -73,7 +73,6 @@ Modules
    :toctree: generated/
 
    encoder_decoder.EncDec
-   encoder_decoder.TargetEnc
    encoder_decoder.OneHotEnc
    encoder_decoder.LabelEnc
 

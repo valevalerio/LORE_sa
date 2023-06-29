@@ -1,5 +1,3 @@
-from collections import defaultdict
-
 from lore_sa.logger import logger
 import pandas as pd
 from pandas import DataFrame
@@ -13,11 +11,12 @@ class TabularDataset():
     It provides an interface to handle datasets, including some essential information on the structure and
     semantic of the dataset.
 
-    :attribute[pandas.DataFrame] df : dataframe containing the whole dataset
-    :attribute[dict] descriptor: it contains the essential informationregarding each feature. Format:
-            {'numeric': {'feature name' : 
+    Attributes:
+        df (pandas.DataFrame): dataframe containing the whole dataset
+        descriptor (dict): it contains the essential informationregarding each feature. Format:
+
+            >>> {'numeric': {'feature name' :
                             {
-                                
                                 'min' : <min value>,
                                 'max' : <max value>,
                                 'mean': <mean value>,
@@ -25,23 +24,21 @@ class TabularDataset():
                                 'median': <median value>,
                                 'q1': <first quartile of the distribution>,
                                 'q3': <third quartile of the distribution,
-                                
                             },
                         ...,
                         ...,
                         },
-             'categorical: {'feature name': 
+            'categorical: {'feature name':
                                 {
                                     'distinct_values' : <distinct categorical values>,
                                     'value_counts' : {'distinct value' : <elements count>,
                                                     ... }
-                
                                 }
                             },
                             ...
                             ...
                             ...     
-             }
+            }
     """
     def __init__(self,data: DataFrame, class_name:str = None):
         
@@ -123,13 +120,6 @@ class TabularDataset():
     def get_numeric_columns(self):
         numeric_columns = list(self.df._get_numeric_data().columns)
         return numeric_columns
-
-    def get_original_dataset(self):
-        """
-        Provides the original dataset
-        :return:
-        """
-        return self.rdf
 
     def get_features_names(self):
         return list(self.df.columns)

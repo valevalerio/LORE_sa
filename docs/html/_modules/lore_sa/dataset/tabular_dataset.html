@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lore_sa.neighgen.random &mdash; LORE_sa  documentation</title>
+  <title>lore_sa.dataset.tabular_dataset &mdash; LORE_sa  documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -228,7 +228,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
-      <li class="breadcrumb-item active">lore_sa.neighgen.random</li>
+      <li class="breadcrumb-item active">lore_sa.dataset.tabular_dataset</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -237,62 +237,134 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for lore_sa.neighgen.random</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">lore_sa.neighgen.neighborhood_generator</span> <span class="kn">import</span> <span class="n">NeighborhoodGenerator</span>
-
-<span class="kn">from</span> <span class="nn">lore_sa.dataset.tabular_dataset</span> <span class="kn">import</span> <span class="n">TabularDataset</span>
+  <h1>Source code for lore_sa.dataset.tabular_dataset</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">lore_sa.logger</span> <span class="kn">import</span> <span class="n">logger</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">DataFrame</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;NeighborhoodGenerator&quot;</span><span class="p">,</span><span class="s2">&quot;RandomGenerator&quot;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TabularDataset&quot;</span><span class="p">]</span>
 
-<div class="viewcode-block" id="RandomGenerator"><a class="viewcode-back" href="../../../source/generated/lore_sa.neighgen.RandomGenerator.html#lore_sa.neighgen.RandomGenerator">[docs]</a><span class="k">class</span> <span class="nc">RandomGenerator</span><span class="p">(</span><span class="n">NeighborhoodGenerator</span><span class="p">):</span>
+
+<div class="viewcode-block" id="TabularDataset"><a class="viewcode-back" href="../../../source/generated/lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset">[docs]</a><span class="k">class</span> <span class="nc">TabularDataset</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Random Generator creates neighbor instances by generating random values starting from the instance to explain</span>
+<span class="sd">    It provides an interface to handle datasets, including some essential information on the structure and</span>
+<span class="sd">    semantic of the dataset.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        df (pandas.DataFrame): dataframe containing the whole dataset</span>
+<span class="sd">        descriptor (dict): it contains the essential informationregarding each feature. Format:</span>
+
+<span class="sd">            &gt;&gt;&gt; {&#39;numeric&#39;: {&#39;feature name&#39; :</span>
+<span class="sd">                            {</span>
+<span class="sd">                                &#39;min&#39; : &lt;min value&gt;,</span>
+<span class="sd">                                &#39;max&#39; : &lt;max value&gt;,</span>
+<span class="sd">                                &#39;mean&#39;: &lt;mean value&gt;,</span>
+<span class="sd">                                &#39;std&#39;: &lt;standard deviation&gt;,</span>
+<span class="sd">                                &#39;median&#39;: &lt;median value&gt;,</span>
+<span class="sd">                                &#39;q1&#39;: &lt;first quartile of the distribution&gt;,</span>
+<span class="sd">                                &#39;q3&#39;: &lt;third quartile of the distribution,</span>
+<span class="sd">                            },</span>
+<span class="sd">                        ...,</span>
+<span class="sd">                        ...,</span>
+<span class="sd">                        },</span>
+<span class="sd">            &#39;categorical: {&#39;feature name&#39;:</span>
+<span class="sd">                                {</span>
+<span class="sd">                                    &#39;distinct_values&#39; : &lt;distinct categorical values&gt;,</span>
+<span class="sd">                                    &#39;value_counts&#39; : {&#39;distinct value&#39; : &lt;elements count&gt;,</span>
+<span class="sd">                                                    ... }</span>
+<span class="sd">                                }</span>
+<span class="sd">                            },</span>
+<span class="sd">                            ...</span>
+<span class="sd">                            ...</span>
+<span class="sd">                            ...     </span>
+<span class="sd">            }</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="RandomGenerator.__init__"><a class="viewcode-back" href="../../../source/generated/lore_sa.neighgen.RandomGenerator.html#lore_sa.neighgen.RandomGenerator.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">generated_data</span> <span class="o">=</span> <span class="kc">None</span></div>
-
-
-<div class="viewcode-block" id="RandomGenerator.generate"><a class="viewcode-back" href="../../../source/generated/lore_sa.neighgen.RandomGenerator.html#lore_sa.neighgen.RandomGenerator.generate">[docs]</a>    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">x</span><span class="p">,</span> <span class="n">num_instances</span><span class="p">,</span> <span class="n">descriptor</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        random generation of new instances. The starting instance x is only used to detect the value type of each feature, in order</span>
-<span class="sd">        to generate new values only for numeric features.</span>
-<span class="sd">        </span>
-<span class="sd">        :param x[dict]: the starting instance from the real dataset</span>
-<span class="sd">        :param num_instances[int]: the number of instances to generate</span>
-<span class="sd">        :param descriptor[dict]: data descriptor as generated from a Dataset object</span>
-<span class="sd">        The list (or range) associated to each key is used to randomly choice an element within the list. </span>
-
-<span class="sd">        :return [Dataset]: a dataset instance with the new data generated</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">generated_list</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_instances</span><span class="p">):</span>
-            <span class="n">instance</span> <span class="o">=</span> <span class="p">{}</span>
-            <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span>
-                <span class="n">feature_value</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span>
-                <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">feature_value</span><span class="p">)</span> <span class="o">==</span><span class="nb">float</span> <span class="p">:</span>
-                    
-                    <span class="c1">#no information on the dataset, generation of random instances only for the numeric features of the input real instance</span>
-
-                    <span class="n">instance</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">descriptor</span><span class="p">[</span><span class="s1">&#39;numeric&#39;</span><span class="p">][</span><span class="n">feature</span><span class="p">][</span><span class="s1">&#39;min&#39;</span><span class="p">],</span> <span class="n">descriptor</span><span class="p">[</span><span class="s1">&#39;numeric&#39;</span><span class="p">][</span><span class="n">feature</span><span class="p">][</span><span class="s1">&#39;max&#39;</span><span class="p">]))</span>
-
-                <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">feature_value</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">:</span>
-                    <span class="n">instance</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random_integers</span><span class="p">(</span><span class="n">descriptor</span><span class="p">[</span><span class="s1">&#39;numeric&#39;</span><span class="p">][</span><span class="n">feature</span><span class="p">][</span><span class="s1">&#39;min&#39;</span><span class="p">],</span> <span class="n">descriptor</span><span class="p">[</span><span class="s1">&#39;numeric&#39;</span><span class="p">][</span><span class="n">feature</span><span class="p">][</span><span class="s1">&#39;max&#39;</span><span class="p">])</span>
-
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="c1">#feature is a string/category, it is impossibile to generate random values</span>
-                    <span class="n">instance</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">descriptor</span><span class="p">[</span><span class="s1">&#39;categoric&#39;</span><span class="p">][</span><span class="n">feature</span><span class="p">][</span><span class="s1">&#39;distinct_values&#39;</span><span class="p">])</span>
-            <span class="n">generated_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">generated_data</span> <span class="o">=</span> <span class="n">generated_list</span>
-
+<div class="viewcode-block" id="TabularDataset.__init__"><a class="viewcode-back" href="../../../source/generated/lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">class_name</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         
-        <span class="k">return</span> <span class="n">TabularDataset</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">generated_list</span><span class="p">))</span></div></div>
-                        
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_name</span> <span class="o">=</span> <span class="n">class_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">data</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">descriptor</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;numeric&#39;</span><span class="p">:{},</span> <span class="s1">&#39;categoric&#39;</span><span class="p">:{}}</span>
+
+        <span class="c1">#creation of a default version of descriptor</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_descriptor</span><span class="p">()</span></div>
+        
+<div class="viewcode-block" id="TabularDataset.update_descriptor"><a class="viewcode-back" href="../../../source/generated/lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset.update_descriptor">[docs]</a>    <span class="k">def</span> <span class="nf">update_descriptor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        it creates the dataset descriptor dictionary</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">descriptor</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;numeric&#39;</span><span class="p">:{},</span> <span class="s1">&#39;categoric&#39;</span><span class="p">:{}}</span>
+        <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">feature</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">():</span>
+                <span class="c1">#numerical</span>
+                <span class="n">desc</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;min&#39;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span>
+                        <span class="s1">&#39;max&#39;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span>
+                        <span class="s1">&#39;mean&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+                        <span class="s1">&#39;std&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span>
+                        <span class="s1">&#39;median&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">(),</span>
+                        <span class="s1">&#39;q1&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">),</span>
+                        <span class="s1">&#39;q3&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">),</span>
+                        <span class="p">}</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">descriptor</span><span class="p">[</span><span class="s1">&#39;numeric&#39;</span><span class="p">][</span><span class="n">feature</span><span class="p">]</span> <span class="o">=</span> <span class="n">desc</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1">#categorical feature</span>
+                <span class="n">desc</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;distinct_values&#39;</span> <span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()),</span>
+                        <span class="s1">&#39;count&#39;</span> <span class="p">:</span> <span class="p">{</span><span class="n">x</span> <span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span> <span class="o">==</span> <span class="n">x</span><span class="p">])</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())}}</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">descriptor</span><span class="p">[</span><span class="s1">&#39;categoric&#39;</span><span class="p">][</span><span class="n">feature</span><span class="p">]</span> <span class="o">=</span> <span class="n">desc</span></div>
+        
     
-                    
+<div class="viewcode-block" id="TabularDataset.from_csv"><a class="viewcode-back" href="../../../source/generated/lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset.from_csv">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_csv</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">class_name</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read a comma-separated values (csv) file into Dataset object.</span>
+<span class="sd">        :param [str] filename:</span>
+<span class="sd">        :param class_name: optional</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">skipinitialspace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">na_values</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="n">keep_default_na</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">dataset_obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">class_name</span><span class="o">=</span><span class="n">class_name</span><span class="p">)</span>
+        <span class="n">dataset_obj</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1"> file imported&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">dataset_obj</span></div>
+
+<div class="viewcode-block" id="TabularDataset.from_dict"><a class="viewcode-back" href="../../../source/generated/lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">class_name</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        From dicts of Series, arrays, or dicts.</span>
+<span class="sd">        :param [dict] data:</span>
+<span class="sd">        :param class_name: optional</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">class_name</span><span class="o">=</span><span class="n">class_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TabularDataset.set_class_name"><a class="viewcode-back" href="../../../source/generated/lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset.set_class_name">[docs]</a>    <span class="k">def</span> <span class="nf">set_class_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">class_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the class name. Only the column name string</span>
+<span class="sd">        :param [str] class_name:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_name</span> <span class="o">=</span> <span class="n">class_name</span></div>
+
+<div class="viewcode-block" id="TabularDataset.get_class_values"><a class="viewcode-back" href="../../../source/generated/lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset.get_class_values">[docs]</a>    <span class="k">def</span> <span class="nf">get_class_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Provides the class_name</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;ERR: class_name is None. Set class_name with set_class_name(&#39;&lt;column name&gt;&#39;)&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">class_name</span><span class="p">]</span><span class="o">.</span><span class="n">values</span></div>
+
+
+    <span class="k">def</span> <span class="nf">get_numeric_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">numeric_columns</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">_get_numeric_data</span><span class="p">()</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">numeric_columns</span>
+
+    <span class="k">def</span> <span class="nf">get_features_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span></div>
+
+
 </pre></div>
 
            </div>

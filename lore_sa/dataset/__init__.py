@@ -1,4 +1,4 @@
-from .dataset import TabularDataset
+from .tabular_dataset import TabularDataset
 
 
 __all__ = [

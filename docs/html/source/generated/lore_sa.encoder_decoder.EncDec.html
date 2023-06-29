@@ -12,14 +12,12 @@
   <![endif]-->
   
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="lore_sa.encoder_decoder.TargetEnc" href="lore_sa.encoder_decoder.TargetEnc.html" />
+    <link rel="next" title="lore_sa.encoder_decoder.OneHotEnc" href="lore_sa.encoder_decoder.OneHotEnc.html" />
     <link rel="prev" title="lore_sa.discretizer.RMEPDiscretizer" href="lore_sa.discretizer.RMEPDiscretizer.html" />
     <link href="../../_static/style.css" rel="stylesheet" type="text/css">
 
@@ -47,62 +45,146 @@
               <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../modules.html">Modules</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-lorem-lorem-class"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.lorem</span></code>: LOREM class</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.lorem.LOREM.html">lore_sa.lorem.LOREM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.lorem.LOREM.html">lore_sa.lorem.LOREM</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lore_sa.lorem.LOREM.html#lore_sa.lorem.LOREM"><code class="docutils literal notranslate"><span class="pre">LOREM</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-bbox-blackbox-abstract-class"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.bbox</span></code>: BlackBox abstract class</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.bbox.AbstractBBox.html">lore_sa.bbox.AbstractBBox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.bbox.AbstractBBox.html">lore_sa.bbox.AbstractBBox</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lore_sa.bbox.AbstractBBox.html#lore_sa.bbox.AbstractBBox"><code class="docutils literal notranslate"><span class="pre">AbstractBBox</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-dataset-dataset-class"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.dataset</span></code>: Dataset class</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.dataset.Dataset.html">lore_sa.dataset.Dataset</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.dataset.utils.html">lore_sa.dataset.utils</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.dataset.TabularDataset.html">lore_sa.dataset.TabularDataset</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset"><code class="docutils literal notranslate"><span class="pre">TabularDataset</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.dataset.utils.html">lore_sa.dataset.utils</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lore_sa.dataset.utils.html#lore_sa.dataset.utils.prepare_bank_dataset"><code class="docutils literal notranslate"><span class="pre">prepare_bank_dataset()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-neighgen-neighborhood-generator-classes"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.neighgen</span></code>: Neighborhood Generator classes</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.RandomGenerator.html">lore_sa.neighgen.RandomGenerator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.neighgen.RandomGenerator.html">lore_sa.neighgen.RandomGenerator</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lore_sa.neighgen.RandomGenerator.html#lore_sa.neighgen.RandomGenerator"><code class="docutils literal notranslate"><span class="pre">RandomGenerator</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-discretizer-discretizer-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.discretizer</span></code>: Discretizer classes and functions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.discretizer.Discretizer.html">lore_sa.discretizer.Discretizer</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.discretizer.RMEPDiscretizer.html">lore_sa.discretizer.RMEPDiscretizer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.discretizer.Discretizer.html">lore_sa.discretizer.Discretizer</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lore_sa.discretizer.Discretizer.html#lore_sa.discretizer.Discretizer"><code class="docutils literal notranslate"><span class="pre">Discretizer</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.discretizer.RMEPDiscretizer.html">lore_sa.discretizer.RMEPDiscretizer</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lore_sa.discretizer.RMEPDiscretizer.html#lore_sa.discretizer.RMEPDiscretizer"><code class="docutils literal notranslate"><span class="pre">RMEPDiscretizer</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2 current"><a class="reference internal" href="../modules.html#lore-sa-encoder-decoder-encoder-decoder-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.encoder_decoder</span></code>: Encoder/Decoder classes and functions</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">lore_sa.encoder_decoder.EncDec</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.TargetEnc.html">lore_sa.encoder_decoder.TargetEnc</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.OneHotEnc.html">lore_sa.encoder_decoder.OneHotEnc</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.LabelEnc.html">lore_sa.encoder_decoder.LabelEnc</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">lore_sa.encoder_decoder.EncDec</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#lore_sa.encoder_decoder.EncDec"><code class="docutils literal notranslate"><span class="pre">EncDec</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.OneHotEnc.html">lore_sa.encoder_decoder.OneHotEnc</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lore_sa.encoder_decoder.OneHotEnc.html#lore_sa.encoder_decoder.OneHotEnc"><code class="docutils literal notranslate"><span class="pre">OneHotEnc</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.LabelEnc.html">lore_sa.encoder_decoder.LabelEnc</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lore_sa.encoder_decoder.LabelEnc.html#lore_sa.encoder_decoder.LabelEnc"><code class="docutils literal notranslate"><span class="pre">LabelEnc</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-explanation-explanation-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.explanation</span></code>: Explanation classes and functions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.explanation.Explanation.html">lore_sa.explanation.Explanation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.explanation.ExplanationEncoder.html">lore_sa.explanation.ExplanationEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.explanation.ImageExplanation.html">lore_sa.explanation.ImageExplanation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.explanation.MultilabelExplanation.html">lore_sa.explanation.MultilabelExplanation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.explanation.TextExplanation.html">lore_sa.explanation.TextExplanation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.explanation.json2explanation.html">lore_sa.explanation.json2explanation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.explanation.Explanation.html">lore_sa.explanation.Explanation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lore_sa.explanation.Explanation.html#lore_sa.explanation.Explanation"><code class="docutils literal notranslate"><span class="pre">Explanation</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.explanation.ExplanationEncoder.html">lore_sa.explanation.ExplanationEncoder</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lore_sa.explanation.ExplanationEncoder.html#lore_sa.explanation.ExplanationEncoder"><code class="docutils literal notranslate"><span class="pre">ExplanationEncoder</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.explanation.ImageExplanation.html">lore_sa.explanation.ImageExplanation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lore_sa.explanation.ImageExplanation.html#lore_sa.explanation.ImageExplanation"><code class="docutils literal notranslate"><span class="pre">ImageExplanation</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.explanation.MultilabelExplanation.html">lore_sa.explanation.MultilabelExplanation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lore_sa.explanation.MultilabelExplanation.html#lore_sa.explanation.MultilabelExplanation"><code class="docutils literal notranslate"><span class="pre">MultilabelExplanation</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.explanation.TextExplanation.html">lore_sa.explanation.TextExplanation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lore_sa.explanation.TextExplanation.html#lore_sa.explanation.TextExplanation"><code class="docutils literal notranslate"><span class="pre">TextExplanation</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.explanation.json2explanation.html">lore_sa.explanation.json2explanation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lore_sa.explanation.json2explanation.html#lore_sa.explanation.json2explanation"><code class="docutils literal notranslate"><span class="pre">json2explanation()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-rule-rule-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.rule</span></code>: Rule classes and functions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.Rule.html">lore_sa.rule.Rule</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.NumpyEncoder.html">lore_sa.rule.rule.NumpyEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.ConditionEncoder.html">lore_sa.rule.rule.ConditionEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.RuleEncoder.html">lore_sa.rule.rule.RuleEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.json2rule.html">lore_sa.rule.rule.json2rule</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.json2cond.html">lore_sa.rule.rule.json2cond</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.Condition.html">lore_sa.rule.rule.Condition</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.RuleGetter.html">lore_sa.rule.RuleGetter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.RuleGetterBinary.html">lore_sa.rule.RuleGetterBinary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.Rule.html">lore_sa.rule.Rule</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lore_sa.rule.Rule.html#lore_sa.rule.Rule"><code class="docutils literal notranslate"><span class="pre">Rule</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.RuleGetter.html">lore_sa.rule.RuleGetter</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lore_sa.rule.RuleGetter.html#lore_sa.rule.RuleGetter"><code class="docutils literal notranslate"><span class="pre">RuleGetter</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.RuleGetterBinary.html">lore_sa.rule.RuleGetterBinary</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lore_sa.rule.RuleGetterBinary.html#lore_sa.rule.RuleGetterBinary"><code class="docutils literal notranslate"><span class="pre">RuleGetterBinary</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.NumpyEncoder.html">lore_sa.rule.rule.NumpyEncoder</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lore_sa.rule.rule.NumpyEncoder.html#lore_sa.rule.rule.NumpyEncoder"><code class="docutils literal notranslate"><span class="pre">NumpyEncoder</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.ConditionEncoder.html">lore_sa.rule.rule.ConditionEncoder</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lore_sa.rule.rule.ConditionEncoder.html#lore_sa.rule.rule.ConditionEncoder"><code class="docutils literal notranslate"><span class="pre">ConditionEncoder</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.RuleEncoder.html">lore_sa.rule.rule.RuleEncoder</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lore_sa.rule.rule.RuleEncoder.html#lore_sa.rule.rule.RuleEncoder"><code class="docutils literal notranslate"><span class="pre">RuleEncoder</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.json2rule.html">lore_sa.rule.rule.json2rule</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lore_sa.rule.rule.json2rule.html#lore_sa.rule.rule.json2rule"><code class="docutils literal notranslate"><span class="pre">json2rule()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.json2cond.html">lore_sa.rule.rule.json2cond</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lore_sa.rule.rule.json2cond.html#lore_sa.rule.rule.json2cond"><code class="docutils literal notranslate"><span class="pre">json2cond()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.Condition.html">lore_sa.rule.rule.Condition</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lore_sa.rule.rule.Condition.html#lore_sa.rule.rule.Condition"><code class="docutils literal notranslate"><span class="pre">Condition</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-surrogate-surrogate-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.surrogate</span></code>: Surrogate classes and functions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.surrogate.Surrogate.html">lore_sa.surrogate.Surrogate</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.surrogate.DecisionTreeSurrogate.html">lore_sa.surrogate.DecisionTreeSurrogate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.surrogate.Surrogate.html">lore_sa.surrogate.Surrogate</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lore_sa.surrogate.Surrogate.html#lore_sa.surrogate.Surrogate"><code class="docutils literal notranslate"><span class="pre">Surrogate</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.surrogate.DecisionTreeSurrogate.html">lore_sa.surrogate.DecisionTreeSurrogate</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lore_sa.surrogate.DecisionTreeSurrogate.html#lore_sa.surrogate.DecisionTreeSurrogate"><code class="docutils literal notranslate"><span class="pre">DecisionTreeSurrogate</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-util-util-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.util</span></code>: Util functions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.util.html">lore_sa.util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.util.html">lore_sa.util</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lore_sa.util.html#lore_sa.util.best_fit_distribution"><code class="docutils literal notranslate"><span class="pre">best_fit_distribution()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="lore_sa.util.html#lore_sa.util.sigmoid"><code class="docutils literal notranslate"><span class="pre">sigmoid()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -188,10 +270,10 @@ the idea is that the user sends the complete record and here only the categorica
 </table>
 <dl class="py method">
 <dt class="sig sig-object py" id="lore_sa.encoder_decoder.EncDec.encode">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">encode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="lore_sa.dataset.Dataset.html#lore_sa.dataset.Dataset" title="lore_sa.dataset.dataset.Dataset"><span class="pre">Dataset</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">features_to_encode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/enc_dec.html#EncDec.encode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.EncDec.encode" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">encode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset" title="lore_sa.dataset.tabular_dataset.TabularDataset"><span class="pre">TabularDataset</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">features_to_encode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/enc_dec.html#EncDec.encode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.EncDec.encode" title="Permalink to this definition"></a></dt>
 <dd><p>It applies the encoder to the input features</p>
 <dl class="field-list simple">
-<dt class="field-odd">Param[Dataset] x<span class="colon">:</span></dt>
+<dt class="field-odd">Param[TabularDataset] x<span class="colon">:</span></dt>
 <dd class="field-odd"><p>the Dataset containing the features to be encoded</p>
 </dd>
 <dt class="field-even">Param[list] features_to_encode<span class="colon">:</span></dt>
@@ -209,7 +291,7 @@ the idea is that the user sends the complete record and here only the categorica
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="lore_sa.discretizer.RMEPDiscretizer.html" class="btn btn-neutral float-left" title="lore_sa.discretizer.RMEPDiscretizer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="lore_sa.encoder_decoder.TargetEnc.html" class="btn btn-neutral float-right" title="lore_sa.encoder_decoder.TargetEnc" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="lore_sa.encoder_decoder.OneHotEnc.html" class="btn btn-neutral float-right" title="lore_sa.encoder_decoder.OneHotEnc" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

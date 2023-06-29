@@ -1,6 +1,6 @@
 from .enc_dec import EncDec
 from category_encoders import TargetEncoder
-from lore_sa.dataset.dataset import Dataset
+from lore_sa.dataset.tabular_dataset import TabularDataset
 import pandas as pd
 
 __all__ = ["EncDec", "TargetEnc"]
@@ -15,11 +15,11 @@ class TargetEnc(EncDec):
         super().__init__()
         self.type = 'target'
 
-    def encode(self, dataset: Dataset, features_to_encode: list, target):
+    def encode(self, dataset: TabularDataset, features_to_encode: list, target):
         """
         It applies the encoder to the input categorical features
 
-        :param[Dataset] x: the Dataset containing the features to be encoded
+        :param[TabularDataset] x: the Dataset containing the features to be encoded
         :param[list] features_to_encode: list of columns of Dataset.df dataframe to be encoded
         :param[str] target: target name column
         """
@@ -45,7 +45,7 @@ class TargetEnc(EncDec):
         else:
             return "TargetEncoder - no features encoded"
 
-    def decode(self, dataset: Dataset, kwargs=None):
+    def decode(self, dataset: TabularDataset, kwargs=None):
         if self.encoded_features is not None:
             if self.original_data is None:
                 raise Exception("ERROR! To decode a dataset it must be firstly encoded by the same encoder object.")

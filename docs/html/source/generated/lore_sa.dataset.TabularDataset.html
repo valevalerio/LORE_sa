@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lore_sa.rule.RuleGetterBinary &mdash; LORE_sa  documentation</title>
+  <title>lore_sa.dataset.TabularDataset &mdash; LORE_sa  documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -17,8 +17,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="lore_sa.rule.rule.NumpyEncoder" href="lore_sa.rule.rule.NumpyEncoder.html" />
-    <link rel="prev" title="lore_sa.rule.RuleGetter" href="lore_sa.rule.RuleGetter.html" />
+    <link rel="next" title="lore_sa.dataset.utils" href="lore_sa.dataset.utils.html" />
+    <link rel="prev" title="lore_sa.bbox.AbstractBBox" href="lore_sa.bbox.AbstractBBox.html" />
     <link href="../../_static/style.css" rel="stylesheet" type="text/css">
 
 </head>
@@ -58,9 +58,9 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-dataset-dataset-class"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.dataset</span></code>: Dataset class</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.dataset.TabularDataset.html">lore_sa.dataset.TabularDataset</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset"><code class="docutils literal notranslate"><span class="pre">TabularDataset</span></code></a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../modules.html#lore-sa-dataset-dataset-class"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.dataset</span></code>: Dataset class</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">lore_sa.dataset.TabularDataset</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#lore_sa.dataset.TabularDataset"><code class="docutils literal notranslate"><span class="pre">TabularDataset</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.dataset.utils.html">lore_sa.dataset.utils</a><ul>
@@ -129,7 +129,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2 current"><a class="reference internal" href="../modules.html#lore-sa-rule-rule-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.rule</span></code>: Rule classes and functions</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-rule-rule-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.rule</span></code>: Rule classes and functions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.Rule.html">lore_sa.rule.Rule</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="lore_sa.rule.Rule.html#lore_sa.rule.Rule"><code class="docutils literal notranslate"><span class="pre">Rule</span></code></a></li>
 </ul>
@@ -138,8 +138,8 @@
 <li class="toctree-l4"><a class="reference internal" href="lore_sa.rule.RuleGetter.html#lore_sa.rule.RuleGetter"><code class="docutils literal notranslate"><span class="pre">RuleGetter</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">lore_sa.rule.RuleGetterBinary</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#lore_sa.rule.RuleGetterBinary"><code class="docutils literal notranslate"><span class="pre">RuleGetterBinary</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.RuleGetterBinary.html">lore_sa.rule.RuleGetterBinary</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lore_sa.rule.RuleGetterBinary.html#lore_sa.rule.RuleGetterBinary"><code class="docutils literal notranslate"><span class="pre">RuleGetterBinary</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.NumpyEncoder.html">lore_sa.rule.rule.NumpyEncoder</a><ul>
@@ -231,9 +231,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../modules.html">Modules</a></li>
-      <li class="breadcrumb-item active">lore_sa.rule.RuleGetterBinary</li>
+      <li class="breadcrumb-item active">lore_sa.dataset.TabularDataset</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../_sources/source/generated/lore_sa.rule.RuleGetterBinary.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/source/generated/lore_sa.dataset.TabularDataset.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -241,61 +241,132 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="lore-sa-rule-rulegetterbinary">
-<h1>lore_sa.rule.RuleGetterBinary<a class="headerlink" href="#lore-sa-rule-rulegetterbinary" title="Permalink to this heading"></a></h1>
+  <section id="lore-sa-dataset-tabulardataset">
+<h1>lore_sa.dataset.TabularDataset<a class="headerlink" href="#lore-sa-dataset-tabulardataset" title="Permalink to this heading"></a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="lore_sa.rule.RuleGetterBinary">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lore_sa.rule.</span></span><span class="sig-name descname"><span class="pre">RuleGetterBinary</span></span><a class="reference internal" href="../../_modules/lore_sa/rule/rule_getter_binary.html#RuleGetterBinary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.rule.RuleGetterBinary" title="Permalink to this definition"></a></dt>
-<dd><dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.rule.RuleGetterBinary.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lore_sa.rule.RuleGetterBinary.__init__" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="lore_sa.dataset.TabularDataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lore_sa.dataset.</span></span><span class="sig-name descname"><span class="pre">TabularDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/dataset/tabular_dataset.html#TabularDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.dataset.TabularDataset" title="Permalink to this definition"></a></dt>
+<dd><p>It provides an interface to handle datasets, including some essential information on the structure and
+semantic of the dataset.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lore_sa.dataset.TabularDataset.df">
+<span class="sig-name descname"><span class="pre">df</span></span><a class="headerlink" href="#lore_sa.dataset.TabularDataset.df" title="Permalink to this definition"></a></dt>
+<dd><p>dataframe containing the whole dataset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lore_sa.dataset.TabularDataset.descriptor">
+<span class="sig-name descname"><span class="pre">descriptor</span></span><a class="headerlink" href="#lore_sa.dataset.TabularDataset.descriptor" title="Permalink to this definition"></a></dt>
+<dd><p>it contains the essential informationregarding each feature. Format:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="s1">&#39;numeric&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;feature name&#39;</span> <span class="p">:</span>
+<span class="go">                {</span>
+<span class="go">                    &#39;min&#39; : &lt;min value&gt;,</span>
+<span class="go">                    &#39;max&#39; : &lt;max value&gt;,</span>
+<span class="go">                    &#39;mean&#39;: &lt;mean value&gt;,</span>
+<span class="go">                    &#39;std&#39;: &lt;standard deviation&gt;,</span>
+<span class="go">                    &#39;median&#39;: &lt;median value&gt;,</span>
+<span class="go">                    &#39;q1&#39;: &lt;first quartile of the distribution&gt;,</span>
+<span class="go">                    &#39;q3&#39;: &lt;third quartile of the distribution,</span>
+<span class="go">                },</span>
+<span class="go">            ...,</span>
+<span class="go">            ...,</span>
+<span class="go">            },</span>
+<span class="go">&#39;categorical: {&#39;feature name&#39;:</span>
+<span class="go">                    {</span>
+<span class="go">                        &#39;distinct_values&#39; : &lt;distinct categorical values&gt;,</span>
+<span class="go">                        &#39;value_counts&#39; : {&#39;distinct value&#39; : &lt;elements count&gt;,</span>
+<span class="go">                                        ... }</span>
+<span class="go">                    }</span>
+<span class="go">                },</span>
+<span class="go">                ...</span>
+<span class="go">                ...</span>
+<span class="go">                ...</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lore_sa.dataset.TabularDataset.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/dataset/tabular_dataset.html#TabularDataset.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.dataset.TabularDataset.__init__" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <p class="rubric">Methods</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.rule.RuleGetterBinary.__init__" title="lore_sa.rule.RuleGetterBinary.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.dataset.TabularDataset.__init__" title="lore_sa.dataset.TabularDataset.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(data[, class_name])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_counterfactual</span></code>(x, delta, feature_names)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lore_sa.dataset.TabularDataset.from_csv" title="lore_sa.dataset.TabularDataset.from_csv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_csv</span></code></a>(filename[, class_name])</p></td>
+<td><p>Read a comma-separated values (csv) file into Dataset object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.dataset.TabularDataset.from_dict" title="lore_sa.dataset.TabularDataset.from_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code></a>(data[, class_name])</p></td>
+<td><p>From dicts of Series, arrays, or dicts.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lore_sa.dataset.TabularDataset.get_class_values" title="lore_sa.dataset.TabularDataset.get_class_values"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_class_values</span></code></a>()</p></td>
+<td><p>Provides the class_name :return:</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_features_names</span></code>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_feasibility_of_falsified_conditions</span></code>(...)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_numeric_columns</span></code>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">compact_premises</span></code>(plist)</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.dataset.TabularDataset.set_class_name" title="lore_sa.dataset.TabularDataset.set_class_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_class_name</span></code></a>(class_name)</p></td>
+<td><p>Set the class name.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_counterfactual_rules</span></code>(x, y, dt, Z, Y, ...)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_falsified_conditions</span></code>(xd, crule)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.rule.RuleGetterBinary.get_rule" title="lore_sa.rule.RuleGetterBinary.get_rule"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_rule</span></code></a>(x, y, dt, dataset[, encdec, ...])</p></td>
-<td><p>Extract the rule.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lore_sa.dataset.TabularDataset.update_descriptor" title="lore_sa.dataset.TabularDataset.update_descriptor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_descriptor</span></code></a>()</p></td>
+<td><p>it creates the dataset descriptor dictionary</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.rule.RuleGetterBinary.get_rule">
-<span class="sig-name descname"><span class="pre">get_rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="lore_sa.surrogate.DecisionTreeSurrogate.html#lore_sa.surrogate.DecisionTreeSurrogate" title="lore_sa.surrogate.decision_tree.DecisionTreeSurrogate"><span class="pre">DecisionTreeSurrogate</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset" title="lore_sa.dataset.tabular_dataset.TabularDataset"><span class="pre">TabularDataset</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">encdec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="lore_sa.encoder_decoder.EncDec.html#lore_sa.encoder_decoder.EncDec" title="lore_sa.encoder_decoder.enc_dec.EncDec"><span class="pre">EncDec</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multi_label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/rule/rule_getter_binary.html#RuleGetterBinary.get_rule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.rule.RuleGetterBinary.get_rule" title="Permalink to this definition"></a></dt>
-<dd><p>Extract the rule.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> – </p></li>
-<li><p><strong>y</strong> – </p></li>
-<li><p><strong>dt</strong> – </p></li>
-<li><p><strong>dataset</strong> – </p></li>
-<li><p><strong>encdec</strong> – </p></li>
-<li><p><strong>multi_label</strong> – </p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p></p>
-</dd>
-</dl>
+<dt class="sig sig-object py" id="lore_sa.dataset.TabularDataset.from_csv">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/dataset/tabular_dataset.html#TabularDataset.from_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.dataset.TabularDataset.from_csv" title="Permalink to this definition"></a></dt>
+<dd><p>Read a comma-separated values (csv) file into Dataset object.
+:param [str] filename:
+:param class_name: optional
+:return:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lore_sa.dataset.TabularDataset.from_dict">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/dataset/tabular_dataset.html#TabularDataset.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.dataset.TabularDataset.from_dict" title="Permalink to this definition"></a></dt>
+<dd><p>From dicts of Series, arrays, or dicts.
+:param [dict] data:
+:param class_name: optional
+:return:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lore_sa.dataset.TabularDataset.get_class_values">
+<span class="sig-name descname"><span class="pre">get_class_values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/dataset/tabular_dataset.html#TabularDataset.get_class_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.dataset.TabularDataset.get_class_values" title="Permalink to this definition"></a></dt>
+<dd><p>Provides the class_name
+:return:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lore_sa.dataset.TabularDataset.set_class_name">
+<span class="sig-name descname"><span class="pre">set_class_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/dataset/tabular_dataset.html#TabularDataset.set_class_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.dataset.TabularDataset.set_class_name" title="Permalink to this definition"></a></dt>
+<dd><p>Set the class name. Only the column name string
+:param [str] class_name:
+:return:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lore_sa.dataset.TabularDataset.update_descriptor">
+<span class="sig-name descname"><span class="pre">update_descriptor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/dataset/tabular_dataset.html#TabularDataset.update_descriptor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.dataset.TabularDataset.update_descriptor" title="Permalink to this definition"></a></dt>
+<dd><p>it creates the dataset descriptor dictionary</p>
 </dd></dl>
 
 </dd></dl>
@@ -306,8 +377,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="lore_sa.rule.RuleGetter.html" class="btn btn-neutral float-left" title="lore_sa.rule.RuleGetter" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="lore_sa.rule.rule.NumpyEncoder.html" class="btn btn-neutral float-right" title="lore_sa.rule.rule.NumpyEncoder" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="lore_sa.bbox.AbstractBBox.html" class="btn btn-neutral float-left" title="lore_sa.bbox.AbstractBBox" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="lore_sa.dataset.utils.html" class="btn btn-neutral float-right" title="lore_sa.dataset.utils" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

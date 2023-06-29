@@ -1,6 +1,7 @@
 import unittest
-from lore_sa.encoder_decoder import OneHotEnc, TargetEnc, LabelEnc
-from lore_sa.dataset import Dataset
+from lore_sa.encoder_decoder import OneHotEnc, LabelEnc
+from lore_sa.dataset import TabularDataset
+from lore_sa.encoder_decoder.my_target_enc import TargetEnc
 
 
 class EncDecTest(unittest.TestCase):
@@ -16,20 +17,20 @@ class EncDecTest(unittest.TestCase):
         self.assertEqual(target_enc.__str__(),"TargetEncoder - no features encoded")
 
     def test_one_hot_encoder_init_with_features_encoder(self):
-        dataset = Dataset.from_csv("resources/adult.csv")
+        dataset = TabularDataset.from_csv("resources/adult.csv")
 
         one_hot_enc = OneHotEnc()
         dataset_encoded = one_hot_enc.encode(dataset,['race','sex'])
         self.assertEqual(one_hot_enc.__str__(),"OneHotEncoder - features encoded: race,sex")
 
     def test_target_encoder_init_with_features_encoder(self):
-        dataset = Dataset.from_csv("resources/adult.csv",class_name = "capital-gain")
+        dataset = TabularDataset.from_csv("resources/adult.csv",class_name = "capital-gain")
         target_enc = TargetEnc()
         dataset_encoded = target_enc.encode(dataset, ['workclass','education','occupation','race','sex'], target = "capital-gain")
         self.assertEqual(target_enc.__str__(),"TargetEncoder - features encoded: workclass,education,occupation,race,sex - target feature: capital-gain")
 
     def test_decode_error(self):
-        dataset = Dataset.from_dict({'col1': [1, 2], 'col2': [3, 4], 'col3': ['America', 'Europe']}, class_name='col3')
+        dataset = TabularDataset.from_dict({'col1': [1, 2], 'col2': [3, 4], 'col3': ['America', 'Europe']}, class_name='col3')
         one_hot_enc = OneHotEnc()
         with  self.assertRaises(Exception) as context:
             one_hot_enc.decode(dataset)
@@ -37,7 +38,7 @@ class EncDecTest(unittest.TestCase):
 
 
     def test_label_encoder_init_with_features_encoder(self):
-        dataset = Dataset.from_csv("resources/adult.csv")
+        dataset = TabularDataset.from_csv("resources/adult.csv")
 
         features_encoding = {'race': {0: 'Amer-Indian-Eskimo', 1: 'Asian-Pac-Islander', 2: 'Black', 3: 'Other', 4: 'White'}, 'sex': {0: 'Female', 1: 'Male'}}
 
@@ -50,10 +51,10 @@ class EncDecTest(unittest.TestCase):
         self.assertTrue(dataset_encoded['sex'].all() in [0,6])
 
     def test_label_decode(self):
-        dataset = Dataset.from_csv("resources/adult.csv")
+        dataset = TabularDataset.from_csv("resources/adult.csv")
         features_encoding = {'race': {0: 'Amer-Indian-Eskimo', 1: 'Asian-Pac-Islander', 2: 'Black', 3: 'Other', 4: 'White'}, 'sex': {0: 'Female', 1: 'Male'}}
         label_enc = LabelEnc()
-        dataset_encoded = Dataset(label_enc.encode(dataset,['race','sex']))
+        dataset_encoded = TabularDataset(label_enc.encode(dataset,['race','sex']))
         dataset_decoded = label_enc.decode(dataset_encoded,features_encoding)
 
         self.assertTrue('sex' in dataset_decoded.columns)
@@ -62,9 +63,9 @@ class EncDecTest(unittest.TestCase):
         self.assertEqual(dataset_decoded['race'].unique().tolist(),['White', 'Black', 'Asian-Pac-Islander', 'Amer-Indian-Eskimo', 'Other'])
 
     def test_label_decode_without_feature_encoding(self):
-        dataset = Dataset.from_csv("resources/adult.csv")
+        dataset = TabularDataset.from_csv("resources/adult.csv")
         label_enc = LabelEnc()
-        dataset_encoded = Dataset(label_enc.encode(dataset,['race','sex']))
+        dataset_encoded = TabularDataset(label_enc.encode(dataset,['race','sex']))
         dataset_decoded = label_enc.decode(dataset_encoded)
 
         self.assertTrue('sex' in dataset_decoded.columns)

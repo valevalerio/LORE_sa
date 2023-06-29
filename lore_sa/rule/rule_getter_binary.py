@@ -3,7 +3,7 @@ from collections import defaultdict
 
 import numpy as np
 
-from lore_sa.dataset import Dataset
+from lore_sa.dataset import TabularDataset
 from lore_sa.encoder_decoder import EncDec, OneHotEnc
 from lore_sa.rule.rule import Condition, Rule
 from lore_sa.rule.rule_getter import RuleGetter
@@ -15,7 +15,7 @@ __all__ = ["RuleGetter","RuleGetterBinary"]
 
 class RuleGetterBinary(RuleGetter):
 
-    def get_rule(self, x, y, dt: DecisionTreeSurrogate, dataset: Dataset, encdec: EncDec = None, multi_label: bool = False):
+    def get_rule(self, x, y, dt: DecisionTreeSurrogate, dataset: TabularDataset, encdec: EncDec = None, multi_label: bool = False):
         """
         Extract the rule.
 
@@ -92,7 +92,7 @@ class RuleGetterBinary(RuleGetter):
                 compact_plist.append(alist[0])
         return compact_plist
 
-    def get_counterfactual_rules(self, x, y, dt: DecisionTreeSurrogate, Z, Y, dataset: Dataset,features_map,
+    def get_counterfactual_rules(self, x, y, dt: DecisionTreeSurrogate, Z, Y, dataset: TabularDataset,features_map,
                                  features_map_inv, multi_label=False, encdec: EncDec = None, filter_crules=None,
                                  constraints=None,unadmittible_features=None):
 
