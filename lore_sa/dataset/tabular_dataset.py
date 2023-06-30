@@ -1,12 +1,14 @@
+from lore_sa.dataset import Dataset
+
 from lore_sa.logger import logger
 import pandas as pd
 from pandas import DataFrame
 import numpy as np
 
-__all__ = ["TabularDataset"]
+__all__ = ["TabularDataset","Dataset"]
 
 
-class TabularDataset():
+class TabularDataset(Dataset):
     """
     It provides an interface to handle datasets, including some essential information on the structure and
     semantic of the dataset.

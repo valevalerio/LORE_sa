@@ -34,6 +34,7 @@ Modules
    :nosignatures:
    :toctree: generated/
 
+   dataset.Dataset
    dataset.TabularDataset
    dataset.utils
 
