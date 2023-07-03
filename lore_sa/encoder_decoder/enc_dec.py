@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from lore_sa.dataset.dataset import Dataset
+from lore_sa.dataset.dataset import TabularDataset
 
 import pandas as pd
 
@@ -20,7 +20,7 @@ class EncDec():
         
 
     @abstractmethod
-    def encode(self, x: Dataset, features_to_encode):
+    def encode(self, x: TabularDataset, features_to_encode):
         """
         It applies the encoder to the input features
 
@@ -30,5 +30,5 @@ class EncDec():
         return
 
     @abstractmethod
-    def decode(self, x: Dataset, kwargs=None):
+    def decode(self, x: TabularDataset, kwargs=None):
         return
