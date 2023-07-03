@@ -1,7 +1,11 @@
 from abc import abstractmethod
+<<<<<<< HEAD
 from lore_sa.dataset.dataset import TabularDataset
 
 import pandas as pd
+=======
+from lore_sa.dataset.tabular_dataset import TabularDataset
+>>>>>>> dfa71cf528e505c88e80bbe6f7cb96f1c9477049
 
 __all__ = ["EncDec"]
 class EncDec():
@@ -24,7 +28,7 @@ class EncDec():
         """
         It applies the encoder to the input features
 
-        :param[Dataset] x: the Dataset containing the features to be encoded
+        :param[TabularDataset] x: the Dataset containing the features to be encoded
         :param[list] features_to_encode: list of columns of Dataset.df dataframe to be encoded
         """
         return

@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from lore_sa.dataset import Dataset
+from lore_sa.dataset import TabularDataset
 from lore_sa.encoder_decoder import EncDec
 from lore_sa.surrogate.surrogate import Surrogate
 
@@ -13,7 +13,7 @@ class RuleGetter(ABC):
     """
 
     @abstractmethod
-    def get_rule(self,x, y, dt: Surrogate, dataset: Dataset, encdec: EncDec = None, multi_label: bool = False):
+    def get_rule(self,x, y, dt: Surrogate, dataset: TabularDataset, encdec: EncDec = None, multi_label: bool = False):
         pass
 
     @abstractmethod

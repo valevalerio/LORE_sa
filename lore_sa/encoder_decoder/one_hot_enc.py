@@ -2,7 +2,7 @@ from .enc_dec import EncDec
 import pandas as pd
 from sklearn.preprocessing import OneHotEncoder
 
-from lore_sa.dataset.dataset import TabularDataset
+from lore_sa.dataset.tabular_dataset import TabularDataset
 
 __all__ = ["EncDec", "OneHotEnc"]
 
@@ -23,7 +23,7 @@ class OneHotEnc(EncDec):
         It applies the encoder to the input features. It also modifies the input dataset object, adding the
         encoded version of the dataset
 
-        :param[Dataset] dataset: the Dataset containing the features to be encoded
+        :param[TabularDataset] dataset: the Dataset containing the features to be encoded
         :param[list] features_to_encode: list of columns of Dataset.df dataframe to be encoded
         """
         

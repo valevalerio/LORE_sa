@@ -16,7 +16,7 @@ from lore_sa.util import neuclidean, record2str
 from lore_sa.discretizer import Discretizer
 from lore_sa.encoder_decoder import EncDec
 from lore_sa.bbox import AbstractBBox
-from lore_sa.dataset import Dataset
+from lore_sa.dataset import TabularDataset
 from lore_sa.rule import Rule
 from lore_sa.rule import RuleGetterBinary
 import numpy as np
@@ -24,7 +24,7 @@ import numpy as np
 
 class Explainer():
 
-    def __init__(self, dataset: Dataset, bb: AbstractBBox):
+    def __init__(self, dataset: TabularDataset, bb: AbstractBBox):
         pass
 
     @abstractmethod
@@ -46,7 +46,7 @@ class LOREM(Explainer):
     LOREM is an explanator class initialized with a Dataset Object, a BlackBox Object, a config dictionary and a
     class_name list of string.
 
-    :param Dataset dataset: Dataset Class that incapsulate the data and provides datamanager functions
+    :param TabularDataset dataset: Dataset Class that incapsulate the data and provides datamanager functions
     :param AbstractBBox bb:  Black Box
     :param NeighborhoodGenerator encdec: NeighborhoodGenerator object
     :param Surrogate surrogate: Surrogate object
@@ -65,7 +65,7 @@ class LOREM(Explainer):
     :param bool verbose:
 
     """
-    def __init__(self, dataset: Dataset, bb: AbstractBBox, encdec: EncDec,neigh_gen: NeighborhoodGenerator,
+    def __init__(self, dataset: TabularDataset, bb: AbstractBBox, encdec: EncDec,neigh_gen: NeighborhoodGenerator,
                  surrogate: Surrogate, rule: Rule, class_name: str, K_transformed=None,
                  multi_label=False, filter_crules=True, kernel_width=None, kernel=None, random_state=None, binary=False,
                  discretize: Discretizer = None, extreme_fidelity: bool = False, constraints=None,

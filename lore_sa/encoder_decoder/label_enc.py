@@ -1,7 +1,7 @@
 from .enc_dec import EncDec
 import pandas as pd
 
-from lore_sa.dataset.dataset import TabularDataset
+from lore_sa.dataset.tabular_dataset import TabularDataset
 from sklearn.preprocessing import LabelEncoder
 
 __all__ = ["EncDec", "LabelEnc"]
@@ -19,7 +19,7 @@ class LabelEnc(EncDec):
         """
         It applies the encoder to the input features
 
-        :param [Dataset] x: the Dataset containing the features to be encoded
+        :param [TabularDataset] x: the Dataset containing the features to be encoded
         :param[list] features_to_encode: list of columns of Dataset.df dataframe to be encoded
         """
         # creating instance of labelencoder
@@ -50,7 +50,7 @@ class LabelEnc(EncDec):
         """
         Provides a new dataframe decoded from dictionary of encoding features
 
-        :param [Dataset] dataset: Dataset to decode
+        :param [TabularDataset] dataset: Dataset to decode
         :param feature_encoding: a dictionary to convert the values from numeric to string.
         :return:
         """

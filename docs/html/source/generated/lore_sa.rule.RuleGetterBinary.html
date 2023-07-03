@@ -19,7 +19,7 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="lore_sa.surrogate.Surrogate" href="lore_sa.surrogate.Surrogate.html" />
+    <link rel="next" title="lore_sa.rule.rule.NumpyEncoder" href="lore_sa.rule.rule.NumpyEncoder.html" />
     <link rel="prev" title="lore_sa.rule.RuleGetter" href="lore_sa.rule.RuleGetter.html" />
     <link href="../../_static/style.css" rel="stylesheet" type="text/css">
 
@@ -56,6 +56,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-dataset-dataset-class"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.dataset</span></code>: Dataset class</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.dataset.Dataset.html">lore_sa.dataset.Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.dataset.TabularDataset.html">lore_sa.dataset.TabularDataset</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.dataset.utils.html">lore_sa.dataset.utils</a></li>
 </ul>
 </li>
@@ -70,7 +71,6 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-encoder-decoder-encoder-decoder-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.encoder_decoder</span></code>: Encoder/Decoder classes and functions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.EncDec.html">lore_sa.encoder_decoder.EncDec</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.TargetEnc.html">lore_sa.encoder_decoder.TargetEnc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.OneHotEnc.html">lore_sa.encoder_decoder.OneHotEnc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.LabelEnc.html">lore_sa.encoder_decoder.LabelEnc</a></li>
 </ul>
@@ -86,14 +86,14 @@
 </li>
 <li class="toctree-l2 current"><a class="reference internal" href="../modules.html#lore-sa-rule-rule-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.rule</span></code>: Rule classes and functions</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.Rule.html">lore_sa.rule.Rule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.RuleGetter.html">lore_sa.rule.RuleGetter</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">lore_sa.rule.RuleGetterBinary</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.NumpyEncoder.html">lore_sa.rule.rule.NumpyEncoder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.ConditionEncoder.html">lore_sa.rule.rule.ConditionEncoder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.RuleEncoder.html">lore_sa.rule.rule.RuleEncoder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.json2rule.html">lore_sa.rule.rule.json2rule</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.json2cond.html">lore_sa.rule.rule.json2cond</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.Condition.html">lore_sa.rule.rule.Condition</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.RuleGetter.html">lore_sa.rule.RuleGetter</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">lore_sa.rule.RuleGetterBinary</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-surrogate-surrogate-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.surrogate</span></code>: Surrogate classes and functions</a><ul>
@@ -197,7 +197,7 @@
 </table>
 <dl class="py method">
 <dt class="sig sig-object py" id="lore_sa.rule.RuleGetterBinary.get_rule">
-<span class="sig-name descname"><span class="pre">get_rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="lore_sa.surrogate.DecisionTreeSurrogate.html#lore_sa.surrogate.DecisionTreeSurrogate" title="lore_sa.surrogate.decision_tree.DecisionTreeSurrogate"><span class="pre">DecisionTreeSurrogate</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="lore_sa.dataset.Dataset.html#lore_sa.dataset.Dataset" title="lore_sa.dataset.dataset.Dataset"><span class="pre">Dataset</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">encdec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="lore_sa.encoder_decoder.EncDec.html#lore_sa.encoder_decoder.EncDec" title="lore_sa.encoder_decoder.enc_dec.EncDec"><span class="pre">EncDec</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multi_label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/rule/rule_getter_binary.html#RuleGetterBinary.get_rule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.rule.RuleGetterBinary.get_rule" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="lore_sa.surrogate.DecisionTreeSurrogate.html#lore_sa.surrogate.DecisionTreeSurrogate" title="lore_sa.surrogate.decision_tree.DecisionTreeSurrogate"><span class="pre">DecisionTreeSurrogate</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset" title="lore_sa.dataset.tabular_dataset.TabularDataset"><span class="pre">TabularDataset</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">encdec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="lore_sa.encoder_decoder.EncDec.html#lore_sa.encoder_decoder.EncDec" title="lore_sa.encoder_decoder.enc_dec.EncDec"><span class="pre">EncDec</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multi_label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/rule/rule_getter_binary.html#RuleGetterBinary.get_rule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.rule.RuleGetterBinary.get_rule" title="Permalink to this definition"></a></dt>
 <dd><p>Extract the rule.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -225,7 +225,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="lore_sa.rule.RuleGetter.html" class="btn btn-neutral float-left" title="lore_sa.rule.RuleGetter" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="lore_sa.surrogate.Surrogate.html" class="btn btn-neutral float-right" title="lore_sa.surrogate.Surrogate" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="lore_sa.rule.rule.NumpyEncoder.html" class="btn btn-neutral float-right" title="lore_sa.rule.rule.NumpyEncoder" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

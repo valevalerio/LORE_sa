@@ -56,6 +56,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-dataset-dataset-class"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.dataset</span></code>: Dataset class</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.dataset.Dataset.html">lore_sa.dataset.Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.dataset.TabularDataset.html">lore_sa.dataset.TabularDataset</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.dataset.utils.html">lore_sa.dataset.utils</a></li>
 </ul>
 </li>
@@ -70,7 +71,6 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-encoder-decoder-encoder-decoder-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.encoder_decoder</span></code>: Encoder/Decoder classes and functions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.EncDec.html">lore_sa.encoder_decoder.EncDec</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.TargetEnc.html">lore_sa.encoder_decoder.TargetEnc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.OneHotEnc.html">lore_sa.encoder_decoder.OneHotEnc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.LabelEnc.html">lore_sa.encoder_decoder.LabelEnc</a></li>
 </ul>
@@ -86,14 +86,14 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-rule-rule-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.rule</span></code>: Rule classes and functions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.Rule.html">lore_sa.rule.Rule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.RuleGetter.html">lore_sa.rule.RuleGetter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.RuleGetterBinary.html">lore_sa.rule.RuleGetterBinary</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.NumpyEncoder.html">lore_sa.rule.rule.NumpyEncoder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.ConditionEncoder.html">lore_sa.rule.rule.ConditionEncoder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.RuleEncoder.html">lore_sa.rule.rule.RuleEncoder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.json2rule.html">lore_sa.rule.rule.json2rule</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.json2cond.html">lore_sa.rule.rule.json2cond</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.Condition.html">lore_sa.rule.rule.Condition</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.RuleGetter.html">lore_sa.rule.RuleGetter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.RuleGetterBinary.html">lore_sa.rule.RuleGetterBinary</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-surrogate-surrogate-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.surrogate</span></code>: Surrogate classes and functions</a><ul>
@@ -179,7 +179,7 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#lore_sa.neighgen.RandomGenerator.check_generated" title="lore_sa.neighgen.RandomGenerator.check_generated"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_generated</span></code></a>([filter_function, check_fuction])</p></td>
 <td><p>It contains the logic to check the requirements for generated data</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.neighgen.RandomGenerator.generate" title="lore_sa.neighgen.RandomGenerator.generate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate</span></code></a>(x, num_instances)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.neighgen.RandomGenerator.generate" title="lore_sa.neighgen.RandomGenerator.generate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate</span></code></a>(x, num_instances[, descriptor])</p></td>
 <td><p>random generation of new instances.</p></td>
 </tr>
 </tbody>
@@ -192,7 +192,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="lore_sa.neighgen.RandomGenerator.generate">
-<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_instances</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/neighgen/random.html#RandomGenerator.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.neighgen.RandomGenerator.generate" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_instances</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descriptor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/neighgen/random.html#RandomGenerator.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.neighgen.RandomGenerator.generate" title="Permalink to this definition"></a></dt>
 <dd><p>random generation of new instances. The starting instance x is only used to detect the value type of each feature, in order
 to generate new values only for numeric features.</p>
 <dl class="field-list simple">
@@ -200,6 +200,7 @@ to generate new values only for numeric features.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>x</strong><strong>[</strong><strong>dict</strong><strong>]</strong> – the starting instance from the real dataset</p></li>
 <li><p><strong>num_instances</strong><strong>[</strong><strong>int</strong><strong>]</strong> – the number of instances to generate</p></li>
+<li><p><strong>descriptor</strong><strong>[</strong><strong>dict</strong><strong>]</strong> – data descriptor as generated from a Dataset object</p></li>
 </ul>
 </dd>
 </dl>

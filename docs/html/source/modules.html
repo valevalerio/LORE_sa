@@ -56,6 +56,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#lore-sa-dataset-dataset-class"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.dataset</span></code>: Dataset class</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="generated/lore_sa.dataset.Dataset.html">lore_sa.dataset.Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/lore_sa.dataset.TabularDataset.html">lore_sa.dataset.TabularDataset</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generated/lore_sa.dataset.utils.html">lore_sa.dataset.utils</a></li>
 </ul>
 </li>
@@ -70,7 +71,6 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#lore-sa-encoder-decoder-encoder-decoder-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.encoder_decoder</span></code>: Encoder/Decoder classes and functions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="generated/lore_sa.encoder_decoder.EncDec.html">lore_sa.encoder_decoder.EncDec</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/lore_sa.encoder_decoder.TargetEnc.html">lore_sa.encoder_decoder.TargetEnc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generated/lore_sa.encoder_decoder.OneHotEnc.html">lore_sa.encoder_decoder.OneHotEnc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generated/lore_sa.encoder_decoder.LabelEnc.html">lore_sa.encoder_decoder.LabelEnc</a></li>
 </ul>
@@ -185,9 +185,12 @@
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/lore_sa.dataset.Dataset.html#lore_sa.dataset.Dataset" title="lore_sa.dataset.Dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dataset.Dataset</span></code></a></p></td>
+<td><p>Generic class to handle datasets</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset" title="lore_sa.dataset.TabularDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dataset.TabularDataset</span></code></a></p></td>
 <td><p>It provides an interface to handle datasets, including some essential information on the structure and semantic of the dataset.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/lore_sa.dataset.utils.html#module-lore_sa.dataset.utils" title="lore_sa.dataset.utils"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dataset.utils</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/lore_sa.dataset.utils.html#module-lore_sa.dataset.utils" title="lore_sa.dataset.utils"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dataset.utils</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -223,13 +226,10 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/lore_sa.encoder_decoder.EncDec.html#lore_sa.encoder_decoder.EncDec" title="lore_sa.encoder_decoder.EncDec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encoder_decoder.EncDec</span></code></a></p></td>
 <td><p>Generic class to implement an encoder/decoder</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/lore_sa.encoder_decoder.TargetEnc.html#lore_sa.encoder_decoder.TargetEnc" title="lore_sa.encoder_decoder.TargetEnc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encoder_decoder.TargetEnc</span></code></a></p></td>
-<td><p>Target encoding for categorical features.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/lore_sa.encoder_decoder.OneHotEnc.html#lore_sa.encoder_decoder.OneHotEnc" title="lore_sa.encoder_decoder.OneHotEnc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encoder_decoder.OneHotEnc</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/lore_sa.encoder_decoder.OneHotEnc.html#lore_sa.encoder_decoder.OneHotEnc" title="lore_sa.encoder_decoder.OneHotEnc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encoder_decoder.OneHotEnc</span></code></a></p></td>
 <td><p>It provides an interface to access One Hot enconding (<a class="reference external" href="https://en.wikipedia.org/wiki/One-hot">https://en.wikipedia.org/wiki/One-hot</a>) functions.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/lore_sa.encoder_decoder.LabelEnc.html#lore_sa.encoder_decoder.LabelEnc" title="lore_sa.encoder_decoder.LabelEnc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encoder_decoder.LabelEnc</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/lore_sa.encoder_decoder.LabelEnc.html#lore_sa.encoder_decoder.LabelEnc" title="lore_sa.encoder_decoder.LabelEnc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encoder_decoder.LabelEnc</span></code></a></p></td>
 <td><p>It provides an interface to access Label enconding functions.</p></td>
 </tr>
 </tbody>

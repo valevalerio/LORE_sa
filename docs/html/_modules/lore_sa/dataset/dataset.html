@@ -53,6 +53,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../source/modules.html#lore-sa-dataset-dataset-class"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.dataset</span></code>: Dataset class</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.dataset.Dataset.html">lore_sa.dataset.Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.dataset.TabularDataset.html">lore_sa.dataset.TabularDataset</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.dataset.utils.html">lore_sa.dataset.utils</a></li>
 </ul>
 </li>
@@ -67,7 +68,6 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../source/modules.html#lore-sa-encoder-decoder-encoder-decoder-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.encoder_decoder</span></code>: Encoder/Decoder classes and functions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.encoder_decoder.EncDec.html">lore_sa.encoder_decoder.EncDec</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.encoder_decoder.TargetEnc.html">lore_sa.encoder_decoder.TargetEnc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.encoder_decoder.OneHotEnc.html">lore_sa.encoder_decoder.OneHotEnc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.encoder_decoder.LabelEnc.html">lore_sa.encoder_decoder.LabelEnc</a></li>
 </ul>
@@ -83,14 +83,14 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../source/modules.html#lore-sa-rule-rule-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.rule</span></code>: Rule classes and functions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.rule.Rule.html">lore_sa.rule.Rule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.rule.RuleGetter.html">lore_sa.rule.RuleGetter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.rule.RuleGetterBinary.html">lore_sa.rule.RuleGetterBinary</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.rule.rule.NumpyEncoder.html">lore_sa.rule.rule.NumpyEncoder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.rule.rule.ConditionEncoder.html">lore_sa.rule.rule.ConditionEncoder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.rule.rule.RuleEncoder.html">lore_sa.rule.rule.RuleEncoder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.rule.rule.json2rule.html">lore_sa.rule.rule.json2rule</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.rule.rule.json2cond.html">lore_sa.rule.rule.json2cond</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.rule.rule.Condition.html">lore_sa.rule.rule.Condition</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.rule.RuleGetter.html">lore_sa.rule.RuleGetter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.rule.RuleGetterBinary.html">lore_sa.rule.RuleGetterBinary</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../source/modules.html#lore-sa-surrogate-surrogate-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.surrogate</span></code>: Surrogate classes and functions</a><ul>
@@ -156,89 +156,11 @@
            <div itemprop="articleBody">
              
   <h1>Source code for lore_sa.dataset.dataset</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
-
-<span class="kn">from</span> <span class="nn">lore_sa.logger</span> <span class="kn">import</span> <span class="n">logger</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">DataFrame</span>
-
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Dataset&quot;</span><span class="p">]</span>
-
-
+<span></span><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Dataset&quot;</span><span class="p">]</span>
 <div class="viewcode-block" id="Dataset"><a class="viewcode-back" href="../../../source/generated/lore_sa.dataset.Dataset.html#lore_sa.dataset.Dataset">[docs]</a><span class="k">class</span> <span class="nc">Dataset</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    It provides an interface to handle datasets, including some essential information on the structure and</span>
-<span class="sd">    semantic of the dataset.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="Dataset.__init__"><a class="viewcode-back" href="../../../source/generated/lore_sa.dataset.Dataset.html#lore_sa.dataset.Dataset.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">class_name</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">encdec</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">class_name</span> <span class="o">=</span> <span class="n">class_name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">data</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">feature_names</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">class_values</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">numeric_columns</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">real_feature_names</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">features_map</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">rdf</span> <span class="o">=</span> <span class="n">data</span></div>
-        
-
-<div class="viewcode-block" id="Dataset.from_csv"><a class="viewcode-back" href="../../../source/generated/lore_sa.dataset.Dataset.html#lore_sa.dataset.Dataset.from_csv">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_csv</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">class_name</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Read a comma-separated values (csv) file into Dataset object.</span>
-<span class="sd">        :param [str] filename:</span>
-<span class="sd">        :param class_name: optional</span>
-<span class="sd">        :return:</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">skipinitialspace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">na_values</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="n">keep_default_na</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">dataset_obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">class_name</span><span class="o">=</span><span class="n">class_name</span><span class="p">)</span>
-        <span class="n">dataset_obj</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1"> file imported&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">dataset_obj</span></div>
-
-<div class="viewcode-block" id="Dataset.from_dict"><a class="viewcode-back" href="../../../source/generated/lore_sa.dataset.Dataset.html#lore_sa.dataset.Dataset.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">class_name</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        From dicts of Series, arrays, or dicts.</span>
-<span class="sd">        :param [dict] data:</span>
-<span class="sd">        :param class_name: optional</span>
-<span class="sd">        :return:</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">class_name</span><span class="o">=</span><span class="n">class_name</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="Dataset.set_class_name"><a class="viewcode-back" href="../../../source/generated/lore_sa.dataset.Dataset.html#lore_sa.dataset.Dataset.set_class_name">[docs]</a>    <span class="k">def</span> <span class="nf">set_class_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">class_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Set the class name. Only the column name string</span>
-<span class="sd">        :param [str] class_name:</span>
-<span class="sd">        :return:</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">class_name</span> <span class="o">=</span> <span class="n">class_name</span></div>
-
-<div class="viewcode-block" id="Dataset.get_class_values"><a class="viewcode-back" href="../../../source/generated/lore_sa.dataset.Dataset.html#lore_sa.dataset.Dataset.get_class_values">[docs]</a>    <span class="k">def</span> <span class="nf">get_class_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Provides the class_name</span>
-<span class="sd">        :return:</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;ERR: class_name is None. Set class_name with set_class_name(&#39;&lt;column name&gt;&#39;)&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">class_name</span><span class="p">]</span><span class="o">.</span><span class="n">values</span></div>
-
-
-    <span class="k">def</span> <span class="nf">get_numeric_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">numeric_columns</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">_get_numeric_data</span><span class="p">()</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">numeric_columns</span>
-
-<div class="viewcode-block" id="Dataset.get_original_dataset"><a class="viewcode-back" href="../../../source/generated/lore_sa.dataset.Dataset.html#lore_sa.dataset.Dataset.get_original_dataset">[docs]</a>    <span class="k">def</span> <span class="nf">get_original_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Provides the original dataset</span>
-<span class="sd">        :return:</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rdf</span></div>
-
-    <span class="k">def</span> <span class="nf">get_features_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span></div>
-
-
+<span class="sd">    Generic class to handle datasets</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
 </pre></div>
 
            </div>

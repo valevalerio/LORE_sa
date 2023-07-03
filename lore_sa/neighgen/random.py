@@ -1,6 +1,6 @@
 from lore_sa.neighgen.neighborhood_generator import NeighborhoodGenerator
 
-from lore_sa.dataset.dataset import TabularDataset
+from lore_sa.dataset.tabular_dataset import TabularDataset
 import pandas as pd
 import numpy as np
 

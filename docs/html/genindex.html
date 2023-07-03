@@ -53,6 +53,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="source/modules.html#lore-sa-dataset-dataset-class"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.dataset</span></code>: Dataset class</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="source/generated/lore_sa.dataset.Dataset.html">lore_sa.dataset.Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="source/generated/lore_sa.dataset.TabularDataset.html">lore_sa.dataset.TabularDataset</a></li>
 <li class="toctree-l3"><a class="reference internal" href="source/generated/lore_sa.dataset.utils.html">lore_sa.dataset.utils</a></li>
 </ul>
 </li>
@@ -67,7 +68,6 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="source/modules.html#lore-sa-encoder-decoder-encoder-decoder-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.encoder_decoder</span></code>: Encoder/Decoder classes and functions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="source/generated/lore_sa.encoder_decoder.EncDec.html">lore_sa.encoder_decoder.EncDec</a></li>
-<li class="toctree-l3"><a class="reference internal" href="source/generated/lore_sa.encoder_decoder.TargetEnc.html">lore_sa.encoder_decoder.TargetEnc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="source/generated/lore_sa.encoder_decoder.OneHotEnc.html">lore_sa.encoder_decoder.OneHotEnc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="source/generated/lore_sa.encoder_decoder.LabelEnc.html">lore_sa.encoder_decoder.LabelEnc</a></li>
 </ul>
@@ -176,6 +176,7 @@
  | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
  
 </div>
 <h2 id="_">_</h2>
@@ -186,6 +187,8 @@
       <ul>
         <li><a href="source/generated/lore_sa.dataset.Dataset.html#lore_sa.dataset.Dataset.__init__">(lore_sa.dataset.Dataset method)</a>
 </li>
+        <li><a href="source/generated/lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset.__init__">(lore_sa.dataset.TabularDataset method)</a>
+</li>
         <li><a href="source/generated/lore_sa.discretizer.Discretizer.html#lore_sa.discretizer.Discretizer.__init__">(lore_sa.discretizer.Discretizer method)</a>
 </li>
         <li><a href="source/generated/lore_sa.discretizer.RMEPDiscretizer.html#lore_sa.discretizer.RMEPDiscretizer.__init__">(lore_sa.discretizer.RMEPDiscretizer method)</a>
@@ -195,8 +198,6 @@
         <li><a href="source/generated/lore_sa.encoder_decoder.LabelEnc.html#lore_sa.encoder_decoder.LabelEnc.__init__">(lore_sa.encoder_decoder.LabelEnc method)</a>
 </li>
         <li><a href="source/generated/lore_sa.encoder_decoder.OneHotEnc.html#lore_sa.encoder_decoder.OneHotEnc.__init__">(lore_sa.encoder_decoder.OneHotEnc method)</a>
-</li>
-        <li><a href="source/generated/lore_sa.encoder_decoder.TargetEnc.html#lore_sa.encoder_decoder.TargetEnc.__init__">(lore_sa.encoder_decoder.TargetEnc method)</a>
 </li>
         <li><a href="source/generated/lore_sa.explanation.Explanation.html#lore_sa.explanation.Explanation.__init__">(lore_sa.explanation.Explanation method)</a>
 </li>
@@ -220,13 +221,7 @@
 </li>
         <li><a href="source/generated/lore_sa.rule.rule.NumpyEncoder.html#lore_sa.rule.rule.NumpyEncoder.__init__">(lore_sa.rule.rule.NumpyEncoder method)</a>
 </li>
-        <li><a href="source/generated/lore_sa.rule.rule.Rule.html#lore_sa.rule.rule.Rule.__init__">(lore_sa.rule.rule.Rule method)</a>
-</li>
         <li><a href="source/generated/lore_sa.rule.rule.RuleEncoder.html#lore_sa.rule.rule.RuleEncoder.__init__">(lore_sa.rule.rule.RuleEncoder method)</a>
-</li>
-        <li><a href="source/generated/lore_sa.rule.rule_getter.RuleGetter.html#lore_sa.rule.rule_getter.RuleGetter.__init__">(lore_sa.rule.rule_getter.RuleGetter method)</a>
-</li>
-        <li><a href="source/generated/lore_sa.rule.rule_getter_binary.RuleGetterBinary.html#lore_sa.rule.rule_getter_binary.RuleGetterBinary.__init__">(lore_sa.rule.rule_getter_binary.RuleGetterBinary method)</a>
 </li>
         <li><a href="source/generated/lore_sa.rule.RuleGetter.html#lore_sa.rule.RuleGetter.__init__">(lore_sa.rule.RuleGetter method)</a>
 </li>
@@ -283,8 +278,6 @@
         <li><a href="source/generated/lore_sa.encoder_decoder.OneHotEnc.html#lore_sa.encoder_decoder.OneHotEnc.decode">(lore_sa.encoder_decoder.OneHotEnc method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/generated/lore_sa.explanation.ExplanationEncoder.html#lore_sa.explanation.ExplanationEncoder.default">default() (lore_sa.explanation.ExplanationEncoder method)</a>
 
       <ul>
@@ -295,6 +288,12 @@
         <li><a href="source/generated/lore_sa.rule.rule.RuleEncoder.html#lore_sa.rule.rule.RuleEncoder.default">(lore_sa.rule.rule.RuleEncoder method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="source/generated/lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset.descriptor">descriptor (lore_sa.dataset.TabularDataset attribute)</a>
+</li>
+      <li><a href="source/generated/lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset.df">df (lore_sa.dataset.TabularDataset attribute)</a>
+</li>
       <li><a href="source/generated/lore_sa.discretizer.Discretizer.html#lore_sa.discretizer.Discretizer">Discretizer (class in lore_sa.discretizer)</a>
 </li>
   </ul></td>
@@ -311,8 +310,6 @@
         <li><a href="source/generated/lore_sa.encoder_decoder.LabelEnc.html#lore_sa.encoder_decoder.LabelEnc.encode">(lore_sa.encoder_decoder.LabelEnc method)</a>
 </li>
         <li><a href="source/generated/lore_sa.encoder_decoder.OneHotEnc.html#lore_sa.encoder_decoder.OneHotEnc.encode">(lore_sa.encoder_decoder.OneHotEnc method)</a>
-</li>
-        <li><a href="source/generated/lore_sa.encoder_decoder.TargetEnc.html#lore_sa.encoder_decoder.TargetEnc.encode">(lore_sa.encoder_decoder.TargetEnc method)</a>
 </li>
         <li><a href="source/generated/lore_sa.explanation.ExplanationEncoder.html#lore_sa.explanation.ExplanationEncoder.encode">(lore_sa.explanation.ExplanationEncoder method)</a>
 </li>
@@ -337,11 +334,11 @@
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="source/generated/lore_sa.dataset.Dataset.html#lore_sa.dataset.Dataset.from_csv">from_csv() (lore_sa.dataset.Dataset class method)</a>
+      <li><a href="source/generated/lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset.from_csv">from_csv() (lore_sa.dataset.TabularDataset class method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="source/generated/lore_sa.dataset.Dataset.html#lore_sa.dataset.Dataset.from_dict">from_dict() (lore_sa.dataset.Dataset class method)</a>
+      <li><a href="source/generated/lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset.from_dict">from_dict() (lore_sa.dataset.TabularDataset class method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -351,18 +348,12 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/generated/lore_sa.neighgen.RandomGenerator.html#lore_sa.neighgen.RandomGenerator.generate">generate() (lore_sa.neighgen.RandomGenerator method)</a>
 </li>
-      <li><a href="source/generated/lore_sa.dataset.Dataset.html#lore_sa.dataset.Dataset.get_class_values">get_class_values() (lore_sa.dataset.Dataset method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="source/generated/lore_sa.dataset.Dataset.html#lore_sa.dataset.Dataset.get_original_dataset">get_original_dataset() (lore_sa.dataset.Dataset method)</a>
+      <li><a href="source/generated/lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset.get_class_values">get_class_values() (lore_sa.dataset.TabularDataset method)</a>
 </li>
-      <li><a href="source/generated/lore_sa.rule.rule_getter_binary.RuleGetterBinary.html#lore_sa.rule.rule_getter_binary.RuleGetterBinary.get_rule">get_rule() (lore_sa.rule.rule_getter_binary.RuleGetterBinary method)</a>
-
-      <ul>
-        <li><a href="source/generated/lore_sa.rule.RuleGetterBinary.html#lore_sa.rule.RuleGetterBinary.get_rule">(lore_sa.rule.RuleGetterBinary method)</a>
+      <li><a href="source/generated/lore_sa.rule.RuleGetterBinary.html#lore_sa.rule.RuleGetterBinary.get_rule">get_rule() (lore_sa.rule.RuleGetterBinary method)</a>
 </li>
-      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -489,34 +480,22 @@
       <li><a href="source/generated/lore_sa.discretizer.RMEPDiscretizer.html#lore_sa.discretizer.RMEPDiscretizer">RMEPDiscretizer (class in lore_sa.discretizer)</a>
 </li>
       <li><a href="source/generated/lore_sa.rule.Rule.html#lore_sa.rule.Rule">Rule (class in lore_sa.rule)</a>
-
-      <ul>
-        <li><a href="source/generated/lore_sa.rule.rule.Rule.html#lore_sa.rule.rule.Rule">(class in lore_sa.rule.rule)</a>
 </li>
-      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/generated/lore_sa.rule.rule.RuleEncoder.html#lore_sa.rule.rule.RuleEncoder">RuleEncoder (class in lore_sa.rule.rule)</a>
 </li>
       <li><a href="source/generated/lore_sa.rule.RuleGetter.html#lore_sa.rule.RuleGetter">RuleGetter (class in lore_sa.rule)</a>
-
-      <ul>
-        <li><a href="source/generated/lore_sa.rule.rule_getter.RuleGetter.html#lore_sa.rule.rule_getter.RuleGetter">(class in lore_sa.rule.rule_getter)</a>
 </li>
-      </ul></li>
       <li><a href="source/generated/lore_sa.rule.RuleGetterBinary.html#lore_sa.rule.RuleGetterBinary">RuleGetterBinary (class in lore_sa.rule)</a>
-
-      <ul>
-        <li><a href="source/generated/lore_sa.rule.rule_getter_binary.RuleGetterBinary.html#lore_sa.rule.rule_getter_binary.RuleGetterBinary">(class in lore_sa.rule.rule_getter_binary)</a>
 </li>
-      </ul></li>
   </ul></td>
 </tr></table>
 
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="source/generated/lore_sa.dataset.Dataset.html#lore_sa.dataset.Dataset.set_class_name">set_class_name() (lore_sa.dataset.Dataset method)</a>
+      <li><a href="source/generated/lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset.set_class_name">set_class_name() (lore_sa.dataset.TabularDataset method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -530,13 +509,21 @@
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="source/generated/lore_sa.encoder_decoder.TargetEnc.html#lore_sa.encoder_decoder.TargetEnc">TargetEnc (class in lore_sa.encoder_decoder)</a>
+      <li><a href="source/generated/lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset">TabularDataset (class in lore_sa.dataset)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/generated/lore_sa.explanation.TextExplanation.html#lore_sa.explanation.TextExplanation">TextExplanation (class in lore_sa.explanation)</a>
 </li>
       <li><a href="source/generated/lore_sa.surrogate.DecisionTreeSurrogate.html#lore_sa.surrogate.DecisionTreeSurrogate.train">train() (lore_sa.surrogate.DecisionTreeSurrogate method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="source/generated/lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset.update_descriptor">update_descriptor() (lore_sa.dataset.TabularDataset method)</a>
 </li>
   </ul></td>
 </tr></table>
