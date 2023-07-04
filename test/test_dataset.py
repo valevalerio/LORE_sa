@@ -1,8 +1,27 @@
 import unittest
 import pandas
-import numpy as np
 
 from lore_sa.dataset import TabularDataset
+
+descriptor_dummy = {'categoric': {'col3': {'count': {'America': 1, 'Europe': 1},
+                        'distinct_values': ['America', 'Europe'],
+                        'index': 2}},
+                     'numeric': {'col1': {'index': 0,
+                                          'max': 2,
+                                          'mean': 1.5,
+                                          'median': 1.5,
+                                          'min': 1,
+                                          'q1': 1.25,
+                                          'q3': 1.75,
+                                          'std': 0.7071067811865476},
+                                 'col2': {'index': 1,
+                                          'max': 4,
+                                          'mean': 3.5,
+                                          'median': 3.5,
+                                          'min': 3,
+                                          'q1': 3.25,
+                                          'q3': 3.75,
+                                          'std': 0.7071067811865476}}}
 
 class DatasetTest(unittest.TestCase):
 
@@ -52,9 +71,14 @@ class DatasetTest(unittest.TestCase):
 
     def test_get_class_value_raise_error(self):
         dataset = TabularDataset.from_dict({'col1': [1, 2], 'col2': [3, 4], 'col3': ['America', 'Europe']})
-        with  self.assertRaises(Exception) as context:
+        with self.assertRaises(Exception) as context:
             dataset.get_class_values()
             self.assertEqual("ERR: class_name is None. Set class_name with set_class_name('<column name>')", str(context.exception))
+
+    def test_update_descriptor(self):
+        dataset = TabularDataset.from_dict({'col1': [1, 2], 'col2': [3, 4], 'col3': ['America', 'Europe']})
+        descriptor = dataset.descriptor
+        self.assertEqual(descriptor,descriptor_dummy)
 
 if __name__ == '__main__':
     unittest.main()

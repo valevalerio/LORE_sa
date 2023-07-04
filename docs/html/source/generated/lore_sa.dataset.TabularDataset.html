@@ -183,6 +183,7 @@ semantic of the dataset.</p>
 <dd><p>it contains the essential informationregarding each feature. Format:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="s1">&#39;numeric&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;feature name&#39;</span> <span class="p">:</span>
 <span class="go">                {</span>
+<span class="go">                    &#39;index&#39; : &lt;index of feature column&gt;,</span>
 <span class="go">                    &#39;min&#39; : &lt;min value&gt;,</span>
 <span class="go">                    &#39;max&#39; : &lt;max value&gt;,</span>
 <span class="go">                    &#39;mean&#39;: &lt;mean value&gt;,</span>
@@ -196,6 +197,7 @@ semantic of the dataset.</p>
 <span class="go">            },</span>
 <span class="go">&#39;categorical: {&#39;feature name&#39;:</span>
 <span class="go">                    {</span>
+<span class="go">                        &#39;index&#39; : &lt;index of feature column&gt;,</span>
 <span class="go">                        &#39;distinct_values&#39; : &lt;distinct categorical values&gt;,</span>
 <span class="go">                        &#39;value_counts&#39; : {&#39;distinct value&#39; : &lt;elements count&gt;,</span>
 <span class="go">                                        ... }</span>

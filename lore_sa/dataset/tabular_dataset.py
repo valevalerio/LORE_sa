@@ -19,6 +19,7 @@ class TabularDataset(Dataset):
 
             >>> {'numeric': {'feature name' :
                             {
+                                'index' : <index of feature column>,
                                 'min' : <min value>,
                                 'max' : <max value>,
                                 'mean': <mean value>,
@@ -32,6 +33,7 @@ class TabularDataset(Dataset):
                         },
             'categorical: {'feature name':
                                 {
+                                    'index' : <index of feature column>,
                                     'distinct_values' : <distinct categorical values>,
                                     'value_counts' : {'distinct value' : <elements count>,
                                                     ... }
@@ -59,9 +61,11 @@ class TabularDataset(Dataset):
         """
         self.descriptor = {'numeric':{}, 'categoric':{}}
         for feature in self.df.columns:
+            index = self.df.columns.get_loc(feature)
             if feature in self.df.select_dtypes(include=np.number).columns.tolist():
                 #numerical
-                desc = {'min' : self.df[feature].min(),
+                desc = {'index': index,
+                        'min' : self.df[feature].min(),
                         'max' : self.df[feature].max(),
                         'mean':self.df[feature].mean(),
                         'std':self.df[feature].std(),
@@ -72,7 +76,8 @@ class TabularDataset(Dataset):
                 self.descriptor['numeric'][feature] = desc
             else:
                 #categorical feature
-                desc = {'distinct_values' : list(self.df[feature].unique()),
+                desc = {'index': index,
+                        'distinct_values' : list(self.df[feature].unique()),
                         'count' : {x : len(self.df[self.df[feature] == x]) for x in list(self.df[feature].unique())}}
                 self.descriptor['categoric'][feature] = desc
         
