@@ -1,7 +1,5 @@
 from .enc_dec import EncDec
-import pandas as pd
 import numpy as np
-from lore_sa.dataset.tabular_dataset import TabularDataset
 
 __all__ = ["EncDec", "OneHotEnc"]
 
@@ -15,6 +13,8 @@ class OneHotEnc(EncDec):
     def __init__(self,descriptor: dict):
         super().__init__(descriptor)
         self.type='one-hot'
+        if self.dataset_descriptor.get("categoric") is None:
+            raise Exception("Dataset descriptor is malformed for One-Hot Encoder: 'categoric' key is not present")
 
     def encode(self, x: np.array):
         """
@@ -75,10 +75,11 @@ class OneHotEnc(EncDec):
             for l in range(len(label_dict['distinct_values'])):
                 arr = list(np.zeros(len(label_dict['distinct_values']), dtype=int))
                 arr[l] = 1
-                mapping[list(mapping.keys())[l]] = [str(x) for x in arr]
+                mapping[list(mapping.keys())[l]] = [int(x) for x in arr]
 
+            code = [int(x) for x in x[label_index: label_index + len(label_dict['distinct_values'])]]
             for t in mapping.keys():
-                if list(mapping[t]) == list(x[label_index: label_index + len(label_dict['distinct_values'])]):
+                if list(mapping[t]) == code:
                     label = t
 
             x = np.concatenate((x[:label_index], [label], x[label_index+len(label_dict['distinct_values']):]),axis=0)

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lore_sa.encoder_decoder.label_enc &mdash; LORE_sa  documentation</title>
+  <title>lore_sa.encoder_decoder.tabular_encoder &mdash; LORE_sa  documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -147,7 +147,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
-      <li class="breadcrumb-item active">lore_sa.encoder_decoder.label_enc</li>
+      <li class="breadcrumb-item active">lore_sa.encoder_decoder.tabular_encoder</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -156,56 +156,42 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for lore_sa.encoder_decoder.label_enc</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">.enc_dec</span> <span class="kn">import</span> <span class="n">EncDec</span>
+  <h1>Source code for lore_sa.encoder_decoder.tabular_encoder</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">lore_sa.encoder_decoder</span> <span class="kn">import</span> <span class="n">EncDec</span><span class="p">,</span> <span class="n">LabelEnc</span><span class="p">,</span> <span class="n">OneHotEnc</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;EncDec&quot;</span><span class="p">,</span> <span class="s2">&quot;LabelEnc&quot;</span><span class="p">]</span>
-<div class="viewcode-block" id="LabelEnc"><a class="viewcode-back" href="../../../source/generated/lore_sa.encoder_decoder.LabelEnc.html#lore_sa.encoder_decoder.LabelEnc">[docs]</a><span class="k">class</span> <span class="nc">LabelEnc</span><span class="p">(</span><span class="n">EncDec</span><span class="p">):</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;EncDec&quot;</span><span class="p">,</span> <span class="s2">&quot;TabularEnc&quot;</span><span class="p">,</span><span class="s2">&quot;LabelEnc&quot;</span><span class="p">]</span>
+<div class="viewcode-block" id="TabularEnc"><a class="viewcode-back" href="../../../source/generated/lore_sa.encoder_decoder.TabularEnc.html#lore_sa.encoder_decoder.TabularEnc">[docs]</a><span class="k">class</span> <span class="nc">TabularEnc</span><span class="p">(</span><span class="n">EncDec</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    It provides an interface to access Label enconding functions.</span>
+<span class="sd">    It combine different encoders/decoders over a table dataset</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="LabelEnc.__init__"><a class="viewcode-back" href="../../../source/generated/lore_sa.encoder_decoder.LabelEnc.html#lore_sa.encoder_decoder.LabelEnc.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">descriptor</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<div class="viewcode-block" id="TabularEnc.__init__"><a class="viewcode-back" href="../../../source/generated/lore_sa.encoder_decoder.TabularEnc.html#lore_sa.encoder_decoder.TabularEnc.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">descriptor</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">descriptor</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="s2">&quot;label&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_descriptor</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ordinal&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Dataset descriptor is malformed for Label Encoder: &#39;ordinal&#39; key is not present&quot;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="o">=</span><span class="s1">&#39;tabular&#39;</span></div>
 
-<div class="viewcode-block" id="LabelEnc.encode"><a class="viewcode-back" href="../../../source/generated/lore_sa.encoder_decoder.LabelEnc.html#lore_sa.encoder_decoder.LabelEnc.encode">[docs]</a>    <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">):</span>
+<div class="viewcode-block" id="TabularEnc.encode"><a class="viewcode-back" href="../../../source/generated/lore_sa.encoder_decoder.TabularEnc.html#lore_sa.encoder_decoder.TabularEnc.encode">[docs]</a>    <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        It applies the encoder to the input features</span>
-
+<span class="sd">        Combine label encoding, as first, and one-hot encoding to provide a table encoded.</span>
 <span class="sd">        :param [Numpy array] x: Array to encode</span>
 <span class="sd">        :return [Numpy array]: Encoded array</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_descriptor</span><span class="p">[</span><span class="s2">&quot;ordinal&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-            <span class="n">label_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_descriptor</span><span class="p">[</span><span class="s2">&quot;ordinal&quot;</span><span class="p">][</span><span class="n">k</span><span class="p">][</span><span class="s1">&#39;index&#39;</span><span class="p">]</span>
-            <span class="n">values_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_descriptor</span><span class="p">[</span><span class="s2">&quot;ordinal&quot;</span><span class="p">][</span><span class="n">k</span><span class="p">][</span><span class="s1">&#39;distinct_values&#39;</span><span class="p">])}</span>
-            <span class="n">x</span><span class="p">[</span><span class="n">label_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">values_dict</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="n">label_index</span><span class="p">]]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">encoded_features</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">x</span></div>
+        <span class="n">label_enc</span> <span class="o">=</span> <span class="n">LabelEnc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_descriptor</span><span class="p">)</span>
+        <span class="n">one_hot_enc</span> <span class="o">=</span> <span class="n">OneHotEnc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_descriptor</span><span class="p">)</span>
+        <span class="n">label_encoded</span> <span class="o">=</span> <span class="n">label_enc</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">one_hot_encoded</span> <span class="o">=</span> <span class="n">one_hot_enc</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">label_encoded</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">one_hot_encoded</span><span class="p">])</span></div>
 
-
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">encoded_features</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;LabelEncoder - features encoded: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">encoded_features</span><span class="p">))</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;LabelEncoder - no features encoded&quot;</span>
-
-<div class="viewcode-block" id="LabelEnc.decode"><a class="viewcode-back" href="../../../source/generated/lore_sa.encoder_decoder.LabelEnc.html#lore_sa.encoder_decoder.LabelEnc.decode">[docs]</a>    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">):</span>
+<div class="viewcode-block" id="TabularEnc.decode"><a class="viewcode-back" href="../../../source/generated/lore_sa.encoder_decoder.TabularEnc.html#lore_sa.encoder_decoder.TabularEnc.decode">[docs]</a>    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Decode the array staring from the original descriptor</span>
-
-<span class="sd">        :param [Numpy array] x: Array to decode</span>
-<span class="sd">        :return [Numpy array]: Decoded array</span>
+<span class="sd">        Combine one-hot decoding, as first, and label encoding to provide a table encoded.</span>
+<span class="sd">        :param x:</span>
+<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_descriptor</span><span class="p">[</span><span class="s2">&quot;ordinal&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-            <span class="n">label_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_descriptor</span><span class="p">[</span><span class="s2">&quot;ordinal&quot;</span><span class="p">][</span><span class="n">k</span><span class="p">][</span><span class="s1">&#39;index&#39;</span><span class="p">]</span>
-            <span class="n">values_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">v</span><span class="p">:</span> <span class="n">k</span> <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_descriptor</span><span class="p">[</span><span class="s2">&quot;ordinal&quot;</span><span class="p">][</span><span class="n">k</span><span class="p">][</span><span class="s1">&#39;distinct_values&#39;</span><span class="p">])}</span>
-            <span class="n">x</span><span class="p">[</span><span class="n">label_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">values_dict</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">label_index</span><span class="p">])]</span>
-        <span class="k">return</span> <span class="n">x</span></div></div>
+        <span class="n">label_enc</span> <span class="o">=</span> <span class="n">LabelEnc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_descriptor</span><span class="p">)</span>
+        <span class="n">one_hot_enc</span> <span class="o">=</span> <span class="n">OneHotEnc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_descriptor</span><span class="p">)</span>
+        <span class="n">one_hot_decoded</span> <span class="o">=</span> <span class="n">one_hot_enc</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">label_decoded</span> <span class="o">=</span> <span class="n">label_enc</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">one_hot_decoded</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">label_decoded</span></div></div>
 </pre></div>
 
            </div>

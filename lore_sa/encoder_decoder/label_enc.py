@@ -1,11 +1,6 @@
-from lore_sa.dataset import Dataset
-
 from .enc_dec import EncDec
-import pandas as pd
 import numpy as np
 
-from lore_sa.dataset.tabular_dataset import TabularDataset
-from sklearn.preprocessing import LabelEncoder
 
 __all__ = ["EncDec", "LabelEnc"]
 class LabelEnc(EncDec):
@@ -16,6 +11,8 @@ class LabelEnc(EncDec):
     def __init__(self,descriptor: dict):
         super().__init__(descriptor)
         self.type = "label"
+        if self.dataset_descriptor.get("ordinal") is None:
+            raise Exception("Dataset descriptor is malformed for Label Encoder: 'ordinal' key is not present")
 
     def encode(self, x: np.array):
         """

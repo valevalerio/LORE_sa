@@ -76,6 +76,7 @@ Modules
    encoder_decoder.EncDec
    encoder_decoder.OneHotEnc
    encoder_decoder.LabelEnc
+   encoder_decoder.TabularEnc
 
 :mod:`lore_sa.explanation`: Explanation classes and functions
 =============================================================
