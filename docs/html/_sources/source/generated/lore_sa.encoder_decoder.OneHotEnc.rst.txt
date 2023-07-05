@@ -16,6 +16,7 @@
       ~OneHotEnc.__init__
       ~OneHotEnc.decode
       ~OneHotEnc.encode
+      ~OneHotEnc.update_encoded_index
    
    
 

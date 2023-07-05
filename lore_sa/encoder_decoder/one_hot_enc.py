@@ -1,7 +1,6 @@
 from .enc_dec import EncDec
 import pandas as pd
-from sklearn.preprocessing import OneHotEncoder
-
+import numpy as np
 from lore_sa.dataset.tabular_dataset import TabularDataset
 
 __all__ = ["EncDec", "OneHotEnc"]
@@ -13,65 +12,75 @@ class OneHotEnc(EncDec):
     It relies on OneHotEncoder class from sklearn
     """
 
-    def __init__(self):
-        super().__init__()
-        self.encoder = OneHotEncoder()
+    def __init__(self,descriptor: dict):
+        super().__init__(descriptor)
         self.type='one-hot'
 
-    def encode(self, dataset: TabularDataset, features_to_encode: list):
+    def encode(self, x: np.array):
         """
-        It applies the encoder to the input features. It also modifies the input dataset object, adding the
-        encoded version of the dataset
+        It applies the encoder to the input features
 
-        :param[TabularDataset] dataset: the Dataset containing the features to be encoded
-        :param[list] features_to_encode: list of columns of Dataset.df dataframe to be encoded
+        :param [Numpy array] x: Array to encode
+        :return [Numpy array]: Encoded array
         """
-        
-        #tranforming everything to numpy, in order to not get everything messed by pandas indexing
-        encoded = self.encoder.fit_transform(dataset.df[features_to_encode].to_numpy()).toarray()
-        original = dataset.df.drop(columns=features_to_encode)
-        self.original_features_skipped = original.columns
-        original = original.to_numpy()
 
-        dataset.dataset_encoded = pd.DataFrame(encoded.astype(int), columns = self.encoder.get_feature_names_out(dataset.df[features_to_encode].columns))
-        # buffering original features
-        self.original_data = dataset.df[features_to_encode]
-   
-        self.original_features_encoded = features_to_encode
-        self.encoded_features = dataset.dataset_encoded.columns
+        for k in self.dataset_descriptor['categoric'].keys():
+            label_dict = self.dataset_descriptor['categoric'][k]
+            label_index = label_dict['index']
 
-        # substituing old features with encoded
-        dataset.df = pd.concat([pd.DataFrame(original, columns = dataset.df.drop(columns=features_to_encode).columns), dataset.dataset_encoded], axis=1)
+            mapping = {}
+            for value in range(len(label_dict['distinct_values'])):
+                mapping[label_dict['distinct_values'][value]] = value
 
-        return dataset.df.to_numpy()
+            arr = list(np.zeros(len(label_dict['distinct_values']), dtype=int))
+            arr[mapping[x[label_index]]] = 1
+            x = np.delete(x, label_index)
+            x = np.insert(x, label_index, arr)
+
+            self.encoded_features.append(k)
+            self.update_encoded_index(k,len(label_dict['distinct_values'])-1)
+        return x
+
+    def update_encoded_index(self,current_field, size: int):
+        current_index_value = self.dataset_descriptor['categoric'][current_field]['index']
+        for type in self.dataset_descriptor.keys():
+            for k in self.dataset_descriptor[type]:
+                if k != current_field:
+                    original_index = self.dataset_descriptor[type][k]['index']
+                    if original_index>current_index_value:
+                        self.dataset_descriptor[type][k]['index'] = self.dataset_descriptor[type][k]['index'] + size
 
     def __str__(self):
-        if self.encoded_features is not None:
-            return "OneHotEncoder - features encoded: %s" % (",".join(self.original_features_encoded))
+        if len(self.encoded_features) > 0:
+            return "OneHotEncoder - features encoded: %s" % (",".join(self.encoded_features))
         else:
             return "OneHotEncoder - no features encoded"
 
-    def decode(self, dataset: TabularDataset):
+    def decode(self, x: np.array):
         """
-        It decodes the input dataset using onehotencoder inverse_transform. The input dataset must be encoded, with the encoded
-        part contained into the property dataset.dataset_encoded
-        
+        Decode the array staring from the original descriptor
 
-        :param dataset: the Dataset containing the features to be encoded
+        :param [Numpy array] x: Array to decode
+        :return [Numpy array]: Decoded array
         """
+        for k in self.dataset_descriptor['categoric'].keys():
+            label_dict = self.dataset_descriptor['categoric'][k]
+            label_index = label_dict['index']
 
-        if dataset.dataset_encoded is None:
-            raise Exception("No encoded dataset found")
-        
-        else:
-            #tranforming everything to numpy, in order to not get everything messed by pandas indexing
+            mapping = {}
+            for value in range(len(label_dict['distinct_values'])):
+                mapping[label_dict['distinct_values'][value]] = value
 
-            decoded = self.encoder.inverse_transform(dataset.dataset_encoded.to_numpy())
-            original = dataset.df.drop(columns=self.encoded_features).to_numpy()
-            
-                
-            dataset.df = pd.concat([pd.DataFrame(original, columns = self.original_features_skipped),
-                                     pd.DataFrame(decoded, columns = self.original_features_encoded)], axis=1)
 
-            
-            return dataset.df
+            for l in range(len(label_dict['distinct_values'])):
+                arr = list(np.zeros(len(label_dict['distinct_values']), dtype=int))
+                arr[l] = 1
+                mapping[list(mapping.keys())[l]] = [str(x) for x in arr]
+
+            for t in mapping.keys():
+                if list(mapping[t]) == list(x[label_index: label_index + len(label_dict['distinct_values'])]):
+                    label = t
+
+            x = np.concatenate((x[:label_index], [label], x[label_index+len(label_dict['distinct_values']):]),axis=0)
+
+        return x

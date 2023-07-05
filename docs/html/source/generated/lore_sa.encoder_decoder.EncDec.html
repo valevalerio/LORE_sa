@@ -163,35 +163,35 @@
 <h1>lore_sa.encoder_decoder.EncDec<a class="headerlink" href="#lore-sa-encoder-decoder-encdec" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="lore_sa.encoder_decoder.EncDec">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lore_sa.encoder_decoder.</span></span><span class="sig-name descname"><span class="pre">EncDec</span></span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/enc_dec.html#EncDec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.EncDec" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lore_sa.encoder_decoder.</span></span><span class="sig-name descname"><span class="pre">EncDec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_descriptor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/enc_dec.html#EncDec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.EncDec" title="Permalink to this definition"></a></dt>
 <dd><p>Generic class to implement an encoder/decoder</p>
 <p>It is implemented by different classes, each of which must implements the functions: enc, dec, enc_fit_transform
 the idea is that the user sends the complete record and here only the categorical variables are handled</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="lore_sa.encoder_decoder.EncDec.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/enc_dec.html#EncDec.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.EncDec.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_descriptor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/enc_dec.html#EncDec.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.EncDec.__init__" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <p class="rubric">Methods</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.encoder_decoder.EncDec.__init__" title="lore_sa.encoder_decoder.EncDec.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.encoder_decoder.EncDec.__init__" title="lore_sa.encoder_decoder.EncDec.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(dataset_descriptor)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">decode</span></code>(x[, kwargs])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">decode</span></code>(x)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.encoder_decoder.EncDec.encode" title="lore_sa.encoder_decoder.EncDec.encode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encode</span></code></a>(x, features_to_encode)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.encoder_decoder.EncDec.encode" title="lore_sa.encoder_decoder.EncDec.encode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encode</span></code></a>(x)</p></td>
 <td><p>It applies the encoder to the input features</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py method">
 <dt class="sig sig-object py" id="lore_sa.encoder_decoder.EncDec.encode">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">encode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset" title="lore_sa.dataset.tabular_dataset.TabularDataset"><span class="pre">TabularDataset</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">features_to_encode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/enc_dec.html#EncDec.encode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.EncDec.encode" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">encode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/enc_dec.html#EncDec.encode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.EncDec.encode" title="Permalink to this definition"></a></dt>
 <dd><p>It applies the encoder to the input features</p>
 <dl class="field-list simple">
-<dt class="field-odd">Param[TabularDataset] x<span class="colon">:</span></dt>
+<dt class="field-odd">Param[Numpy array] x<span class="colon">:</span></dt>
 <dd class="field-odd"><p>the Dataset containing the features to be encoded</p>
 </dd>
 <dt class="field-even">Param[list] features_to_encode<span class="colon">:</span></dt>

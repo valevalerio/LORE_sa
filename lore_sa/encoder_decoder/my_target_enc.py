@@ -11,8 +11,8 @@ class TargetEnc(EncDec):
     Target encoding for categorical features.
     Extend TargetEncoder from category_encoders.
     """
-    def __init__(self):
-        super().__init__()
+    def __init__(self,descriptor):
+        super().__init__(descriptor)
         self.type = 'target'
 
     def encode(self, dataset: TabularDataset, features_to_encode: list, target):
@@ -40,7 +40,7 @@ class TargetEnc(EncDec):
         return dataset.df
 
     def __str__(self):
-        if self.encoded_features is not None and self.target is not None:
+        if len(self.encoded_features) > 0 and self.target is not None:
             return "TargetEncoder - features encoded: {0} - target feature: {1}".format(",".join(self.original_features),self.target)
         else:
             return "TargetEncoder - no features encoded"

@@ -1,6 +1,5 @@
 from abc import abstractmethod
-from lore_sa.dataset.tabular_dataset import TabularDataset
-
+import numpy as np
 
 __all__ = ["EncDec"]
 class EncDec():
@@ -10,24 +9,20 @@ class EncDec():
     It is implemented by different classes, each of which must implements the functions: enc, dec, enc_fit_transform
     the idea is that the user sends the complete record and here only the categorical variables are handled
     """
-    def __init__(self,):
-        self.dataset_encoded = None
-        self.original_features = None
-        self.original_data = None
-        self.encoded_features = None
-        self.original_features_encoded = None
-        
+    def __init__(self,dataset_descriptor):
+        self.dataset_descriptor = dataset_descriptor
+        self.encoded_features = []
 
     @abstractmethod
-    def encode(self, x: TabularDataset, features_to_encode):
+    def encode(self, x: np.array):
         """
         It applies the encoder to the input features
 
-        :param[TabularDataset] x: the Dataset containing the features to be encoded
+        :param[Numpy array] x: the Dataset containing the features to be encoded
         :param[list] features_to_encode: list of columns of Dataset.df dataframe to be encoded
         """
         return
 
     @abstractmethod
-    def decode(self, x: TabularDataset, kwargs=None):
+    def decode(self, x: np.array):
         return

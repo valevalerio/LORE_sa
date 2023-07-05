@@ -20,6 +20,7 @@
       ~TabularDataset.get_features_names
       ~TabularDataset.get_numeric_columns
       ~TabularDataset.set_class_name
+      ~TabularDataset.set_descriptor
       ~TabularDataset.update_descriptor
    
    

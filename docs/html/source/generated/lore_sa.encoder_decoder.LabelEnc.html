@@ -163,54 +163,51 @@
 <h1>lore_sa.encoder_decoder.LabelEnc<a class="headerlink" href="#lore-sa-encoder-decoder-labelenc" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="lore_sa.encoder_decoder.LabelEnc">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lore_sa.encoder_decoder.</span></span><span class="sig-name descname"><span class="pre">LabelEnc</span></span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/label_enc.html#LabelEnc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.LabelEnc" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lore_sa.encoder_decoder.</span></span><span class="sig-name descname"><span class="pre">LabelEnc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">descriptor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/label_enc.html#LabelEnc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.LabelEnc" title="Permalink to this definition"></a></dt>
 <dd><p>It provides an interface to access Label enconding functions.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="lore_sa.encoder_decoder.LabelEnc.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/label_enc.html#LabelEnc.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.LabelEnc.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">descriptor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/label_enc.html#LabelEnc.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.LabelEnc.__init__" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <p class="rubric">Methods</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.encoder_decoder.LabelEnc.__init__" title="lore_sa.encoder_decoder.LabelEnc.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.encoder_decoder.LabelEnc.__init__" title="lore_sa.encoder_decoder.LabelEnc.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(descriptor)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lore_sa.encoder_decoder.LabelEnc.decode" title="lore_sa.encoder_decoder.LabelEnc.decode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">decode</span></code></a>(dataset[, feature_encoding])</p></td>
-<td><p>Provides a new dataframe decoded from dictionary of encoding features</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lore_sa.encoder_decoder.LabelEnc.decode" title="lore_sa.encoder_decoder.LabelEnc.decode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">decode</span></code></a>(x)</p></td>
+<td><p>Decode the array staring from the original descriptor</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.encoder_decoder.LabelEnc.encode" title="lore_sa.encoder_decoder.LabelEnc.encode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encode</span></code></a>(dataset, features_to_encode)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.encoder_decoder.LabelEnc.encode" title="lore_sa.encoder_decoder.LabelEnc.encode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encode</span></code></a>(x)</p></td>
 <td><p>It applies the encoder to the input features</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py method">
 <dt class="sig sig-object py" id="lore_sa.encoder_decoder.LabelEnc.decode">
-<span class="sig-name descname"><span class="pre">decode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset" title="lore_sa.dataset.tabular_dataset.TabularDataset"><span class="pre">TabularDataset</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_encoding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/label_enc.html#LabelEnc.decode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.LabelEnc.decode" title="Permalink to this definition"></a></dt>
-<dd><p>Provides a new dataframe decoded from dictionary of encoding features</p>
+<span class="sig-name descname"><span class="pre">decode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/label_enc.html#LabelEnc.decode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.LabelEnc.decode" title="Permalink to this definition"></a></dt>
+<dd><p>Decode the array staring from the original descriptor</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>dataset</strong> (<em>[</em><a class="reference internal" href="lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset" title="lore_sa.dataset.TabularDataset"><em>TabularDataset</em></a><em>]</em>) – Dataset to decode</p></li>
-<li><p><strong>feature_encoding</strong> – a dictionary to convert the values from numeric to string.</p></li>
-</ul>
+<dd class="field-odd"><p><strong>x</strong> (<em>[</em><em>Numpy array</em><em>]</em>) – Array to decode</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p></p>
+<dt class="field-even">Return [Numpy array]<span class="colon">:</span></dt>
+<dd class="field-even"><p>Decoded array</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="lore_sa.encoder_decoder.LabelEnc.encode">
-<span class="sig-name descname"><span class="pre">encode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset" title="lore_sa.dataset.tabular_dataset.TabularDataset"><span class="pre">TabularDataset</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">features_to_encode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/label_enc.html#LabelEnc.encode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.LabelEnc.encode" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">encode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/label_enc.html#LabelEnc.encode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.LabelEnc.encode" title="Permalink to this definition"></a></dt>
 <dd><p>It applies the encoder to the input features</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>x</strong> (<em>[</em><a class="reference internal" href="lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset" title="lore_sa.dataset.TabularDataset"><em>TabularDataset</em></a><em>]</em>) – the Dataset containing the features to be encoded</p>
+<dd class="field-odd"><p><strong>x</strong> (<em>[</em><em>Numpy array</em><em>]</em>) – Array to encode</p>
 </dd>
-<dt class="field-even">Param[list] features_to_encode<span class="colon">:</span></dt>
-<dd class="field-even"><p>list of columns of Dataset.df dataframe to be encoded</p>
+<dt class="field-even">Return [Numpy array]<span class="colon">:</span></dt>
+<dd class="field-even"><p>Encoded array</p>
 </dd>
 </dl>
 </dd></dl>

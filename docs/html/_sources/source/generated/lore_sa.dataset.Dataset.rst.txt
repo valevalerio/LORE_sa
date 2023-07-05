@@ -14,6 +14,8 @@
    .. autosummary::
    
       ~Dataset.__init__
+      ~Dataset.set_descriptor
+      ~Dataset.update_descriptor
    
    
 
