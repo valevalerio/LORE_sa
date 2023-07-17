@@ -2,6 +2,9 @@ import json
 import numpy as np
 
 from lore_sa.util import vector2dict
+from typing import Callable
+import operator 
+
 
 __all__ = ["Rule"]
 
@@ -44,7 +47,7 @@ class Condition(object):
                 for i in self.thr:
                     thr+=i+' ; '
                 return '%s %s %s' % (self.att, self.op, thr)
-            #print('alla fine, ', self.att, 'spazio ',  self.op, 'spazo ', self.thr)
+            #print('alla fine arriva polly, ', self.att, 'spazio ',  self.op, 'spazo ', self.thr)
             return '%s %s %.2f' % (self.att, self.op, self.thr)
 
     def __eq__(self, other):
@@ -54,9 +57,27 @@ class Condition(object):
         return hash(str(self))
 
 
+class Expression(object):
+    """
+    Utility object to define a logical expression. It is used to define the premises of a Rule emitted from a surrogate model.
+    """
+    def __init__(self,variable:str, operator:Callable, value):
+        """
+        :param[str] variable: name of the variable that defines the rule
+        :param[Callable] operator: logical operator involved in the rule
+        :param value: numerical value to define the rule. E.g. variable > value 
+        """
+
+        self.variable = variable
+        self.operator = operator 
+        self.value= value
+
+
+
+
 class Rule(object):
 
-    def __init__(self, premises, cons, class_name):
+    def __init__(self, premises:list, cons:Expression, class_name:str):
         self.premises = premises
         self.cons = cons
         self.class_name = class_name
