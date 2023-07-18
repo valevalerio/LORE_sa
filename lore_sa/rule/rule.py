@@ -5,7 +5,6 @@ from lore_sa.util import vector2dict
 from typing import Callable
 import operator 
 
-
 __all__ = ["Rule"]
 
 def json2cond(obj):
@@ -61,7 +60,7 @@ class Expression(object):
     """
     Utility object to define a logical expression. It is used to define the premises of a Rule emitted from a surrogate model.
     """
-    def __init__(self,variable:str, operator:Callable, value):
+    def __init__(self, variable: str, operator: Callable, value):
         """
         :param[str] variable: name of the variable that defines the rule
         :param[Callable] operator: logical operator involved in the rule

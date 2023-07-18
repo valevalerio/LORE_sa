@@ -1,8 +1,6 @@
-from .rule_getter import RuleGetter
-from .rule_getter_binary import RuleGetterBinary
-from .rule import Rule,Expression
+from .emitter import Emitter
+from .decision_tree_emitter import DecisioTreeRuleEmitter
+from .rule import Rule
 
-__all__ = ["RuleGetter",
-           "RuleGetterBinary",
-           "Expression",
-           'Rule']
+__all__ = ["Emitter",
+           "DecisioTreeRuleEmitter"]

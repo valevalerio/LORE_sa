@@ -2,20 +2,21 @@ import copy
 from collections import defaultdict
 
 import numpy as np
+import operator
 
 from lore_sa.dataset import TabularDataset
 from lore_sa.encoder_decoder import EncDec, OneHotEnc
 from lore_sa.rule.rule import Condition, Rule
-from lore_sa.rule.rule_getter import Emitter
+from lore_sa.rule.emitter import Emitter
 from lore_sa.surrogate.decision_tree import DecisionTreeSurrogate
 from lore_sa.util import multilabel2str, vector2dict
 
 
-__all__ = ["Emitter","RuleGetterBinary"]
+__all__ = ["Emitter", "DecisioTreeRuleEmitter"]
 
-class DecisionTreeEmitter(Emitter):
+class DecisioTreeRuleEmitter(Emitter):
 
-    def get_rule(self, x, y, dt: DecisionTreeSurrogate, dataset: TabularDataset, encdec: EncDec = None, multi_label: bool = False):
+    def get_rule(self, x, dt: DecisionTreeSurrogate, dataset: TabularDataset, encdec: EncDec = None, multi_label: bool = False):
         """
         Extract the rule.
 

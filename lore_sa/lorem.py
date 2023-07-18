@@ -18,7 +18,7 @@ from lore_sa.encoder_decoder import EncDec
 from lore_sa.bbox import AbstractBBox
 from lore_sa.dataset import TabularDataset
 from lore_sa.rule import Rule
-from lore_sa.rule import RuleGetterBinary
+from lore_sa.rule import DecisioTreeRuleEmitter
 import numpy as np
 
 
@@ -307,13 +307,13 @@ class LOREM(Explainer):
                     print('Retrieving explanation')
         x = x.flatten()
         Yc = superT.predict(X=Z)
-        rule = RuleGetterBinary().get_rule(x, self.bb_predict(x.reshape(1, -1)), superT , encdec=self.encdec,
-                            multi_label=self.multi_label)
+        rule = DecisioTreeRuleEmitter().get_rule(x, self.bb_predict(x.reshape(1, -1)), superT, encdec=self.encdec,
+                                                 multi_label=self.multi_label)
 
-        crules, deltas = RuleGetterBinary().get_counterfactual_rules(x, Yc[0], superT, Z, Yc, self.feature_names,
-                                                      self.class_name, self.class_values, self.numeric_columns,
-                                                      self.features_map, self.features_map_inv, encdec=self.encdec,
-                                                      filter_crules=self.filter_crules, constraints=self.constraints)
+        crules, deltas = DecisioTreeRuleEmitter().get_counterfactual_rules(x, Yc[0], superT, Z, Yc, self.feature_names,
+                                                                           self.class_name, self.class_values, self.numeric_columns,
+                                                                           self.features_map, self.features_map_inv, encdec=self.encdec,
+                                                                           filter_crules=self.filter_crules, constraints=self.constraints)
 
 
         exp = Explanation()
