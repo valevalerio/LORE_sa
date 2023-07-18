@@ -4,12 +4,12 @@ from lore_sa.dataset import TabularDataset
 from lore_sa.encoder_decoder import EncDec
 from lore_sa.surrogate.surrogate import Surrogate
 
-__all__ = ["RuleGetter"]
+__all__ = ["Emitter"]
 
-class RuleGetter(ABC):
+class Emitter(ABC):
 
     """
-    Interfaces to get the rules and the counterfactual rules
+    Interfaces to get the rules and the counterfactual rules from a surrogate model
     """
 
     @abstractmethod

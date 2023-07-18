@@ -72,12 +72,32 @@ class Expression(object):
         self.operator = operator 
         self.value= value
 
+    def operator2string(self):
+        """
+        it converts the logical operator into a string representation. E.g.: operator2string(operator.gt) = ">")
+        """
 
+        operator_strings = {operator.gt: '>', operator.lt:'<',
+                            operator.eq: '=', operator.ge:'>=', operator.le:'<='}
+        if self.operator not in operator_strings:
+            raise ValueError("logical operator not recognized. Use one of [operator.gt,operator.lt,operator.eq, operator.gte, operator.lte]")
+        return operator_strings[self.operator]
+
+    def __str__(self):
+        """
+        It writes the expression as a string
+        """
+
+        return "%s %s %s"%(self.variable, self.operator2string(), self.value)
 
 
 class Rule(object):
 
     def __init__(self, premises:list, cons:Expression, class_name:str):
+        """
+        :param[list] premises: list of Expression objects representing the premises
+        :param[Expression] cons: Expression representing the consequence
+        """
         self.premises = premises
         self.cons = cons
         self.class_name = class_name
@@ -92,7 +112,10 @@ class Rule(object):
             return '{ %s }' % self.cons
 
     def __str__(self):
-        return '%s --> %s' % (self._pstr(), self._cstr())
+        str_out =  'premises: %s \n'%(["\n".join(str(e) for e in self.premises)])
+        str_out+= 'consequence: %s'%(str(self.cons))
+
+        return str_out
 
     def __eq__(self, other):
         return self.premises == other.premises and self.cons == other.cons

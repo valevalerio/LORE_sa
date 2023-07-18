@@ -6,14 +6,14 @@ import numpy as np
 from lore_sa.dataset import TabularDataset
 from lore_sa.encoder_decoder import EncDec, OneHotEnc
 from lore_sa.rule.rule import Condition, Rule
-from lore_sa.rule.rule_getter import RuleGetter
+from lore_sa.rule.rule_getter import Emitter
 from lore_sa.surrogate.decision_tree import DecisionTreeSurrogate
 from lore_sa.util import multilabel2str, vector2dict
 
 
-__all__ = ["RuleGetter","RuleGetterBinary"]
+__all__ = ["Emitter","RuleGetterBinary"]
 
-class RuleGetterBinary(RuleGetter):
+class DecisionTreeEmitter(Emitter):
 
     def get_rule(self, x, y, dt: DecisionTreeSurrogate, dataset: TabularDataset, encdec: EncDec = None, multi_label: bool = False):
         """
