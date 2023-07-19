@@ -4,6 +4,8 @@ from lore_sa.dataset import TabularDataset
 from lore_sa.encoder_decoder import EncDec
 from lore_sa.surrogate.surrogate import Surrogate
 
+import numpy as np
+
 __all__ = ["Emitter"]
 
 class Emitter(ABC):
@@ -13,7 +15,7 @@ class Emitter(ABC):
     """
 
     @abstractmethod
-    def get_rule(self,x, dt: Surrogate, dataset: TabularDataset, encdec: EncDec = None, multi_label: bool = False):
+    def get_rule(self, x: np.array, dt: Surrogate, dataset: TabularDataset, encdec: EncDec = None, multi_label: bool = False):
         pass
 
     @abstractmethod

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lore_sa.rule.rule_getter_binary &mdash; LORE_sa  documentation</title>
+  <title>lore_sa.rule.decision_tree_emitter &mdash; LORE_sa  documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -84,14 +84,15 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../source/modules.html#lore-sa-rule-rule-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.rule</span></code>: Rule classes and functions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.rule.Rule.html">lore_sa.rule.Rule</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.rule.RuleGetter.html">lore_sa.rule.RuleGetter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.rule.RuleGetterBinary.html">lore_sa.rule.RuleGetterBinary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.rule.Emitter.html">lore_sa.rule.Emitter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.rule.DecisionTreeRuleEmitter.html">lore_sa.rule.DecisionTreeRuleEmitter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.rule.rule.NumpyEncoder.html">lore_sa.rule.rule.NumpyEncoder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.rule.rule.ConditionEncoder.html">lore_sa.rule.rule.ConditionEncoder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.rule.rule.RuleEncoder.html">lore_sa.rule.rule.RuleEncoder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.rule.rule.json2rule.html">lore_sa.rule.rule.json2rule</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.rule.rule.json2cond.html">lore_sa.rule.rule.json2cond</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.rule.rule.Condition.html">lore_sa.rule.rule.Condition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/generated/lore_sa.rule.rule.Expression.html">lore_sa.rule.rule.Expression</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../source/modules.html#lore-sa-surrogate-surrogate-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.surrogate</span></code>: Surrogate classes and functions</a><ul>
@@ -147,7 +148,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
-      <li class="breadcrumb-item active">lore_sa.rule.rule_getter_binary</li>
+      <li class="breadcrumb-item active">lore_sa.rule.decision_tree_emitter</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -156,35 +157,39 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for lore_sa.rule.rule_getter_binary</h1><div class="highlight"><pre>
+  <h1>Source code for lore_sa.rule.decision_tree_emitter</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">copy</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">operator</span>
 
 <span class="kn">from</span> <span class="nn">lore_sa.dataset</span> <span class="kn">import</span> <span class="n">TabularDataset</span>
 <span class="kn">from</span> <span class="nn">lore_sa.encoder_decoder</span> <span class="kn">import</span> <span class="n">EncDec</span><span class="p">,</span> <span class="n">OneHotEnc</span>
 <span class="kn">from</span> <span class="nn">lore_sa.rule.rule</span> <span class="kn">import</span> <span class="n">Condition</span><span class="p">,</span> <span class="n">Rule</span>
-<span class="kn">from</span> <span class="nn">lore_sa.rule.rule_getter</span> <span class="kn">import</span> <span class="n">RuleGetter</span>
+<span class="kn">from</span> <span class="nn">lore_sa.rule.emitter</span> <span class="kn">import</span> <span class="n">Emitter</span>
 <span class="kn">from</span> <span class="nn">lore_sa.surrogate.decision_tree</span> <span class="kn">import</span> <span class="n">DecisionTreeSurrogate</span>
 <span class="kn">from</span> <span class="nn">lore_sa.util</span> <span class="kn">import</span> <span class="n">multilabel2str</span><span class="p">,</span> <span class="n">vector2dict</span>
 
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;RuleGetter&quot;</span><span class="p">,</span><span class="s2">&quot;RuleGetterBinary&quot;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Emitter&quot;</span><span class="p">,</span> <span class="s2">&quot;DecisionTreeRuleEmitter&quot;</span><span class="p">]</span>
 
-<div class="viewcode-block" id="RuleGetterBinary"><a class="viewcode-back" href="../../../source/generated/lore_sa.rule.RuleGetterBinary.html#lore_sa.rule.RuleGetterBinary">[docs]</a><span class="k">class</span> <span class="nc">RuleGetterBinary</span><span class="p">(</span><span class="n">RuleGetter</span><span class="p">):</span>
+<div class="viewcode-block" id="DecisionTreeRuleEmitter"><a class="viewcode-back" href="../../../source/generated/lore_sa.rule.DecisionTreeRuleEmitter.html#lore_sa.rule.DecisionTreeRuleEmitter">[docs]</a><span class="k">class</span> <span class="nc">DecisionTreeRuleEmitter</span><span class="p">(</span><span class="n">Emitter</span><span class="p">):</span>
 
-<div class="viewcode-block" id="RuleGetterBinary.get_rule"><a class="viewcode-back" href="../../../source/generated/lore_sa.rule.RuleGetterBinary.html#lore_sa.rule.RuleGetterBinary.get_rule">[docs]</a>    <span class="k">def</span> <span class="nf">get_rule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="n">DecisionTreeSurrogate</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">TabularDataset</span><span class="p">,</span> <span class="n">encdec</span><span class="p">:</span> <span class="n">EncDec</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">multi_label</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="DecisionTreeRuleEmitter.get_rule"><a class="viewcode-back" href="../../../source/generated/lore_sa.rule.DecisionTreeRuleEmitter.html#lore_sa.rule.DecisionTreeRuleEmitter.get_rule">[docs]</a>    <span class="k">def</span> <span class="nf">get_rule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="n">DecisionTreeSurrogate</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">TabularDataset</span><span class="p">,</span> <span class="n">encdec</span><span class="p">:</span> <span class="n">EncDec</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">multi_label</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Extract the rule.</span>
+<span class="sd">        Extract the rules as the promises and consequences {p -&gt; y}, starting from a Decision Tree</span>
 
-<span class="sd">        :param x:</span>
-<span class="sd">        :param y:</span>
-<span class="sd">        :param dt:</span>
-<span class="sd">        :param dataset:</span>
-<span class="sd">        :param encdec:</span>
-<span class="sd">        :param multi_label:</span>
-<span class="sd">        :return:</span>
+<span class="sd">            &gt;&gt;&gt; {( income &gt; 90) -&gt; grant),</span>
+<span class="sd">                ( job = employer) -&gt; grant)</span>
+<span class="sd">            }</span>
+
+<span class="sd">        :param [Numpy Array] x:</span>
+<span class="sd">        :param [DecisionTreeSurrogate] dt:</span>
+<span class="sd">        :param [TabularDataset] dataset:</span>
+<span class="sd">        :param [EncDec] encdec:</span>
+<span class="sd">        :param [boolean] multi_label:</span>
+<span class="sd">        :return [Rule]: Rule objects</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">feature</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">tree_</span><span class="o">.</span><span class="n">feature</span>
@@ -204,32 +209,32 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">encdec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">encdec</span><span class="p">,</span> <span class="n">OneHotEnc</span><span class="p">):</span>
-                        <span class="n">att</span> <span class="o">=</span> <span class="n">feature_names</span><span class="p">[</span><span class="n">feature</span><span class="p">[</span><span class="n">node_id</span><span class="p">]]</span>
-                        <span class="k">if</span> <span class="n">att</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">numeric_columns</span><span class="p">:</span>
+                        <span class="n">attribute</span> <span class="o">=</span> <span class="n">feature_names</span><span class="p">[</span><span class="n">feature</span><span class="p">[</span><span class="n">node_id</span><span class="p">]]</span>
+                        <span class="k">if</span> <span class="n">attribute</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">numeric_columns</span><span class="p">:</span>
                             <span class="n">thr</span> <span class="o">=</span> <span class="s1">&#39;no&#39;</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">feature</span><span class="p">[</span><span class="n">node_id</span><span class="p">]]</span> <span class="o">&lt;=</span> <span class="n">threshold</span><span class="p">[</span><span class="n">node_id</span><span class="p">]</span> <span class="k">else</span> <span class="s1">&#39;yes&#39;</span>
                             <span class="n">op</span> <span class="o">=</span> <span class="s1">&#39;=&#39;</span>
                         <span class="k">else</span><span class="p">:</span>
-                            <span class="n">op</span> <span class="o">=</span> <span class="s1">&#39;&lt;=&#39;</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">feature</span><span class="p">[</span><span class="n">node_id</span><span class="p">]]</span> <span class="o">&lt;=</span> <span class="n">threshold</span><span class="p">[</span><span class="n">node_id</span><span class="p">]</span> <span class="k">else</span> <span class="s1">&#39;&gt;&#39;</span>
                             <span class="n">thr</span> <span class="o">=</span> <span class="n">threshold</span><span class="p">[</span><span class="n">node_id</span><span class="p">]</span>
-                        <span class="n">iscont</span> <span class="o">=</span> <span class="n">att</span> <span class="ow">in</span> <span class="n">numeric_columns</span>
+                            <span class="n">op</span> <span class="o">=</span> <span class="s1">&#39;&lt;=&#39;</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">feature</span><span class="p">[</span><span class="n">node_id</span><span class="p">]]</span> <span class="o">&lt;=</span> <span class="n">threshold</span><span class="p">[</span><span class="n">node_id</span><span class="p">]</span> <span class="k">else</span> <span class="s1">&#39;&gt;&#39;</span>
+                        <span class="n">is_continuous</span> <span class="o">=</span> <span class="n">attribute</span> <span class="ow">in</span> <span class="n">numeric_columns</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;unknown encoder instance &#39;</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">op</span> <span class="o">=</span> <span class="s1">&#39;&lt;=&#39;</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">feature</span><span class="p">[</span><span class="n">node_id</span><span class="p">]]</span> <span class="o">&lt;=</span> <span class="n">threshold</span><span class="p">[</span><span class="n">node_id</span><span class="p">]</span> <span class="k">else</span> <span class="s1">&#39;&gt;&#39;</span>
-                    <span class="n">att</span> <span class="o">=</span> <span class="n">feature_names</span><span class="p">[</span><span class="n">feature</span><span class="p">[</span><span class="n">node_id</span><span class="p">]]</span>
+                    <span class="n">attribute</span> <span class="o">=</span> <span class="n">feature_names</span><span class="p">[</span><span class="n">feature</span><span class="p">[</span><span class="n">node_id</span><span class="p">]]</span>
                     <span class="n">thr</span> <span class="o">=</span> <span class="n">threshold</span><span class="p">[</span><span class="n">node_id</span><span class="p">]</span>
-                    <span class="n">iscont</span> <span class="o">=</span> <span class="n">att</span> <span class="ow">in</span> <span class="n">numeric_columns</span>
-                <span class="n">premises</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Condition</span><span class="p">(</span><span class="n">att</span><span class="p">,</span> <span class="n">op</span><span class="p">,</span> <span class="n">thr</span><span class="p">,</span> <span class="n">iscont</span><span class="p">))</span>
+                    <span class="n">is_continuous</span> <span class="o">=</span> <span class="n">attribute</span> <span class="ow">in</span> <span class="n">numeric_columns</span>
+                <span class="n">premises</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Condition</span><span class="p">(</span><span class="n">attribute</span><span class="p">,</span> <span class="n">op</span><span class="p">,</span> <span class="n">thr</span><span class="p">,</span> <span class="n">is_continuous</span><span class="p">))</span>
 
         <span class="n">dt_outcome</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">cons</span> <span class="o">=</span> <span class="n">class_values</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">dt_outcome</span><span class="p">)]</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">multi_label</span> <span class="k">else</span> <span class="n">multilabel2str</span><span class="p">(</span><span class="n">dt_outcome</span><span class="p">,</span> <span class="n">class_values</span><span class="p">)</span>
+        <span class="n">consequences</span> <span class="o">=</span> <span class="n">class_values</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">dt_outcome</span><span class="p">)]</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">multi_label</span> <span class="k">else</span> <span class="n">multilabel2str</span><span class="p">(</span><span class="n">dt_outcome</span><span class="p">,</span> <span class="n">class_values</span><span class="p">)</span>
         <span class="n">premises</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compact_premises</span><span class="p">(</span><span class="n">premises</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">Rule</span><span class="p">(</span><span class="n">premises</span><span class="p">,</span> <span class="n">cons</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">class_name</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">Rule</span><span class="p">(</span><span class="n">premises</span><span class="p">,</span> <span class="n">consequences</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">class_name</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">compact_premises</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plist</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">compact_premises</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">premises_list</span><span class="p">):</span>
         <span class="n">att_list</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">plist</span><span class="p">:</span>
-            <span class="n">att_list</span><span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">att</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">premise</span> <span class="ow">in</span> <span class="n">premises_list</span><span class="p">:</span>
+            <span class="n">att_list</span><span class="p">[</span><span class="n">premise</span><span class="o">.</span><span class="n">att</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">premise</span><span class="p">)</span>
 
         <span class="n">compact_plist</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">att</span><span class="p">,</span> <span class="n">alist</span> <span class="ow">in</span> <span class="n">att_list</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>

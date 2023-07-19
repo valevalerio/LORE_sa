@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lore_sa.explanation.TextExplanation &mdash; LORE_sa  documentation</title>
+  <title>lore_sa.rule.Emitter &mdash; LORE_sa  documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="lore_sa.explanation.json2explanation" href="lore_sa.explanation.json2explanation.html" />
-    <link rel="prev" title="lore_sa.explanation.MultilabelExplanation" href="lore_sa.explanation.MultilabelExplanation.html" />
+    <link rel="next" title="lore_sa.rule.DecisionTreeRuleEmitter" href="lore_sa.rule.DecisionTreeRuleEmitter.html" />
+    <link rel="prev" title="lore_sa.rule.Rule" href="lore_sa.rule.Rule.html" />
     <link href="../../_static/style.css" rel="stylesheet" type="text/css">
 
 </head>
@@ -76,18 +76,18 @@
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.encoder_decoder.TabularEnc.html">lore_sa.encoder_decoder.TabularEnc</a></li>
 </ul>
 </li>
-<li class="toctree-l2 current"><a class="reference internal" href="../modules.html#lore-sa-explanation-explanation-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.explanation</span></code>: Explanation classes and functions</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-explanation-explanation-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.explanation</span></code>: Explanation classes and functions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.explanation.Explanation.html">lore_sa.explanation.Explanation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.explanation.ExplanationEncoder.html">lore_sa.explanation.ExplanationEncoder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.explanation.ImageExplanation.html">lore_sa.explanation.ImageExplanation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.explanation.MultilabelExplanation.html">lore_sa.explanation.MultilabelExplanation</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">lore_sa.explanation.TextExplanation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.explanation.TextExplanation.html">lore_sa.explanation.TextExplanation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.explanation.json2explanation.html">lore_sa.explanation.json2explanation</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-rule-rule-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.rule</span></code>: Rule classes and functions</a><ul>
+<li class="toctree-l2 current"><a class="reference internal" href="../modules.html#lore-sa-rule-rule-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.rule</span></code>: Rule classes and functions</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.Rule.html">lore_sa.rule.Rule</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.Emitter.html">lore_sa.rule.Emitter</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">lore_sa.rule.Emitter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.DecisionTreeRuleEmitter.html">lore_sa.rule.DecisionTreeRuleEmitter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.NumpyEncoder.html">lore_sa.rule.rule.NumpyEncoder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.ConditionEncoder.html">lore_sa.rule.rule.ConditionEncoder</a></li>
@@ -151,9 +151,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../modules.html">Modules</a></li>
-      <li class="breadcrumb-item active">lore_sa.explanation.TextExplanation</li>
+      <li class="breadcrumb-item active">lore_sa.rule.Emitter</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../_sources/source/generated/lore_sa.explanation.TextExplanation.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/source/generated/lore_sa.rule.Emitter.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -161,32 +161,27 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="lore-sa-explanation-textexplanation">
-<h1>lore_sa.explanation.TextExplanation<a class="headerlink" href="#lore-sa-explanation-textexplanation" title="Permalink to this heading"></a></h1>
+  <section id="lore-sa-rule-emitter">
+<h1>lore_sa.rule.Emitter<a class="headerlink" href="#lore-sa-rule-emitter" title="Permalink to this heading"></a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="lore_sa.explanation.TextExplanation">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lore_sa.explanation.</span></span><span class="sig-name descname"><span class="pre">TextExplanation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indexed_text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/explanation.html#TextExplanation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.explanation.TextExplanation" title="Permalink to this definition"></a></dt>
-<dd><dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.explanation.TextExplanation.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indexed_text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/explanation.html#TextExplanation.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.explanation.TextExplanation.__init__" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="lore_sa.rule.Emitter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lore_sa.rule.</span></span><span class="sig-name descname"><span class="pre">Emitter</span></span><a class="reference internal" href="../../_modules/lore_sa/rule/emitter.html#Emitter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.rule.Emitter" title="Permalink to this definition"></a></dt>
+<dd><p>Interfaces to get the rules and the counterfactual rules from a surrogate model</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="lore_sa.rule.Emitter.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lore_sa.rule.Emitter.__init__" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <p class="rubric">Methods</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.explanation.TextExplanation.__init__" title="lore_sa.explanation.TextExplanation.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(text, indexed_text)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.rule.Emitter.__init__" title="lore_sa.rule.Emitter.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">cstr</span></code>()</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_counterfactual_rules</span></code>(x, y)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_text_counterfactuals</span></code>([num_features, ...])</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_text_rule</span></code>([num_features, min_importance])</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">rstr</span></code>()</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_rule</span></code>(x, dt, dataset[, encdec, multi_label])</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -199,8 +194,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="lore_sa.explanation.MultilabelExplanation.html" class="btn btn-neutral float-left" title="lore_sa.explanation.MultilabelExplanation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="lore_sa.explanation.json2explanation.html" class="btn btn-neutral float-right" title="lore_sa.explanation.json2explanation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="lore_sa.rule.Rule.html" class="btn btn-neutral float-left" title="lore_sa.rule.Rule" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="lore_sa.rule.DecisionTreeRuleEmitter.html" class="btn btn-neutral float-right" title="lore_sa.rule.DecisionTreeRuleEmitter" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

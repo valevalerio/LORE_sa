@@ -19,35 +19,36 @@ def json2rule(obj):
 
 class Condition(object):
 
-    def __init__(self, att, op, thr, is_continuous=True):
-        self.att = att
-        self.op = op
-        self.thr = thr
+    def __init__(self, attribute, operator: str, threshold, is_continuous=True):
+        self.att = attribute
+        self.op = operator
+        self.thr = threshold
         self.is_continuous = is_continuous
 
     def __str__(self):
         if self.is_continuous:
+
             if type(self.thr) is tuple:
                 thr = str(self.thr[0])+' '+str(self.thr[1])
                 return '%s %s %s' % (self.att, self.op, thr)
-            if type(self.thr) is list:
-                thr = '['
-                for i in self.thr:
-                    thr += str(i)
-                thr += ']'
+
+            elif type(self.thr) is list:
+                thr = '[' + ''.join(str(i) for i in self.thr) + ']'
                 return '%s %s %s' % (self.att, self.op, thr)
-            return '%s %s %.2f' % (self.att, self.op, self.thr)
+
+            else:
+                return '%s %s %.2f' % (self.att, self.op, self.thr)
         else:
             if type(self.thr) is tuple:
                 thr = '['+str(self.thr[0])+';'+str(self.thr[1])+']'
                 return '%s %s %s' % (self.att, self.op, thr)
-            if type(self.thr) is list:
-                thr = '['
-                for i in self.thr:
-                    thr+=i+' ; '
+
+            elif type(self.thr) is list:
+                thr = '[' + ' ; '.join(str(i) for i in self.thr)+ ']'
                 return '%s %s %s' % (self.att, self.op, thr)
-            #print('alla fine arriva polly, ', self.att, 'spazio ',  self.op, 'spazo ', self.thr)
-            return '%s %s %.2f' % (self.att, self.op, self.thr)
+
+            else:
+                return '%s %s %.2f' % (self.att, self.op, self.thr)
 
     def __eq__(self, other):
         return self.att == other.att and self.op == other.op and self.thr == other.thr

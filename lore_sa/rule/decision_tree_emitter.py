@@ -12,21 +12,24 @@ from lore_sa.surrogate.decision_tree import DecisionTreeSurrogate
 from lore_sa.util import multilabel2str, vector2dict
 
 
-__all__ = ["Emitter", "DecisioTreeRuleEmitter"]
+__all__ = ["Emitter", "DecisionTreeRuleEmitter"]
 
-class DecisioTreeRuleEmitter(Emitter):
+class DecisionTreeRuleEmitter(Emitter):
 
-    def get_rule(self, x, dt: DecisionTreeSurrogate, dataset: TabularDataset, encdec: EncDec = None, multi_label: bool = False):
+    def get_rule(self, x: np.array, dt: DecisionTreeSurrogate, dataset: TabularDataset, encdec: EncDec = None, multi_label: bool = False):
         """
-        Extract the rule.
+        Extract the rules as the promises and consequences {p -> y}, starting from a Decision Tree
 
-        :param x:
-        :param y:
-        :param dt:
-        :param dataset:
-        :param encdec:
-        :param multi_label:
-        :return:
+            >>> {( income > 90) -> grant),
+                ( job = employer) -> grant)
+            }
+
+        :param [Numpy Array] x:
+        :param [DecisionTreeSurrogate] dt:
+        :param [TabularDataset] dataset:
+        :param [EncDec] encdec:
+        :param [boolean] multi_label:
+        :return [Rule]: Rule objects
         """
         x = x.reshape(1, -1)
         feature = dt.tree_.feature
@@ -46,32 +49,32 @@ class DecisioTreeRuleEmitter(Emitter):
             else:
                 if encdec is not None:
                     if isinstance(encdec, OneHotEnc):
-                        att = feature_names[feature[node_id]]
-                        if att not in numeric_columns:
+                        attribute = feature_names[feature[node_id]]
+                        if attribute not in numeric_columns:
                             thr = 'no' if x[0][feature[node_id]] <= threshold[node_id] else 'yes'
                             op = '='
                         else:
-                            op = '<=' if x[0][feature[node_id]] <= threshold[node_id] else '>'
                             thr = threshold[node_id]
-                        iscont = att in numeric_columns
+                            op = '<=' if x[0][feature[node_id]] <= threshold[node_id] else '>'
+                        is_continuous = attribute in numeric_columns
                     else:
                         raise Exception('unknown encoder instance ')
                 else:
                     op = '<=' if x[0][feature[node_id]] <= threshold[node_id] else '>'
-                    att = feature_names[feature[node_id]]
+                    attribute = feature_names[feature[node_id]]
                     thr = threshold[node_id]
-                    iscont = att in numeric_columns
-                premises.append(Condition(att, op, thr, iscont))
+                    is_continuous = attribute in numeric_columns
+                premises.append(Condition(attribute, op, thr, is_continuous))
 
         dt_outcome = dt.predict(x)[0]
-        cons = class_values[int(dt_outcome)] if not multi_label else multilabel2str(dt_outcome, class_values)
+        consequences = class_values[int(dt_outcome)] if not multi_label else multilabel2str(dt_outcome, class_values)
         premises = self.compact_premises(premises)
-        return Rule(premises, cons, dataset.class_name)
+        return Rule(premises, consequences, dataset.class_name)
 
-    def compact_premises(self, plist):
+    def compact_premises(self, premises_list):
         att_list = defaultdict(list)
-        for p in plist:
-            att_list[p.att].append(p)
+        for premise in premises_list:
+            att_list[premise.att].append(premise)
 
         compact_plist = list()
         for att, alist in att_list.items():

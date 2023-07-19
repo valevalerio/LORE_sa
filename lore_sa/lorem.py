@@ -18,7 +18,6 @@ from lore_sa.encoder_decoder import EncDec
 from lore_sa.bbox import AbstractBBox
 from lore_sa.dataset import TabularDataset
 from lore_sa.rule import Rule
-from lore_sa.rule import DecisioTreeRuleEmitter
 import numpy as np
 
 

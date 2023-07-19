@@ -1,6 +1,7 @@
 from .emitter import Emitter
-from .decision_tree_emitter import DecisioTreeRuleEmitter
+from .decision_tree_emitter import DecisionTreeRuleEmitter
 from .rule import Rule
 
-__all__ = ["Emitter",
-           "DecisioTreeRuleEmitter"]
+__all__ = ["Rule",
+           "Emitter",
+           "DecisionTreeRuleEmitter"]
