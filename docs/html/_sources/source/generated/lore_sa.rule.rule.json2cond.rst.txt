@@ -1,6 +1,0 @@
-﻿lore\_sa.rule.rule.json2cond
-============================
-
-.. currentmodule:: lore_sa.rule.rule
-
-.. autofunction:: json2cond

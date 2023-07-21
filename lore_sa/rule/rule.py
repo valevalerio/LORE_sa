@@ -7,54 +7,14 @@ import operator
 
 __all__ = ["Rule"]
 
-def json2cond(obj):
-    return Condition(obj['att'], obj['op'], obj['thr'], obj['is_continuous'])
+def json2expression(obj):
+    return Expression(obj['att'], obj['op'], obj['thr'])
 
 def json2rule(obj):
-    premises = [json2cond(p) for p in obj['premise']]
+    premises = [json2expression(p) for p in obj['premise']]
     cons = obj['cons']
     class_name = obj['class_name']
     return Rule(premises, cons, class_name)
-
-
-class Condition(object):
-
-    def __init__(self, attribute, operator: str, threshold, is_continuous=True):
-        self.att = attribute
-        self.op = operator
-        self.thr = threshold
-        self.is_continuous = is_continuous
-
-    def __str__(self):
-        if self.is_continuous:
-
-            if type(self.thr) is tuple:
-                thr = str(self.thr[0])+' '+str(self.thr[1])
-                return '%s %s %s' % (self.att, self.op, thr)
-
-            elif type(self.thr) is list:
-                thr = '[' + ''.join(str(i) for i in self.thr) + ']'
-                return '%s %s %s' % (self.att, self.op, thr)
-
-            else:
-                return '%s %s %.2f' % (self.att, self.op, self.thr)
-        else:
-            if type(self.thr) is tuple:
-                thr = '['+str(self.thr[0])+';'+str(self.thr[1])+']'
-                return '%s %s %s' % (self.att, self.op, thr)
-
-            elif type(self.thr) is list:
-                thr = '[' + ' ; '.join(str(i) for i in self.thr)+ ']'
-                return '%s %s %s' % (self.att, self.op, thr)
-
-            else:
-                return '%s %s %.2f' % (self.att, self.op, self.thr)
-
-    def __eq__(self, other):
-        return self.att == other.att and self.op == other.op and self.thr == other.thr
-
-    def __hash__(self):
-        return hash(str(self))
 
 
 class Expression(object):

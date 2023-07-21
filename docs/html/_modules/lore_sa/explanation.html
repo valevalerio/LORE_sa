@@ -90,8 +90,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.rule.ConditionEncoder.html">lore_sa.rule.rule.ConditionEncoder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.rule.RuleEncoder.html">lore_sa.rule.rule.RuleEncoder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.rule.json2rule.html">lore_sa.rule.rule.json2rule</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.rule.json2cond.html">lore_sa.rule.rule.json2cond</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.rule.Condition.html">lore_sa.rule.rule.Condition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.rule.json2expression.html">lore_sa.rule.rule.json2expression</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.rule.Expression.html">lore_sa.rule.rule.Expression</a></li>
 </ul>
 </li>
@@ -164,7 +163,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">.rule.rule</span> <span class="kn">import</span> <span class="n">RuleEncoder</span><span class="p">,</span> <span class="n">ConditionEncoder</span><span class="p">,</span> <span class="n">NumpyEncoder</span>
-<span class="kn">from</span> <span class="nn">.rule.rule</span> <span class="kn">import</span> <span class="n">json2rule</span><span class="p">,</span> <span class="n">json2cond</span>
+<span class="kn">from</span> <span class="nn">.rule.rule</span> <span class="kn">import</span> <span class="n">json2rule</span><span class="p">,</span> <span class="n">json2expression</span>
 
 
 <div class="viewcode-block" id="Explanation"><a class="viewcode-back" href="../../source/generated/lore_sa.explanation.Explanation.html#lore_sa.explanation.Explanation">[docs]</a><span class="k">class</span> <span class="nc">Explanation</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -236,7 +235,7 @@
     <span class="n">exp</span><span class="o">.</span><span class="n">dt_pred</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;dt_pred&#39;</span><span class="p">]</span>
     <span class="n">exp</span><span class="o">.</span><span class="n">rule</span> <span class="o">=</span> <span class="n">json2rule</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;rule&#39;</span><span class="p">])</span>
     <span class="n">exp</span><span class="o">.</span><span class="n">crules</span> <span class="o">=</span> <span class="p">[</span><span class="n">json2rule</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;crules&#39;</span><span class="p">]]</span>
-    <span class="n">exp</span><span class="o">.</span><span class="n">deltas</span> <span class="o">=</span> <span class="p">[[</span><span class="n">json2cond</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cs</span><span class="p">]</span> <span class="k">for</span> <span class="n">cs</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;deltas&#39;</span><span class="p">]]</span>
+    <span class="n">exp</span><span class="o">.</span><span class="n">deltas</span> <span class="o">=</span> <span class="p">[[</span><span class="n">json2expression</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cs</span><span class="p">]</span> <span class="k">for</span> <span class="n">cs</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;deltas&#39;</span><span class="p">]]</span>
     <span class="n">exp</span><span class="o">.</span><span class="n">dt</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">bitarray</span><span class="o">.</span><span class="n">bitarray</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;dt&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">tobytes</span><span class="p">())</span>
     <span class="n">exp</span><span class="o">.</span><span class="n">fidelity</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;fidelity&#39;</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">exp</span></div>

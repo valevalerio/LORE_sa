@@ -6,7 +6,7 @@ import operator
 
 from lore_sa.dataset import TabularDataset
 from lore_sa.encoder_decoder import EncDec, OneHotEnc
-from lore_sa.rule.rule import Condition, Rule
+from lore_sa.rule.rule import Rule, Expression
 from lore_sa.rule.emitter import Emitter
 from lore_sa.surrogate.decision_tree import DecisionTreeSurrogate
 from lore_sa.util import multilabel2str, vector2dict
@@ -51,20 +51,18 @@ class DecisionTreeRuleEmitter(Emitter):
                     if isinstance(encdec, OneHotEnc):
                         attribute = feature_names[feature[node_id]]
                         if attribute not in numeric_columns:
-                            thr = 'no' if x[0][feature[node_id]] <= threshold[node_id] else 'yes'
-                            op = '='
+                            thr = False if x[0][feature[node_id]] <= threshold[node_id] else True
+                            op = operator.eq
                         else:
                             thr = threshold[node_id]
-                            op = '<=' if x[0][feature[node_id]] <= threshold[node_id] else '>'
-                        is_continuous = attribute in numeric_columns
+                            op = operator.le if x[0][feature[node_id]] <= threshold[node_id] else operator.gt
                     else:
                         raise Exception('unknown encoder instance ')
                 else:
-                    op = '<=' if x[0][feature[node_id]] <= threshold[node_id] else '>'
+                    op = operator.le if x[0][feature[node_id]] <= threshold[node_id] else operator.gt
                     attribute = feature_names[feature[node_id]]
                     thr = threshold[node_id]
-                    is_continuous = attribute in numeric_columns
-                premises.append(Condition(attribute, op, thr, is_continuous))
+                premises.append(Expression(attribute, op, thr))
 
         dt_outcome = dt.predict(x)[0]
         consequences = class_values[int(dt_outcome)] if not multi_label else multilabel2str(dt_outcome, class_values)
@@ -82,16 +80,16 @@ class DecisionTreeRuleEmitter(Emitter):
                 min_thr = None
                 max_thr = None
                 for av in alist:
-                    if av.op == '<=':
+                    if av.op == operator.le:
                         max_thr = min(av.thr, max_thr) if max_thr else av.thr
-                    elif av.op == '>':
+                    elif av.op == operator.gt:
                         min_thr = max(av.thr, min_thr) if min_thr else av.thr
 
                 if max_thr:
-                    compact_plist.append(Condition(att, '<=', max_thr))
+                    compact_plist.append(Expression(att, operator.le, max_thr))
 
                 if min_thr:
-                    compact_plist.append(Condition(att, '>', min_thr))
+                    compact_plist.append(Expression(att, operator.gt, min_thr))
             else:
                 compact_plist.append(alist[0])
         return compact_plist

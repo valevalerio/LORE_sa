@@ -111,8 +111,7 @@ Modules
    rule.rule.ConditionEncoder
    rule.rule.RuleEncoder
    rule.rule.json2rule
-   rule.rule.json2cond
-   rule.rule.Condition
+   rule.rule.json2expression
    rule.rule.Expression
 
 

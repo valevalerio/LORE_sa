@@ -4,7 +4,7 @@ import bitarray
 import numpy as np
 
 from .rule.rule import RuleEncoder, ConditionEncoder, NumpyEncoder
-from .rule.rule import json2rule, json2cond
+from .rule.rule import json2rule, json2expression
 
 
 class Explanation(object):
@@ -76,7 +76,7 @@ def json2explanation(obj):
     exp.dt_pred = obj['dt_pred']
     exp.rule = json2rule(obj['rule'])
     exp.crules = [json2rule(c) for c in obj['crules']]
-    exp.deltas = [[json2cond(c) for c in cs] for cs in obj['deltas']]
+    exp.deltas = [[json2expression(c) for c in cs] for cs in obj['deltas']]
     exp.dt = pickle.loads(bitarray.bitarray(obj['dt']).tobytes())
     exp.fidelity = obj['fidelity']
     return exp
