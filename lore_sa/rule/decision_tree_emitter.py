@@ -34,6 +34,9 @@ class DecisionTreeRuleEmitter(Emitter):
         x = x.reshape(1, -1)
         feature = dt.tree_.feature
         threshold = dt.tree_.threshold
+        predicted_class = dt.predict(x)
+
+        cons = Expression(dataset.class_name, operator.eq, predicted_class)
 
         leave_id = dt.apply(x)
         node_index = dt.decision_path(x).indices
@@ -65,9 +68,9 @@ class DecisionTreeRuleEmitter(Emitter):
                 premises.append(Expression(attribute, op, thr))
 
         dt_outcome = dt.predict(x)[0]
-        consequences = class_values[int(dt_outcome)] if not multi_label else multilabel2str(dt_outcome, class_values)
+        #consequences = class_values[int(dt_outcome)] if not multi_label else multilabel2str(dt_outcome, class_values)
         premises = self.compact_premises(premises)
-        return Rule(premises, consequences, dataset.class_name)
+        return Rule(premises, cons)
 
     def compact_premises(self, premises_list):
         att_list = defaultdict(list)
