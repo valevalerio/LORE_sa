@@ -16,7 +16,7 @@ __all__ = ["Emitter", "DecisionTreeRuleEmitter"]
 
 class DecisionTreeRuleEmitter(Emitter):
 
-    def get_rule(self, x: np.array, dt: DecisionTreeSurrogate, dataset: TabularDataset, encdec: EncDec = None, multi_label: bool = False):
+    def get_rule(self, x: np.array, dt: DecisionTreeSurrogate, dataset: TabularDataset, encdec: EncDec = None):
         """
         Extract the rules as the promises and consequences {p -> y}, starting from a Decision Tree
 
@@ -28,19 +28,20 @@ class DecisionTreeRuleEmitter(Emitter):
         :param [DecisionTreeSurrogate] dt:
         :param [TabularDataset] dataset:
         :param [EncDec] encdec:
-        :param [boolean] multi_label:
         :return [Rule]: Rule objects
         """
         x = x.reshape(1, -1)
         feature = dt.tree_.feature
         threshold = dt.tree_.threshold
+        predicted_class = dt.predict(x)
+
+        consequence = Expression(variable=dataset.class_name, operator=operator.eq, value=predicted_class)
 
         leave_id = dt.apply(x)
         node_index = dt.decision_path(x).indices
 
         feature_names = dataset.get_features_names()
         numeric_columns = dataset.get_numeric_columns()
-        class_values = dataset.get_class_values()
 
         premises = list()
         for node_id in node_index:
@@ -64,19 +65,8 @@ class DecisionTreeRuleEmitter(Emitter):
                     thr = threshold[node_id]
                 premises.append(Expression(attribute, op, thr))
 
-        dt_outcome = dt.predict(x)[0]
-        consequences = Expression(variable=class_values[int(dt_outcome)], operator=operator.eq, value=dt_outcome) if not multi_label else self.multilabel2expression(dt_outcome, class_values)
         premises = self.compact_premises(premises)
-        return Rule(premises, consequences, dataset.class_name)
-
-    def multilabel2expression(self, y, class_values):
-        """
-        Return a list of Expression starting from outcomes and classe_values multilabel. Use for consequences.
-        :param y: predicted values
-        :param class_values:
-        :return [Expression]:
-        """
-        return [Expression(variable=class_values[i], operator=operator.eq, value=y[i]) for i in range(len(y)) if y[i] == 1.0]
+        return Rule(premises, consequence)
 
     def compact_premises(self, premises_list):
         attribute_list = defaultdict(list)
@@ -89,10 +79,10 @@ class DecisionTreeRuleEmitter(Emitter):
                 min_thr = None
                 max_thr = None
                 for av in alist:
-                    if av.op == operator.le:
-                        max_thr = min(av.thr, max_thr) if max_thr else av.thr
+                    if av.operator == operator.le:
+                        max_thr = min(av.value, max_thr) if max_thr else av.value
                     elif av.op == operator.gt:
-                        min_thr = max(av.thr, min_thr) if min_thr else av.thr
+                        min_thr = max(av.value, min_thr) if min_thr else av.value
 
                 if max_thr:
                     compact_plist.append(Expression(att, operator.le, max_thr))

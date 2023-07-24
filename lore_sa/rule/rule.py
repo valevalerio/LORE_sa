@@ -3,24 +3,26 @@ import numpy as np
 
 from lore_sa.util import vector2dict
 from typing import Callable
-import operator 
+import operator
 
 __all__ = ["Rule"]
+
 
 def json2expression(obj):
     return Expression(obj['att'], obj['op'], obj['thr'])
 
+
 def json2rule(obj):
     premises = [json2expression(p) for p in obj['premise']]
     cons = obj['cons']
-    class_name = obj['class_name']
-    return Rule(premises, cons, class_name)
+    return Rule(premises, cons)
 
 
 class Expression(object):
     """
     Utility object to define a logical expression. It is used to define the premises of a Rule emitted from a surrogate model.
     """
+
     def __init__(self, variable: str, operator: Callable, value):
         """
         :param[str] variable: name of the variable that defines the rule
@@ -29,18 +31,19 @@ class Expression(object):
         """
 
         self.variable = variable
-        self.operator = operator 
-        self.value= value
+        self.operator = operator
+        self.value = value
 
     def operator2string(self):
         """
         it converts the logical operator into a string representation. E.g.: operator2string(operator.gt) = ">")
         """
 
-        operator_strings = {operator.gt: '>', operator.lt:'<',
-                            operator.eq: '=', operator.ge:'>=', operator.le:'<='}
+        operator_strings = {operator.gt: '>', operator.lt: '<',
+                            operator.eq: '=', operator.ge: '>=', operator.le: '<='}
         if self.operator not in operator_strings:
-            raise ValueError("logical operator not recognized. Use one of [operator.gt,operator.lt,operator.eq, operator.gte, operator.lte]")
+            raise ValueError(
+                "logical operator not recognized. Use one of [operator.gt,operator.lt,operator.eq, operator.gte, operator.lte]")
         return operator_strings[self.operator]
 
     def __str__(self):
@@ -48,32 +51,28 @@ class Expression(object):
         It writes the expression as a string
         """
 
-        return "%s %s %s"%(self.variable, self.operator2string(), self.value)
+        return "%s %s %s" % (self.variable, self.operator2string(), self.value)
 
 
 class Rule(object):
 
-    def __init__(self, premises:list, consequences, class_name:str):
+    def __init__(self, premises: list, consequences: Expression):
         """
         :param[list] premises: list of Expression objects representing the premises
         :param[Expression] cons: Expression representing the consequence
         """
         self.premises = premises
         self.consequences = consequences
-        self.class_name = class_name
 
     def _pstr(self):
         return '{ %s }' % (', '.join([str(p) for p in self.premises]))
 
     def _cstr(self):
-        if not isinstance(self.class_name, list):
-            return '{ %s: %s }' % (self.class_name, self.consequences)
-        else:
-            return '{ %s }' % self.consequences
+        return '{ %s }' % self.consequences
 
     def __str__(self):
-        str_out =  'premises: %s \n'%(["\n".join(str(e) for e in self.premises)])
-        str_out+= 'consequence: %s'%(str(self.consequences))
+        str_out = 'premises: %s \n' % (["\n".join(str(e) for e in self.premises)])
+        str_out += 'consequence: %s' % (str(self.consequences))
 
         return str_out
 
@@ -96,28 +95,15 @@ class Rule(object):
         return True
 
 
-class NumpyEncoder(json.JSONEncoder):
-    """ Special json encoder for numpy types """
-    def default(self, obj):
-        if isinstance(obj, (np.int_, np.intc, np.intp, np.int8, np.int16, np.int32, np.int64,
-                            np.uint8, np.uint16, np.uint32, np.uint64)):
-            return int(obj)
-        elif isinstance(obj, (np.float_, np.float16, np.float32, np.float64)):
-            return float(obj)
-        elif isinstance(obj, (np.ndarray,)):
-            return obj.tolist()
-        return json.JSONEncoder.default(self, obj)
-
-
-class ConditionEncoder(json.JSONEncoder):
+class ExpressionEncoder(json.JSONEncoder):
     """ Special json encoder for Condition types """
+
     def default(self, obj):
-        if isinstance(obj, Condition):
+        if isinstance(obj, Expression):
             json_obj = {
-                'att': obj.att,
-                'op': obj.op,
-                'thr': obj.thr,
-                'is_continuous': obj.is_continuous,
+                'att': obj.variable,
+                'op': obj.operator2string(),
+                'thr': obj.value,
             }
             return json_obj
         return json.JSONEncoder.default(self, obj)
@@ -125,13 +111,13 @@ class ConditionEncoder(json.JSONEncoder):
 
 class RuleEncoder(json.JSONEncoder):
     """ Special json encoder for Rule types """
+
     def default(self, obj):
         if isinstance(obj, Rule):
-            ce = ConditionEncoder()
+            ce = ExpressionEncoder()
             json_obj = {
                 'premise': [ce.default(p) for p in obj.premises],
-                'cons': obj.cons,
-                'class_name': obj.class_name
+                'cons': obj.consequences,
             }
             return json_obj
         return json.JSONEncoder.default(self, obj)

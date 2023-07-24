@@ -15,7 +15,7 @@ class Emitter(ABC):
     """
 
     @abstractmethod
-    def get_rule(self, x: np.array, dt: Surrogate, dataset: TabularDataset, encdec: EncDec = None, multi_label: bool = False):
+    def get_rule(self, x: np.array, dt: Surrogate, dataset: TabularDataset, encdec: EncDec = None):
         pass
 
     @abstractmethod
