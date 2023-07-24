@@ -5,6 +5,9 @@ import scipy.stats as st
 from scipy.spatial.distance import jaccard
 import warnings
 
+from lore_sa.encoder_decoder import OneHotEnc
+from lore_sa.encoder_decoder.my_target_enc import TargetEnc
+
 
 def vector2dict(x, feature_names):
     return {k: v for k, v in zip(feature_names, x)}
@@ -27,12 +30,10 @@ def record2str(x, feature_names, numeric_columns, encdec=None):
         elif encdec is None:
             s += '%s = %s' % (att, val)
         else:
-            if isinstance(encdec, SuperLore.encdec.OneHotEnc):
-            #if type(encdec) is encdec.OneHotEnc:
+            if isinstance(encdec, OneHotEnc):
                 att_split = att.split('=')
                 s += '%s = %s, ' % (att_split[0], att_split[1])
-            if isinstance(encdec, SuperLore.encdec.MyTargetEnc):
-                #caso in cui devo riprendere il valore originale
+            if isinstance(encdec, TargetEnc):
                 ind = x.index(val)
                 s += '%s = %s' % x_dec[ind]
             '''

@@ -53,13 +53,13 @@ class Expression(object):
 
 class Rule(object):
 
-    def __init__(self, premises:list, cons:Expression, class_name:str):
+    def __init__(self, premises:list, consequences, class_name:str):
         """
         :param[list] premises: list of Expression objects representing the premises
         :param[Expression] cons: Expression representing the consequence
         """
         self.premises = premises
-        self.cons = cons
+        self.consequences = consequences
         self.class_name = class_name
 
     def _pstr(self):
@@ -67,18 +67,18 @@ class Rule(object):
 
     def _cstr(self):
         if not isinstance(self.class_name, list):
-            return '{ %s: %s }' % (self.class_name, self.cons)
+            return '{ %s: %s }' % (self.class_name, self.consequences)
         else:
-            return '{ %s }' % self.cons
+            return '{ %s }' % self.consequences
 
     def __str__(self):
         str_out =  'premises: %s \n'%(["\n".join(str(e) for e in self.premises)])
-        str_out+= 'consequence: %s'%(str(self.cons))
+        str_out+= 'consequence: %s'%(str(self.consequences))
 
         return str_out
 
     def __eq__(self, other):
-        return self.premises == other.premises and self.cons == other.cons
+        return self.premises == other.premises and self.consequences == other.cons
 
     def __len__(self):
         return len(self.premises)

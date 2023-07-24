@@ -65,17 +65,26 @@ class DecisionTreeRuleEmitter(Emitter):
                 premises.append(Expression(attribute, op, thr))
 
         dt_outcome = dt.predict(x)[0]
-        consequences = class_values[int(dt_outcome)] if not multi_label else multilabel2str(dt_outcome, class_values)
+        consequences = Expression(variable=class_values[int(dt_outcome)], operator=operator.eq, value=dt_outcome) if not multi_label else self.multilabel2expression(dt_outcome, class_values)
         premises = self.compact_premises(premises)
         return Rule(premises, consequences, dataset.class_name)
 
+    def multilabel2expression(self, y, class_values):
+        """
+        Return a list of Expression starting from outcomes and classe_values multilabel. Use for consequences.
+        :param y: predicted values
+        :param class_values:
+        :return [Expression]:
+        """
+        return [Expression(variable=class_values[i], operator=operator.eq, value=y[i]) for i in range(len(y)) if y[i] == 1.0]
+
     def compact_premises(self, premises_list):
-        att_list = defaultdict(list)
+        attribute_list = defaultdict(list)
         for premise in premises_list:
-            att_list[premise.att].append(premise)
+            attribute_list[premise.variable].append(premise)
 
         compact_plist = list()
-        for att, alist in att_list.items():
+        for att, alist in attribute_list.items():
             if len(alist) > 1:
                 min_thr = None
                 max_thr = None
