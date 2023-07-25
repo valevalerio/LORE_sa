@@ -81,7 +81,7 @@ class DecisionTreeRuleEmitter(Emitter):
                 for av in alist:
                     if av.operator == operator.le:
                         max_thr = min(av.value, max_thr) if max_thr else av.value
-                    elif av.op == operator.gt:
+                    elif av.operator == operator.gt:
                         min_thr = max(av.value, min_thr) if min_thr else av.value
 
                 if max_thr:
