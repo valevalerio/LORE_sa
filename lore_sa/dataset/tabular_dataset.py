@@ -131,4 +131,10 @@ class TabularDataset(Dataset):
     def get_features_names(self):
         return list(self.df.columns)
 
+    def get_feature_name(self, index):
+        for category in self.descriptor.keys():
+            for name in self.descriptor[category].keys():
+                if self.descriptor[category][name]['index'] == index:
+                    return name
+
 

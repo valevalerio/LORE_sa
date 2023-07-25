@@ -15,3 +15,6 @@ class Dataset():
 
     def set_descriptor(self, descriptor):
         self.descriptor = descriptor
+
+    def get_feature_name(self, index):
+        pass

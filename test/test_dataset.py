@@ -80,5 +80,13 @@ class DatasetTest(unittest.TestCase):
         descriptor = dataset.descriptor
         self.assertEqual(descriptor,descriptor_dummy)
 
+    def test_get_features_name_by_index(self):
+        dataset = TabularDataset.from_dict({'col1': [1, 2], 'col2': [3, 4], 'col3': ['America', 'Europe']})
+
+        self.assertEqual(dataset.get_feature_name(0),'col1')
+        self.assertEqual(dataset.get_feature_name(1),'col2')
+        self.assertEqual(dataset.get_feature_name(2),'col3')
+
+
 if __name__ == '__main__':
     unittest.main()
