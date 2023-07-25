@@ -1,5 +1,6 @@
 from .enc_dec import EncDec
 import numpy as np
+import copy
 
 __all__ = ["EncDec", "OneHotEnc"]
 
@@ -13,6 +14,7 @@ class OneHotEnc(EncDec):
     def __init__(self,descriptor: dict):
         super().__init__(descriptor)
         self.type='one-hot'
+        self.encoded_descriptor = copy.deepcopy(self.dataset_descriptor)
         if self.dataset_descriptor.get("categoric") is None:
             raise Exception("Dataset descriptor is malformed for One-Hot Encoder: 'categoric' key is not present")
 
@@ -23,9 +25,9 @@ class OneHotEnc(EncDec):
         :param [Numpy array] x: Array to encode
         :return [Numpy array]: Encoded array
         """
-
-        for k in self.dataset_descriptor['categoric'].keys():
-            label_dict = self.dataset_descriptor['categoric'][k]
+        self.encoded_descriptor = copy.deepcopy(self.dataset_descriptor)
+        for k in self.encoded_descriptor['categoric'].keys():
+            label_dict = self.encoded_descriptor['categoric'][k]
             label_index = label_dict['index']
 
             mapping = {}
@@ -38,17 +40,17 @@ class OneHotEnc(EncDec):
             x = np.insert(x, label_index, arr)
 
             self.encoded_features.append(k)
-            self.update_encoded_index(k,len(label_dict['distinct_values'])-1)
+            self.update_encoded_index(str(k),len(label_dict['distinct_values'])-1)
         return x
 
     def update_encoded_index(self,current_field, size: int):
-        current_index_value = self.dataset_descriptor['categoric'][current_field]['index']
-        for type in self.dataset_descriptor.keys():
-            for k in self.dataset_descriptor[type]:
+        current_index_value = self.encoded_descriptor['categoric'][current_field]['index']
+        for type in self.encoded_descriptor.keys():
+            for k in self.encoded_descriptor[type]:
                 if k != current_field:
-                    original_index = self.dataset_descriptor[type][k]['index']
+                    original_index = self.encoded_descriptor[type][k]['index']
                     if original_index>current_index_value:
-                        self.dataset_descriptor[type][k]['index'] = self.dataset_descriptor[type][k]['index'] + size
+                        self.encoded_descriptor[type][k]['index'] = self.encoded_descriptor[type][k]['index'] + size
 
     def __str__(self):
         if len(self.encoded_features) > 0:

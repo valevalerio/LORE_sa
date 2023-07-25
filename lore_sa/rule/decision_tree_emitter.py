@@ -24,7 +24,7 @@ class DecisionTreeRuleEmitter(Emitter):
                 ( job = employer) -> grant)
             }
 
-        :param [Numpy Array] x:
+        :param [Numpy Array] x: instance encoded of the dataset to extract the rule
         :param [DecisionTreeSurrogate] dt:
         :param [TabularDataset] dataset:
         :param [EncDec] encdec:
@@ -69,6 +69,12 @@ class DecisionTreeRuleEmitter(Emitter):
         return Rule(premises, consequence)
 
     def compact_premises(self, premises_list):
+        """
+        Remove the same premises with different values of threashold
+
+        :param premises_list: List of Expressions that defines the premises
+        :return:
+        """
         attribute_list = defaultdict(list)
         for premise in premises_list:
             attribute_list[premise.variable].append(premise)
@@ -93,12 +99,26 @@ class DecisionTreeRuleEmitter(Emitter):
                 compact_plist.append(alist[0])
         return compact_plist
 
-    def get_counterfactual_rules(self, x, y, dt: DecisionTreeSurrogate, Z, Y, dataset: TabularDataset,features_map,
+    def get_counterfactual_rules(self, x, y, dt: DecisionTreeSurrogate, Z, Y, dataset: TabularDataset,
                                  features_map_inv, multi_label=False, encdec: EncDec = None, filter_crules=None,
-                                 constraints=None,unadmittible_features=None):
+                                 constraints=None, unadmittible_features=None):
+        """
 
-        feature_names = dataset.get_features_names()
-        numeric_columns = dataset.get_numeric_columns()
+        :param [Numpy Array] x: instance encoded of the dataset
+        :param [str] y: extracted class from the surrogate
+        :param [DecisionTreeSurrogate] dt: Decision Tree surrogate
+        :param [Numpy Array] Z: Neighborhood instances
+        :param Y: all possible classes provided by the surrogate
+        :param [TabularDataset] dataset:
+        :param features_map_inv:
+        :param multi_label:
+        :param [EncDec] encdec:
+        :param filter_crules:
+        :param constraints:
+        :param unadmittible_features: List of unadmittible features
+        :return:
+        """
+
         class_values = dataset.get_class_values()
         class_name = dataset.class_name
 
@@ -106,15 +126,21 @@ class DecisionTreeRuleEmitter(Emitter):
         crule_list = list()
         delta_list = list()
         Z1 = Z[np.where(Y != y)[0]]
-        xd = vector2dict(x, feature_names)
+        x_dict = vector2dict(x, dataset.get_features_names())
         for z in Z1:
-            crule = self.get_rule(z, y, dt, dataset, encdec, multi_label)
-            delta, qlen = self.get_falsified_conditions(xd, crule)
-            if unadmittible_features != None:
+            # estraggo la regola per ognuno
+            crule = self.get_rule(x = z, dt = dt, dataset= dataset, encdec = encdec)
+
+            delta = self.get_falsified_conditions(x_dict, crule)
+            num_falsified_conditions = len(delta)
+
+            if unadmittible_features is not None:
                 is_feasible = self.check_feasibility_of_falsified_conditions(delta, unadmittible_features)
-                if not is_feasible:
+                if is_feasible is False:
                     continue
+
             if constraints is not None:
+
                 to_remove = list()
                 for p in crule.premises:
                     if p.att in constraints.keys():
@@ -126,97 +152,108 @@ class DecisionTreeRuleEmitter(Emitter):
                                 to_remove.append()
 
             if filter_crules is not None:
-                xc = self.apply_counterfactual(x, delta, feature_names, features_map, features_map_inv, numeric_columns)
+                xc = self.apply_counterfactual(x, delta, dataset)
                 bb_outcomec = filter_crules(xc.reshape(1, -1))[0]
                 bb_outcomec = class_values[bb_outcomec] if isinstance(class_name, str) else multilabel2str(bb_outcomec,
                                                                                                            class_values)
                 dt_outcomec = crule.cons
 
                 if bb_outcomec == dt_outcomec:
-                    if qlen < clen:
-                        clen = qlen
+                    if num_falsified_conditions < clen:
+                        clen = num_falsified_conditions
                         crule_list = [crule]
                         delta_list = [delta]
-                    elif qlen == clen:
+                    elif num_falsified_conditions == clen:
                         if delta not in delta_list:
                             crule_list.append(crule)
                             delta_list.append(delta)
             else:
-                if qlen < clen:
-                    clen = qlen
+                if num_falsified_conditions < clen:
+                    clen = num_falsified_conditions
                     crule_list = [crule]
                     delta_list = [delta]
-                elif qlen == clen:
+                elif num_falsified_conditions == clen:
                     if delta not in delta_list:
                         crule_list.append(crule)
                         delta_list.append(delta)
 
         return crule_list, delta_list
 
-    def apply_counterfactual(self, x, delta, feature_names, features_map=None, features_map_inv=None, numeric_columns=None):
-        xd = vector2dict(x, feature_names)
-        xcd = copy.deepcopy(xd)
+    def get_falsified_conditions(self, x_dict: dict, crule: Rule):
+        """
+        Check the wrong conditions
+        :param x_dict:
+        :param crule:
+        :return: list of falsified premises
+        """
+        delta = []
+        for p in crule.premises:
+            try:
+                if p.operator == operator.le and x_dict[p.att] > p.value:
+                    delta.append(p)
+                elif p.operator == operator.gt and x_dict[p.att] <= p.value:
+                    delta.append(p)
+            except:
+                print('pop', p.operator2string(), 'xd', x_dict, 'xd di p ', p.variable, 'hthrr', p.value)
+                continue
+        return delta
+
+    def check_feasibility_of_falsified_conditions(self, delta, unadmittible_features: list):
+        """
+        Check if a falsifield confition is in an unadmittible feature list
+        :param delta:
+        :param unadmittible_features:
+        :return: True or False
+        """
         for p in delta:
-            if p.att in numeric_columns:
-                if p.thr == int(p.thr):
+            if p.variable in unadmittible_features:
+                if unadmittible_features[p.variable] is None:
+                    return False
+                else:
+                    if unadmittible_features[p.variable] == p.operator:
+                        return False
+        return True
+
+    def apply_counterfactual(self, x, delta, dataset,  features_map=None, features_map_inv=None, numeric_columns=None):
+        feature_names = dataset.get_features_names()
+        x_dict = vector2dict(x, feature_names)
+        x_copy_dict = copy.deepcopy(x_dict)
+        for p in delta:
+            if p.variable in numeric_columns:
+                if p.value == int(p.value):
                     gap = 1.0
                 else:
-                    decimals = list(str(p.thr).split('.')[1])
+                    decimals = list(str(p.value).split('.')[1])
                     for idx, e in enumerate(decimals):
                         if e != '0':
                             break
                     gap = 1 / (10 ** (idx + 1))
-                if p.op == '>':
-                    xcd[p.att] = p.thr + gap
+                if p.operator == operator.gt:
+                    x_copy_dict[p.variable] = p.value + gap
                 else:
-                    xcd[p.att] = p.thr
+                    x_copy_dict[p.variable] = p.value
             else:
-                fn = p.att.split('=')[0]
-                if p.op == '>':
+                fn = p.variable
+                if p.operator == operator.gt:
                     if features_map is not None:
                         fi = list(feature_names).index(p.att)
                         fi = features_map_inv[fi]
                         for fv in features_map[fi]:
-                            xcd['%s=%s' % (fn, fv)] = 0.0
-                    xcd[p.att] = 1.0
+                            x_copy_dict['%s=%s' % (fn, fv)] = 0.0
+                    x_copy_dict[p.att] = 1.0
 
                 else:
                     if features_map is not None:
                         fi = list(feature_names).index(p.att)
                         fi = features_map_inv[fi]
                         for fv in features_map[fi]:
-                            xcd['%s=%s' % (fn, fv)] = 1.0
-                    xcd[p.att] = 0.0
+                            x_copy_dict['%s=%s' % (fn, fv)] = 1.0
+                    x_copy_dict[p.att] = 0.0
 
-        xc = np.zeros(len(xd))
+        x_counterfactual = np.zeros(len(x_dict))
         for i, fn in enumerate(feature_names):
-            xc[i] = xcd[fn]
+            x_counterfactual[i] = x_copy_dict[fn]
 
-        return xc
+        return x_counterfactual
 
-    def get_falsified_conditions(self,xd, crule):
-        delta = list()
-        nbr_falsified_conditions = 0
-        for p in crule.premises:
-            try:
-                if p.op == '<=' and xd[p.att] > p.thr:
-                    delta.append(p)
-                    nbr_falsified_conditions += 1
-                elif p.op == '>' and xd[p.att] <= p.thr:
-                    delta.append(p)
-                    nbr_falsified_conditions += 1
-            except:
-                print('pop', p.op, 'xd', xd, 'xd di p ', p.att, 'hthrr', p.thr)
-                continue
-        return delta, nbr_falsified_conditions
 
-    def check_feasibility_of_falsified_conditions(self, delta, unadmittible_features):
-        for p in delta:
-            p_key = p.att if p.is_continuous else p.att.split('=')[0]
-            if p_key in unadmittible_features:
-                if unadmittible_features[p_key] is None:
-                    return False
-                else:
-                    if unadmittible_features[p_key] == p.op:
-                        return False
-        return True

@@ -10,6 +10,12 @@ from lore_sa.encoder_decoder.my_target_enc import TargetEnc
 
 
 def vector2dict(x, feature_names):
+    """
+    Return a dictionary feature name : value
+    :param x: list of values
+    :param feature_names: ordered feature list as the x instance
+    :return:
+    """
     return {k: v for k, v in zip(feature_names, x)}
 
 def neuclidean(x, y):

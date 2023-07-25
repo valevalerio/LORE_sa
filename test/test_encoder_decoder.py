@@ -1,4 +1,6 @@
 import unittest
+
+from lore_sa.dataset import TabularDataset
 from lore_sa.encoder_decoder import OneHotEnc, LabelEnc
 from lore_sa.encoder_decoder.my_target_enc import TargetEnc
 import numpy as np
@@ -47,11 +49,11 @@ class EncDecTest(unittest.TestCase):
         encoded = one_hot_enc.encode(np.array([1, 2, "Europe", "Graduate", "Green"]))
         self.assertEqual(one_hot_enc.__str__(),"OneHotEncoder - features encoded: col3,colours")
         self.assertEqual(encoded.tolist(),np.array([1, 2, 0, 1, 0, "Graduate", 0, 0, 0, 0, 1]).tolist())
-        self.assertEqual(one_hot_enc.dataset_descriptor['categoric']['col3']['index'],2)
-        self.assertEqual(one_hot_enc.dataset_descriptor['categoric']['colours']['index'], 6)
-        self.assertEqual(one_hot_enc.dataset_descriptor['numeric']['col1']['index'], 0)
-        self.assertEqual(one_hot_enc.dataset_descriptor['numeric']['col2']['index'], 1)
-        self.assertEqual(one_hot_enc.dataset_descriptor['ordinal']['education']['index'], 5)
+        self.assertEqual(one_hot_enc.encoded_descriptor['categoric']['col3']['index'],2)
+        self.assertEqual(one_hot_enc.encoded_descriptor['categoric']['colours']['index'], 6)
+        self.assertEqual(one_hot_enc.encoded_descriptor['numeric']['col1']['index'], 0)
+        self.assertEqual(one_hot_enc.encoded_descriptor['numeric']['col2']['index'], 1)
+        self.assertEqual(one_hot_enc.encoded_descriptor['ordinal']['education']['index'], 5)
 
     def test_one_hot_decode_init_with_features_encoder(self):
         one_hot_enc = OneHotEnc(self.descriptor_dummy)
@@ -91,7 +93,6 @@ class EncDecTest(unittest.TestCase):
         tabular_enc = TabularEnc(self.descriptor_dummy)
         decoded = tabular_enc.decode(np.array([1, 2, 0, 0, 1, 1, 1, 0, 0, 0, 0]))
         self.assertEqual(decoded.tolist(), np.array([1, 2, "Africa", "High School", 'White']).tolist())
-
 
 
 if __name__ == '__main__':
