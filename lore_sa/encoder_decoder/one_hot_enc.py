@@ -39,7 +39,8 @@ class OneHotEnc(EncDec):
             x = np.delete(x, label_index)
             x = np.insert(x, label_index, arr)
 
-            self.encoded_features.append(k)
+            encoded_feature = {"=".join([k, v]): label_index+i for i,v in enumerate(label_dict['distinct_values'])}
+            self.encoded_features.update(encoded_feature)
             self.update_encoded_index(str(k),len(label_dict['distinct_values'])-1)
         return x
 
@@ -52,9 +53,15 @@ class OneHotEnc(EncDec):
                     if original_index>current_index_value:
                         self.encoded_descriptor[type][k]['index'] = self.encoded_descriptor[type][k]['index'] + size
 
+    def get_encoded_features(self):
+        if self.encoded_features is None:
+            raise Exception("You have not run the encoder yet")
+        else:
+            return self.encoded_features
+
     def __str__(self):
         if len(self.encoded_features) > 0:
-            return "OneHotEncoder - features encoded: %s" % (",".join(self.encoded_features))
+            return "OneHotEncoder - features encoded: %s" % (",".join(self.encoded_features.keys()))
         else:
             return "OneHotEncoder - no features encoded"
 

@@ -47,13 +47,21 @@ class EncDecTest(unittest.TestCase):
     def test_one_hot_encoder_init_with_features_encoder(self):
         one_hot_enc = OneHotEnc(self.descriptor_dummy)
         encoded = one_hot_enc.encode(np.array([1, 2, "Europe", "Graduate", "Green"]))
-        self.assertEqual(one_hot_enc.__str__(),"OneHotEncoder - features encoded: col3,colours")
+        self.assertEqual(one_hot_enc.__str__(),"OneHotEncoder - features encoded: col3=America,col3=Europe,col3=Africa,colours=White,colours=Black,colours=Red,colours=Blue,colours=Green")
         self.assertEqual(encoded.tolist(),np.array([1, 2, 0, 1, 0, "Graduate", 0, 0, 0, 0, 1]).tolist())
         self.assertEqual(one_hot_enc.encoded_descriptor['categoric']['col3']['index'],2)
         self.assertEqual(one_hot_enc.encoded_descriptor['categoric']['colours']['index'], 6)
         self.assertEqual(one_hot_enc.encoded_descriptor['numeric']['col1']['index'], 0)
         self.assertEqual(one_hot_enc.encoded_descriptor['numeric']['col2']['index'], 1)
         self.assertEqual(one_hot_enc.encoded_descriptor['ordinal']['education']['index'], 5)
+        self.assertEqual(one_hot_enc.encoded_features, {'col3=Africa': 4, 'col3=America':  2, 'col3=Europe':  3,
+                                                         'colours=Black': 7,'colours=Blue': 9,'colours=Green': 10,'colours=Red': 8,'colours=White': 6})
+
+    def test_get_encoded_features_name_none(self):
+        with self.assertRaises(Exception) as context:
+            one_hot_enc = OneHotEnc(self.descriptor_dummy)
+            one_hot_enc.get_encoded_features()
+            self.assertEqual("You have not run the encoder yet", str(context.exception))
 
     def test_one_hot_decode_init_with_features_encoder(self):
         one_hot_enc = OneHotEnc(self.descriptor_dummy)
@@ -74,6 +82,7 @@ class EncDecTest(unittest.TestCase):
         self.assertEqual(label_enc.__str__(),"LabelEncoder - features encoded: education")
         self.assertEqual(encoded[3],'3')
         self.assertEqual(encoded.tolist(),np.array([1,2,"Europe",3]).tolist())
+        self.assertEqual(label_enc.get_encoded_features(),{"education":3})
 
 
     def test_label_decode(self):
@@ -88,6 +97,18 @@ class EncDecTest(unittest.TestCase):
         tabular_enc = TabularEnc(self.descriptor_dummy)
         encoded = tabular_enc.encode(np.array([1, 2, "Europe", "Graduate", "Green"]))
         self.assertEqual(encoded.tolist(), np.array([1, 2, 0, 1, 0, 3, 0, 0, 0, 0, 1]).tolist())
+
+    def test_tabular_encode_get_encoded_feature(self):
+        tabular_enc = TabularEnc(self.descriptor_dummy)
+        encoded = tabular_enc.encode(np.array([1, 2, "Europe", "Graduate", "Green"]))
+        self.assertEqual(tabular_enc.get_encoded_features(),{'col3=Africa': 4,
+                                                             'col3=America': 2,
+                                                             'col3=Europe': 3,
+                                                             'education': 5,
+                                                             'colours=White': 6,
+                                                             'colours=Black': 7,
+                                                             'colours=Red': 8,'colours=Blue': 9,
+                                                             'colours=Green': 10})
 
     def test_tabular_decode(self):
         tabular_enc = TabularEnc(self.descriptor_dummy)

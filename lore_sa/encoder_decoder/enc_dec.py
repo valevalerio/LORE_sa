@@ -11,7 +11,8 @@ class EncDec():
     """
     def __init__(self,dataset_descriptor):
         self.dataset_descriptor = dataset_descriptor
-        self.encoded_features = []
+        self.encoded_features = {}
+        self.encoded_descriptor = None
 
     @abstractmethod
     def encode(self, x: np.array):
@@ -20,6 +21,14 @@ class EncDec():
 
         :param[Numpy array] x: the Dataset containing the features to be encoded
         :param[list] features_to_encode: list of columns of Dataset.df dataframe to be encoded
+        """
+        return
+
+    @abstractmethod
+    def get_encoded_features(self):
+        """
+        Provides a dictionary with the new encoded features name and the new index
+        :return:
         """
         return
 

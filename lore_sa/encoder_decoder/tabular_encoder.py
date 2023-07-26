@@ -16,11 +16,20 @@ class TabularEnc(EncDec):
         :param [Numpy array] x: Array to encode
         :return [Numpy array]: Encoded array
         """
-        label_enc = LabelEnc(self.dataset_descriptor)
-        one_hot_enc = OneHotEnc(self.dataset_descriptor)
-        label_encoded = label_enc.encode(x)
-        one_hot_encoded = one_hot_enc.encode(label_encoded)
-        return np.array([int(n) for n in one_hot_encoded])
+        self.one_hot_enc = OneHotEnc(self.dataset_descriptor)
+        one_hot_encoded = self.one_hot_enc.encode(x)
+        self.encoded_features.update(self.one_hot_enc.get_encoded_features())
+
+        self.label_enc = LabelEnc(self.one_hot_enc.encoded_descriptor)
+        label_encoded = self.label_enc.encode(one_hot_encoded)
+        self.encoded_features.update(self.label_enc.get_encoded_features())
+        return np.array([int(n) for n in label_encoded])
+
+    def get_encoded_features(self):
+        if self.encoded_features is None:
+            raise Exception("You have not run the encoder yet")
+        else:
+            return self.encoded_features
 
     def decode(self, x: np.array):
         """

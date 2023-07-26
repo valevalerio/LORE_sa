@@ -1,3 +1,5 @@
+import copy
+
 from .enc_dec import EncDec
 import numpy as np
 
@@ -21,17 +23,23 @@ class LabelEnc(EncDec):
         :param [Numpy array] x: Array to encode
         :return [Numpy array]: Encoded array
         """
+        self.encoded_descriptor = copy.deepcopy(self.dataset_descriptor)
         for k in self.dataset_descriptor["ordinal"].keys():
             label_index = self.dataset_descriptor["ordinal"][k]['index']
             values_dict = {k: v for v, k in enumerate(self.dataset_descriptor["ordinal"][k]['distinct_values'])}
             x[label_index] = values_dict[x[label_index]]
-            self.encoded_features.append(k)
+            self.encoded_features.update({k:label_index})
         return x
 
+    def get_encoded_features(self):
+        if self.encoded_features is None:
+            raise Exception("You have not run the encoder yet")
+        else:
+            return self.encoded_features
 
     def __str__(self):
         if len(self.encoded_features) > 0:
-            return "LabelEncoder - features encoded: %s" % (",".join(self.encoded_features))
+            return "LabelEncoder - features encoded: %s" % (",".join(self.encoded_features.keys()))
         else:
             return "LabelEncoder - no features encoded"
 
