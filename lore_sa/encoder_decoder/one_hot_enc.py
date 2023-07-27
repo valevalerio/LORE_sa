@@ -39,7 +39,8 @@ class OneHotEnc(EncDec):
             x = np.delete(x, label_index)
             x = np.insert(x, label_index, arr)
 
-            encoded_feature = {"=".join([k, v]): label_index+i for i,v in enumerate(label_dict['distinct_values'])}
+            #-1 is to keep the index starting from zero
+            encoded_feature = {(label_index+i)-1:"=".join([k, v])  for i,v in enumerate(label_dict['distinct_values'])}
             self.encoded_features.update(encoded_feature)
             self.update_encoded_index(str(k),len(label_dict['distinct_values'])-1)
         return x
