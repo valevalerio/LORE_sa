@@ -25,6 +25,8 @@ class OneHotEnc(EncDec):
         :param [Numpy array] x: Array to encode
         :return [Numpy array]: Encoded array
         """
+        encoded_feature_list = []
+        original_encoded_feature_list = []
         self.encoded_descriptor = copy.deepcopy(self.dataset_descriptor)
         for k in self.encoded_descriptor['categoric'].keys():
             label_dict = self.encoded_descriptor['categoric'][k]
@@ -39,10 +41,14 @@ class OneHotEnc(EncDec):
             x = np.delete(x, label_index)
             x = np.insert(x, label_index, arr)
 
-            #-1 is to keep the index starting from zero
-            encoded_feature = {(label_index+i)-1:"=".join([k, v])  for i,v in enumerate(label_dict['distinct_values'])}
+            encoded_feature = {(label_index+i):"=".join([k, v])  for i,v in enumerate(label_dict['distinct_values'])}
             self.encoded_features.update(encoded_feature)
+            encoded_feature_list.append(encoded_feature)
+            original_encoded_feature_list.append(str(k))
             self.update_encoded_index(str(k),len(label_dict['distinct_values'])-1)
+
+        self.clean_encoded_descriptor_by_old(original_encoded_feature_list)
+        self.add_encoded_features(encoded_feature_list)
         return x
 
     def update_encoded_index(self,current_field, size: int):
@@ -54,15 +60,34 @@ class OneHotEnc(EncDec):
                     if original_index>current_index_value:
                         self.encoded_descriptor[type][k]['index'] = self.encoded_descriptor[type][k]['index'] + size
 
+    def clean_encoded_descriptor_by_old(self,old_field):
+        for current_field in old_field:
+            #remove old field
+            self.encoded_descriptor['categoric'].pop(current_field)
+
+    def add_encoded_features(self, encoded_features):
+        for feature in encoded_features:
+            #add new features encoded
+            new_encoded_feature = {v:dict(index=k) for k,v in feature.items()}
+            self.encoded_descriptor['categoric'].update(new_encoded_feature)
+
+
     def get_encoded_features(self):
         if self.encoded_features is None:
             raise Exception("You have not run the encoder yet")
         else:
-            return self.encoded_features
+            for type in self.encoded_descriptor.keys():
+                if type is "categoric":
+                    continue
+                else:
+                    for k in self.encoded_descriptor[type]:
+                        self.encoded_features.update({self.encoded_descriptor[type][k]['index']:k})
+
+            return dict(sorted(self.encoded_features.items()))
 
     def __str__(self):
         if len(self.encoded_features) > 0:
-            return "OneHotEncoder - features encoded: %s" % (",".join(self.encoded_features.keys()))
+            return "OneHotEncoder - features encoded: %s" % (",".join(self.encoded_features.values()))
         else:
             return "OneHotEncoder - no features encoded"
 

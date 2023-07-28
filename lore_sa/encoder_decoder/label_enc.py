@@ -28,18 +28,21 @@ class LabelEnc(EncDec):
             label_index = self.dataset_descriptor["ordinal"][k]['index']
             values_dict = {k: v for v, k in enumerate(self.dataset_descriptor["ordinal"][k]['distinct_values'])}
             x[label_index] = values_dict[x[label_index]]
-            self.encoded_features.update({k:label_index})
+            self.encoded_features.update({label_index:k})
         return x
 
     def get_encoded_features(self):
         if self.encoded_features is None:
             raise Exception("You have not run the encoder yet")
         else:
+            for type in self.encoded_descriptor.keys():
+                for k in self.encoded_descriptor[type]:
+                    self.encoded_features.update({self.encoded_descriptor[type][k]['index']:k})
             return self.encoded_features
 
     def __str__(self):
         if len(self.encoded_features) > 0:
-            return "LabelEncoder - features encoded: %s" % (",".join(self.encoded_features.keys()))
+            return "LabelEncoder - features encoded: %s" % (",".join(self.encoded_features.values()))
         else:
             return "LabelEncoder - no features encoded"
 
