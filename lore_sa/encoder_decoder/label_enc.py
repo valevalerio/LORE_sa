@@ -24,11 +24,13 @@ class LabelEnc(EncDec):
         :return [Numpy array]: Encoded array
         """
         self.encoded_descriptor = copy.deepcopy(self.dataset_descriptor)
-        for k in self.dataset_descriptor["ordinal"].keys():
-            label_index = self.dataset_descriptor["ordinal"][k]['index']
-            values_dict = {k: v for v, k in enumerate(self.dataset_descriptor["ordinal"][k]['distinct_values'])}
-            x[label_index] = values_dict[x[label_index]]
-            self.encoded_features.update({label_index:k})
+        for type in self.dataset_descriptor.keys():
+            if type in ['ordinal','target']:
+                for k in self.dataset_descriptor[type].keys():
+                    label_index = self.dataset_descriptor["ordinal"][k]['index']
+                    values_dict = {k: v for v, k in enumerate(self.dataset_descriptor["ordinal"][k]['distinct_values'])}
+                    x[label_index] = values_dict[x[label_index]]
+                    self.encoded_features.update({label_index:k})
         return x
 
     def get_encoded_features(self):

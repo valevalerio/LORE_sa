@@ -124,8 +124,28 @@ class EncDecTest(unittest.TestCase):
                                                              9:'colours=Blue',
                                                              10:'colours=Green'})
 
+    def test_tabular_encode_get_encoded_feature_with_target(self):
+        tabular_enc = TabularEnc(self.descriptor_dummy, "education")
+        encoded = tabular_enc.encode(np.array([1, 2, "Europe", "Graduate", "Green"]))
+        self.assertEqual(tabular_enc.get_encoded_features(),{0:'col1',
+                                                             1:'col2',
+                                                             2:'col3=America',
+                                                             3:'col3=Europe',
+                                                             4:'col3=Africa',
+                                                             5:'education',
+                                                             6:'colours=White',
+                                                             7:'colours=Black',
+                                                             8:'colours=Red',
+                                                             9:'colours=Blue',
+                                                             10:'colours=Green'})
+
     def test_tabular_decode(self):
         tabular_enc = TabularEnc(self.descriptor_dummy)
+        decoded = tabular_enc.decode(np.array([1, 2, 0, 0, 1, 1, 1, 0, 0, 0, 0]))
+        self.assertEqual(decoded.tolist(), np.array([1, 2, "Africa", "High School", 'White']).tolist())
+
+    def test_tabular_decode_with_target(self):
+        tabular_enc = TabularEnc(self.descriptor_dummy,"education")
         decoded = tabular_enc.decode(np.array([1, 2, 0, 0, 1, 1, 1, 0, 0, 0, 0]))
         self.assertEqual(decoded.tolist(), np.array([1, 2, "Africa", "High School", 'White']).tolist())
 

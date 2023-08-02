@@ -1,4 +1,5 @@
 from lore_sa.encoder_decoder import EncDec, LabelEnc, OneHotEnc
+from lore_sa.logger import logger
 import numpy as np
 
 __all__ = ["EncDec", "TabularEnc","LabelEnc"]
@@ -6,8 +7,9 @@ class TabularEnc(EncDec):
     """
     It combine different encoders/decoders over a table dataset
     """
-    def __init__(self,descriptor: dict):
+    def __init__(self,descriptor: dict, target_class: str = None):
         super().__init__(descriptor)
+        self.target_class = target_class
         self.type='tabular'
 
     def encode(self, x: np.array):
@@ -20,10 +22,28 @@ class TabularEnc(EncDec):
         one_hot_encoded = self.one_hot_enc.encode(x)
         self.encoded_features.update(self.one_hot_enc.get_encoded_features())
 
-        self.label_enc = LabelEnc(self.one_hot_enc.encoded_descriptor)
+        new_descriptor = self.set_target_label(self.one_hot_enc.encoded_descriptor)
+
+        self.label_enc = LabelEnc(new_descriptor)
         label_encoded = self.label_enc.encode(one_hot_encoded)
         self.encoded_features.update(self.label_enc.get_encoded_features())
         return np.array([int(n) for n in label_encoded])
+
+    def set_target_label(self, descriptor):
+        if self.target_class is None:
+            logger.warning("No target class is defined")
+            return descriptor
+
+        for type in descriptor:
+            for k in descriptor[type]:
+                if k == self.target_class:
+                    descriptor['target'] = k
+                    descriptor['type'].pop(k)
+                    return descriptor
+                else:
+                    logger.warning("No target class is finded")
+                    return descriptor
+
 
     def get_encoded_features(self):
         if self.encoded_features is None:
