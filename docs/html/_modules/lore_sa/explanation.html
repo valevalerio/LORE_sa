@@ -84,14 +84,10 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../source/modules.html#lore-sa-rule-rule-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.rule</span></code>: Rule classes and functions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.Rule.html">lore_sa.rule.Rule</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.Emitter.html">lore_sa.rule.Emitter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.DecisionTreeRuleEmitter.html">lore_sa.rule.DecisionTreeRuleEmitter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.rule.NumpyEncoder.html">lore_sa.rule.rule.NumpyEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.rule.ConditionEncoder.html">lore_sa.rule.rule.ConditionEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.rule.RuleEncoder.html">lore_sa.rule.rule.RuleEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.rule.json2rule.html">lore_sa.rule.rule.json2rule</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.rule.json2expression.html">lore_sa.rule.rule.json2expression</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.rule.Expression.html">lore_sa.rule.rule.Expression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.RuleEncoder.html">lore_sa.rule.RuleEncoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.json2rule.html">lore_sa.rule.json2rule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.json2expression.html">lore_sa.rule.json2expression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.Expression.html">lore_sa.rule.Expression</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../source/modules.html#lore-sa-surrogate-surrogate-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.surrogate</span></code>: Surrogate classes and functions</a><ul>
@@ -162,8 +158,8 @@
 <span class="kn">import</span> <span class="nn">bitarray</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">.rule.rule</span> <span class="kn">import</span> <span class="n">RuleEncoder</span><span class="p">,</span> <span class="n">ConditionEncoder</span><span class="p">,</span> <span class="n">NumpyEncoder</span>
-<span class="kn">from</span> <span class="nn">.rule.rule</span> <span class="kn">import</span> <span class="n">json2rule</span><span class="p">,</span> <span class="n">json2expression</span>
+<span class="kn">from</span> <span class="nn">lore_sa.rule</span> <span class="kn">import</span> <span class="n">RuleEncoder</span><span class="p">,</span> <span class="n">ExpressionEncoder</span>
+<span class="kn">from</span> <span class="nn">lore_sa.rule</span> <span class="kn">import</span> <span class="n">json2rule</span><span class="p">,</span> <span class="n">json2expression</span>
 
 
 <div class="viewcode-block" id="Explanation"><a class="viewcode-back" href="../../source/generated/lore_sa.explanation.Explanation.html#lore_sa.explanation.Explanation">[docs]</a><span class="k">class</span> <span class="nc">Explanation</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -211,7 +207,7 @@
 <div class="viewcode-block" id="ExplanationEncoder.default"><a class="viewcode-back" href="../../source/generated/lore_sa.explanation.ExplanationEncoder.html#lore_sa.explanation.ExplanationEncoder.default">[docs]</a>    <span class="k">def</span> <span class="nf">default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Explanation</span><span class="p">):</span>
             <span class="n">re</span> <span class="o">=</span> <span class="n">RuleEncoder</span><span class="p">()</span>
-            <span class="n">ce</span> <span class="o">=</span> <span class="n">ConditionEncoder</span><span class="p">()</span>
+            <span class="n">ce</span> <span class="o">=</span> <span class="n">ExpressionEncoder</span><span class="p">()</span>
             <span class="n">ba</span> <span class="o">=</span> <span class="n">bitarray</span><span class="o">.</span><span class="n">bitarray</span><span class="p">()</span>
             <span class="n">ba</span><span class="o">.</span><span class="n">frombytes</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">dt</span><span class="p">))</span>
             <span class="n">bal</span> <span class="o">=</span> <span class="n">ba</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
@@ -225,7 +221,7 @@
                 <span class="s1">&#39;dt&#39;</span><span class="p">:</span> <span class="n">bal</span><span class="p">,</span>
             <span class="p">}</span>
             <span class="k">return</span> <span class="n">json_obj</span>
-        <span class="k">return</span> <span class="n">NumpyEncoder</span><span class="p">()</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">ExpressionEncoder</span><span class="p">()</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="json2explanation"><a class="viewcode-back" href="../../source/generated/lore_sa.explanation.json2explanation.html#lore_sa.explanation.json2explanation">[docs]</a><span class="k">def</span> <span class="nf">json2explanation</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>

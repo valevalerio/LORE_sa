@@ -87,14 +87,10 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-rule-rule-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.rule</span></code>: Rule classes and functions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.Rule.html">lore_sa.rule.Rule</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.Emitter.html">lore_sa.rule.Emitter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.DecisionTreeRuleEmitter.html">lore_sa.rule.DecisionTreeRuleEmitter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.NumpyEncoder.html">lore_sa.rule.rule.NumpyEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.ConditionEncoder.html">lore_sa.rule.rule.ConditionEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.RuleEncoder.html">lore_sa.rule.rule.RuleEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.json2rule.html">lore_sa.rule.rule.json2rule</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.json2expression.html">lore_sa.rule.rule.json2expression</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.Expression.html">lore_sa.rule.rule.Expression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.RuleEncoder.html">lore_sa.rule.RuleEncoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.json2rule.html">lore_sa.rule.json2rule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.json2expression.html">lore_sa.rule.json2expression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.Expression.html">lore_sa.rule.Expression</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-surrogate-surrogate-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.surrogate</span></code>: Surrogate classes and functions</a><ul>
@@ -204,8 +200,8 @@
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">struges</span></code>(x)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">vector2dict</span></code>(x, feature_names)</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lore_sa.util.vector2dict" title="lore_sa.util.vector2dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vector2dict</span></code></a>(x, feature_names)</p></td>
+<td><p>Return a dictionary feature name : value :param x: list of values :param feature_names: ordered feature list as the x instance :return:</p></td>
 </tr>
 </tbody>
 </table>
@@ -232,6 +228,15 @@
 <dd class="field-even"><p>sigmoid of x</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lore_sa.util.vector2dict">
+<span class="sig-prename descclassname"><span class="pre">lore_sa.util.</span></span><span class="sig-name descname"><span class="pre">vector2dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_names</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/util.html#vector2dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.util.vector2dict" title="Permalink to this definition"></a></dt>
+<dd><p>Return a dictionary feature name : value
+:param x: list of values
+:param feature_names: ordered feature list as the x instance
+:return:</p>
 </dd></dl>
 
 </section>

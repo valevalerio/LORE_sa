@@ -1,12 +1,7 @@
 import json
-import numpy as np
-
 from lore_sa.util import vector2dict
 from typing import Callable
 import operator
-
-__all__ = ["Rule"]
-
 
 def json2expression(obj):
     return Expression(obj['att'], obj['op'], obj['thr'])

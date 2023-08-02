@@ -3,8 +3,8 @@ import pickle
 import bitarray
 import numpy as np
 
-from .rule.rule import RuleEncoder, ConditionEncoder, NumpyEncoder
-from .rule.rule import json2rule, json2expression
+from lore_sa.rule import RuleEncoder, ExpressionEncoder
+from lore_sa.rule import json2rule, json2expression
 
 
 class Explanation(object):
@@ -52,7 +52,7 @@ class ExplanationEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, Explanation):
             re = RuleEncoder()
-            ce = ConditionEncoder()
+            ce = ExpressionEncoder()
             ba = bitarray.bitarray()
             ba.frombytes(pickle.dumps(obj.dt))
             bal = ba.tolist()
@@ -66,7 +66,7 @@ class ExplanationEncoder(json.JSONEncoder):
                 'dt': bal,
             }
             return json_obj
-        return NumpyEncoder().default(obj)
+        return ExpressionEncoder().default(obj)
 
 
 def json2explanation(obj):

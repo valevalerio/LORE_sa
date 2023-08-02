@@ -1,7 +1,7 @@
-﻿lore\_sa.rule.rule.Expression
-=============================
+﻿lore\_sa.rule.Expression
+========================
 
-.. currentmodule:: lore_sa.rule.rule
+.. currentmodule:: lore_sa.rule
 
 .. autoclass:: Expression
 

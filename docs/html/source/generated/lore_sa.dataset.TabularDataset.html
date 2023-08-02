@@ -87,14 +87,10 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-rule-rule-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.rule</span></code>: Rule classes and functions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.Rule.html">lore_sa.rule.Rule</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.Emitter.html">lore_sa.rule.Emitter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.DecisionTreeRuleEmitter.html">lore_sa.rule.DecisionTreeRuleEmitter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.NumpyEncoder.html">lore_sa.rule.rule.NumpyEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.ConditionEncoder.html">lore_sa.rule.rule.ConditionEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.RuleEncoder.html">lore_sa.rule.rule.RuleEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.json2rule.html">lore_sa.rule.rule.json2rule</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.json2expression.html">lore_sa.rule.rule.json2expression</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.Expression.html">lore_sa.rule.rule.Expression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.RuleEncoder.html">lore_sa.rule.RuleEncoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.json2rule.html">lore_sa.rule.json2rule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.json2expression.html">lore_sa.rule.json2expression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.Expression.html">lore_sa.rule.Expression</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-surrogate-surrogate-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.surrogate</span></code>: Surrogate classes and functions</a><ul>
@@ -237,19 +233,22 @@ semantic of the dataset.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#lore_sa.dataset.TabularDataset.get_class_values" title="lore_sa.dataset.TabularDataset.get_class_values"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_class_values</span></code></a>()</p></td>
 <td><p>Provides the class_name :return:</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_features_names</span></code>()</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_feature_name</span></code>(index)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_numeric_columns</span></code>()</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_features_names</span></code>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.dataset.TabularDataset.set_class_name" title="lore_sa.dataset.TabularDataset.set_class_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_class_name</span></code></a>(class_name)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_numeric_columns</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lore_sa.dataset.TabularDataset.set_class_name" title="lore_sa.dataset.TabularDataset.set_class_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_class_name</span></code></a>(class_name)</p></td>
 <td><p>Set the class name.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_descriptor</span></code>(descriptor)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_descriptor</span></code>(descriptor)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.dataset.TabularDataset.update_descriptor" title="lore_sa.dataset.TabularDataset.update_descriptor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_descriptor</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lore_sa.dataset.TabularDataset.update_descriptor" title="lore_sa.dataset.TabularDataset.update_descriptor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_descriptor</span></code></a>()</p></td>
 <td><p>it creates the dataset descriptor dictionary</p></td>
 </tr>
 </tbody>

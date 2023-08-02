@@ -1,7 +1,7 @@
-﻿lore\_sa.rule.rule.RuleEncoder
-==============================
+﻿lore\_sa.rule.RuleEncoder
+=========================
 
-.. currentmodule:: lore_sa.rule.rule
+.. currentmodule:: lore_sa.rule
 
 .. autoclass:: RuleEncoder
 

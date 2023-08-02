@@ -20,7 +20,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="lore_sa.surrogate.DecisionTreeSurrogate" href="lore_sa.surrogate.DecisionTreeSurrogate.html" />
-    <link rel="prev" title="lore_sa.rule.rule.Expression" href="lore_sa.rule.rule.Expression.html" />
+    <link rel="prev" title="lore_sa.rule.Expression" href="lore_sa.rule.Expression.html" />
     <link href="../../_static/style.css" rel="stylesheet" type="text/css">
 
 </head>
@@ -87,14 +87,10 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-rule-rule-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.rule</span></code>: Rule classes and functions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.Rule.html">lore_sa.rule.Rule</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.Emitter.html">lore_sa.rule.Emitter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.DecisionTreeRuleEmitter.html">lore_sa.rule.DecisionTreeRuleEmitter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.NumpyEncoder.html">lore_sa.rule.rule.NumpyEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.ConditionEncoder.html">lore_sa.rule.rule.ConditionEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.RuleEncoder.html">lore_sa.rule.rule.RuleEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.json2rule.html">lore_sa.rule.rule.json2rule</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.json2expression.html">lore_sa.rule.rule.json2expression</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.Expression.html">lore_sa.rule.rule.Expression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.RuleEncoder.html">lore_sa.rule.RuleEncoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.json2rule.html">lore_sa.rule.json2rule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.json2expression.html">lore_sa.rule.json2expression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.Expression.html">lore_sa.rule.Expression</a></li>
 </ul>
 </li>
 <li class="toctree-l2 current"><a class="reference internal" href="../modules.html#lore-sa-surrogate-surrogate-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.surrogate</span></code>: Surrogate classes and functions</a><ul class="current">
@@ -177,6 +173,12 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.surrogate.Surrogate.__init__" title="lore_sa.surrogate.Surrogate.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>([kind, preprocessing])</p></td>
 <td><p></p></td>
 </tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_counterfactual_rules</span></code>(x, y)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_rule</span></code>(x, dataset[, encdec])</p></td>
+<td><p></p></td>
+</tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">train</span></code>(Z, Yb, weights)</p></td>
 <td><p></p></td>
 </tr>
@@ -190,7 +192,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="lore_sa.rule.rule.Expression.html" class="btn btn-neutral float-left" title="lore_sa.rule.rule.Expression" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="lore_sa.rule.Expression.html" class="btn btn-neutral float-left" title="lore_sa.rule.Expression" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="lore_sa.surrogate.DecisionTreeSurrogate.html" class="btn btn-neutral float-right" title="lore_sa.surrogate.DecisionTreeSurrogate" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

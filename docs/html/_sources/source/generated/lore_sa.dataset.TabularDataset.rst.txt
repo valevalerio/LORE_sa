@@ -17,6 +17,7 @@
       ~TabularDataset.from_csv
       ~TabularDataset.from_dict
       ~TabularDataset.get_class_values
+      ~TabularDataset.get_feature_name
       ~TabularDataset.get_features_names
       ~TabularDataset.get_numeric_columns
       ~TabularDataset.set_class_name

@@ -16,6 +16,7 @@
       ~EncDec.__init__
       ~EncDec.decode
       ~EncDec.encode
+      ~EncDec.get_encoded_features
    
    
 

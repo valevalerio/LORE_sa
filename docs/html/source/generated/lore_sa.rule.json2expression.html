@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>lore_sa.rule.rule.Expression &mdash; LORE_sa  documentation</title>
+  <title>lore_sa.rule.json2expression &mdash; LORE_sa  documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="lore_sa.surrogate.Surrogate" href="lore_sa.surrogate.Surrogate.html" />
-    <link rel="prev" title="lore_sa.rule.rule.json2expression" href="lore_sa.rule.rule.json2expression.html" />
+    <link rel="next" title="lore_sa.rule.Expression" href="lore_sa.rule.Expression.html" />
+    <link rel="prev" title="lore_sa.rule.json2rule" href="lore_sa.rule.json2rule.html" />
     <link href="../../_static/style.css" rel="stylesheet" type="text/css">
 
 </head>
@@ -87,14 +87,10 @@
 </li>
 <li class="toctree-l2 current"><a class="reference internal" href="../modules.html#lore-sa-rule-rule-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.rule</span></code>: Rule classes and functions</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.Rule.html">lore_sa.rule.Rule</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.Emitter.html">lore_sa.rule.Emitter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.DecisionTreeRuleEmitter.html">lore_sa.rule.DecisionTreeRuleEmitter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.NumpyEncoder.html">lore_sa.rule.rule.NumpyEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.ConditionEncoder.html">lore_sa.rule.rule.ConditionEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.RuleEncoder.html">lore_sa.rule.rule.RuleEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.json2rule.html">lore_sa.rule.rule.json2rule</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.json2expression.html">lore_sa.rule.rule.json2expression</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">lore_sa.rule.rule.Expression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.RuleEncoder.html">lore_sa.rule.RuleEncoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.json2rule.html">lore_sa.rule.json2rule</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">lore_sa.rule.json2expression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.Expression.html">lore_sa.rule.Expression</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-surrogate-surrogate-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.surrogate</span></code>: Surrogate classes and functions</a><ul>
@@ -150,9 +146,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../modules.html">Modules</a></li>
-      <li class="breadcrumb-item active">lore_sa.rule.rule.Expression</li>
+      <li class="breadcrumb-item active">lore_sa.rule.json2expression</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../_sources/source/generated/lore_sa.rule.rule.Expression.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/source/generated/lore_sa.rule.json2expression.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -160,51 +156,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="lore-sa-rule-rule-expression">
-<h1>lore_sa.rule.rule.Expression<a class="headerlink" href="#lore-sa-rule-rule-expression" title="Permalink to this heading"></a></h1>
-<dl class="py class">
-<dt class="sig sig-object py" id="lore_sa.rule.rule.Expression">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lore_sa.rule.rule.</span></span><span class="sig-name descname"><span class="pre">Expression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">operator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/rule/rule.html#Expression"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.rule.rule.Expression" title="Permalink to this definition"></a></dt>
-<dd><p>Utility object to define a logical expression. It is used to define the premises of a Rule emitted from a surrogate model.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.rule.rule.Expression.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">operator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/rule/rule.html#Expression.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.rule.rule.Expression.__init__" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Param[str] variable<span class="colon">:</span></dt>
-<dd class="field-odd"><p>name of the variable that defines the rule</p>
-</dd>
-<dt class="field-even">Param[Callable] operator<span class="colon">:</span></dt>
-<dd class="field-even"><p>logical operator involved in the rule</p>
-</dd>
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>value</strong> – numerical value to define the rule. E.g. variable &gt; value</p>
-</dd>
-</dl>
-</dd></dl>
-
-<p class="rubric">Methods</p>
-<table class="autosummary longtable docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.rule.rule.Expression.__init__" title="lore_sa.rule.rule.Expression.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(variable, operator, value)</p></td>
-<td><p><dl class="field-list simple">
-<dt class="field-odd">param[str] variable<span class="colon">:</span></dt>
-<dd class="field-odd"><p>name of the variable that defines the rule</p>
-</dd>
-</dl>
-</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lore_sa.rule.rule.Expression.operator2string" title="lore_sa.rule.rule.Expression.operator2string"><code class="xref py py-obj docutils literal notranslate"><span class="pre">operator2string</span></code></a>()</p></td>
-<td><p>it converts the logical operator into a string representation.</p></td>
-</tr>
-</tbody>
-</table>
-<dl class="py method">
-<dt class="sig sig-object py" id="lore_sa.rule.rule.Expression.operator2string">
-<span class="sig-name descname"><span class="pre">operator2string</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/rule/rule.html#Expression.operator2string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.rule.rule.Expression.operator2string" title="Permalink to this definition"></a></dt>
-<dd><p>it converts the logical operator into a string representation. E.g.: operator2string(operator.gt) = “&gt;”)</p>
-</dd></dl>
-
-</dd></dl>
+  <section id="lore-sa-rule-json2expression">
+<h1>lore_sa.rule.json2expression<a class="headerlink" href="#lore-sa-rule-json2expression" title="Permalink to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="lore_sa.rule.json2expression">
+<span class="sig-prename descclassname"><span class="pre">lore_sa.rule.</span></span><span class="sig-name descname"><span class="pre">json2expression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/rule.html#json2expression"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.rule.json2expression" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
 
 </section>
 
@@ -212,8 +169,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="lore_sa.rule.rule.json2expression.html" class="btn btn-neutral float-left" title="lore_sa.rule.rule.json2expression" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="lore_sa.surrogate.Surrogate.html" class="btn btn-neutral float-right" title="lore_sa.surrogate.Surrogate" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="lore_sa.rule.json2rule.html" class="btn btn-neutral float-left" title="lore_sa.rule.json2rule" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="lore_sa.rule.Expression.html" class="btn btn-neutral float-right" title="lore_sa.rule.Expression" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

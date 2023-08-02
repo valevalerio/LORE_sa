@@ -2,6 +2,12 @@ from abc import ABC, abstractmethod
 
 __all__ = ["Surrogate"]
 
+import numpy as np
+
+from lore_sa.dataset import Dataset
+from lore_sa.encoder_decoder import EncDec
+
+
 class Surrogate(ABC):
     """
     Generic surrogate class
@@ -16,3 +22,10 @@ class Surrogate(ABC):
     def train(self, Z, Yb, weights):
         pass
 
+    @abstractmethod
+    def get_rule(self, x: np.array, dataset: Dataset, encdec: EncDec = None):
+        pass
+
+    @abstractmethod
+    def get_counterfactual_rules(self,x, y):
+        pass

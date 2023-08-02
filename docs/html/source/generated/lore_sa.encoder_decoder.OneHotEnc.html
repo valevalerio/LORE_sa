@@ -87,14 +87,10 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-rule-rule-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.rule</span></code>: Rule classes and functions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.Rule.html">lore_sa.rule.Rule</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.Emitter.html">lore_sa.rule.Emitter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.DecisionTreeRuleEmitter.html">lore_sa.rule.DecisionTreeRuleEmitter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.NumpyEncoder.html">lore_sa.rule.rule.NumpyEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.ConditionEncoder.html">lore_sa.rule.rule.ConditionEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.RuleEncoder.html">lore_sa.rule.rule.RuleEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.json2rule.html">lore_sa.rule.rule.json2rule</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.json2expression.html">lore_sa.rule.rule.json2expression</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.Expression.html">lore_sa.rule.rule.Expression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.RuleEncoder.html">lore_sa.rule.RuleEncoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.json2rule.html">lore_sa.rule.json2rule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.json2expression.html">lore_sa.rule.json2expression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.Expression.html">lore_sa.rule.Expression</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-surrogate-surrogate-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.surrogate</span></code>: Surrogate classes and functions</a><ul>
@@ -178,13 +174,22 @@ It relies on OneHotEncoder class from sklearn</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.encoder_decoder.OneHotEnc.__init__" title="lore_sa.encoder_decoder.OneHotEnc.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(descriptor)</p></td>
 <td><p></p></td>
 </tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_encoded_features</span></code>(encoded_features)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">clean_encoded_descriptor_by_old</span></code>(old_field)</p></td>
+<td><p></p></td>
+</tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#lore_sa.encoder_decoder.OneHotEnc.decode" title="lore_sa.encoder_decoder.OneHotEnc.decode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">decode</span></code></a>(x)</p></td>
 <td><p>Decode the array staring from the original descriptor</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.encoder_decoder.OneHotEnc.encode" title="lore_sa.encoder_decoder.OneHotEnc.encode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encode</span></code></a>(x)</p></td>
 <td><p>It applies the encoder to the input features</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_encoded_index</span></code>(current_field, size)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lore_sa.encoder_decoder.OneHotEnc.get_encoded_features" title="lore_sa.encoder_decoder.OneHotEnc.get_encoded_features"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_encoded_features</span></code></a>()</p></td>
+<td><p>Provides a dictionary with the new encoded features name and the new index :return:</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_encoded_index</span></code>(current_field, size)</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -215,6 +220,13 @@ It relies on OneHotEncoder class from sklearn</p>
 <dd class="field-even"><p>Encoded array</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lore_sa.encoder_decoder.OneHotEnc.get_encoded_features">
+<span class="sig-name descname"><span class="pre">get_encoded_features</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/one_hot_enc.html#OneHotEnc.get_encoded_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.OneHotEnc.get_encoded_features" title="Permalink to this definition"></a></dt>
+<dd><p>Provides a dictionary with the new encoded features name and the new index
+:return:</p>
 </dd></dl>
 
 </dd></dl>

@@ -84,14 +84,10 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../source/modules.html#lore-sa-rule-rule-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.rule</span></code>: Rule classes and functions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.Rule.html">lore_sa.rule.Rule</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.Emitter.html">lore_sa.rule.Emitter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.DecisionTreeRuleEmitter.html">lore_sa.rule.DecisionTreeRuleEmitter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.rule.NumpyEncoder.html">lore_sa.rule.rule.NumpyEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.rule.ConditionEncoder.html">lore_sa.rule.rule.ConditionEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.rule.RuleEncoder.html">lore_sa.rule.rule.RuleEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.rule.json2rule.html">lore_sa.rule.rule.json2rule</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.rule.json2expression.html">lore_sa.rule.rule.json2expression</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.rule.Expression.html">lore_sa.rule.rule.Expression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.RuleEncoder.html">lore_sa.rule.RuleEncoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.json2rule.html">lore_sa.rule.json2rule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.json2expression.html">lore_sa.rule.json2expression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.Expression.html">lore_sa.rule.Expression</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../source/modules.html#lore-sa-surrogate-surrogate-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.surrogate</span></code>: Surrogate classes and functions</a><ul>
@@ -170,13 +166,14 @@
 
 <span class="kn">from</span> <span class="nn">lore_sa.explanation</span> <span class="kn">import</span> <span class="n">Explanation</span>
 <span class="kn">from</span> <span class="nn">lore_sa.neighgen.neighborhood_generator</span> <span class="kn">import</span> <span class="n">NeighborhoodGenerator</span>
+<span class="kn">from</span> <span class="nn">lore_sa.rule</span> <span class="kn">import</span> <span class="n">Rule</span>
 <span class="kn">from</span> <span class="nn">lore_sa.surrogate</span> <span class="kn">import</span> <span class="n">Surrogate</span>
 <span class="kn">from</span> <span class="nn">lore_sa.util</span> <span class="kn">import</span> <span class="n">neuclidean</span><span class="p">,</span> <span class="n">record2str</span>
 <span class="kn">from</span> <span class="nn">lore_sa.discretizer</span> <span class="kn">import</span> <span class="n">Discretizer</span>
 <span class="kn">from</span> <span class="nn">lore_sa.encoder_decoder</span> <span class="kn">import</span> <span class="n">EncDec</span>
 <span class="kn">from</span> <span class="nn">lore_sa.bbox</span> <span class="kn">import</span> <span class="n">AbstractBBox</span>
 <span class="kn">from</span> <span class="nn">lore_sa.dataset</span> <span class="kn">import</span> <span class="n">TabularDataset</span>
-<span class="kn">from</span> <span class="nn">lore_sa.rule</span> <span class="kn">import</span> <span class="n">Rule</span>
+
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
@@ -465,10 +462,10 @@
                     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Retrieving explanation&#39;</span><span class="p">)</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
         <span class="n">Yc</span> <span class="o">=</span> <span class="n">superT</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">Z</span><span class="p">)</span>
-        <span class="n">rule</span> <span class="o">=</span> <span class="n">DecisioTreeRuleEmitter</span><span class="p">()</span><span class="o">.</span><span class="n">get_rule</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bb_predict</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)),</span> <span class="n">superT</span><span class="p">,</span> <span class="n">encdec</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">encdec</span><span class="p">,</span>
+        <span class="n">rule</span> <span class="o">=</span> <span class="n">superT</span><span class="o">.</span><span class="n">get_rule</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bb_predict</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)),</span> <span class="n">encdec</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">encdec</span><span class="p">,</span>
                                                  <span class="n">multi_label</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">multi_label</span><span class="p">)</span>
 
-        <span class="n">crules</span><span class="p">,</span> <span class="n">deltas</span> <span class="o">=</span> <span class="n">DecisioTreeRuleEmitter</span><span class="p">()</span><span class="o">.</span><span class="n">get_counterfactual_rules</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Yc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">superT</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">Yc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_names</span><span class="p">,</span>
+        <span class="n">crules</span><span class="p">,</span> <span class="n">deltas</span> <span class="o">=</span> <span class="n">superT</span><span class="o">.</span><span class="n">get_counterfactual_rules</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Yc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Z</span><span class="p">,</span> <span class="n">Yc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_names</span><span class="p">,</span>
                                                                            <span class="bp">self</span><span class="o">.</span><span class="n">class_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_values</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">numeric_columns</span><span class="p">,</span>
                                                                            <span class="bp">self</span><span class="o">.</span><span class="n">features_map</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">features_map_inv</span><span class="p">,</span> <span class="n">encdec</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">encdec</span><span class="p">,</span>
                                                                            <span class="n">filter_crules</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">filter_crules</span><span class="p">,</span> <span class="n">constraints</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">constraints</span><span class="p">)</span>

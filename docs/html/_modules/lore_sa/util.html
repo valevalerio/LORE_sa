@@ -84,14 +84,10 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../source/modules.html#lore-sa-rule-rule-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.rule</span></code>: Rule classes and functions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.Rule.html">lore_sa.rule.Rule</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.Emitter.html">lore_sa.rule.Emitter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.DecisionTreeRuleEmitter.html">lore_sa.rule.DecisionTreeRuleEmitter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.rule.NumpyEncoder.html">lore_sa.rule.rule.NumpyEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.rule.ConditionEncoder.html">lore_sa.rule.rule.ConditionEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.rule.RuleEncoder.html">lore_sa.rule.rule.RuleEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.rule.json2rule.html">lore_sa.rule.rule.json2rule</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.rule.json2expression.html">lore_sa.rule.rule.json2expression</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.rule.Expression.html">lore_sa.rule.rule.Expression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.RuleEncoder.html">lore_sa.rule.RuleEncoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.json2rule.html">lore_sa.rule.json2rule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.json2expression.html">lore_sa.rule.json2expression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../source/generated/lore_sa.rule.Expression.html">lore_sa.rule.Expression</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../source/modules.html#lore-sa-surrogate-surrogate-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.surrogate</span></code>: Surrogate classes and functions</a><ul>
@@ -164,9 +160,18 @@
 <span class="kn">from</span> <span class="nn">scipy.spatial.distance</span> <span class="kn">import</span> <span class="n">jaccard</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 
+<span class="kn">from</span> <span class="nn">lore_sa.encoder_decoder</span> <span class="kn">import</span> <span class="n">OneHotEnc</span>
+<span class="kn">from</span> <span class="nn">lore_sa.encoder_decoder.my_target_enc</span> <span class="kn">import</span> <span class="n">TargetEnc</span>
 
-<span class="k">def</span> <span class="nf">vector2dict</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">feature_names</span><span class="p">):</span>
-    <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">x</span><span class="p">)}</span>
+
+<div class="viewcode-block" id="vector2dict"><a class="viewcode-back" href="../../source/generated/lore_sa.util.html#lore_sa.util.vector2dict">[docs]</a><span class="k">def</span> <span class="nf">vector2dict</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">feature_names</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return a dictionary feature name : value</span>
+<span class="sd">    :param x: list of values</span>
+<span class="sd">    :param feature_names: ordered feature list as the x instance</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">x</span><span class="p">)}</span></div>
 
 <span class="k">def</span> <span class="nf">neuclidean</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
     <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
@@ -186,12 +191,10 @@
         <span class="k">elif</span> <span class="n">encdec</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">s</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> = </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">att</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">encdec</span><span class="p">,</span> <span class="n">SuperLore</span><span class="o">.</span><span class="n">encdec</span><span class="o">.</span><span class="n">OneHotEnc</span><span class="p">):</span>
-            <span class="c1">#if type(encdec) is encdec.OneHotEnc:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">encdec</span><span class="p">,</span> <span class="n">OneHotEnc</span><span class="p">):</span>
                 <span class="n">att_split</span> <span class="o">=</span> <span class="n">att</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)</span>
                 <span class="n">s</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> = </span><span class="si">%s</span><span class="s1">, &#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">att_split</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">att_split</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">encdec</span><span class="p">,</span> <span class="n">SuperLore</span><span class="o">.</span><span class="n">encdec</span><span class="o">.</span><span class="n">MyTargetEnc</span><span class="p">):</span>
-                <span class="c1">#caso in cui devo riprendere il valore originale</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">encdec</span><span class="p">,</span> <span class="n">TargetEnc</span><span class="p">):</span>
                 <span class="n">ind</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
                 <span class="n">s</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> = </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">x_dec</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span>
 <span class="w">            </span><span class="sd">&#39;&#39;&#39;</span>

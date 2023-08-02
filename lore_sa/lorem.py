@@ -11,13 +11,14 @@ from sklearn.metrics import accuracy_score
 
 from lore_sa.explanation import Explanation
 from lore_sa.neighgen.neighborhood_generator import NeighborhoodGenerator
+from lore_sa.rule import Rule
 from lore_sa.surrogate import Surrogate
 from lore_sa.util import neuclidean, record2str
 from lore_sa.discretizer import Discretizer
 from lore_sa.encoder_decoder import EncDec
 from lore_sa.bbox import AbstractBBox
 from lore_sa.dataset import TabularDataset
-from lore_sa.rule import Rule
+
 import numpy as np
 
 
@@ -306,10 +307,10 @@ class LOREM(Explainer):
                     print('Retrieving explanation')
         x = x.flatten()
         Yc = superT.predict(X=Z)
-        rule = DecisioTreeRuleEmitter().get_rule(x, self.bb_predict(x.reshape(1, -1)), superT, encdec=self.encdec,
+        rule = superT.get_rule(x, self.bb_predict(x.reshape(1, -1)), encdec=self.encdec,
                                                  multi_label=self.multi_label)
 
-        crules, deltas = DecisioTreeRuleEmitter().get_counterfactual_rules(x, Yc[0], superT, Z, Yc, self.feature_names,
+        crules, deltas = superT.get_counterfactual_rules(x, Yc[0], Z, Yc, self.feature_names,
                                                                            self.class_name, self.class_values, self.numeric_columns,
                                                                            self.features_map, self.features_map_inv, encdec=self.encdec,
                                                                            filter_crules=self.filter_crules, constraints=self.constraints)

@@ -16,6 +16,7 @@
       ~LabelEnc.__init__
       ~LabelEnc.decode
       ~LabelEnc.encode
+      ~LabelEnc.get_encoded_features
    
    
 

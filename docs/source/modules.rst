@@ -105,14 +105,10 @@ Modules
    :toctree: generated/
 
    rule.Rule
-   rule.Emitter
-   rule.DecisionTreeRuleEmitter
-   rule.rule.NumpyEncoder
-   rule.rule.ConditionEncoder
-   rule.rule.RuleEncoder
-   rule.rule.json2rule
-   rule.rule.json2expression
-   rule.rule.Expression
+   rule.RuleEncoder
+   rule.json2rule
+   rule.json2expression
+   rule.Expression
 
 
 

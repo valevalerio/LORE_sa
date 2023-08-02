@@ -84,14 +84,10 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="source/modules.html#lore-sa-rule-rule-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.rule</span></code>: Rule classes and functions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="source/generated/lore_sa.rule.Rule.html">lore_sa.rule.Rule</a></li>
-<li class="toctree-l3"><a class="reference internal" href="source/generated/lore_sa.rule.Emitter.html">lore_sa.rule.Emitter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="source/generated/lore_sa.rule.DecisionTreeRuleEmitter.html">lore_sa.rule.DecisionTreeRuleEmitter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="source/generated/lore_sa.rule.rule.NumpyEncoder.html">lore_sa.rule.rule.NumpyEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="source/generated/lore_sa.rule.rule.ConditionEncoder.html">lore_sa.rule.rule.ConditionEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="source/generated/lore_sa.rule.rule.RuleEncoder.html">lore_sa.rule.rule.RuleEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="source/generated/lore_sa.rule.rule.json2rule.html">lore_sa.rule.rule.json2rule</a></li>
-<li class="toctree-l3"><a class="reference internal" href="source/generated/lore_sa.rule.rule.json2expression.html">lore_sa.rule.rule.json2expression</a></li>
-<li class="toctree-l3"><a class="reference internal" href="source/generated/lore_sa.rule.rule.Expression.html">lore_sa.rule.rule.Expression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="source/generated/lore_sa.rule.RuleEncoder.html">lore_sa.rule.RuleEncoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="source/generated/lore_sa.rule.json2rule.html">lore_sa.rule.json2rule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="source/generated/lore_sa.rule.json2expression.html">lore_sa.rule.json2expression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="source/generated/lore_sa.rule.Expression.html">lore_sa.rule.Expression</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="source/modules.html#lore-sa-surrogate-surrogate-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.surrogate</span></code>: Surrogate classes and functions</a><ul>
@@ -171,13 +167,13 @@
  | <a href="#J"><strong>J</strong></a>
  | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
- | <a href="#N"><strong>N</strong></a>
  | <a href="#O"><strong>O</strong></a>
  | <a href="#P"><strong>P</strong></a>
  | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
  | <a href="#U"><strong>U</strong></a>
+ | <a href="#V"><strong>V</strong></a>
  
 </div>
 <h2 id="_">_</h2>
@@ -216,19 +212,11 @@
 </li>
         <li><a href="source/generated/lore_sa.neighgen.RandomGenerator.html#lore_sa.neighgen.RandomGenerator.__init__">(lore_sa.neighgen.RandomGenerator method)</a>
 </li>
-        <li><a href="source/generated/lore_sa.rule.DecisionTreeRuleEmitter.html#lore_sa.rule.DecisionTreeRuleEmitter.__init__">(lore_sa.rule.DecisionTreeRuleEmitter method)</a>
-</li>
-        <li><a href="source/generated/lore_sa.rule.Emitter.html#lore_sa.rule.Emitter.__init__">(lore_sa.rule.Emitter method)</a>
+        <li><a href="source/generated/lore_sa.rule.Expression.html#lore_sa.rule.Expression.__init__">(lore_sa.rule.Expression method)</a>
 </li>
         <li><a href="source/generated/lore_sa.rule.Rule.html#lore_sa.rule.Rule.__init__">(lore_sa.rule.Rule method)</a>
 </li>
-        <li><a href="source/generated/lore_sa.rule.rule.ConditionEncoder.html#lore_sa.rule.rule.ConditionEncoder.__init__">(lore_sa.rule.rule.ConditionEncoder method)</a>
-</li>
-        <li><a href="source/generated/lore_sa.rule.rule.Expression.html#lore_sa.rule.rule.Expression.__init__">(lore_sa.rule.rule.Expression method)</a>
-</li>
-        <li><a href="source/generated/lore_sa.rule.rule.NumpyEncoder.html#lore_sa.rule.rule.NumpyEncoder.__init__">(lore_sa.rule.rule.NumpyEncoder method)</a>
-</li>
-        <li><a href="source/generated/lore_sa.rule.rule.RuleEncoder.html#lore_sa.rule.rule.RuleEncoder.__init__">(lore_sa.rule.rule.RuleEncoder method)</a>
+        <li><a href="source/generated/lore_sa.rule.RuleEncoder.html#lore_sa.rule.RuleEncoder.__init__">(lore_sa.rule.RuleEncoder method)</a>
 </li>
         <li><a href="source/generated/lore_sa.surrogate.DecisionTreeSurrogate.html#lore_sa.surrogate.DecisionTreeSurrogate.__init__">(lore_sa.surrogate.DecisionTreeSurrogate method)</a>
 </li>
@@ -257,11 +245,13 @@
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="source/generated/lore_sa.neighgen.RandomGenerator.html#lore_sa.neighgen.RandomGenerator.check_generated">check_generated() (lore_sa.neighgen.RandomGenerator method)</a>
+      <li><a href="source/generated/lore_sa.surrogate.DecisionTreeSurrogate.html#lore_sa.surrogate.DecisionTreeSurrogate.check_feasibility_of_falsified_conditions">check_feasibility_of_falsified_conditions() (lore_sa.surrogate.DecisionTreeSurrogate method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="source/generated/lore_sa.rule.rule.ConditionEncoder.html#lore_sa.rule.rule.ConditionEncoder">ConditionEncoder (class in lore_sa.rule.rule)</a>
+      <li><a href="source/generated/lore_sa.neighgen.RandomGenerator.html#lore_sa.neighgen.RandomGenerator.check_generated">check_generated() (lore_sa.neighgen.RandomGenerator method)</a>
+</li>
+      <li><a href="source/generated/lore_sa.surrogate.DecisionTreeSurrogate.html#lore_sa.surrogate.DecisionTreeSurrogate.compact_premises">compact_premises() (lore_sa.surrogate.DecisionTreeSurrogate method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -270,8 +260,6 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/generated/lore_sa.dataset.Dataset.html#lore_sa.dataset.Dataset">Dataset (class in lore_sa.dataset)</a>
-</li>
-      <li><a href="source/generated/lore_sa.rule.DecisionTreeRuleEmitter.html#lore_sa.rule.DecisionTreeRuleEmitter">DecisionTreeRuleEmitter (class in lore_sa.rule)</a>
 </li>
       <li><a href="source/generated/lore_sa.surrogate.DecisionTreeSurrogate.html#lore_sa.surrogate.DecisionTreeSurrogate">DecisionTreeSurrogate (class in lore_sa.surrogate)</a>
 </li>
@@ -288,11 +276,7 @@
       <li><a href="source/generated/lore_sa.explanation.ExplanationEncoder.html#lore_sa.explanation.ExplanationEncoder.default">default() (lore_sa.explanation.ExplanationEncoder method)</a>
 
       <ul>
-        <li><a href="source/generated/lore_sa.rule.rule.ConditionEncoder.html#lore_sa.rule.rule.ConditionEncoder.default">(lore_sa.rule.rule.ConditionEncoder method)</a>
-</li>
-        <li><a href="source/generated/lore_sa.rule.rule.NumpyEncoder.html#lore_sa.rule.rule.NumpyEncoder.default">(lore_sa.rule.rule.NumpyEncoder method)</a>
-</li>
-        <li><a href="source/generated/lore_sa.rule.rule.RuleEncoder.html#lore_sa.rule.rule.RuleEncoder.default">(lore_sa.rule.rule.RuleEncoder method)</a>
+        <li><a href="source/generated/lore_sa.rule.RuleEncoder.html#lore_sa.rule.RuleEncoder.default">(lore_sa.rule.RuleEncoder method)</a>
 </li>
       </ul></li>
       <li><a href="source/generated/lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset.descriptor">descriptor (lore_sa.dataset.TabularDataset attribute)</a>
@@ -307,8 +291,6 @@
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="source/generated/lore_sa.rule.Emitter.html#lore_sa.rule.Emitter">Emitter (class in lore_sa.rule)</a>
-</li>
       <li><a href="source/generated/lore_sa.encoder_decoder.EncDec.html#lore_sa.encoder_decoder.EncDec">EncDec (class in lore_sa.encoder_decoder)</a>
 </li>
       <li><a href="source/generated/lore_sa.encoder_decoder.EncDec.html#lore_sa.encoder_decoder.EncDec.encode">encode() (lore_sa.encoder_decoder.EncDec method)</a>
@@ -322,11 +304,7 @@
 </li>
         <li><a href="source/generated/lore_sa.explanation.ExplanationEncoder.html#lore_sa.explanation.ExplanationEncoder.encode">(lore_sa.explanation.ExplanationEncoder method)</a>
 </li>
-        <li><a href="source/generated/lore_sa.rule.rule.ConditionEncoder.html#lore_sa.rule.rule.ConditionEncoder.encode">(lore_sa.rule.rule.ConditionEncoder method)</a>
-</li>
-        <li><a href="source/generated/lore_sa.rule.rule.NumpyEncoder.html#lore_sa.rule.rule.NumpyEncoder.encode">(lore_sa.rule.rule.NumpyEncoder method)</a>
-</li>
-        <li><a href="source/generated/lore_sa.rule.rule.RuleEncoder.html#lore_sa.rule.rule.RuleEncoder.encode">(lore_sa.rule.rule.RuleEncoder method)</a>
+        <li><a href="source/generated/lore_sa.rule.RuleEncoder.html#lore_sa.rule.RuleEncoder.encode">(lore_sa.rule.RuleEncoder method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -337,7 +315,7 @@
 </li>
       <li><a href="source/generated/lore_sa.explanation.ExplanationEncoder.html#lore_sa.explanation.ExplanationEncoder">ExplanationEncoder (class in lore_sa.explanation)</a>
 </li>
-      <li><a href="source/generated/lore_sa.rule.rule.Expression.html#lore_sa.rule.rule.Expression">Expression (class in lore_sa.rule.rule)</a>
+      <li><a href="source/generated/lore_sa.rule.Expression.html#lore_sa.rule.Expression">Expression (class in lore_sa.rule)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -359,11 +337,25 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/generated/lore_sa.neighgen.RandomGenerator.html#lore_sa.neighgen.RandomGenerator.generate">generate() (lore_sa.neighgen.RandomGenerator method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/generated/lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset.get_class_values">get_class_values() (lore_sa.dataset.TabularDataset method)</a>
 </li>
-      <li><a href="source/generated/lore_sa.rule.DecisionTreeRuleEmitter.html#lore_sa.rule.DecisionTreeRuleEmitter.get_rule">get_rule() (lore_sa.rule.DecisionTreeRuleEmitter method)</a>
+      <li><a href="source/generated/lore_sa.surrogate.DecisionTreeSurrogate.html#lore_sa.surrogate.DecisionTreeSurrogate.get_counterfactual_rules">get_counterfactual_rules() (lore_sa.surrogate.DecisionTreeSurrogate method)</a>
+</li>
+      <li><a href="source/generated/lore_sa.encoder_decoder.EncDec.html#lore_sa.encoder_decoder.EncDec.get_encoded_features">get_encoded_features() (lore_sa.encoder_decoder.EncDec method)</a>
+
+      <ul>
+        <li><a href="source/generated/lore_sa.encoder_decoder.LabelEnc.html#lore_sa.encoder_decoder.LabelEnc.get_encoded_features">(lore_sa.encoder_decoder.LabelEnc method)</a>
+</li>
+        <li><a href="source/generated/lore_sa.encoder_decoder.OneHotEnc.html#lore_sa.encoder_decoder.OneHotEnc.get_encoded_features">(lore_sa.encoder_decoder.OneHotEnc method)</a>
+</li>
+        <li><a href="source/generated/lore_sa.encoder_decoder.TabularEnc.html#lore_sa.encoder_decoder.TabularEnc.get_encoded_features">(lore_sa.encoder_decoder.TabularEnc method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="source/generated/lore_sa.surrogate.DecisionTreeSurrogate.html#lore_sa.surrogate.DecisionTreeSurrogate.get_falsified_conditions">get_falsified_conditions() (lore_sa.surrogate.DecisionTreeSurrogate method)</a>
+</li>
+      <li><a href="source/generated/lore_sa.surrogate.DecisionTreeSurrogate.html#lore_sa.surrogate.DecisionTreeSurrogate.get_rule">get_rule() (lore_sa.surrogate.DecisionTreeSurrogate method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -375,14 +367,12 @@
 </li>
       <li><a href="source/generated/lore_sa.surrogate.DecisionTreeSurrogate.html#lore_sa.surrogate.DecisionTreeSurrogate.is_leaf">is_leaf() (lore_sa.surrogate.DecisionTreeSurrogate method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/generated/lore_sa.explanation.ExplanationEncoder.html#lore_sa.explanation.ExplanationEncoder.iterencode">iterencode() (lore_sa.explanation.ExplanationEncoder method)</a>
 
       <ul>
-        <li><a href="source/generated/lore_sa.rule.rule.ConditionEncoder.html#lore_sa.rule.rule.ConditionEncoder.iterencode">(lore_sa.rule.rule.ConditionEncoder method)</a>
-</li>
-        <li><a href="source/generated/lore_sa.rule.rule.NumpyEncoder.html#lore_sa.rule.rule.NumpyEncoder.iterencode">(lore_sa.rule.rule.NumpyEncoder method)</a>
-</li>
-        <li><a href="source/generated/lore_sa.rule.rule.RuleEncoder.html#lore_sa.rule.rule.RuleEncoder.iterencode">(lore_sa.rule.rule.RuleEncoder method)</a>
+        <li><a href="source/generated/lore_sa.rule.RuleEncoder.html#lore_sa.rule.RuleEncoder.iterencode">(lore_sa.rule.RuleEncoder method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -395,9 +385,9 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="source/generated/lore_sa.rule.rule.json2expression.html#lore_sa.rule.rule.json2expression">json2expression() (in module lore_sa.rule.rule)</a>
+      <li><a href="source/generated/lore_sa.rule.json2expression.html#lore_sa.rule.json2expression">json2expression() (in module lore_sa.rule)</a>
 </li>
-      <li><a href="source/generated/lore_sa.rule.rule.json2rule.html#lore_sa.rule.rule.json2rule">json2rule() (in module lore_sa.rule.rule)</a>
+      <li><a href="source/generated/lore_sa.rule.json2rule.html#lore_sa.rule.json2rule">json2rule() (in module lore_sa.rule)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -449,14 +439,6 @@
   </ul></td>
 </tr></table>
 
-<h2 id="N">N</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="source/generated/lore_sa.rule.rule.NumpyEncoder.html#lore_sa.rule.rule.NumpyEncoder">NumpyEncoder (class in lore_sa.rule.rule)</a>
-</li>
-  </ul></td>
-</tr></table>
-
 <h2 id="O">O</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -464,7 +446,7 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="source/generated/lore_sa.rule.rule.Expression.html#lore_sa.rule.rule.Expression.operator2string">operator2string() (lore_sa.rule.rule.Expression method)</a>
+      <li><a href="source/generated/lore_sa.rule.Expression.html#lore_sa.rule.Expression.operator2string">operator2string() (lore_sa.rule.Expression method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -498,7 +480,7 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/generated/lore_sa.rule.Rule.html#lore_sa.rule.Rule">Rule (class in lore_sa.rule)</a>
 </li>
-      <li><a href="source/generated/lore_sa.rule.rule.RuleEncoder.html#lore_sa.rule.rule.RuleEncoder">RuleEncoder (class in lore_sa.rule.rule)</a>
+      <li><a href="source/generated/lore_sa.rule.RuleEncoder.html#lore_sa.rule.RuleEncoder">RuleEncoder (class in lore_sa.rule)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -542,6 +524,14 @@
         <li><a href="source/generated/lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset.update_descriptor">(lore_sa.dataset.TabularDataset method)</a>
 </li>
       </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="V">V</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="source/generated/lore_sa.util.html#lore_sa.util.vector2dict">vector2dict() (in module lore_sa.util)</a>
+</li>
   </ul></td>
 </tr></table>
 

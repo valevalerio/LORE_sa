@@ -14,8 +14,11 @@
    .. autosummary::
    
       ~OneHotEnc.__init__
+      ~OneHotEnc.add_encoded_features
+      ~OneHotEnc.clean_encoded_descriptor_by_old
       ~OneHotEnc.decode
       ~OneHotEnc.encode
+      ~OneHotEnc.get_encoded_features
       ~OneHotEnc.update_encoded_index
    
    

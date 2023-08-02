@@ -87,14 +87,10 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../modules.html#lore-sa-rule-rule-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.rule</span></code>: Rule classes and functions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.Rule.html">lore_sa.rule.Rule</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.Emitter.html">lore_sa.rule.Emitter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.DecisionTreeRuleEmitter.html">lore_sa.rule.DecisionTreeRuleEmitter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.NumpyEncoder.html">lore_sa.rule.rule.NumpyEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.ConditionEncoder.html">lore_sa.rule.rule.ConditionEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.RuleEncoder.html">lore_sa.rule.rule.RuleEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.json2rule.html">lore_sa.rule.rule.json2rule</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.json2expression.html">lore_sa.rule.rule.json2expression</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.rule.Expression.html">lore_sa.rule.rule.Expression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.RuleEncoder.html">lore_sa.rule.RuleEncoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.json2rule.html">lore_sa.rule.json2rule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.json2expression.html">lore_sa.rule.json2expression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lore_sa.rule.Expression.html">lore_sa.rule.Expression</a></li>
 </ul>
 </li>
 <li class="toctree-l2 current"><a class="reference internal" href="../modules.html#lore-sa-surrogate-surrogate-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.surrogate</span></code>: Surrogate classes and functions</a><ul class="current">
@@ -176,6 +172,29 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.surrogate.DecisionTreeSurrogate.__init__" title="lore_sa.surrogate.DecisionTreeSurrogate.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>([kind, preprocessing])</p></td>
 <td><p></p></td>
 </tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_counterfactual</span></code>(x, delta, dataset[, ...])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.surrogate.DecisionTreeSurrogate.check_feasibility_of_falsified_conditions" title="lore_sa.surrogate.DecisionTreeSurrogate.check_feasibility_of_falsified_conditions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_feasibility_of_falsified_conditions</span></code></a>(...)</p></td>
+<td><p>Check if a falsifield confition is in an unadmittible feature list :param delta: :param unadmittible_features: :return: True or False</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lore_sa.surrogate.DecisionTreeSurrogate.compact_premises" title="lore_sa.surrogate.DecisionTreeSurrogate.compact_premises"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compact_premises</span></code></a>(premises_list)</p></td>
+<td><p>Remove the same premises with different values of threashold</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.surrogate.DecisionTreeSurrogate.get_counterfactual_rules" title="lore_sa.surrogate.DecisionTreeSurrogate.get_counterfactual_rules"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_counterfactual_rules</span></code></a>(x, y, Z, Y, ...[, ...])</p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">param [Numpy Array] x<span class="colon">:</span></dt>
+<dd class="field-odd"><p>instance encoded of the dataset</p>
+</dd>
+</dl>
+</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lore_sa.surrogate.DecisionTreeSurrogate.get_falsified_conditions" title="lore_sa.surrogate.DecisionTreeSurrogate.get_falsified_conditions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_falsified_conditions</span></code></a>(x_dict, crule)</p></td>
+<td><p>Check the wrong conditions :param x_dict: :param crule: :return: list of falsified premises</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.surrogate.DecisionTreeSurrogate.get_rule" title="lore_sa.surrogate.DecisionTreeSurrogate.get_rule"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_rule</span></code></a>(x, dataset[, encdec])</p></td>
+<td><p>Extract the rules as the promises and consequences {p -&gt; y}, starting from a Decision Tree</p></td>
+</tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#lore_sa.surrogate.DecisionTreeSurrogate.is_leaf" title="lore_sa.surrogate.DecisionTreeSurrogate.is_leaf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_leaf</span></code></a>(inner_tree, index)</p></td>
 <td><p>Check whether node is leaf node</p></td>
 </tr>
@@ -195,6 +214,86 @@
 </tr>
 </tbody>
 </table>
+<dl class="py method">
+<dt class="sig sig-object py" id="lore_sa.surrogate.DecisionTreeSurrogate.check_feasibility_of_falsified_conditions">
+<span class="sig-name descname"><span class="pre">check_feasibility_of_falsified_conditions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unadmittible_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/surrogate/decision_tree.html#DecisionTreeSurrogate.check_feasibility_of_falsified_conditions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.surrogate.DecisionTreeSurrogate.check_feasibility_of_falsified_conditions" title="Permalink to this definition"></a></dt>
+<dd><p>Check if a falsifield confition is in an unadmittible feature list
+:param delta:
+:param unadmittible_features:
+:return: True or False</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lore_sa.surrogate.DecisionTreeSurrogate.compact_premises">
+<span class="sig-name descname"><span class="pre">compact_premises</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">premises_list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/surrogate/decision_tree.html#DecisionTreeSurrogate.compact_premises"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.surrogate.DecisionTreeSurrogate.compact_premises" title="Permalink to this definition"></a></dt>
+<dd><p>Remove the same premises with different values of threashold</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>premises_list</strong> – List of Expressions that defines the premises</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lore_sa.surrogate.DecisionTreeSurrogate.get_counterfactual_rules">
+<span class="sig-name descname"><span class="pre">get_counterfactual_rules</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset" title="lore_sa.dataset.tabular_dataset.TabularDataset"><span class="pre">TabularDataset</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">features_map_inv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multi_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encdec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="lore_sa.encoder_decoder.EncDec.html#lore_sa.encoder_decoder.EncDec" title="lore_sa.encoder_decoder.enc_dec.EncDec"><span class="pre">EncDec</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_crules</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constraints</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unadmittible_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/surrogate/decision_tree.html#DecisionTreeSurrogate.get_counterfactual_rules"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.surrogate.DecisionTreeSurrogate.get_counterfactual_rules" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>[</em><em>Numpy Array</em><em>]</em>) – instance encoded of the dataset</p></li>
+<li><p><strong>y</strong> (<em>[</em><em>str</em><em>]</em>) – extracted class from the surrogate</p></li>
+<li><p><strong>Z</strong> (<em>[</em><em>Numpy Array</em><em>]</em>) – Neighborhood instances</p></li>
+<li><p><strong>Y</strong> – all possible classes provided by the surrogate</p></li>
+<li><p><strong>dataset</strong> (<em>[</em><a class="reference internal" href="lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset" title="lore_sa.dataset.TabularDataset"><em>TabularDataset</em></a><em>]</em>) – </p></li>
+<li><p><strong>features_map_inv</strong> – </p></li>
+<li><p><strong>multi_label</strong> – </p></li>
+<li><p><strong>encdec</strong> (<em>[</em><a class="reference internal" href="lore_sa.encoder_decoder.EncDec.html#lore_sa.encoder_decoder.EncDec" title="lore_sa.encoder_decoder.EncDec"><em>EncDec</em></a><em>]</em>) – </p></li>
+<li><p><strong>filter_crules</strong> – </p></li>
+<li><p><strong>constraints</strong> – </p></li>
+<li><p><strong>unadmittible_features</strong> – List of unadmittible features</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lore_sa.surrogate.DecisionTreeSurrogate.get_falsified_conditions">
+<span class="sig-name descname"><span class="pre">get_falsified_conditions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crule</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="lore_sa.rule.Rule.html#lore_sa.rule.Rule" title="lore_sa.rule.Rule"><span class="pre">Rule</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/surrogate/decision_tree.html#DecisionTreeSurrogate.get_falsified_conditions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.surrogate.DecisionTreeSurrogate.get_falsified_conditions" title="Permalink to this definition"></a></dt>
+<dd><p>Check the wrong conditions
+:param x_dict:
+:param crule:
+:return: list of falsified premises</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lore_sa.surrogate.DecisionTreeSurrogate.get_rule">
+<span class="sig-name descname"><span class="pre">get_rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset" title="lore_sa.dataset.tabular_dataset.TabularDataset"><span class="pre">TabularDataset</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">encdec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="lore_sa.encoder_decoder.EncDec.html#lore_sa.encoder_decoder.EncDec" title="lore_sa.encoder_decoder.enc_dec.EncDec"><span class="pre">EncDec</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/surrogate/decision_tree.html#DecisionTreeSurrogate.get_rule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.surrogate.DecisionTreeSurrogate.get_rule" title="Permalink to this definition"></a></dt>
+<dd><p>Extract the rules as the promises and consequences {p -&gt; y}, starting from a Decision Tree</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">{(</span> <span class="n">income</span> <span class="o">&gt;</span> <span class="mi">90</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">grant</span><span class="p">),</span>
+<span class="go">    ( job = employer) -&gt; grant)</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>[</em><em>Numpy Array</em><em>]</em>) – instance encoded of the dataset to extract the rule</p></li>
+<li><p><strong>dataset</strong> (<em>[</em><a class="reference internal" href="lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset" title="lore_sa.dataset.TabularDataset"><em>TabularDataset</em></a><em>]</em>) – </p></li>
+<li><p><strong>encdec</strong> (<em>[</em><a class="reference internal" href="lore_sa.encoder_decoder.EncDec.html#lore_sa.encoder_decoder.EncDec" title="lore_sa.encoder_decoder.EncDec"><em>EncDec</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return [Rule]<span class="colon">:</span></dt>
+<dd class="field-even"><p>Rule objects</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="lore_sa.surrogate.DecisionTreeSurrogate.is_leaf">
 <span class="sig-name descname"><span class="pre">is_leaf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inner_tree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/surrogate/decision_tree.html#DecisionTreeSurrogate.is_leaf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.surrogate.DecisionTreeSurrogate.is_leaf" title="Permalink to this definition"></a></dt>
