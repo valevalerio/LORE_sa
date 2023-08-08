@@ -169,7 +169,7 @@
 
 <div class="viewcode-block" id="TabularEnc.encode"><a class="viewcode-back" href="../../../source/generated/lore_sa.encoder_decoder.TabularEnc.html#lore_sa.encoder_decoder.TabularEnc.encode">[docs]</a>    <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Combine label encoding, as first, and one-hot encoding to provide a table encoded.</span>
+<span class="sd">        Combine one-hot encoding, as first, and label encoding to provide a table encoded.</span>
 <span class="sd">        :param [Numpy array] x: Array to encode</span>
 <span class="sd">        :return [Numpy array]: Encoded array</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -177,28 +177,10 @@
         <span class="n">one_hot_encoded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">one_hot_enc</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">encoded_features</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">one_hot_enc</span><span class="o">.</span><span class="n">get_encoded_features</span><span class="p">())</span>
 
-        <span class="n">new_descriptor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_target_label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">one_hot_enc</span><span class="o">.</span><span class="n">encoded_descriptor</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">label_enc</span> <span class="o">=</span> <span class="n">LabelEnc</span><span class="p">(</span><span class="n">new_descriptor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_enc</span> <span class="o">=</span> <span class="n">LabelEnc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">one_hot_enc</span><span class="o">.</span><span class="n">encoded_descriptor</span><span class="p">)</span>
         <span class="n">label_encoded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_enc</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">one_hot_encoded</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">encoded_features</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label_enc</span><span class="o">.</span><span class="n">get_encoded_features</span><span class="p">())</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">label_encoded</span><span class="p">])</span></div>
-
-    <span class="k">def</span> <span class="nf">set_target_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">descriptor</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_class</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;No target class is defined&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">descriptor</span>
-
-        <span class="k">for</span> <span class="nb">type</span> <span class="ow">in</span> <span class="n">descriptor</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">descriptor</span><span class="p">[</span><span class="nb">type</span><span class="p">]:</span>
-                <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_class</span><span class="p">:</span>
-                    <span class="n">descriptor</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span>
-                    <span class="n">descriptor</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
-                    <span class="k">return</span> <span class="n">descriptor</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;No target class is finded&quot;</span><span class="p">)</span>
-                    <span class="k">return</span> <span class="n">descriptor</span>
-
 
 <div class="viewcode-block" id="TabularEnc.get_encoded_features"><a class="viewcode-back" href="../../../source/generated/lore_sa.encoder_decoder.TabularEnc.html#lore_sa.encoder_decoder.TabularEnc.get_encoded_features">[docs]</a>    <span class="k">def</span> <span class="nf">get_encoded_features</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoded_features</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>

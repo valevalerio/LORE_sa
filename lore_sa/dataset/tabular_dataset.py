@@ -83,6 +83,12 @@ class TabularDataset(Dataset):
         self.descriptor = self.set_target_label(self.descriptor)
 
     def set_target_label(self, descriptor):
+        """
+        Set the target column into the dataset descriptor
+
+        :param descriptor:
+        :return:
+        """
         if self.class_name is None:
             logger.warning("No target class is defined")
             return descriptor

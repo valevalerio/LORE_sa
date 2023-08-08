@@ -207,7 +207,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">descriptor</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;numeric&#39;</span><span class="p">:{},</span> <span class="s1">&#39;categoric&#39;</span><span class="p">:{}}</span>
 
         <span class="c1">#creation of a default version of descriptor</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">update_descriptor</span><span class="p">()</span></div>
         
 <div class="viewcode-block" id="TabularDataset.update_descriptor"><a class="viewcode-back" href="../../../source/generated/lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset.update_descriptor">[docs]</a>    <span class="k">def</span> <span class="nf">update_descriptor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -234,7 +233,30 @@
                 <span class="n">desc</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="n">index</span><span class="p">,</span>
                         <span class="s1">&#39;distinct_values&#39;</span> <span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()),</span>
                         <span class="s1">&#39;count&#39;</span> <span class="p">:</span> <span class="p">{</span><span class="n">x</span> <span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span> <span class="o">==</span> <span class="n">x</span><span class="p">])</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())}}</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">descriptor</span><span class="p">[</span><span class="s1">&#39;categoric&#39;</span><span class="p">][</span><span class="n">feature</span><span class="p">]</span> <span class="o">=</span> <span class="n">desc</span></div>
+                <span class="bp">self</span><span class="o">.</span><span class="n">descriptor</span><span class="p">[</span><span class="s1">&#39;categoric&#39;</span><span class="p">][</span><span class="n">feature</span><span class="p">]</span> <span class="o">=</span> <span class="n">desc</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">descriptor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_target_label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">descriptor</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TabularDataset.set_target_label"><a class="viewcode-back" href="../../../source/generated/lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset.set_target_label">[docs]</a>    <span class="k">def</span> <span class="nf">set_target_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">descriptor</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the target column into the dataset descriptor</span>
+
+<span class="sd">        :param descriptor:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;No target class is defined&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">descriptor</span>
+
+        <span class="k">for</span> <span class="nb">type</span> <span class="ow">in</span> <span class="n">descriptor</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">descriptor</span><span class="p">[</span><span class="nb">type</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_name</span><span class="p">:</span>
+                    <span class="n">descriptor</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span><span class="n">descriptor</span><span class="p">[</span><span class="nb">type</span><span class="p">][</span><span class="n">k</span><span class="p">]}</span>
+                    <span class="n">descriptor</span><span class="p">[</span><span class="nb">type</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="n">descriptor</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;No target class is finded&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">descriptor</span></div>
         
     
 <div class="viewcode-block" id="TabularDataset.from_csv"><a class="viewcode-back" href="../../../source/generated/lore_sa.dataset.TabularDataset.html#lore_sa.dataset.TabularDataset.from_csv">[docs]</a>    <span class="nd">@classmethod</span>
@@ -291,8 +313,6 @@
             <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">descriptor</span><span class="p">[</span><span class="n">category</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">descriptor</span><span class="p">[</span><span class="n">category</span><span class="p">][</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;index&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">index</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">name</span></div>
-
-
 </pre></div>
 
            </div>

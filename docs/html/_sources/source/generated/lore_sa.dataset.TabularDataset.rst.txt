@@ -22,6 +22,7 @@
       ~TabularDataset.get_numeric_columns
       ~TabularDataset.set_class_name
       ~TabularDataset.set_descriptor
+      ~TabularDataset.set_target_label
       ~TabularDataset.update_descriptor
    
    
