@@ -14,7 +14,7 @@ class RandomGenerator(NeighborhoodGenerator):
         self.generated_data = None
 
 
-    def generate(self,x, num_instances, descriptor = None):
+    def generate(self,x, num_instances, descriptor, onehotencoder = None):
         """
         random generation of new instances. The starting instance x is only used to detect the value type of each feature, in order
         to generate new values only for numeric features.
@@ -22,34 +22,58 @@ class RandomGenerator(NeighborhoodGenerator):
         :param x[dict]: the starting instance from the real dataset
         :param num_instances[int]: the number of instances to generate
         :param descriptor[dict]: data descriptor as generated from a Dataset object
+        :param onehotencoder[EncDec]: the onehotencoder eventually to encode the instance
         The list (or range) associated to each key is used to randomly choice an element within the list. 
 
-        :return [Dataset]: a dataset instance with the new data generated
+        :return [TabularDataset]: a tabular dataset instance with the new data generated
         """
 
-        generated_list = []
+        generated_list, columns = [],[]
+
+        columns = [None for e in range(len(x))]
         for n in range(num_instances):
-            instance = {}
-            for feature in x:
-                feature_value = x[feature]
-                if type(feature_value) ==float :
+            instance = [None for e in range(len(x))]
+            
+            
+            for name,feature in descriptor['categoric'].items():
+                if onehotencoder is not None:
+                    #feature is encoded, so i need to random generate chunks of one-hot-encoded values
+
+                    #finding the vector index of the feature
+                    indices = [k for k,v in onehotencoder.get_encoded_features().items() if v.split("=")[0]==name]
+                    index_choice = np.random.choice(list(range(len(indices))))
                     
-                    #no information on the dataset, generation of random instances only for the numeric features of the input real instance
-
-                    instance[feature] = (np.random.uniform(descriptor['numeric'][feature]['min'], descriptor['numeric'][feature]['max']))
-
-                elif type(feature_value) == int:
-                    instance[feature] = np.random.random_integers(descriptor['numeric'][feature]['min'], descriptor['numeric'][feature]['max'])
+                    for i, idx in enumerate(indices):
+                        if i == index_choice:
+                            instance[idx] = 1
+                        else:
+                            instance[idx] = 0
+                        columns[idx] = onehotencoder.get_encoded_features()[idx]
+                    
 
                 else:
-                    #feature is a string/category, it is impossibile to generate random values
-                    instance[feature] = np.random.choice(descriptor['categoric'][feature]['distinct_values'])
+                    #feature is not encoded: random choice among the distinct values of the feature
+
+                    instance[feature['index']] = np.random.choice(feature['distinct_values'])
+                    columns[feature['index']] = name
+
+            for name,feature in descriptor['numeric'].items():
+                idx = None
+                if onehotencoder is not None:
+                    idx = [k for k,v in onehotencoder.get_encoded_features().items() if v==name][0]
+                else:
+                    idx = feature['index']   
+                
+                columns[idx] = name 
+                    
+                instance[idx] = np.random.uniform(low = feature['min'], high = feature['max'])
+                
+
             generated_list.append(instance)
 
         self.generated_data = generated_list
 
-        
-        return TabularDataset(pd.DataFrame(generated_list))
+        return TabularDataset(pd.DataFrame(generated_list, columns = columns))
                         
     
                     
