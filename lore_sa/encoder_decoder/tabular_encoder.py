@@ -14,7 +14,7 @@ class TabularEnc(EncDec):
 
     def encode(self, x: np.array):
         """
-        Combine label encoding, as first, and one-hot encoding to provide a table encoded.
+        Combine one-hot encoding, as first, and label encoding to provide a table encoded.
         :param [Numpy array] x: Array to encode
         :return [Numpy array]: Encoded array
         """
@@ -22,28 +22,10 @@ class TabularEnc(EncDec):
         one_hot_encoded = self.one_hot_enc.encode(x)
         self.encoded_features.update(self.one_hot_enc.get_encoded_features())
 
-        new_descriptor = self.set_target_label(self.one_hot_enc.encoded_descriptor)
-
-        self.label_enc = LabelEnc(new_descriptor)
+        self.label_enc = LabelEnc(self.one_hot_enc.encoded_descriptor)
         label_encoded = self.label_enc.encode(one_hot_encoded)
         self.encoded_features.update(self.label_enc.get_encoded_features())
         return np.array([int(n) for n in label_encoded])
-
-    def set_target_label(self, descriptor):
-        if self.target_class is None:
-            logger.warning("No target class is defined")
-            return descriptor
-
-        for type in descriptor:
-            for k in descriptor[type]:
-                if k == self.target_class:
-                    descriptor['target'] = k
-                    descriptor['type'].pop(k)
-                    return descriptor
-                else:
-                    logger.warning("No target class is finded")
-                    return descriptor
-
 
     def get_encoded_features(self):
         if self.encoded_features is None:

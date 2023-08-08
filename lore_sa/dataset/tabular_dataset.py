@@ -52,7 +52,6 @@ class TabularDataset(Dataset):
         self.descriptor = {'numeric':{}, 'categoric':{}}
 
         #creation of a default version of descriptor
-
         self.update_descriptor()
         
     def update_descriptor(self):
@@ -80,6 +79,23 @@ class TabularDataset(Dataset):
                         'distinct_values' : list(self.df[feature].unique()),
                         'count' : {x : len(self.df[self.df[feature] == x]) for x in list(self.df[feature].unique())}}
                 self.descriptor['categoric'][feature] = desc
+
+        self.descriptor = self.set_target_label(self.descriptor)
+
+    def set_target_label(self, descriptor):
+        if self.class_name is None:
+            logger.warning("No target class is defined")
+            return descriptor
+
+        for type in descriptor:
+            for k in descriptor[type]:
+                if k == self.class_name:
+                    descriptor['target'] = {k:descriptor[type][k]}
+                    descriptor[type].pop(k)
+                    return descriptor
+                else:
+                    logger.warning("No target class is finded")
+        return descriptor
         
     
     @classmethod
@@ -136,5 +152,3 @@ class TabularDataset(Dataset):
             for name in self.descriptor[category].keys():
                 if self.descriptor[category][name]['index'] == index:
                     return name
-
-

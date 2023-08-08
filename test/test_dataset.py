@@ -87,6 +87,14 @@ class DatasetTest(unittest.TestCase):
         self.assertEqual(dataset.get_feature_name(1),'col2')
         self.assertEqual(dataset.get_feature_name(2),'col3')
 
+    def test_get_features_name_by_index_with_class_name(self):
+        dataset = TabularDataset.from_dict({'col1': [1, 2], 'col2': [3, 4], 'col3': ['America', 'Europe']},class_name="col3")
+
+        descriptor = dataset.descriptor
+        self.assertEqual(descriptor['target'],{'col3': {'count': {'America': 1, 'Europe': 1},
+                        'distinct_values': ['America', 'Europe'],
+                        'index': 2}})
+
 
 if __name__ == '__main__':
     unittest.main()
