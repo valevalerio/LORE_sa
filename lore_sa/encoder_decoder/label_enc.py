@@ -56,8 +56,22 @@ class LabelEnc(EncDec):
         :param [Numpy array] x: Array to decode
         :return [Numpy array]: Decoded array
         """
-        for k in self.dataset_descriptor["ordinal"].keys():
-            label_index = self.dataset_descriptor["ordinal"][k]['index']
-            values_dict = {v: k for v, k in enumerate(self.dataset_descriptor["ordinal"][k]['distinct_values'])}
-            x[label_index] = values_dict[int(x[label_index])]
+        if "target" in self.dataset_descriptor.keys():
+            for k in self.dataset_descriptor["target"].keys():
+                label_index = self.dataset_descriptor["target"][k]['index']
+                values_dict = {v: k for v, k in enumerate(self.dataset_descriptor["target"][k]['distinct_values'])}
+                x[label_index] = values_dict[int(x[label_index])]
+
+        if "ordinal" in self.dataset_descriptor.keys():
+            for k in self.dataset_descriptor["ordinal"].keys():
+                label_index = self.dataset_descriptor["ordinal"][k]['index']
+                values_dict = {v: k for v, k in enumerate(self.dataset_descriptor["ordinal"][k]['distinct_values'])}
+                x[label_index] = values_dict[int(x[label_index])]
+        return x
+
+    def decode_target_class(self, x: np.array):
+        if "target" in self.dataset_descriptor.keys():
+            for k in self.dataset_descriptor["target"].keys():
+                values_dict = {v: k for v, k in enumerate(self.dataset_descriptor["target"][k]['distinct_values'])}
+                x = values_dict[int(x)]
         return x

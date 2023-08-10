@@ -26,6 +26,24 @@ class EncDecTest(unittest.TestCase):
                                                                           'Graduate', 'Post-graduate']}
                                         }}
 
+        self.tabular_descriptor = {'categoric': {'col3': {'count': {'America': 1, 'Europe': 1, 'Africa': 1},
+                                                        'distinct_values': ['America', 'Europe', 'Africa'],
+                                                        'index': 2},
+                                               'colours': {
+                                                   'distinct_values': ['White', 'Black', 'Red', 'Blue', 'Green'],
+                                                   'index': 4
+                                               }},
+                                 'numeric': {
+                                     'col1': {'index': 0, 'max': 2, 'mean': 1.5, 'median': 1.5, 'min': 1, 'q1': 1.25,
+                                              'q3': 1.75, 'std': 0.7071067811865476},
+                                     'col2': {'index': 1, 'max': 4, 'mean': 3.5, 'median': 3.5, 'min': 3, 'q1': 3.25,
+                                              'q3': 3.75, 'std': 0.7071067811865476}},
+                                 'target': {'education': {'index': 3,
+                                                           'distinct_values': ['Elementary', 'High School', 'College',
+                                                                               'Graduate', 'Post-graduate']}
+                                             }}
+
+
     def test_one_hot_encoder_init(self):
         one_hot_enc = OneHotEnc(self.descriptor_dummy)
         self.assertEqual(one_hot_enc.type,'one-hot')
@@ -142,6 +160,16 @@ class EncDecTest(unittest.TestCase):
         decoded = tabular_enc.decode(np.array([1, 2, 0, 0, 1, 1, 1, 0, 0, 0, 0]))
         self.assertEqual(decoded.tolist(), np.array([1, 2, "Africa", "High School", 'White']).tolist())
 
+
+    def test_tabular_decode_with_target_get_target_decoded_1(self):
+        tabular_enc = TabularEnc(self.tabular_descriptor)
+        decoded = tabular_enc.decode_target_class(np.array([1]))
+        self.assertEqual(decoded, 'High School')
+
+    def test_tabular_decode_with_target_get_target_decoded_2(self):
+        tabular_enc = TabularEnc(self.tabular_descriptor)
+        decoded = tabular_enc.decode_target_class(np.array([2]))
+        self.assertEqual(decoded, 'College')
 
 if __name__ == '__main__':
     unittest.main()

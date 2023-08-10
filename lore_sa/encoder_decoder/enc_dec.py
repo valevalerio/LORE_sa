@@ -35,3 +35,8 @@ class EncDec():
     @abstractmethod
     def decode(self, x: np.array):
         return
+
+
+    @abstractmethod
+    def decode_target_class(self, x: np.array):
+        return

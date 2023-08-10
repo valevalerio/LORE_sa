@@ -25,6 +25,8 @@ class TabularEnc(EncDec):
         self.label_enc = LabelEnc(self.one_hot_enc.encoded_descriptor)
         label_encoded = self.label_enc.encode(one_hot_encoded)
         self.encoded_features.update(self.label_enc.get_encoded_features())
+
+        self.encoded_descriptor = self.label_enc.encoded_descriptor
         return np.array([int(n) for n in label_encoded])
 
     def get_encoded_features(self):
@@ -43,4 +45,14 @@ class TabularEnc(EncDec):
         one_hot_enc = OneHotEnc(self.dataset_descriptor)
         one_hot_decoded = one_hot_enc.decode(x)
         label_decoded = label_enc.decode(one_hot_decoded)
+        return label_decoded
+
+    def decode_target_class(self, x: np.array):
+        """
+        Provides the value of the target class only.
+        :param x:
+        :return:
+        """
+        label_dec = LabelEnc({'target':self.dataset_descriptor['target']})
+        label_decoded = label_dec.decode_target_class(x)
         return label_decoded

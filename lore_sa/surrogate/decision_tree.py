@@ -123,7 +123,7 @@ class DecisionTreeSurrogate(Surrogate):
         threshold = self.dt.tree_.threshold
         predicted_class = self.dt.predict(x)
 
-        consequence = Expression(variable=dataset.class_name, operator=operator.eq, value=predicted_class)
+        consequence = Expression(variable=dataset.class_name, operator=operator.eq, value=encdec.decode_target_class(predicted_class))
 
         leave_id = self.dt.apply(x)
         node_index = self.dt.decision_path(x).indices
@@ -137,7 +137,6 @@ class DecisionTreeSurrogate(Surrogate):
                 break
             else:
                 if encdec is not None:
-                    print ("input encoder type:",encdec, type(encdec))
                     if isinstance(encdec, OneHotEnc) or isinstance(encdec, TabularEnc):
                         attribute = feature_names[feature[node_id]]
                         if attribute not in numeric_columns:
