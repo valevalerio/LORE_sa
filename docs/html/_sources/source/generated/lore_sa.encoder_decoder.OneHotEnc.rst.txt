@@ -17,6 +17,7 @@
       ~OneHotEnc.add_encoded_features
       ~OneHotEnc.clean_encoded_descriptor_by_old
       ~OneHotEnc.decode
+      ~OneHotEnc.decode_target_class
       ~OneHotEnc.encode
       ~OneHotEnc.get_encoded_features
       ~OneHotEnc.update_encoded_index

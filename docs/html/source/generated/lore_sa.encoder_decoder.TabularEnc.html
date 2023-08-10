@@ -161,7 +161,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="lore_sa.encoder_decoder.TabularEnc">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lore_sa.encoder_decoder.</span></span><span class="sig-name descname"><span class="pre">TabularEnc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">descriptor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_class</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/tabular_encoder.html#TabularEnc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.TabularEnc" title="Permalink to this definition"></a></dt>
-<dd><p>It combine different encoders/decoders over a table dataset</p>
+<dd><p>It combines different encoders/decoders over a table dataset</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="lore_sa.encoder_decoder.TabularEnc.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">descriptor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_class</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/tabular_encoder.html#TabularEnc.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.TabularEnc.__init__" title="Permalink to this definition"></a></dt>
@@ -174,12 +174,15 @@
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#lore_sa.encoder_decoder.TabularEnc.decode" title="lore_sa.encoder_decoder.TabularEnc.decode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">decode</span></code></a>(x)</p></td>
-<td><p>Combine one-hot decoding, as first, and label encoding to provide a table encoded.</p></td>
+<td><p>Decode the instance applyng the onehot and label decode methods :param x: :return:</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.encoder_decoder.TabularEnc.encode" title="lore_sa.encoder_decoder.TabularEnc.encode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encode</span></code></a>(x)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.encoder_decoder.TabularEnc.decode_target_class" title="lore_sa.encoder_decoder.TabularEnc.decode_target_class"><code class="xref py py-obj docutils literal notranslate"><span class="pre">decode_target_class</span></code></a>(x)</p></td>
+<td><p>Provides the value of the target class only.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lore_sa.encoder_decoder.TabularEnc.encode" title="lore_sa.encoder_decoder.TabularEnc.encode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encode</span></code></a>(x)</p></td>
 <td><p>Combine one-hot encoding, as first, and label encoding to provide a table encoded.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lore_sa.encoder_decoder.TabularEnc.get_encoded_features" title="lore_sa.encoder_decoder.TabularEnc.get_encoded_features"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_encoded_features</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.encoder_decoder.TabularEnc.get_encoded_features" title="lore_sa.encoder_decoder.TabularEnc.get_encoded_features"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_encoded_features</span></code></a>()</p></td>
 <td><p>Provides a dictionary with the new encoded features name and the new index :return:</p></td>
 </tr>
 </tbody>
@@ -187,7 +190,15 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="lore_sa.encoder_decoder.TabularEnc.decode">
 <span class="sig-name descname"><span class="pre">decode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/tabular_encoder.html#TabularEnc.decode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.TabularEnc.decode" title="Permalink to this definition"></a></dt>
-<dd><p>Combine one-hot decoding, as first, and label encoding to provide a table encoded.
+<dd><p>Decode the instance applyng the onehot and label decode methods
+:param x:
+:return:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lore_sa.encoder_decoder.TabularEnc.decode_target_class">
+<span class="sig-name descname"><span class="pre">decode_target_class</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/encoder_decoder/tabular_encoder.html#TabularEnc.decode_target_class"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.encoder_decoder.TabularEnc.decode_target_class" title="Permalink to this definition"></a></dt>
+<dd><p>Provides the value of the target class only.
 :param x:
 :return:</p>
 </dd></dl>

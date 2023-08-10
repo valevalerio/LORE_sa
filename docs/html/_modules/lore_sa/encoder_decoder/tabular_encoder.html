@@ -160,7 +160,7 @@
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;EncDec&quot;</span><span class="p">,</span> <span class="s2">&quot;TabularEnc&quot;</span><span class="p">,</span><span class="s2">&quot;LabelEnc&quot;</span><span class="p">]</span>
 <div class="viewcode-block" id="TabularEnc"><a class="viewcode-back" href="../../../source/generated/lore_sa.encoder_decoder.TabularEnc.html#lore_sa.encoder_decoder.TabularEnc">[docs]</a><span class="k">class</span> <span class="nc">TabularEnc</span><span class="p">(</span><span class="n">EncDec</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    It combine different encoders/decoders over a table dataset</span>
+<span class="sd">    It combines different encoders/decoders over a table dataset</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="TabularEnc.__init__"><a class="viewcode-back" href="../../../source/generated/lore_sa.encoder_decoder.TabularEnc.html#lore_sa.encoder_decoder.TabularEnc.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">descriptor</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">target_class</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">descriptor</span><span class="p">)</span>
@@ -180,6 +180,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">label_enc</span> <span class="o">=</span> <span class="n">LabelEnc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">one_hot_enc</span><span class="o">.</span><span class="n">encoded_descriptor</span><span class="p">)</span>
         <span class="n">label_encoded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_enc</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">one_hot_encoded</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">encoded_features</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label_enc</span><span class="o">.</span><span class="n">get_encoded_features</span><span class="p">())</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">encoded_descriptor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_enc</span><span class="o">.</span><span class="n">encoded_descriptor</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">label_encoded</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="TabularEnc.get_encoded_features"><a class="viewcode-back" href="../../../source/generated/lore_sa.encoder_decoder.TabularEnc.html#lore_sa.encoder_decoder.TabularEnc.get_encoded_features">[docs]</a>    <span class="k">def</span> <span class="nf">get_encoded_features</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -190,7 +192,7 @@
 
 <div class="viewcode-block" id="TabularEnc.decode"><a class="viewcode-back" href="../../../source/generated/lore_sa.encoder_decoder.TabularEnc.html#lore_sa.encoder_decoder.TabularEnc.decode">[docs]</a>    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Combine one-hot decoding, as first, and label encoding to provide a table encoded.</span>
+<span class="sd">        Decode the instance applyng the onehot and label decode methods </span>
 <span class="sd">        :param x:</span>
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -198,6 +200,16 @@
         <span class="n">one_hot_enc</span> <span class="o">=</span> <span class="n">OneHotEnc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_descriptor</span><span class="p">)</span>
         <span class="n">one_hot_decoded</span> <span class="o">=</span> <span class="n">one_hot_enc</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="n">label_decoded</span> <span class="o">=</span> <span class="n">label_enc</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">one_hot_decoded</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">label_decoded</span></div>
+
+<div class="viewcode-block" id="TabularEnc.decode_target_class"><a class="viewcode-back" href="../../../source/generated/lore_sa.encoder_decoder.TabularEnc.html#lore_sa.encoder_decoder.TabularEnc.decode_target_class">[docs]</a>    <span class="k">def</span> <span class="nf">decode_target_class</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Provides the value of the target class only.</span>
+<span class="sd">        :param x:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">label_dec</span> <span class="o">=</span> <span class="n">LabelEnc</span><span class="p">({</span><span class="s1">&#39;target&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_descriptor</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]})</span>
+        <span class="n">label_decoded</span> <span class="o">=</span> <span class="n">label_dec</span><span class="o">.</span><span class="n">decode_target_class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">label_decoded</span></div></div>
 </pre></div>
 

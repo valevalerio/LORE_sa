@@ -15,6 +15,7 @@
    
       ~TabularEnc.__init__
       ~TabularEnc.decode
+      ~TabularEnc.decode_target_class
       ~TabularEnc.encode
       ~TabularEnc.get_encoded_features
    
