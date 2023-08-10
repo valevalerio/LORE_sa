@@ -66,7 +66,7 @@ class Rule(object):
         return '{ %s }' % self.consequences
 
     def __str__(self):
-        str_out = 'premises: %s \n' % (["\n".join(str(e) for e in self.premises)])
+        str_out = 'premises:\n' + '%s \n' % ("\n".join([str(e) for e in self.premises]))
         str_out += 'consequence: %s' % (str(self.consequences))
 
         return str_out

@@ -99,8 +99,7 @@ class TabularDataset(Dataset):
                     descriptor['target'] = {k:descriptor[type][k]}
                     descriptor[type].pop(k)
                     return descriptor
-                else:
-                    logger.warning("No target class is finded")
+                
         return descriptor
         
     

@@ -5,7 +5,7 @@ import numpy as np
 __all__ = ["EncDec", "TabularEnc","LabelEnc"]
 class TabularEnc(EncDec):
     """
-    It combine different encoders/decoders over a table dataset
+    It combines different encoders/decoders over a table dataset
     """
     def __init__(self,descriptor: dict, target_class: str = None):
         super().__init__(descriptor)
@@ -35,7 +35,7 @@ class TabularEnc(EncDec):
 
     def decode(self, x: np.array):
         """
-        Combine one-hot decoding, as first, and label encoding to provide a table encoded.
+        Decode the instance applyng the onehot and label decode methods 
         :param x:
         :return:
         """

@@ -137,6 +137,7 @@ class DecisionTreeSurrogate(Surrogate):
                 break
             else:
                 if encdec is not None:
+                    print ("input encoder type:",encdec, type(encdec))
                     if isinstance(encdec, OneHotEnc) or isinstance(encdec, TabularEnc):
                         attribute = feature_names[feature[node_id]]
                         if attribute not in numeric_columns:
