@@ -2,7 +2,6 @@ import unittest
 
 from lore_sa.dataset import TabularDataset
 from lore_sa.encoder_decoder import OneHotEnc, LabelEnc
-from lore_sa.encoder_decoder.my_target_enc import TargetEnc
 import numpy as np
 
 from lore_sa.encoder_decoder.tabular_encoder import TabularEnc
@@ -31,12 +30,6 @@ class EncDecTest(unittest.TestCase):
         one_hot_enc = OneHotEnc(self.descriptor_dummy)
         self.assertEqual(one_hot_enc.type,'one-hot')
         self.assertEqual(one_hot_enc.__str__(),"OneHotEncoder - no features encoded")
-
-    def test_target_encoder_init(self):
-        target_enc = TargetEnc(self.descriptor_dummy)
-        self.assertEqual(target_enc.type,'target')
-        self.assertEqual(target_enc.__str__(),"TargetEncoder - no features encoded")
-
 
     def test_one_hot_init_no_ordinal_field(self):
         wrong_descriptor = {}

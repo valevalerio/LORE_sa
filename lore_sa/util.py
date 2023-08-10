@@ -6,7 +6,6 @@ from scipy.spatial.distance import jaccard
 import warnings
 
 from lore_sa.encoder_decoder import OneHotEnc
-from lore_sa.encoder_decoder.my_target_enc import TargetEnc
 
 
 def vector2dict(x, feature_names):
@@ -39,9 +38,7 @@ def record2str(x, feature_names, numeric_columns, encdec=None):
             if isinstance(encdec, OneHotEnc):
                 att_split = att.split('=')
                 s += '%s = %s, ' % (att_split[0], att_split[1])
-            if isinstance(encdec, TargetEnc):
-                ind = x.index(val)
-                s += '%s = %s' % x_dec[ind]
+
             '''
             if encdec:
                 att_split = [None]*2
