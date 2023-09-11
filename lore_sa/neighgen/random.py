@@ -14,6 +14,7 @@ class RandomGenerator(NeighborhoodGenerator):
         self.generated_data = None
 
 
+
     def generate(self,x, num_instances, descriptor, onehotencoder = None):
         """
         random generation of new instances. The starting instance x is only used to detect the value type of each feature, in order
@@ -63,7 +64,6 @@ class RandomGenerator(NeighborhoodGenerator):
                     idx = [k for k,v in onehotencoder.get_encoded_features().items() if v==name][0]
                 else:
                     idx = feature['index']   
-                
                 columns[idx] = name 
                     
                 instance[idx] = np.random.uniform(low = feature['min'], high = feature['max'])
