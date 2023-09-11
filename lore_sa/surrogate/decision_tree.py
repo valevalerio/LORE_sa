@@ -187,7 +187,7 @@ class DecisionTreeSurrogate(Surrogate):
                 compact_plist.append(alist[0])
         return compact_plist
 
-    def get_counterfactual_rules(self, x, y, Z, Y, dataset: TabularDataset,
+    def get_counterfactual_rules(self, x: np.array, y, Z, Y, dataset: TabularDataset,
                                  features_map_inv, multi_label=False, encdec: EncDec = None, filter_crules=None,
                                  constraints=None, unadmittible_features=None):
         """
@@ -212,6 +212,9 @@ class DecisionTreeSurrogate(Surrogate):
         clen = np.inf
         crule_list = list()
         delta_list = list()
+
+        y = self.dt.predict(Z)
+
         Z1 = Z[np.where(Y != y)[0]]
         x_dict = vector2dict(x, dataset.get_features_names())
         for z in Z1:
