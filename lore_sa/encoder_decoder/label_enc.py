@@ -10,8 +10,8 @@ class LabelEnc(EncDec):
     It provides an interface to access Label enconding functions.
     """
 
-    def __init__(self,descriptor: dict):
-        super().__init__(descriptor)
+    def __init__(self,dataset_descriptor: dict):
+        super().__init__(dataset_descriptor)
         self.type = "label"
         if self.dataset_descriptor.get("ordinal") is None and self.dataset_descriptor.get("target") is None:
             raise Exception("Dataset descriptor is malformed for Label Encoder: 'ordinal' or 'target' keys are not present")
@@ -56,18 +56,19 @@ class LabelEnc(EncDec):
         :param [Numpy array] x: Array to decode
         :return [Numpy array]: Decoded array
         """
+        decoded = [None for x in range(len(x))]
         if "target" in self.dataset_descriptor.keys():
             for k in self.dataset_descriptor["target"].keys():
                 label_index = self.dataset_descriptor["target"][k]['index']
                 values_dict = {v: k for v, k in enumerate(self.dataset_descriptor["target"][k]['distinct_values'])}
-                x[label_index] = values_dict[int(x[label_index])]
+                decoded[label_index] = values_dict[int(x[label_index])]
 
         if "ordinal" in self.dataset_descriptor.keys():
             for k in self.dataset_descriptor["ordinal"].keys():
                 label_index = self.dataset_descriptor["ordinal"][k]['index']
                 values_dict = {v: k for v, k in enumerate(self.dataset_descriptor["ordinal"][k]['distinct_values'])}
-                x[label_index] = values_dict[int(x[label_index])]
-        return x
+                decoded[label_index] = values_dict[int(x[label_index])]
+        return decoded
 
     def decode_target_class(self, x: np.array):
         if "target" in self.dataset_descriptor.keys():

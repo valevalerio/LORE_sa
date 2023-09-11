@@ -29,6 +29,7 @@ class OneHotEnc(EncDec):
         original_encoded_feature_list = []
         self.encoded_descriptor = copy.deepcopy(self.dataset_descriptor)
         for k in self.encoded_descriptor['categoric'].keys():
+            
             label_dict = self.encoded_descriptor['categoric'][k]
             label_index = label_dict['index']
 
@@ -77,7 +78,7 @@ class OneHotEnc(EncDec):
             raise Exception("You have not run the encoder yet")
         else:
             for type in self.encoded_descriptor.keys():
-                if type is "categoric":
+                if type == "categoric":
                     continue
                 else:
                     for k in self.encoded_descriptor[type]:
