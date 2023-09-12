@@ -48,6 +48,9 @@ class TabularDataset(Dataset):
         
         self.class_name = class_name
         self.df = data
+
+        #target columns forced to be the last column of the dataset
+        self.df = self.df[[x for x in self.df.columns if x != class_name] + [class_name]]
         
         self.descriptor = {'numeric':{}, 'categoric':{}}
 
