@@ -17,6 +17,7 @@ __all__ = ["Surrogate","DecisionTreeSurrogate"]
 from lore_sa.rule import Expression, Rule
 from lore_sa.surrogate.surrogate import Surrogate
 from lore_sa.util import vector2dict, multilabel2str
+import lore_sa
 
 
 class DecisionTreeSurrogate(Surrogate):
@@ -105,7 +106,7 @@ class DecisionTreeSurrogate(Surrogate):
 
 
 
-    def get_rule(self, x: np.array, dataset: TabularDataset, encdec: EncDec = None):
+    def get_rule(self, x: np.array, dataset: TabularDataset, encoder: EncDec = None):
         """
         Extract the rules as the promises and consequences {p -> y}, starting from a Decision Tree
 
@@ -123,7 +124,7 @@ class DecisionTreeSurrogate(Surrogate):
         threshold = self.dt.tree_.threshold
         predicted_class = self.dt.predict(x)
 
-        consequence = Expression(variable=dataset.class_name, operator=operator.eq, value=encdec.decode_target_class(predicted_class))
+        consequence = Expression(variable=dataset.class_name, operator=operator.eq, value=encoder.decode_target_class(predicted_class))
 
         leave_id = self.dt.apply(x)
         node_index = self.dt.decision_path(x).indices
@@ -136,8 +137,8 @@ class DecisionTreeSurrogate(Surrogate):
             if leave_id[0] == node_id:
                 break
             else:
-                if encdec is not None:
-                    if isinstance(encdec, OneHotEnc) or isinstance(encdec, TabularEnc):
+                if encoder is not None:
+                    if isinstance(encoder, OneHotEnc) or isinstance(encoder, TabularEnc):
                         attribute = feature_names[feature[node_id]]
                         if attribute not in numeric_columns:
                             thr = False if x[0][feature[node_id]] <= threshold[node_id] else True
@@ -146,6 +147,7 @@ class DecisionTreeSurrogate(Surrogate):
                             thr = threshold[node_id]
                             op = operator.le if x[0][feature[node_id]] <= threshold[node_id] else operator.gt
                     else:
+                        print (type(encoder))
                         raise Exception('unknown encoder instance ')
                 else:
                     op = operator.le if x[0][feature[node_id]] <= threshold[node_id] else operator.gt
