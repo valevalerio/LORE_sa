@@ -56,7 +56,7 @@ class LabelEnc(EncDec):
         :param [Numpy array] x: Array to decode
         :return [Numpy array]: Decoded array
         """
-        decoded = [None for x in range(len(x))]
+        decoded = [x for x in x]
         if "target" in self.dataset_descriptor.keys():
             for k in self.dataset_descriptor["target"].keys():
                 label_index = self.dataset_descriptor["target"][k]['index']
