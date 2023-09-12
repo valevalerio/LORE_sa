@@ -114,7 +114,7 @@ class DecisionTreeSurrogate(Surrogate):
             }
 
         :param [Numpy Array] x: instance encoded of the dataset to extract the rule
-        :param [TabularDataset] dataset:
+        :param [TabularDataset] dataset: Neighborhood instances
         :param [EncDec] encdec:
         :return [Rule]: Rule objects
         """
@@ -187,39 +187,39 @@ class DecisionTreeSurrogate(Surrogate):
                 compact_plist.append(alist[0])
         return compact_plist
 
-    def get_counterfactual_rules(self, x: np.array, y, Z, Y, dataset: TabularDataset,
-                                 features_map_inv, multi_label=False, encdec: EncDec = None, filter_crules=None,
-                                 constraints=None, unadmittible_features=None):
+    def get_counterfactual_rules(self, x: np.array, y, Y, neighborhood_dataset: TabularDataset,
+                                 features_map_inv = None, multi_label: bool =False, encdec: EncDec = None, filter_crules=None,
+                                 constraints: dict = None, unadmittible_features: list = None):
         """
 
         :param [Numpy Array] x: instance encoded of the dataset
-        :param [str] y: extracted class from the surrogate
-        :param [Numpy Array] Z: Neighborhood instances
-        :param Y: all possible classes provided by the surrogate
+        :param [Numpy Array] neighborhood_dataset: Neighborhood instances
         :param [TabularDataset] dataset:
         :param features_map_inv:
-        :param multi_label:
+        :param [bool] multi_label:
         :param [EncDec] encdec:
         :param filter_crules:
-        :param constraints:
-        :param unadmittible_features: List of unadmittible features
+        :param [dict] constraints:
+        :param [list] unadmittible_features: List of unadmittible features
         :return:
         """
 
-        class_values = dataset.get_class_values()
-        class_name = dataset.class_name
+        class_values = neighborhood_dataset.get_class_values()
+        class_name = neighborhood_dataset.class_name
 
         clen = np.inf
         crule_list = list()
         delta_list = list()
 
-        y = self.dt.predict(Z)
+        #y = self.dt.predict(neighborhood_dataset.df)[0]
+        #Y = self.dt.predict(neighborhood_dataset.df)
 
-        Z1 = Z[np.where(Y != y)[0]]
-        x_dict = vector2dict(x, dataset.get_features_names())
-        for z in Z1:
+        Z_list = neighborhood_dataset.df.to_numpy()[np.where(Y != y)[0]]
+        x_dict = vector2dict(x, neighborhood_dataset.get_features_names())
+        for z in Z_list:
+            
             # estraggo la regola per ognuno
-            crule = self.get_rule(x = z, dataset= dataset, encdec = encdec)
+            crule = self.get_rule(x = z, dataset= neighborhood_dataset, encdec = encdec)
 
             delta = self.get_falsified_conditions(x_dict, crule)
             num_falsified_conditions = len(delta)
@@ -230,19 +230,18 @@ class DecisionTreeSurrogate(Surrogate):
                     continue
 
             if constraints is not None:
-
+                ##TODO
                 to_remove = list()
                 for p in crule.premises:
-                    if p.att in constraints.keys():
-                        if p.op == constraints[p.att]['op']:
-                            if p.thr > constraints[p.att]['thr']:
+                    if p.variable in constraints.keys():
+                        if p.operator == constraints[p.variable]['op']:
+                            if p.thr > constraints[p.variable]['thr']:
                                 break
                                 # caso corretto
-                            else:
-                                to_remove.append()
+                ##TODO
 
             if filter_crules is not None:
-                xc = self.apply_counterfactual(x, delta, dataset)
+                xc = self.apply_counterfactual(x, delta, neighborhood_dataset)
                 bb_outcomec = filter_crules(xc.reshape(1, -1))[0]
                 bb_outcomec = class_values[bb_outcomec] if isinstance(class_name, str) else multilabel2str(bb_outcomec,
                                                                                                            class_values)

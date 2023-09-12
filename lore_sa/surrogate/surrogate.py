@@ -27,5 +27,7 @@ class Surrogate(ABC):
         pass
 
     @abstractmethod
-    def get_counterfactual_rules(self,x, y):
+    def get_counterfactual_rules(self,x: np.array, neighborhood_dataset: Dataset, encdec: EncDec = None,
+                                 features_map_inv = None, multi_label: bool = False,  filter_crules=None,
+                                 constraints: dict = None, unadmittible_features: list =None):
         pass

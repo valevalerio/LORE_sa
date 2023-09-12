@@ -27,7 +27,7 @@ class TabularEnc(EncDec):
         self.encoded_features.update(self.label_enc.get_encoded_features())
 
         self.encoded_descriptor = self.label_enc.encoded_descriptor
-        return np.array([n for n in label_encoded])
+        return np.array([int(n) for n in label_encoded])
 
     def get_encoded_features(self):
         if self.encoded_features is None:
