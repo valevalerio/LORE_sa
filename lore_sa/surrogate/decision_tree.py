@@ -156,7 +156,7 @@ class DecisionTreeSurrogate(Surrogate):
                 premises.append(Expression(attribute, op, thr))
 
         premises = self.compact_premises(premises)
-        return Rule(premises, consequence)
+        return Rule(premises=premises, consequences=consequence, encoder=encoder)
 
     def compact_premises(self, premises_list):
         """

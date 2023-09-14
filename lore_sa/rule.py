@@ -1,4 +1,6 @@
 import json
+
+from lore_sa.encoder_decoder import EncDec
 from lore_sa.util import vector2dict
 from typing import Callable
 import operator
@@ -34,7 +36,7 @@ class Expression(object):
         it converts the logical operator into a string representation. E.g.: operator2string(operator.gt) = ">")
         """
 
-        operator_strings = {operator.gt: '>', operator.lt: '<',
+        operator_strings = {operator.gt: '>', operator.lt: '<', operator.ne: '!=',
                             operator.eq: '=', operator.ge: '>=', operator.le: '<='}
         if self.operator not in operator_strings:
             raise ValueError(
@@ -51,13 +53,15 @@ class Expression(object):
 
 class Rule(object):
 
-    def __init__(self, premises: list, consequences: Expression):
+    def __init__(self, premises: list, consequences: Expression, encoder: EncDec):
         """
         :param[list] premises: list of Expression objects representing the premises
         :param[Expression] cons: Expression representing the consequence
+        :param[EncDec] encoder: encoder to decode categorical rules
         """
-        self.premises = premises
-        self.consequences = consequences
+        self.encoder = encoder
+        self.premises = [self.decode_rule(p) for p in premises]
+        self.consequences = self.decode_rule(consequences)
 
     def _pstr(self):
         return '{ %s }' % (', '.join([str(p) for p in self.premises]))
@@ -80,12 +84,29 @@ class Rule(object):
     def __hash__(self):
         return hash(str(self))
 
+    def decode_rule(self, rule: Expression):
+        if 'categoric' not in self.encoder.dataset_descriptor.keys() or self.encoder.dataset_descriptor['categoric'] == {}:
+            return rule
+
+        if rule.variable.split('=')[0] in self.encoder.dataset_descriptor['categoric'].keys():
+            decoded_label = rule.variable.split("=")[0]
+            decoded_value = rule.variable.split("=")[1]
+            rule.variable = decoded_label
+            rule.value = decoded_value
+            if rule.operator == operator.le:
+                rule.operator = operator.ne
+            if rule.operator == operator.gt:
+                rule.operator = operator.eq
+            return rule
+        else:
+            return rule
+
     def is_covered(self, x, feature_names):
         xd = vector2dict(x, feature_names)
         for p in self.premises:
-            if p.op == '<=' and xd[p.att] > p.thr:
+            if p.operator == operator.le and xd[p.variable] > p.value:
                 return False
-            elif p.op == '>' and xd[p.att] <= p.thr:
+            elif p.operator == operator.gt and xd[p.variable] <= p.value:
                 return False
         return True
 

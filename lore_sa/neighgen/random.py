@@ -13,8 +13,6 @@ class RandomGenerator(NeighborhoodGenerator):
     def __init__(self):
         self.generated_data = None
 
-
-
     def generate(self,x, num_instances, descriptor, onehotencoder = None):
         """
         random generation of new instances. The starting instance x is only used to detect the value type of each feature, in order
