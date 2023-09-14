@@ -160,16 +160,17 @@
 <h1>lore_sa.rule.Rule<a class="headerlink" href="#lore-sa-rule-rule" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="lore_sa.rule.Rule">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lore_sa.rule.</span></span><span class="sig-name descname"><span class="pre">Rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">premises</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">consequences</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="lore_sa.rule.Expression.html#lore_sa.rule.Expression" title="lore_sa.rule.Expression"><span class="pre">Expression</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/rule.html#Rule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.rule.Rule" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lore_sa.rule.</span></span><span class="sig-name descname"><span class="pre">Rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">premises</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">consequences</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="lore_sa.rule.Expression.html#lore_sa.rule.Expression" title="lore_sa.rule.Expression"><span class="pre">Expression</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="lore_sa.encoder_decoder.EncDec.html#lore_sa.encoder_decoder.EncDec" title="lore_sa.encoder_decoder.enc_dec.EncDec"><span class="pre">EncDec</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/rule.html#Rule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.rule.Rule" title="Permalink to this definition"></a></dt>
 <dd><dl class="py method">
 <dt class="sig sig-object py" id="lore_sa.rule.Rule.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">premises</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">consequences</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="lore_sa.rule.Expression.html#lore_sa.rule.Expression" title="lore_sa.rule.Expression"><span class="pre">Expression</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/rule.html#Rule.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.rule.Rule.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">premises</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">consequences</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="lore_sa.rule.Expression.html#lore_sa.rule.Expression" title="lore_sa.rule.Expression"><span class="pre">Expression</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="lore_sa.encoder_decoder.EncDec.html#lore_sa.encoder_decoder.EncDec" title="lore_sa.encoder_decoder.enc_dec.EncDec"><span class="pre">EncDec</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/lore_sa/rule.html#Rule.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lore_sa.rule.Rule.__init__" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Param[list] premises<span class="colon">:</span></dt>
-<dd class="field-odd"><p>list of Expression objects representing the premises</p>
-</dd>
-<dt class="field-even">Param[Expression] cons<span class="colon">:</span></dt>
-<dd class="field-even"><p>Expression representing the consequence</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>premises</strong> (<em>[</em><em>list</em><em>]</em>) – list of Expression objects representing the premises</p></li>
+<li><p><strong>cons</strong> (<em>[</em><a class="reference internal" href="lore_sa.rule.Expression.html#lore_sa.rule.Expression" title="lore_sa.rule.Expression"><em>Expression</em></a><em>]</em>) – Expression representing the consequence</p></li>
+<li><p><strong>encoder</strong> (<em>[</em><a class="reference internal" href="lore_sa.encoder_decoder.EncDec.html#lore_sa.encoder_decoder.EncDec" title="lore_sa.encoder_decoder.EncDec"><em>EncDec</em></a><em>]</em>) – encoder to decode categorical rules</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -177,15 +178,18 @@
 <p class="rubric">Methods</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.rule.Rule.__init__" title="lore_sa.rule.Rule.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(premises, consequences)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lore_sa.rule.Rule.__init__" title="lore_sa.rule.Rule.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(premises, consequences, encoder)</p></td>
 <td><p><dl class="field-list simple">
-<dt class="field-odd">param[list] premises<span class="colon">:</span></dt>
+<dt class="field-odd">param [list] premises<span class="colon">:</span></dt>
 <dd class="field-odd"><p>list of Expression objects representing the premises</p>
 </dd>
 </dl>
 </p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_covered</span></code>(x, feature_names)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">decode_rule</span></code>(rule)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_covered</span></code>(x, feature_names)</p></td>
 <td><p></p></td>
 </tr>
 </tbody>

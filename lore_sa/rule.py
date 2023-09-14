@@ -55,9 +55,9 @@ class Rule(object):
 
     def __init__(self, premises: list, consequences: Expression, encoder: EncDec):
         """
-        :param[list] premises: list of Expression objects representing the premises
-        :param[Expression] cons: Expression representing the consequence
-        :param[EncDec] encoder: encoder to decode categorical rules
+        :param [list] premises: list of Expression objects representing the premises
+        :param [Expression] cons: Expression representing the consequence
+        :param [EncDec] encoder: encoder to decode categorical rules
         """
         self.encoder = encoder
         self.premises = [self.decode_rule(p) for p in premises]

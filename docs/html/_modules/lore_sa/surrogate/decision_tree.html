@@ -172,6 +172,7 @@
 <span class="kn">from</span> <span class="nn">lore_sa.rule</span> <span class="kn">import</span> <span class="n">Expression</span><span class="p">,</span> <span class="n">Rule</span>
 <span class="kn">from</span> <span class="nn">lore_sa.surrogate.surrogate</span> <span class="kn">import</span> <span class="n">Surrogate</span>
 <span class="kn">from</span> <span class="nn">lore_sa.util</span> <span class="kn">import</span> <span class="n">vector2dict</span><span class="p">,</span> <span class="n">multilabel2str</span>
+<span class="kn">import</span> <span class="nn">lore_sa</span>
 
 
 <div class="viewcode-block" id="DecisionTreeSurrogate"><a class="viewcode-back" href="../../../source/generated/lore_sa.surrogate.DecisionTreeSurrogate.html#lore_sa.surrogate.DecisionTreeSurrogate">[docs]</a><span class="k">class</span> <span class="nc">DecisionTreeSurrogate</span><span class="p">(</span><span class="n">Surrogate</span><span class="p">):</span>
@@ -260,7 +261,7 @@
 
 
 
-<div class="viewcode-block" id="DecisionTreeSurrogate.get_rule"><a class="viewcode-back" href="../../../source/generated/lore_sa.surrogate.DecisionTreeSurrogate.html#lore_sa.surrogate.DecisionTreeSurrogate.get_rule">[docs]</a>    <span class="k">def</span> <span class="nf">get_rule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">TabularDataset</span><span class="p">,</span> <span class="n">encdec</span><span class="p">:</span> <span class="n">EncDec</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="DecisionTreeSurrogate.get_rule"><a class="viewcode-back" href="../../../source/generated/lore_sa.surrogate.DecisionTreeSurrogate.html#lore_sa.surrogate.DecisionTreeSurrogate.get_rule">[docs]</a>    <span class="k">def</span> <span class="nf">get_rule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">TabularDataset</span><span class="p">,</span> <span class="n">encoder</span><span class="p">:</span> <span class="n">EncDec</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract the rules as the promises and consequences {p -&gt; y}, starting from a Decision Tree</span>
 
@@ -269,7 +270,7 @@
 <span class="sd">            }</span>
 
 <span class="sd">        :param [Numpy Array] x: instance encoded of the dataset to extract the rule</span>
-<span class="sd">        :param [TabularDataset] dataset:</span>
+<span class="sd">        :param [TabularDataset] dataset: Neighborhood instances</span>
 <span class="sd">        :param [EncDec] encdec:</span>
 <span class="sd">        :return [Rule]: Rule objects</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -278,7 +279,7 @@
         <span class="n">threshold</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">tree_</span><span class="o">.</span><span class="n">threshold</span>
         <span class="n">predicted_class</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
-        <span class="n">consequence</span> <span class="o">=</span> <span class="n">Expression</span><span class="p">(</span><span class="n">variable</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">class_name</span><span class="p">,</span> <span class="n">operator</span><span class="o">=</span><span class="n">operator</span><span class="o">.</span><span class="n">eq</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">encdec</span><span class="o">.</span><span class="n">decode_target_class</span><span class="p">(</span><span class="n">predicted_class</span><span class="p">))</span>
+        <span class="n">consequence</span> <span class="o">=</span> <span class="n">Expression</span><span class="p">(</span><span class="n">variable</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">class_name</span><span class="p">,</span> <span class="n">operator</span><span class="o">=</span><span class="n">operator</span><span class="o">.</span><span class="n">eq</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">encoder</span><span class="o">.</span><span class="n">decode_target_class</span><span class="p">(</span><span class="n">predicted_class</span><span class="p">))</span>
 
         <span class="n">leave_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="n">node_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">decision_path</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">indices</span>
@@ -291,8 +292,8 @@
             <span class="k">if</span> <span class="n">leave_id</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">node_id</span><span class="p">:</span>
                 <span class="k">break</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">encdec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">encdec</span><span class="p">,</span> <span class="n">OneHotEnc</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">encdec</span><span class="p">,</span> <span class="n">TabularEnc</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">encoder</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">encoder</span><span class="p">,</span> <span class="n">OneHotEnc</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">encoder</span><span class="p">,</span> <span class="n">TabularEnc</span><span class="p">):</span>
                         <span class="n">attribute</span> <span class="o">=</span> <span class="n">feature_names</span><span class="p">[</span><span class="n">feature</span><span class="p">[</span><span class="n">node_id</span><span class="p">]]</span>
                         <span class="k">if</span> <span class="n">attribute</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">numeric_columns</span><span class="p">:</span>
                             <span class="n">thr</span> <span class="o">=</span> <span class="kc">False</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">feature</span><span class="p">[</span><span class="n">node_id</span><span class="p">]]</span> <span class="o">&lt;=</span> <span class="n">threshold</span><span class="p">[</span><span class="n">node_id</span><span class="p">]</span> <span class="k">else</span> <span class="kc">True</span>
@@ -301,6 +302,7 @@
                             <span class="n">thr</span> <span class="o">=</span> <span class="n">threshold</span><span class="p">[</span><span class="n">node_id</span><span class="p">]</span>
                             <span class="n">op</span> <span class="o">=</span> <span class="n">operator</span><span class="o">.</span><span class="n">le</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">feature</span><span class="p">[</span><span class="n">node_id</span><span class="p">]]</span> <span class="o">&lt;=</span> <span class="n">threshold</span><span class="p">[</span><span class="n">node_id</span><span class="p">]</span> <span class="k">else</span> <span class="n">operator</span><span class="o">.</span><span class="n">gt</span>
                     <span class="k">else</span><span class="p">:</span>
+                        <span class="nb">print</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">encoder</span><span class="p">))</span>
                         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;unknown encoder instance &#39;</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">op</span> <span class="o">=</span> <span class="n">operator</span><span class="o">.</span><span class="n">le</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">feature</span><span class="p">[</span><span class="n">node_id</span><span class="p">]]</span> <span class="o">&lt;=</span> <span class="n">threshold</span><span class="p">[</span><span class="n">node_id</span><span class="p">]</span> <span class="k">else</span> <span class="n">operator</span><span class="o">.</span><span class="n">gt</span>
@@ -309,7 +311,7 @@
                 <span class="n">premises</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Expression</span><span class="p">(</span><span class="n">attribute</span><span class="p">,</span> <span class="n">op</span><span class="p">,</span> <span class="n">thr</span><span class="p">))</span>
 
         <span class="n">premises</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compact_premises</span><span class="p">(</span><span class="n">premises</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">Rule</span><span class="p">(</span><span class="n">premises</span><span class="p">,</span> <span class="n">consequence</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">Rule</span><span class="p">(</span><span class="n">premises</span><span class="o">=</span><span class="n">premises</span><span class="p">,</span> <span class="n">consequences</span><span class="o">=</span><span class="n">consequence</span><span class="p">,</span> <span class="n">encoder</span><span class="o">=</span><span class="n">encoder</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="DecisionTreeSurrogate.compact_premises"><a class="viewcode-back" href="../../../source/generated/lore_sa.surrogate.DecisionTreeSurrogate.html#lore_sa.surrogate.DecisionTreeSurrogate.compact_premises">[docs]</a>    <span class="k">def</span> <span class="nf">compact_premises</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">premises_list</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -342,36 +344,39 @@
                 <span class="n">compact_plist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">alist</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">compact_plist</span></div>
 
-<div class="viewcode-block" id="DecisionTreeSurrogate.get_counterfactual_rules"><a class="viewcode-back" href="../../../source/generated/lore_sa.surrogate.DecisionTreeSurrogate.html#lore_sa.surrogate.DecisionTreeSurrogate.get_counterfactual_rules">[docs]</a>    <span class="k">def</span> <span class="nf">get_counterfactual_rules</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">TabularDataset</span><span class="p">,</span>
-                                 <span class="n">features_map_inv</span><span class="p">,</span> <span class="n">multi_label</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">encdec</span><span class="p">:</span> <span class="n">EncDec</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">filter_crules</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                 <span class="n">constraints</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">unadmittible_features</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="DecisionTreeSurrogate.get_counterfactual_rules"><a class="viewcode-back" href="../../../source/generated/lore_sa.surrogate.DecisionTreeSurrogate.html#lore_sa.surrogate.DecisionTreeSurrogate.get_counterfactual_rules">[docs]</a>    <span class="k">def</span> <span class="nf">get_counterfactual_rules</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">class_name</span><span class="p">,</span> <span class="n">feature_names</span><span class="p">,</span> <span class="n">neighborhood_dataset</span><span class="p">:</span> <span class="n">TabularDataset</span><span class="p">,</span>
+                                 <span class="n">features_map_inv</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">multi_label</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">encoder</span><span class="p">:</span> <span class="n">EncDec</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">filter_crules</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                 <span class="n">constraints</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">unadmittible_features</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">        :param [Numpy Array] x: instance encoded of the dataset</span>
-<span class="sd">        :param [str] y: extracted class from the surrogate</span>
-<span class="sd">        :param [Numpy Array] Z: Neighborhood instances</span>
-<span class="sd">        :param Y: all possible classes provided by the surrogate</span>
+<span class="sd">        :param [Numpy Array] neighborhood_dataset: Neighborhood instances</span>
 <span class="sd">        :param [TabularDataset] dataset:</span>
 <span class="sd">        :param features_map_inv:</span>
-<span class="sd">        :param multi_label:</span>
+<span class="sd">        :param [bool] multi_label:</span>
 <span class="sd">        :param [EncDec] encdec:</span>
 <span class="sd">        :param filter_crules:</span>
-<span class="sd">        :param constraints:</span>
-<span class="sd">        :param unadmittible_features: List of unadmittible features</span>
+<span class="sd">        :param [dict] constraints:</span>
+<span class="sd">        :param [list] unadmittible_features: List of unadmittible features</span>
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">class_values</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">get_class_values</span><span class="p">()</span>
-        <span class="n">class_name</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">class_name</span>
+        <span class="n">class_values</span> <span class="o">=</span> <span class="n">neighborhood_dataset</span><span class="o">.</span><span class="n">get_class_values</span><span class="p">()</span>
+        <span class="n">class_name</span> <span class="o">=</span> <span class="n">neighborhood_dataset</span><span class="o">.</span><span class="n">class_name</span>
 
         <span class="n">clen</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
         <span class="n">crule_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
         <span class="n">delta_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
-        <span class="n">Z1</span> <span class="o">=</span> <span class="n">Z</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Y</span> <span class="o">!=</span> <span class="n">y</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]</span>
-        <span class="n">x_dict</span> <span class="o">=</span> <span class="n">vector2dict</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">get_features_names</span><span class="p">())</span>
-        <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">Z1</span><span class="p">:</span>
+
+        <span class="c1">#y = self.dt.predict(neighborhood_dataset.df)[0]</span>
+        <span class="c1">#Y = self.dt.predict(neighborhood_dataset.df)</span>
+
+        <span class="n">Z_list</span> <span class="o">=</span> <span class="n">neighborhood_dataset</span><span class="o">.</span><span class="n">df</span><span class="p">[[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">feature_names</span> <span class="k">if</span> <span class="n">x</span><span class="o">!=</span><span class="n">class_name</span><span class="p">]]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+        <span class="n">x_dict</span> <span class="o">=</span> <span class="n">vector2dict</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">neighborhood_dataset</span><span class="o">.</span><span class="n">get_features_names</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">Z_list</span><span class="p">:</span>
+            
             <span class="c1"># estraggo la regola per ognuno</span>
-            <span class="n">crule</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_rule</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">z</span><span class="p">,</span> <span class="n">dataset</span><span class="o">=</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">encdec</span> <span class="o">=</span> <span class="n">encdec</span><span class="p">)</span>
+            <span class="n">crule</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_rule</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">z</span><span class="p">,</span> <span class="n">dataset</span><span class="o">=</span> <span class="n">neighborhood_dataset</span><span class="p">,</span> <span class="n">encoder</span> <span class="o">=</span> <span class="n">encoder</span><span class="p">)</span>
 
             <span class="n">delta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_falsified_conditions</span><span class="p">(</span><span class="n">x_dict</span><span class="p">,</span> <span class="n">crule</span><span class="p">)</span>
             <span class="n">num_falsified_conditions</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span>
@@ -382,19 +387,18 @@
                     <span class="k">continue</span>
 
             <span class="k">if</span> <span class="n">constraints</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-
+                <span class="c1">##TODO</span>
                 <span class="n">to_remove</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
                 <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">crule</span><span class="o">.</span><span class="n">premises</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">att</span> <span class="ow">in</span> <span class="n">constraints</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-                        <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">op</span> <span class="o">==</span> <span class="n">constraints</span><span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">att</span><span class="p">][</span><span class="s1">&#39;op&#39;</span><span class="p">]:</span>
-                            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">thr</span> <span class="o">&gt;</span> <span class="n">constraints</span><span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">att</span><span class="p">][</span><span class="s1">&#39;thr&#39;</span><span class="p">]:</span>
+                    <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">variable</span> <span class="ow">in</span> <span class="n">constraints</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                        <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">operator</span> <span class="o">==</span> <span class="n">constraints</span><span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">variable</span><span class="p">][</span><span class="s1">&#39;op&#39;</span><span class="p">]:</span>
+                            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">thr</span> <span class="o">&gt;</span> <span class="n">constraints</span><span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">variable</span><span class="p">][</span><span class="s1">&#39;thr&#39;</span><span class="p">]:</span>
                                 <span class="k">break</span>
                                 <span class="c1"># caso corretto</span>
-                            <span class="k">else</span><span class="p">:</span>
-                                <span class="n">to_remove</span><span class="o">.</span><span class="n">append</span><span class="p">()</span>
+                <span class="c1">##TODO</span>
 
             <span class="k">if</span> <span class="n">filter_crules</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">xc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_counterfactual</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">delta</span><span class="p">,</span> <span class="n">dataset</span><span class="p">)</span>
+                <span class="n">xc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_counterfactual</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">delta</span><span class="p">,</span> <span class="n">neighborhood_dataset</span><span class="p">)</span>
                 <span class="n">bb_outcomec</span> <span class="o">=</span> <span class="n">filter_crules</span><span class="p">(</span><span class="n">xc</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
                 <span class="n">bb_outcomec</span> <span class="o">=</span> <span class="n">class_values</span><span class="p">[</span><span class="n">bb_outcomec</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">class_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">multilabel2str</span><span class="p">(</span><span class="n">bb_outcomec</span><span class="p">,</span>
                                                                                                            <span class="n">class_values</span><span class="p">)</span>
