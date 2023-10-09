@@ -2,17 +2,6 @@
 Modules
 =======
 
-:mod:`lore_sa.lorem`: LOREM class
-=================================
-
-.. currentmodule:: lore_sa
-
-.. autosummary::
-   :nosignatures:
-   :toctree: generated/
-
-   lorem.LOREM
-
 
 :mod:`lore_sa.bbox`: BlackBox abstract class
 ============================================
