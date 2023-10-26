@@ -10,7 +10,7 @@ class EncDecTest(unittest.TestCase):
 
     descriptor_dummy = {}
     def setUp(self):
-        self.descriptor_dummy = {'categoric': {'col3': {'count': {'America': 1, 'Europe': 1, 'Africa': 1},
+        self.descriptor_dummy = {'catgorical': {'col3': {'count': {'America': 1, 'Europe': 1, 'Africa': 1},
                                                    'distinct_values': ['America', 'Europe', 'Africa'],
                                                    'index': 2},
                                           'colours': {
@@ -26,7 +26,7 @@ class EncDecTest(unittest.TestCase):
                                                                           'Graduate', 'Post-graduate']}
                                         }}
 
-        self.tabular_descriptor = {'categoric': {'col3': {'count': {'America': 1, 'Europe': 1, 'Africa': 1},
+        self.tabular_descriptor = {'catgorical': {'col3': {'count': {'America': 1, 'Europe': 1, 'Africa': 1},
                                                         'distinct_values': ['America', 'Europe', 'Africa'],
                                                         'index': 2},
                                                'colours': {
@@ -53,7 +53,7 @@ class EncDecTest(unittest.TestCase):
         wrong_descriptor = {}
         with self.assertRaises(Exception) as context:
             one_hot_enc = OneHotEnc(wrong_descriptor)
-            self.assertEqual("Dataset descriptor is malformed for One-Hot Encoder: 'categoric' key is not present", str(context.exception))
+            self.assertEqual("Dataset descriptor is malformed for One-Hot Encoder: 'catgorical' key is not present", str(context.exception))
 
     def test_one_hot_encoder_init_with_features_encoder(self):
         one_hot_enc = OneHotEnc(self.descriptor_dummy)
