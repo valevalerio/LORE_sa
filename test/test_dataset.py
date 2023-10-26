@@ -95,11 +95,6 @@ class DatasetTest(unittest.TestCase):
                         'distinct_values': ['America', 'Europe'],
                         'index': 2}})
 
-    def test_create_data_descriptor(self):
-        name = "workclass"
-        dataset = Dataset.from_csv("resources/adult.csv", class_name=name)
-        descr = dataset.create_data_descriptor()
-        print(descr)
 
 if __name__ == '__main__':
     unittest.main()
