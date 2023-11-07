@@ -85,10 +85,10 @@ class Rule(object):
         return hash(str(self))
 
     def decode_rule(self, rule: Expression):
-        if 'categoric' not in self.encoder.dataset_descriptor.keys() or self.encoder.dataset_descriptor['categoric'] == {}:
+        if 'catgorical' not in self.encoder.dataset_descriptor.keys() or self.encoder.dataset_descriptor['catgorical'] == {}:
             return rule
 
-        if rule.variable.split('=')[0] in self.encoder.dataset_descriptor['categoric'].keys():
+        if rule.variable.split('=')[0] in self.encoder.dataset_descriptor['catgorical'].keys():
             decoded_label = rule.variable.split("=")[0]
             decoded_value = rule.variable.split("=")[1]
             rule.variable = decoded_label
