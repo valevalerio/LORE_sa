@@ -34,7 +34,7 @@ class RandomGenerator(NeighborhoodGenerator):
             instance = [None for e in range(len(x))]
             
             
-            for name,feature in descriptor['catgorical'].items():
+            for name,feature in descriptor['categorical'].items():
                 if onehotencoder is not None:
                     #feature is encoded, so i need to random generate chunks of one-hot-encoded values
 

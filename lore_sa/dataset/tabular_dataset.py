@@ -53,7 +53,7 @@ class TabularDataset(Dataset):
         if class_name is not None:
             self.df = self.df[[x for x in self.df.columns if x != class_name] + [class_name]]
         
-        self.descriptor = {'numeric':{}, 'catgorical':{}}
+        self.descriptor = {'numeric':{}, 'categorical':{}}
 
         #creation of a default version of descriptor
         self.update_descriptor()
@@ -62,7 +62,7 @@ class TabularDataset(Dataset):
         """
         it creates the dataset descriptor dictionary
         """
-        self.descriptor = {'numeric':{}, 'catgorical':{}}
+        self.descriptor = {'numeric':{}, 'categorical':{}}
         for feature in self.df.columns:
             index = self.df.columns.get_loc(feature)
             if feature in self.df.select_dtypes(include=np.number).columns.tolist():
@@ -82,7 +82,7 @@ class TabularDataset(Dataset):
                 desc = {'index': index,
                         'distinct_values' : list(self.df[feature].unique()),
                         'count' : {x : len(self.df[self.df[feature] == x]) for x in list(self.df[feature].unique())}}
-                self.descriptor['catgorical'][feature] = desc
+                self.descriptor['categorical'][feature] = desc
 
         self.descriptor = self.set_target_label(self.descriptor)
 

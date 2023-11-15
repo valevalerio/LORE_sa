@@ -141,6 +141,7 @@ class DecisionTreeSurrogate(Surrogate):
                     if isinstance(encoder, OneHotEnc) or isinstance(encoder, TabularEnc):
                         attribute = feature_names[feature[node_id]]
                         if attribute not in numeric_columns:
+                            print (attribute)
                             thr = False if x[0][feature[node_id]] <= threshold[node_id] else True
                             op = operator.eq
                         else:
@@ -222,13 +223,14 @@ class DecisionTreeSurrogate(Surrogate):
             
             # estraggo la regola per ognuno
             crule = self.get_rule(x = z, dataset= neighborhood_dataset, encoder = encoder)
-
+            
             delta = self.get_falsified_conditions(x_dict, crule)
             num_falsified_conditions = len(delta)
-
+            
             if unadmittible_features is not None:
                 is_feasible = self.check_feasibility_of_falsified_conditions(delta, unadmittible_features)
                 if is_feasible is False:
+                    
                     continue
 
             if constraints is not None:
@@ -263,11 +265,12 @@ class DecisionTreeSurrogate(Surrogate):
                     clen = num_falsified_conditions
                     crule_list = [crule]
                     delta_list = [delta]
+                    print (crule,delta)
                 elif num_falsified_conditions == clen:
                     if delta not in delta_list:
                         crule_list.append(crule)
                         delta_list.append(delta)
-
+        
         return crule_list, delta_list
 
     def get_falsified_conditions(self, x_dict: dict, crule: Rule):
@@ -280,12 +283,13 @@ class DecisionTreeSurrogate(Surrogate):
         delta = []
         for p in crule.premises:
             try:
-                if p.operator == operator.le and x_dict[p.att] > p.value:
+                if p.operator == operator.le and x_dict[p.variable] > p.value:
                     delta.append(p)
-                elif p.operator == operator.gt and x_dict[p.att] <= p.value:
+                elif p.operator == operator.gt and x_dict[p.variable] <= p.value:
                     delta.append(p)
             except:
-                print('pop', p.operator2string(), 'xd', x_dict, 'xd di p ', p.variable, 'hthrr', p.value)
+                #print('pop', p.operator2string(), 'xd', x_dict, 'xd di p ', p.variable, 'hthrr', p.value)
+                
                 continue
         return delta
 

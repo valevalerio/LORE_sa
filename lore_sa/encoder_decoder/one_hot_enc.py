@@ -15,8 +15,8 @@ class OneHotEnc(EncDec):
         super().__init__(descriptor)
         self.type='one-hot'
         self.encoded_descriptor = copy.deepcopy(self.dataset_descriptor)
-        if self.dataset_descriptor.get("catgorical") is None:
-            raise Exception("Dataset descriptor is malformed for One-Hot Encoder: 'catgorical' key is not present")
+        if self.dataset_descriptor.get("categorical") is None:
+            raise Exception("Dataset descriptor is malformed for One-Hot Encoder: 'categorical' key is not present")
 
     def encode(self, x: np.array):
         """
@@ -28,9 +28,9 @@ class OneHotEnc(EncDec):
         encoded_feature_list = []
         original_encoded_feature_list = []
         self.encoded_descriptor = copy.deepcopy(self.dataset_descriptor)
-        for k in self.encoded_descriptor['catgorical'].keys():
+        for k in self.encoded_descriptor['categorical'].keys():
             
-            label_dict = self.encoded_descriptor['catgorical'][k]
+            label_dict = self.encoded_descriptor['categorical'][k]
             label_index = label_dict['index']
 
             mapping = {}
@@ -53,7 +53,7 @@ class OneHotEnc(EncDec):
         return x
 
     def update_encoded_index(self,current_field, size: int):
-        current_index_value = self.encoded_descriptor['catgorical'][current_field]['index']
+        current_index_value = self.encoded_descriptor['categorical'][current_field]['index']
         for type in self.encoded_descriptor.keys():
             for k in self.encoded_descriptor[type]:
                 if k != current_field:
@@ -64,13 +64,13 @@ class OneHotEnc(EncDec):
     def clean_encoded_descriptor_by_old(self,old_field):
         for current_field in old_field:
             #remove old field
-            self.encoded_descriptor['catgorical'].pop(current_field)
+            self.encoded_descriptor['categorical'].pop(current_field)
 
     def add_encoded_features(self, encoded_features):
         for feature in encoded_features:
             #add new features encoded
             new_encoded_feature = {v:dict(index=k) for k,v in feature.items()}
-            self.encoded_descriptor['catgorical'].update(new_encoded_feature)
+            self.encoded_descriptor['categorical'].update(new_encoded_feature)
 
 
     def get_encoded_features(self):
@@ -78,7 +78,7 @@ class OneHotEnc(EncDec):
             raise Exception("You have not run the encoder yet")
         else:
             for type in self.encoded_descriptor.keys():
-                if type == "catgorical":
+                if type == "categorical":
                     continue
                 else:
                     for k in self.encoded_descriptor[type]:
@@ -99,8 +99,8 @@ class OneHotEnc(EncDec):
         :param [Numpy array] x: Array to decode
         :return [Numpy array]: Decoded array
         """
-        for k in self.dataset_descriptor['catgorical'].keys():
-            label_dict = self.dataset_descriptor['catgorical'][k]
+        for k in self.dataset_descriptor['categorical'].keys():
+            label_dict = self.dataset_descriptor['categorical'][k]
             label_index = label_dict['index']
 
             mapping = {}
