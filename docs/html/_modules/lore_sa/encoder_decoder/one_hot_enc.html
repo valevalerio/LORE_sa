@@ -166,8 +166,8 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">descriptor</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="o">=</span><span class="s1">&#39;one-hot&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">encoded_descriptor</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_descriptor</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_descriptor</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;categoric&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Dataset descriptor is malformed for One-Hot Encoder: &#39;categoric&#39; key is not present&quot;</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_descriptor</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;categorical&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Dataset descriptor is malformed for One-Hot Encoder: &#39;categorical&#39; key is not present&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="OneHotEnc.encode"><a class="viewcode-back" href="../../../source/generated/lore_sa.encoder_decoder.OneHotEnc.html#lore_sa.encoder_decoder.OneHotEnc.encode">[docs]</a>    <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -179,9 +179,9 @@
         <span class="n">encoded_feature_list</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">original_encoded_feature_list</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">encoded_descriptor</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_descriptor</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoded_descriptor</span><span class="p">[</span><span class="s1">&#39;categoric&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoded_descriptor</span><span class="p">[</span><span class="s1">&#39;categorical&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             
-            <span class="n">label_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoded_descriptor</span><span class="p">[</span><span class="s1">&#39;categoric&#39;</span><span class="p">][</span><span class="n">k</span><span class="p">]</span>
+            <span class="n">label_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoded_descriptor</span><span class="p">[</span><span class="s1">&#39;categorical&#39;</span><span class="p">][</span><span class="n">k</span><span class="p">]</span>
             <span class="n">label_index</span> <span class="o">=</span> <span class="n">label_dict</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">]</span>
 
             <span class="n">mapping</span> <span class="o">=</span> <span class="p">{}</span>
@@ -204,7 +204,7 @@
         <span class="k">return</span> <span class="n">x</span></div>
 
     <span class="k">def</span> <span class="nf">update_encoded_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">current_field</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-        <span class="n">current_index_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoded_descriptor</span><span class="p">[</span><span class="s1">&#39;categoric&#39;</span><span class="p">][</span><span class="n">current_field</span><span class="p">][</span><span class="s1">&#39;index&#39;</span><span class="p">]</span>
+        <span class="n">current_index_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoded_descriptor</span><span class="p">[</span><span class="s1">&#39;categorical&#39;</span><span class="p">][</span><span class="n">current_field</span><span class="p">][</span><span class="s1">&#39;index&#39;</span><span class="p">]</span>
         <span class="k">for</span> <span class="nb">type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoded_descriptor</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoded_descriptor</span><span class="p">[</span><span class="nb">type</span><span class="p">]:</span>
                 <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="n">current_field</span><span class="p">:</span>
@@ -215,13 +215,13 @@
     <span class="k">def</span> <span class="nf">clean_encoded_descriptor_by_old</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">old_field</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">current_field</span> <span class="ow">in</span> <span class="n">old_field</span><span class="p">:</span>
             <span class="c1">#remove old field</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">encoded_descriptor</span><span class="p">[</span><span class="s1">&#39;categoric&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">current_field</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">encoded_descriptor</span><span class="p">[</span><span class="s1">&#39;categorical&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">current_field</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">add_encoded_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">encoded_features</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">encoded_features</span><span class="p">:</span>
             <span class="c1">#add new features encoded</span>
             <span class="n">new_encoded_feature</span> <span class="o">=</span> <span class="p">{</span><span class="n">v</span><span class="p">:</span><span class="nb">dict</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">feature</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">encoded_descriptor</span><span class="p">[</span><span class="s1">&#39;categoric&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_encoded_feature</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">encoded_descriptor</span><span class="p">[</span><span class="s1">&#39;categorical&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_encoded_feature</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="OneHotEnc.get_encoded_features"><a class="viewcode-back" href="../../../source/generated/lore_sa.encoder_decoder.OneHotEnc.html#lore_sa.encoder_decoder.OneHotEnc.get_encoded_features">[docs]</a>    <span class="k">def</span> <span class="nf">get_encoded_features</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -229,7 +229,7 @@
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;You have not run the encoder yet&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">for</span> <span class="nb">type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoded_descriptor</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-                <span class="k">if</span> <span class="nb">type</span> <span class="o">==</span> <span class="s2">&quot;categoric&quot;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">type</span> <span class="o">==</span> <span class="s2">&quot;categorical&quot;</span><span class="p">:</span>
                     <span class="k">continue</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoded_descriptor</span><span class="p">[</span><span class="nb">type</span><span class="p">]:</span>
@@ -250,8 +250,8 @@
 <span class="sd">        :param [Numpy array] x: Array to decode</span>
 <span class="sd">        :return [Numpy array]: Decoded array</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_descriptor</span><span class="p">[</span><span class="s1">&#39;categoric&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-            <span class="n">label_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_descriptor</span><span class="p">[</span><span class="s1">&#39;categoric&#39;</span><span class="p">][</span><span class="n">k</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_descriptor</span><span class="p">[</span><span class="s1">&#39;categorical&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">label_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_descriptor</span><span class="p">[</span><span class="s1">&#39;categorical&#39;</span><span class="p">][</span><span class="n">k</span><span class="p">]</span>
             <span class="n">label_index</span> <span class="o">=</span> <span class="n">label_dict</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">]</span>
 
             <span class="n">mapping</span> <span class="o">=</span> <span class="p">{}</span>

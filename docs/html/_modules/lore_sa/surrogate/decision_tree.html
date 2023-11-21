@@ -292,6 +292,7 @@
                     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">encoder</span><span class="p">,</span> <span class="n">OneHotEnc</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">encoder</span><span class="p">,</span> <span class="n">TabularEnc</span><span class="p">):</span>
                         <span class="n">attribute</span> <span class="o">=</span> <span class="n">feature_names</span><span class="p">[</span><span class="n">feature</span><span class="p">[</span><span class="n">node_id</span><span class="p">]]</span>
                         <span class="k">if</span> <span class="n">attribute</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">numeric_columns</span><span class="p">:</span>
+                            <span class="nb">print</span> <span class="p">(</span><span class="n">attribute</span><span class="p">)</span>
                             <span class="n">thr</span> <span class="o">=</span> <span class="kc">False</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">feature</span><span class="p">[</span><span class="n">node_id</span><span class="p">]]</span> <span class="o">&lt;=</span> <span class="n">threshold</span><span class="p">[</span><span class="n">node_id</span><span class="p">]</span> <span class="k">else</span> <span class="kc">True</span>
                             <span class="n">op</span> <span class="o">=</span> <span class="n">operator</span><span class="o">.</span><span class="n">eq</span>
                         <span class="k">else</span><span class="p">:</span>
@@ -373,13 +374,14 @@
             
             <span class="c1"># estraggo la regola per ognuno</span>
             <span class="n">crule</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_rule</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">z</span><span class="p">,</span> <span class="n">dataset</span><span class="o">=</span> <span class="n">neighborhood_dataset</span><span class="p">,</span> <span class="n">encoder</span> <span class="o">=</span> <span class="n">encoder</span><span class="p">)</span>
-
+            
             <span class="n">delta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_falsified_conditions</span><span class="p">(</span><span class="n">x_dict</span><span class="p">,</span> <span class="n">crule</span><span class="p">)</span>
             <span class="n">num_falsified_conditions</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span>
-
+            
             <span class="k">if</span> <span class="n">unadmittible_features</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">is_feasible</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_feasibility_of_falsified_conditions</span><span class="p">(</span><span class="n">delta</span><span class="p">,</span> <span class="n">unadmittible_features</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">is_feasible</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+                    
                     <span class="k">continue</span>
 
             <span class="k">if</span> <span class="n">constraints</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -414,11 +416,12 @@
                     <span class="n">clen</span> <span class="o">=</span> <span class="n">num_falsified_conditions</span>
                     <span class="n">crule_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">crule</span><span class="p">]</span>
                     <span class="n">delta_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">delta</span><span class="p">]</span>
+                    <span class="nb">print</span> <span class="p">(</span><span class="n">crule</span><span class="p">,</span><span class="n">delta</span><span class="p">)</span>
                 <span class="k">elif</span> <span class="n">num_falsified_conditions</span> <span class="o">==</span> <span class="n">clen</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">delta</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">delta_list</span><span class="p">:</span>
                         <span class="n">crule_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">crule</span><span class="p">)</span>
                         <span class="n">delta_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span>
-
+        
         <span class="k">return</span> <span class="n">crule_list</span><span class="p">,</span> <span class="n">delta_list</span></div>
 
 <div class="viewcode-block" id="DecisionTreeSurrogate.get_falsified_conditions"><a class="viewcode-back" href="../../../source/generated/lore_sa.surrogate.DecisionTreeSurrogate.html#lore_sa.surrogate.DecisionTreeSurrogate.get_falsified_conditions">[docs]</a>    <span class="k">def</span> <span class="nf">get_falsified_conditions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">crule</span><span class="p">:</span> <span class="n">Rule</span><span class="p">):</span>
@@ -431,12 +434,13 @@
         <span class="n">delta</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">crule</span><span class="o">.</span><span class="n">premises</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">operator</span> <span class="o">==</span> <span class="n">operator</span><span class="o">.</span><span class="n">le</span> <span class="ow">and</span> <span class="n">x_dict</span><span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">att</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">p</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">operator</span> <span class="o">==</span> <span class="n">operator</span><span class="o">.</span><span class="n">le</span> <span class="ow">and</span> <span class="n">x_dict</span><span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">variable</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">p</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
                     <span class="n">delta</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-                <span class="k">elif</span> <span class="n">p</span><span class="o">.</span><span class="n">operator</span> <span class="o">==</span> <span class="n">operator</span><span class="o">.</span><span class="n">gt</span> <span class="ow">and</span> <span class="n">x_dict</span><span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">att</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">p</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+                <span class="k">elif</span> <span class="n">p</span><span class="o">.</span><span class="n">operator</span> <span class="o">==</span> <span class="n">operator</span><span class="o">.</span><span class="n">gt</span> <span class="ow">and</span> <span class="n">x_dict</span><span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">variable</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">p</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
                     <span class="n">delta</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
             <span class="k">except</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;pop&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">operator2string</span><span class="p">(),</span> <span class="s1">&#39;xd&#39;</span><span class="p">,</span> <span class="n">x_dict</span><span class="p">,</span> <span class="s1">&#39;xd di p &#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">variable</span><span class="p">,</span> <span class="s1">&#39;hthrr&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+                <span class="c1">#print(&#39;pop&#39;, p.operator2string(), &#39;xd&#39;, x_dict, &#39;xd di p &#39;, p.variable, &#39;hthrr&#39;, p.value)</span>
+                
                 <span class="k">continue</span>
         <span class="k">return</span> <span class="n">delta</span></div>
 
