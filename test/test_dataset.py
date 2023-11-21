@@ -3,7 +3,7 @@ import pandas
 
 from lore_sa.dataset import TabularDataset
 
-descriptor_dummy = {'catgorical': {'col3': {'count': {'America': 1, 'Europe': 1},
+descriptor_dummy = {'categorical': {'col3': {'count': {'America': 1, 'Europe': 1},
                         'distinct_values': ['America', 'Europe'],
                         'index': 2}},
                      'numeric': {'col1': {'index': 0,
