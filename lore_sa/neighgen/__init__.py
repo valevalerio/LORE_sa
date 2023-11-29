@@ -1,6 +1,6 @@
 
-from .random import RandomGenerator
+from .random import TabularRandomGenerator
 
 __all__ = [
-    "RandomGenerator"
+    "TabularRandomGenerator"
 ]

@@ -4,9 +4,9 @@ from lore_sa.dataset.tabular_dataset import TabularDataset
 import pandas as pd
 import numpy as np
 
-__all__ = ["NeighborhoodGenerator","RandomGenerator"]
+__all__ = ["NeighborhoodGenerator", "TabularRandomGenerator"]
 
-class RandomGenerator(NeighborhoodGenerator):
+class TabularRandomGenerator(NeighborhoodGenerator):
     """
     Random Generator creates neighbor instances by generating random values starting from the instance to explain
     """

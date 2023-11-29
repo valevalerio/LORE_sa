@@ -10,7 +10,7 @@ class Dataset():
     @abstractmethod
     def update_descriptor(self):
         """
-        it creates the dataset descriptor dictionary
+        it updates the dataset descriptor dictionary depending on the content of the dataset
         """
 
     def set_descriptor(self, descriptor):

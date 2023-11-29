@@ -24,7 +24,6 @@ class DecisionTreeSurrogate(Surrogate):
 
     def __init__(self, kind = None, preprocessing=None):
         super().__init__(kind, preprocessing)
-        self.dt = None
 
     def train(self, Z, Yb, weights = None, class_values = None, multi_label: bool= False, one_vs_rest: bool = False, cv = 5, prune_tree: bool = False):
         """
@@ -39,7 +38,7 @@ class DecisionTreeSurrogate(Surrogate):
         :param [bool] prune_tree:
         :return:
         """
-        self.dt = DecisionTreeClassifier()
+        dt = DecisionTreeClassifier()
         if prune_tree is True:
             param_list = {'min_samples_split': [ 0.01, 0.05, 0.1, 0.2, 3, 2],
                           'min_samples_leaf': [0.001, 0.01, 0.05, 0.1,  2, 4],
@@ -57,18 +56,18 @@ class DecisionTreeSurrogate(Surrogate):
             else:
                 scoring = 'precision_samples'
 
-            dt_search = sklearn.model_selection.HalvingGridSearchCV(self.dt, param_grid=param_list, scoring=scoring, cv=cv, n_jobs=-1)
+            dt_search = sklearn.model_selection.HalvingGridSearchCV(dt, param_grid=param_list, scoring=scoring, cv=cv, n_jobs=-1)
             logger.info('Search the best estimator')
             logger.info('Start time: {0}'.format(datetime.datetime.now()))
             dt_search.fit(Z, Yb, sample_weight=weights)
             logger.info('End time: {0}'.format(datetime.datetime.now()))
-            self.dt = dt_search.best_estimator_
+            dt = dt_search.best_estimator_
             logger.info('Pruning')
-            self.prune_duplicate_leaves(self.dt)
+            self.prune_duplicate_leaves(dt)
         else:
-            self.dt.fit(Z, Yb)
+            return dt.fit(Z, Yb)
 
-        return self.dt
+        return dt
 
 
     def is_leaf(self, inner_tree, index):
@@ -106,7 +105,7 @@ class DecisionTreeSurrogate(Surrogate):
 
 
 
-    def get_rule(self, x: np.array, dataset: TabularDataset, encoder: EncDec = None):
+    def get_rule(self, x: np.array, dt, dataset: TabularDataset, encoder: EncDec = None):
         """
         Extract the rules as the promises and consequences {p -> y}, starting from a Decision Tree
 
@@ -120,14 +119,14 @@ class DecisionTreeSurrogate(Surrogate):
         :return [Rule]: Rule objects
         """
         x = x.reshape(1, -1)
-        feature = self.dt.tree_.feature
-        threshold = self.dt.tree_.threshold
-        predicted_class = self.dt.predict(x)
+        feature = dt.tree_.feature
+        threshold = dt.tree_.threshold
+        predicted_class = dt.predict(x)
 
         consequence = Expression(variable=dataset.class_name, operator=operator.eq, value=encoder.decode_target_class(predicted_class))
 
-        leave_id = self.dt.apply(x)
-        node_index = self.dt.decision_path(x).indices
+        leave_id = dt.apply(x)
+        node_index = dt.decision_path(x).indices
 
         feature_names = dataset.get_features_names()
         numeric_columns = dataset.get_numeric_columns()
@@ -190,7 +189,7 @@ class DecisionTreeSurrogate(Surrogate):
                 compact_plist.append(alist[0])
         return compact_plist
 
-    def get_counterfactual_rules(self, x: np.array, class_name, feature_names, neighborhood_dataset: TabularDataset,
+    def get_counterfactual_rules(self, x: np.array, dt, class_name, feature_names, neighborhood_dataset: TabularDataset,
                                  features_map_inv = None, multi_label: bool =False, encoder: EncDec = None, filter_crules=None,
                                  constraints: dict = None, unadmittible_features: list = None):
         """
@@ -222,7 +221,7 @@ class DecisionTreeSurrogate(Surrogate):
         for z in Z_list:
             
             # estraggo la regola per ognuno
-            crule = self.get_rule(x = z, dataset= neighborhood_dataset, encoder = encoder)
+            crule = self.get_rule(x = z, surr_model = dt, dataset= neighborhood_dataset, encoder = encoder)
             
             delta = self.get_falsified_conditions(x_dict, crule)
             num_falsified_conditions = len(delta)

@@ -23,11 +23,11 @@ class Surrogate(ABC):
         pass
 
     @abstractmethod
-    def get_rule(self, x: np.array, dataset: Dataset, encdec: EncDec = None):
+    def get_rule(self, x: np.array, surr_model, dataset: Dataset, encdec: EncDec = None):
         pass
 
     @abstractmethod
-    def get_counterfactual_rules(self, x: np.array, class_name, feature_names, neighborhood_dataset: Dataset,
+    def get_counterfactual_rules(self, x: np.array, surr_model, class_name, feature_names, neighborhood_dataset: Dataset,
                                  features_map_inv=None, multi_label: bool = False, encoder: EncDec = None,
                                  filter_crules=None, constraints: dict = None, unadmittible_features: list = None):
         pass

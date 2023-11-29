@@ -18,7 +18,7 @@ class OneHotEnc(EncDec):
         if self.dataset_descriptor.get("categorical") is None:
             raise Exception("Dataset descriptor is malformed for One-Hot Encoder: 'categorical' key is not present")
 
-    def encode(self, x: np.array):
+    def encode(self, x: np.array) -> np.array:
         """
         It applies the encoder to the input features
 
@@ -92,7 +92,7 @@ class OneHotEnc(EncDec):
         else:
             return "OneHotEncoder - no features encoded"
 
-    def decode(self, x: np.array):
+    def decode(self, x: np.array) -> np.array:
         """
         Decode the array staring from the original descriptor
 

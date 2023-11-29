@@ -60,7 +60,7 @@ class TabularDataset(Dataset):
         
     def update_descriptor(self):
         """
-        it creates the dataset descriptor dictionary
+        it creates the dataset descriptor dictionary analyzing the given DataFrame
         """
         self.descriptor = {'numeric':{}, 'categorical':{}}
         for feature in self.df.columns:

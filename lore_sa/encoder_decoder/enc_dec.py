@@ -15,12 +15,11 @@ class EncDec():
         self.encoded_descriptor = None
 
     @abstractmethod
-    def encode(self, x: np.array):
+    def encode(self, x: np.array) -> np.array:
         """
         It applies the encoder to the input features
 
         :param[Numpy array] x: the Dataset containing the features to be encoded
-        :param[list] features_to_encode: list of columns of Dataset.df dataframe to be encoded
         """
         return
 
@@ -33,7 +32,7 @@ class EncDec():
         return
 
     @abstractmethod
-    def decode(self, x: np.array):
+    def decode(self, x: np.array) -> np.array:
         return
 
 
