@@ -45,7 +45,7 @@ class TabularDataset(Dataset):
             }
     """
     def __init__(self,data: DataFrame, class_name:str = None):
-        
+        super().__init__()
         self.class_name = class_name
         self.df = data
 
@@ -56,55 +56,39 @@ class TabularDataset(Dataset):
         self.descriptor = {'numeric':{}, 'categorical':{}}
 
         #creation of a default version of descriptor
-        self.update_descriptor()
+        self.descriptor = self.update_descriptor(self.df)
+        print(self.descriptor)
         
-    def update_descriptor(self):
+    def update_descriptor(self, df: DataFrame):
         """
         it creates the dataset descriptor dictionary
         """
-        self.descriptor = {'numeric':{}, 'categorical':{}}
-        for feature in self.df.columns:
-            index = self.df.columns.get_loc(feature)
-            if feature in self.df.select_dtypes(include=np.number).columns.tolist():
+        descriptor = {'numeric':{}, 'categorical':{}}
+        for feature in df.columns:
+            index = df.columns.get_loc(feature)
+            if feature in df.select_dtypes(include=np.number).columns.tolist():
                 #numerical
                 desc = {'index': index,
-                        'min' : self.df[feature].min(),
-                        'max' : self.df[feature].max(),
-                        'mean':self.df[feature].mean(),
-                        'std':self.df[feature].std(),
-                        'median':self.df[feature].median(),
-                        'q1':self.df[feature].quantile(0.25),
-                        'q3':self.df[feature].quantile(0.75),
+                        'min' : df[feature].min(),
+                        'max' : df[feature].max(),
+                        'mean':df[feature].mean(),
+                        'std':df[feature].std(),
+                        'median':df[feature].median(),
+                        'q1':df[feature].quantile(0.25),
+                        'q3':df[feature].quantile(0.75),
                         }
-                self.descriptor['numeric'][feature] = desc
+                descriptor['numeric'][feature] = desc
             else:
                 #categorical feature
                 desc = {'index': index,
-                        'distinct_values' : list(self.df[feature].unique()),
-                        'count' : {x : len(self.df[self.df[feature] == x]) for x in list(self.df[feature].unique())}}
-                self.descriptor['categorical'][feature] = desc
+                        'distinct_values' : list(df[feature].unique()),
+                        'count' : {x : len(df[df[feature] == x]) for x in list(df[feature].unique())}}
+                descriptor['categorical'][feature] = desc
 
-        self.descriptor = self.set_target_label(self.descriptor)
-
-    def set_target_label(self, descriptor):
-        """
-        Set the target column into the dataset descriptor
-
-        :param descriptor:
-        :return:
-        """
-        if self.class_name is None:
-            logger.warning("No target class is defined")
-            return descriptor
-
-        for type in descriptor:
-            for k in descriptor[type]:
-                if k == self.class_name:
-                    descriptor['target'] = {k:descriptor[type][k]}
-                    descriptor[type].pop(k)
-                    return descriptor
-                
+        descriptor = self.set_target_label(descriptor)
         return descriptor
+
+
         
     
     @classmethod
@@ -131,33 +115,3 @@ class TabularDataset(Dataset):
         """
         return cls(pd.DataFrame(data), class_name=class_name)
 
-    def set_class_name(self,class_name: str):
-        """
-        Set the class name. Only the column name string
-        :param [str] class_name:
-        :return:
-        """
-        self.class_name = class_name
-
-    def get_class_values(self):
-        """
-        Provides the class_name
-        :return:
-        """
-        if self.class_name is None:
-            raise Exception("ERR: class_name is None. Set class_name with set_class_name('<column name>')")
-        return self.df[self.class_name].values
-
-
-    def get_numeric_columns(self):
-        numeric_columns = list(self.df._get_numeric_data().columns)
-        return numeric_columns
-
-    def get_features_names(self):
-        return list(self.df.columns)
-
-    def get_feature_name(self, index):
-        for category in self.descriptor.keys():
-            for name in self.descriptor[category].keys():
-                if self.descriptor[category][name]['index'] == index:
-                    return name
