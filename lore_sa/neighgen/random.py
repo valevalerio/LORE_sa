@@ -31,47 +31,13 @@ class RandomGenerator(NeighborhoodGenerator):
 
         columns = [None for e in range(len(x))]
         for n in range(num_instances):
-            instance = [None for e in range(len(x))]
-            
-            
-            for name,feature in descriptor['categorical'].items():
-                if onehotencoder is not None:
-                    #feature is encoded, so i need to random generate chunks of one-hot-encoded values
-
-                    #finding the vector index of the feature
-                    indices = [k for k,v in onehotencoder.get_encoded_features().items() if v.split("=")[0]==name]
-                    index_choice = np.random.choice(list(range(len(indices))))
-                    
-                    for i, idx in enumerate(indices):
-                        if i == index_choice:
-                            instance[idx] = 1
-                        else:
-                            instance[idx] = 0
-                        columns[idx] = onehotencoder.get_encoded_features()[idx]
-                    
-
-                else:
-                    #feature is not encoded: random choice among the distinct values of the feature
-
-                    instance[feature['index']] = np.random.choice(feature['distinct_values'])
-                    columns[feature['index']] = name
-
-            for name,feature in descriptor['numeric'].items():
-                idx = None
-                if onehotencoder is not None:
-                    idx = [k for k,v in onehotencoder.get_encoded_features().items() if v==name][0]
-                else:
-                    idx = feature['index']   
-                columns[idx] = name 
-                    
-                instance[idx] = np.random.uniform(low = feature['min'], high = feature['max'])
-                
-
+            instance = self.generate_synthetic_instance(from_z=x)
             generated_list.append(instance)
 
-        self.generated_data = generated_list
+        Z = self.balance_neigh(x, generated_list, num_instances)
+        self.generated_data = Z
 
-        return TabularDataset(pd.DataFrame(generated_list, columns = columns))
+        return TabularDataset(pd.DataFrame(Z, columns = columns))
                         
     
                     
