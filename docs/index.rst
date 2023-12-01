@@ -6,6 +6,13 @@
 lore_sa
 ===================================
 
+**Get started**
+
+.. toctree::
+   :maxdepth: 1
+
+   get_started
+
 **Modules**
 
 .. toctree::
