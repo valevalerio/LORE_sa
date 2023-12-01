@@ -39,3 +39,33 @@ class EncDec():
     @abstractmethod
     def decode_target_class(self, x: np.array):
         return
+
+
+class IdentityEncoder(EncDec):
+    """
+    It provides an interface to access Identity encoding functions.
+    """
+    def __init__(self,dataset_descriptor):
+        super().__init__(dataset_descriptor)
+
+    def encode(self, x: np.array) -> np.array:
+        """
+        It applies the encoder to the input features
+
+        :param [Numpy array] x: Array to encode
+        :return [Numpy array]: Encoded array
+        """
+        return x
+
+    def get_encoded_features(self):
+        """
+        Provides a dictionary with the new encoded features name and the new index
+        :return:
+        """
+        return self.encoded_features
+
+    def decode(self, x: np.array) -> np.array:
+        return x
+
+    def decode_target_class(self, x: np.array):
+        return x
