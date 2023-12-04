@@ -29,8 +29,13 @@ class NeighborhoodGenerator(object):
 
     def generate_synthetic_instance(self, from_z=None, mutpb=1.0):
 
-        columns = [None for e in range(len(self.encoder.get_encoded_features().items()) - 1)] # -1 because the target class is not generated
-        instance = [None for e in range(len(columns))] if from_z is None else from_z
+        if from_z is None:
+            raise RuntimeError("Missing parameter 'from_z' in generate_synthetic_instance")
+
+        columns = [None for e in range(len(self.encoder.get_encoded_features().items()))]
+        instance = np.zeros(len(columns))
+        if from_z is not None:
+            instance = from_z # -1 because the target class is not generated
 
         for name, feature in self.dataset.descriptor['categorical'].items():
             if self.encoder is not None:
@@ -72,7 +77,7 @@ class NeighborhoodGenerator(object):
 
         if len(class_counts[0]) <= 2:
             ocs = int(np.round(num_samples * self.ocr))
-            Z1 = self.__rndgen_not_class(ocs, self.bbox.predict(x.reshape(1, -1))[0])
+            Z1 = self.__rndgen_not_class(x, ocs, self.bbox.predict(x.reshape(1, -1))[0])
             if len(Z1) > 0:
                 Z = np.concatenate((Z, Z1), axis=0)
         else:
@@ -80,17 +85,17 @@ class NeighborhoodGenerator(object):
             max_cc2 = np.max([cc for cc in class_counts[1] if cc != max_cc])
             if max_cc2 / len(Yb) < self.ocr:
                 ocs = int(np.round(num_samples * self.ocr)) - max_cc2
-                Z1 = self.__rndgen_not_class(ocs, self.bbox.predict(x.reshape(1, -1))[0])
+                Z1 = self.__rndgen_not_class(x, ocs, self.bbox.predict(x.reshape(1, -1))[0])
                 if len(Z1) > 0:
                     Z = np.concatenate((Z, Z1), axis=0)
         return Z
 
-    def __rndgen_not_class(self, num_samples, class_value, max_iter=1000):
+    def __rndgen_not_class(self, x, num_samples, class_value, max_iter=1000):
         Z = list()
         iter_count = 0
         multi_label = isinstance(class_value, np.ndarray)
         while len(Z) < num_samples:
-            z = self.generate_synthetic_instance()
+            z = self.generate_synthetic_instance(x)
             y = self.bbox.predict([z])[0]
             flag = y != class_value if not multi_label else np.all(y != class_value)
             if flag:
@@ -118,6 +123,7 @@ class NeighborhoodGenerator(object):
         """
         It contains the logic to check the requirements for generated data
         """
+        raise NotImplementedError("This method is not implemented yet")
         return
         
     

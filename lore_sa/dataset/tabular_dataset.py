@@ -57,8 +57,7 @@ class TabularDataset(Dataset):
 
         #creation of a default version of descriptor
         self.descriptor = self.update_descriptor(self.df)
-        print(self.descriptor)
-        
+
     def update_descriptor(self, df: DataFrame):
         """
         it creates the dataset descriptor dictionary

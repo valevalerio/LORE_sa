@@ -1,5 +1,6 @@
 from abc import ABC
 
+from lore_sa.logger import logger
 from lore_sa.neighgen.neighborhood_generator import NeighborhoodGenerator
 
 from lore_sa.dataset.tabular_dataset import TabularDataset
@@ -31,15 +32,16 @@ class RandomGenerator(NeighborhoodGenerator):
         :return [TabularDataset]: a tabular dataset instance with the new data generated
         """
 
-        Z, columns = [], []
+        Z = np.zeros((num_instances, len(self.encoder.get_encoded_features().items()) if x is None else len(x)))
 
-
+        logger.debug('Starting generation of {} record, each of size {}'.format(Z.shape[0], Z.shape[1]))
         for n in range(num_instances):
             instance = self.generate_synthetic_instance(from_z=x)
-            Z.append(instance)
+            Z[n] = instance
 
         if self.bbox is not None:
             Z = self.balance_neigh(x, Z, num_instances)
         self.generated_data = Z
 
-        return TabularDataset(pd.DataFrame(Z, columns=self.columns))
+        logger.debug('Generation completed')
+        return Z
