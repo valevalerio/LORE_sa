@@ -24,12 +24,13 @@ class NeighborhoodGenerator(object):
         self.dataset = dataset
         self.encoder = encoder
         self.ocr = ocr
+        self.columns = None
         return
 
     def generate_synthetic_instance(self, from_z=None, mutpb=1.0):
 
-        columns = [None for e in range(len(from_z))]
-        instance = [None for e in range(len(columns))]
+        columns = [None for e in range(len(self.encoder.get_encoded_features().items()) - 1)] # -1 because the target class is not generated
+        instance = [None for e in range(len(columns))] if from_z is None else from_z
 
         for name, feature in self.dataset.descriptor['categorical'].items():
             if self.encoder is not None:
@@ -62,6 +63,7 @@ class NeighborhoodGenerator(object):
             columns[idx] = name
 
             instance[idx] = np.random.uniform(low=feature['min'], high=feature['max'])
+        self.columns = columns
         return instance
 
     def balance_neigh(self, x, Z, num_samples):
@@ -89,7 +91,7 @@ class NeighborhoodGenerator(object):
         multi_label = isinstance(class_value, np.ndarray)
         while len(Z) < num_samples:
             z = self.generate_synthetic_instance()
-            y = self.bbox.predict(z.reshape(1, -1))[0]
+            y = self.bbox.predict([z])[0]
             flag = y != class_value if not multi_label else np.all(y != class_value)
             if flag:
                 Z.append(z)
