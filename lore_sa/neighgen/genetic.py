@@ -29,8 +29,8 @@ class GeneticGenerator(NeighborhoodGenerator):
         :param dataset: the dataset with the descriptor of the original dataset
         :param encoder: an encoder to transfrom the data from/to the black box model
         :param ocr: acronym for One Class Ratio, it is the ratio of the number of instances of the minority class
-        :param alpha1:
-        :param alpha2:
+        :param alpha1: the weight of the similarity of the features from the given instance. The sum of alpha1 and alpha2 must be 1
+        :param alpha2: the weight of the similiarity of the target class from the given instance. The sum of alpha1 and alpha2 must be 1
         :param metric: the distance metric to use to compute the distance between instances
         :param ngen: the number of generations to run
         :param mutpb: probability of mutation of a specific feature
@@ -51,24 +51,40 @@ class GeneticGenerator(NeighborhoodGenerator):
         self.random_seed = random_seed
         random.seed(random_seed)
 
-    def generate(self, x, num_instances, descriptor, onehotencoder=None):
+    def generate(self, x, num_instances, descriptor):
+        """
+        The generation is based on the strategy of generating a number of instances for the same class as the input
+        instance and a number of instances for a different class.
+        The generation of the instances for each subgroup is done through a genetic algorithm based on two fitness
+        fuctions: one for the same class and one for the different class.
+        :param x: the input instance
+        :param num_instances: how many elements to generate
+        :param descriptor: the descriptor of the dataset
+        :return:
+        """
 
+        # determine the number of instances to generate for the same class and for a different class
         num_samples_eq = int(np.round(num_instances * 0.5))
         num_samples_neq = num_instances - num_samples_eq
 
+        # generate the instances for the same class
         toolbox_eq = self.setup_toolbox(x, self.fitness_equal, num_samples_eq)
         population_eq, halloffame_eq, logbook_eq = self.fit(toolbox_eq, num_samples_eq)
         Z_eq = self.add_halloffame(population_eq, halloffame_eq)
         # print(logbook_eq)
 
+        # generate the instances for a different class
         toolbox_noteq = self.setup_toolbox(x, self.fitness_notequal, num_samples_neq)
         population_noteq, halloffame_noteq, logbook_noteq = self.fit(toolbox_noteq, num_samples_neq)
         Z_noteq = self.add_halloffame(population_noteq, halloffame_noteq)
         # print(logbook_noteq)
 
+        # concatenate the two sets of instances
         Z = np.concatenate((Z_eq, Z_noteq), axis=0)
 
+        # balance the instances according to the minority class
         Z = super(GeneticGenerator, self).balance_neigh(x, Z, num_instances)
+        # the first element is the input instance
         Z[0] = x.copy()
         return Z
 
