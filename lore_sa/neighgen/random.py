@@ -15,7 +15,7 @@ class RandomGenerator(NeighborhoodGenerator):
         super().__init__(bbox, dataset, encoder, ocr)
         self.generated_data = None
 
-    def generate(self, x, num_instances, descriptor, onehotencoder=None):
+    def generate(self, x, num_instances, descriptor):
         """
         random generation of new instances. The starting instance x is only used to detect the value type of each feature, in order
         to generate new values only for numeric features.
@@ -23,7 +23,6 @@ class RandomGenerator(NeighborhoodGenerator):
         :param x[dict]: the starting instance from the real dataset
         :param num_instances[int]: the number of instances to generate
         :param descriptor[dict]: data descriptor as generated from a Dataset object
-        :param onehotencoder[EncDec]: the onehotencoder eventually to encode the instance
         The list (or range) associated to each key is used to randomly choice an element within the list. 
 
         :return [TabularDataset]: a tabular dataset instance with the new data generated
