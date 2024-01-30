@@ -22,9 +22,7 @@ class RandomGenerator(NeighborhoodGenerator):
         
         :param x[dict]: the starting instance from the real dataset
         :param num_instances[int]: the number of instances to generate
-        :param descriptor[dict]: data descriptor as generated from a Dataset object
-        The list (or range) associated to each key is used to randomly choice an element within the list. 
-
+        :param descriptor[dict]: data descriptor as generated from a Dataset object. The list (or range) associated to each key is used to randomly choice an element within the list.
         :return [TabularDataset]: a tabular dataset instance with the new data generated
         """
 

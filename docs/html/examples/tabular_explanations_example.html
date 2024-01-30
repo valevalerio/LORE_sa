@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tabular explanations example &mdash; LORE_sa  documentation</title>
@@ -14,12 +14,12 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="lore_sa.util" href="../source/generated/lore_sa.util.html" />
+    <link rel="next" title="Modules" href="../source/modules.html" />
+    <link rel="prev" title="Get started" href="../get_started.html" />
     <link href="../_static/style.css" rel="stylesheet" type="text/css">
 
 </head>
@@ -43,7 +43,33 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../get_started.html">Get started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tabular explanation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#learning-and-explaining-german-credit-dataset">Learning and explaining German Credit Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#loading-and-preparation-of-data">Loading and preparation of data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#learning-a-random-forest-classfier">Learning a Random Forest classfier</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#explaining-the-prediction">Explaining the prediction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#shap-explainer">SHAP explainer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#lore-explainer">LORE explainer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#lime-explainer">LIME explainer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#learning-a-different-model">Learning a different model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#learning-a-logistic-regressor">Learning a Logistic Regressor</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Explaining the prediction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">LORE explainer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">LIME explainer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../source/modules.html">Modules</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../source/modules.html#lore-sa-bbox-blackbox-abstract-class"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.bbox</span></code>: BlackBox abstract class</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../source/generated/lore_sa.bbox.AbstractBBox.html">lore_sa.bbox.AbstractBBox</a></li>
@@ -57,6 +83,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../source/modules.html#lore-sa-neighgen-neighborhood-generator-classes"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.neighgen</span></code>: Neighborhood Generator classes</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../source/generated/lore_sa.neighgen.RandomGenerator.html">lore_sa.neighgen.RandomGenerator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../source/generated/lore_sa.neighgen.GeneticGenerator.html">lore_sa.neighgen.GeneticGenerator</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../source/modules.html#lore-sa-discretizer-discretizer-classes-and-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lore_sa.discretizer</span></code>: Discretizer classes and functions</a><ul>
@@ -100,31 +127,6 @@
 </ul>
 </li>
 </ul>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Tabular explanation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#learning-and-explaining-german-credit-dataset">Learning and explaining German Credit Dataset</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#loading-and-preparation-of-data">Loading and preparation of data</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#learning-a-random-forest-classfier">Learning a Random Forest classfier</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#explaining-the-prediction">Explaining the prediction</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#shap-explainer">SHAP explainer</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#lore-explainer">LORE explainer</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#lime-explainer">LIME explainer</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#learning-a-different-model">Learning a different model</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#learning-a-logistic-regressor">Learning a Logistic Regressor</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#id1">Explaining the prediction</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id2">LORE explainer</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">LIME explainer</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
 
         </div>
       </div>
@@ -151,9 +153,9 @@
            <div itemprop="articleBody">
              
   <section id="tabular-explanations-example">
-<h1>Tabular explanations example<a class="headerlink" href="#tabular-explanations-example" title="Permalink to this heading"></a></h1>
+<h1>Tabular explanations example<a class="headerlink" href="#tabular-explanations-example" title="Permalink to this headline"></a></h1>
 <section id="learning-and-explaining-german-credit-dataset">
-<h2>Learning and explaining German Credit Dataset<a class="headerlink" href="#learning-and-explaining-german-credit-dataset" title="Permalink to this heading"></a></h2>
+<h2>Learning and explaining German Credit Dataset<a class="headerlink" href="#learning-and-explaining-german-credit-dataset" title="Permalink to this headline"></a></h2>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
 import numpy as np
 
@@ -173,7 +175,7 @@ from xailib.models.sklearn_classifier_wrapper import sklearn_classifier_wrapper
 </div>
 </section>
 <section id="loading-and-preparation-of-data">
-<h2>Loading and preparation of data<a class="headerlink" href="#loading-and-preparation-of-data" title="Permalink to this heading"></a></h2>
+<h2>Loading and preparation of data<a class="headerlink" href="#loading-and-preparation-of-data" title="Permalink to this headline"></a></h2>
 <p>We start by reading from a CSV file the dataset to analyze. The table is
 loaded by means of the <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> class from the <code class="docutils literal notranslate"><span class="pre">pandas</span></code> library.</p>
 <p>Among all the attributes of the table, we select the <code class="docutils literal notranslate"><span class="pre">class_field</span></code>
@@ -202,7 +204,7 @@ each feature to the original one before the transformation.</p>
 </pre></div>
 </div>
 <section id="learning-a-random-forest-classfier">
-<h3>Learning a Random Forest classfier<a class="headerlink" href="#learning-a-random-forest-classfier" title="Permalink to this heading"></a></h3>
+<h3>Learning a Random Forest classfier<a class="headerlink" href="#learning-a-random-forest-classfier" title="Permalink to this headline"></a></h3>
 <p>We train a RF classifier by using the <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> library. We start by
 splitting the dataset into a train and test subsets.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>test_size = 0.3
@@ -240,13 +242,13 @@ Predicted class  [0]
 </section>
 </section>
 <section id="explaining-the-prediction">
-<h2>Explaining the prediction<a class="headerlink" href="#explaining-the-prediction" title="Permalink to this heading"></a></h2>
+<h2>Explaining the prediction<a class="headerlink" href="#explaining-the-prediction" title="Permalink to this headline"></a></h2>
 <p>We use the explanators of <code class="docutils literal notranslate"><span class="pre">XAI</span> <span class="pre">lib</span></code> to provide an explantion for the
 classified instance <code class="docutils literal notranslate"><span class="pre">inst</span></code>. Every explainer of <code class="docutils literal notranslate"><span class="pre">XAI</span> <span class="pre">lib</span></code> takes in
 input the blackbox to be explained with the corresponding feature names,
 and a configuration object to initialize the explainer.</p>
 <section id="shap-explainer">
-<h3>SHAP explainer<a class="headerlink" href="#shap-explainer" title="Permalink to this heading"></a></h3>
+<h3>SHAP explainer<a class="headerlink" href="#shap-explainer" title="Permalink to this headline"></a></h3>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>explainer = ShapXAITabularExplainer(bbox, feature_names)
 config = {&#39;explainer&#39; : &#39;tree&#39;, &#39;X_train&#39; : X_train.iloc[0:100].values}
 explainer.fit(config)
@@ -261,7 +263,7 @@ explainer.fit(config)
 </div>
 </section>
 <section id="lore-explainer">
-<h3>LORE explainer<a class="headerlink" href="#lore-explainer" title="Permalink to this heading"></a></h3>
+<h3>LORE explainer<a class="headerlink" href="#lore-explainer" title="Permalink to this headline"></a></h3>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>explainer = LoreTabularExplainer(bbox)
 config = {&#39;neigh_type&#39;:&#39;rndgen&#39;, &#39;size&#39;:1000, &#39;ocr&#39;:0.1, &#39;ngen&#39;:10}
 explainer.fit(df, class_field, config)
@@ -277,7 +279,7 @@ print(exp)
 </div>
 </section>
 <section id="lime-explainer">
-<h3>LIME explainer<a class="headerlink" href="#lime-explainer" title="Permalink to this heading"></a></h3>
+<h3>LIME explainer<a class="headerlink" href="#lime-explainer" title="Permalink to this headline"></a></h3>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>limeExplainer = LimeXAITabularExplainer(bbox)
 config = {&#39;feature_selection&#39;: &#39;lasso_path&#39;}
 limeExplainer.fit(df, class_field, config)
@@ -356,9 +358,9 @@ lime_exp.plot_features_importance()
 </script></section>
 </section>
 <section id="learning-a-different-model">
-<h2>Learning a different model<a class="headerlink" href="#learning-a-different-model" title="Permalink to this heading"></a></h2>
+<h2>Learning a different model<a class="headerlink" href="#learning-a-different-model" title="Permalink to this headline"></a></h2>
 <section id="learning-a-logistic-regressor">
-<h3>Learning a Logistic Regressor<a class="headerlink" href="#learning-a-logistic-regressor" title="Permalink to this heading"></a></h3>
+<h3>Learning a Logistic Regressor<a class="headerlink" href="#learning-a-logistic-regressor" title="Permalink to this headline"></a></h3>
 <p>We train a Logistic Regression by using the <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> library. We
 transform the dataset by using a <code class="docutils literal notranslate"><span class="pre">Scaler</span></code> to normalize all the
 attributes.</p>
@@ -394,7 +396,7 @@ Predicted class  [1]
 </section>
 </section>
 <section id="id1">
-<h2>Explaining the prediction<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<h2>Explaining the prediction<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h2>
 <p>We use the same explainators as for the previous model. In this case, a
 few adjustments are necessary for the initialization of the explanators.
 For example, SHAP needs a specific configuration for the linear model we
@@ -476,7 +478,7 @@ print(exp)
     }
   })({"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}, "axis": {"labelFontSize": 10, "labelLimit": 225.0}}, "vconcat": [{"layer": [{"data": {"name": "data-456173d5f8a5bb144673e82a151da09e"}, "mark": {"type": "rule", "strokeWidth": 3}, "encoding": {"color": {"type": "quantitative", "field": "xValue", "legend": null, "scale": {"domain": [-0.8470079627378541, 0.8470079627378541], "domainMid": 0, "scheme": "redyellowblue"}}, "x": {"type": "quantitative", "axis": {"orient": "top", "titleFontSize": 10}, "field": "xValue", "title": "Select a cutoff range for Feature Importance values "}}}, {"data": {"name": "data-c7bc3ae69e1253e8223f70a11d04b99d"}, "mark": {"type": "rect", "color": "black", "height": 20, "opacity": 0.4, "tooltip": true}, "encoding": {"x": {"type": "quantitative", "field": "x_min"}, "x2": {"field": "x_max"}, "y": {"type": "quantitative", "axis": null, "field": "y"}}, "selection": {"Cutter": {"type": "single", "fields": ["cutoff"], "bind": {"input": "range", "max": 0.8470079627378541, "min": 0, "name": "Importance cutoff value (\u00b1) ", "step": 0.01694015925475708}, "init": {"cutoff": 0.0}}}, "transform": [{"calculate": "(-Cutter.cutoff)", "as": "x_min"}, {"calculate": "Cutter.cutoff", "as": "x_max"}]}], "height": 20}, {"layer": [{"data": {"name": "data-3543b32c4654533cf48a041c66311614"}, "mark": "bar", "encoding": {"color": {"type": "quantitative", "field": "value", "legend": null, "scale": {"domain": [-0.8470079627378541, 0.8470079627378541], "domainMid": 0, "scheme": "blueorange"}}, "tooltip": [{"type": "nominal", "field": "name", "title": "Feature"}, {"type": "quantitative", "field": "value", "title": "Importance"}], "x": {"type": "quantitative", "field": "value", "title": null}, "y": {"type": "nominal", "field": "name", "sort": {"field": "value", "op": "mean", "order": "descending"}, "title": null}}, "selection": {"Cutter": {"type": "single", "fields": ["cutoff"], "bind": {"input": "range", "max": 0.8470079627378541, "min": 0, "name": "Importance cutoff value (\u00b1) ", "step": 0.01694015925475708}, "init": {"cutoff": 0.0}}}, "transform": [{"filter": "((datum.value > Cutter.cutoff) || (datum.value < (-Cutter.cutoff)))"}]}, {"data": {"name": "data-9c00aa9dc2b1c1a0b4bf9b34ead12925"}, "mark": "rule", "encoding": {"x": {"type": "quantitative", "field": "x"}}}]}], "padding": 10, "$schema": "https://vega.github.io/schema/vega-lite/v4.8.1.json", "datasets": {"data-456173d5f8a5bb144673e82a151da09e": [{"xValue": -0.8470079627378541}, {"xValue": -0.8385378831104755}, {"xValue": -0.8300678034830969}, {"xValue": -0.8215977238557184}, {"xValue": -0.8131276442283398}, {"xValue": -0.8046575646009613}, {"xValue": -0.7961874849735827}, {"xValue": -0.7877174053462042}, {"xValue": -0.7792473257188256}, {"xValue": -0.770777246091447}, {"xValue": -0.7623071664640685}, {"xValue": -0.7538370868366899}, {"xValue": -0.7453670072093114}, {"xValue": -0.7368969275819328}, {"xValue": -0.7284268479545543}, {"xValue": -0.7199567683271757}, {"xValue": -0.7114866886997971}, {"xValue": -0.7030166090724186}, {"xValue": -0.69454652944504}, {"xValue": -0.6860764498176615}, {"xValue": -0.6776063701902829}, {"xValue": -0.6691362905629044}, {"xValue": -0.6606662109355258}, {"xValue": -0.6521961313081472}, {"xValue": -0.6437260516807687}, {"xValue": -0.6352559720533901}, {"xValue": -0.6267858924260116}, {"xValue": -0.618315812798633}, {"xValue": -0.6098457331712545}, {"xValue": -0.6013756535438759}, {"xValue": -0.5929055739164973}, {"xValue": -0.5844354942891188}, {"xValue": -0.5759654146617402}, {"xValue": -0.5674953350343617}, {"xValue": -0.5590252554069831}, {"xValue": -0.5505551757796046}, {"xValue": -0.542085096152226}, {"xValue": -0.5336150165248474}, {"xValue": -0.5251449368974689}, {"xValue": -0.5166748572700903}, {"xValue": -0.5082047776427118}, {"xValue": -0.4997346980153332}, {"xValue": -0.49126461838795465}, {"xValue": -0.4827945387605761}, {"xValue": -0.47432445913319754}, {"xValue": -0.465854379505819}, {"xValue": -0.4573842998784404}, {"xValue": -0.44891422025106187}, {"xValue": -0.4404441406236833}, {"xValue": -0.43197406099630475}, {"xValue": -0.4235039813689262}, {"xValue": -0.41503390174154764}, {"xValue": -0.4065638221141691}, {"xValue": -0.3980937424867905}, {"xValue": -0.38962366285941197}, {"xValue": -0.3811535832320334}, {"xValue": -0.37268350360465485}, {"xValue": -0.3642134239772763}, {"xValue": -0.35574334434989774}, {"xValue": -0.3472732647225192}, {"xValue": -0.3388031850951406}, {"xValue": -0.33033310546776207}, {"xValue": -0.3218630258403835}, {"xValue": -0.31339294621300495}, {"xValue": -0.3049228665856264}, {"xValue": -0.29645278695824784}, {"xValue": -0.2879827073308693}, {"xValue": -0.2795126277034907}, {"xValue": -0.27104254807611217}, {"xValue": -0.2625724684487336}, {"xValue": -0.25410238882135505}, {"xValue": -0.2456323091939765}, {"xValue": -0.23716222956659794}, {"xValue": -0.22869214993921938}, {"xValue": -0.22022207031184082}, {"xValue": -0.21175199068446227}, {"xValue": -0.2032819110570837}, {"xValue": -0.19481183142970515}, {"xValue": -0.1863417518023266}, {"xValue": -0.17787167217494804}, {"xValue": -0.16940159254756948}, {"xValue": -0.16093151292019092}, {"xValue": -0.15246143329281237}, {"xValue": -0.1439913536654338}, {"xValue": -0.13552127403805525}, {"xValue": -0.1270511944106767}, {"xValue": -0.11858111478329814}, {"xValue": -0.11011103515591958}, {"xValue": -0.10164095552854102}, {"xValue": -0.09317087590116246}, {"xValue": -0.08470079627378391}, {"xValue": -0.07623071664640535}, {"xValue": -0.06776063701902679}, {"xValue": -0.059290557391648235}, {"xValue": -0.05082047776426968}, {"xValue": -0.04235039813689112}, {"xValue": -0.033880318509512564}, {"xValue": -0.025410238882134006}, {"xValue": -0.01694015925475545}, {"xValue": -0.008470079627376892}, {"xValue": 1.6653345369377348e-15}, {"xValue": 0.008470079627380223}, {"xValue": 0.01694015925475878}, {"xValue": 0.025410238882137337}, {"xValue": 0.033880318509515894}, {"xValue": 0.04235039813689445}, {"xValue": 0.05082047776427301}, {"xValue": 0.059290557391651566}, {"xValue": 0.06776063701903012}, {"xValue": 0.07623071664640868}, {"xValue": 0.08470079627378724}, {"xValue": 0.0931708759011658}, {"xValue": 0.10164095552854435}, {"xValue": 0.11011103515592291}, {"xValue": 0.11858111478330147}, {"xValue": 0.12705119441068002}, {"xValue": 0.13552127403805858}, {"xValue": 0.14399135366543714}, {"xValue": 0.1524614332928157}, {"xValue": 0.16093151292019436}, {"xValue": 0.1694015925475728}, {"xValue": 0.17787167217495126}, {"xValue": 0.18634175180232992}, {"xValue": 0.1948118314297086}, {"xValue": 0.20328191105708704}, {"xValue": 0.21175199068446549}, {"xValue": 0.22022207031184415}, {"xValue": 0.22869214993922282}, {"xValue": 0.23716222956660127}, {"xValue": 0.24563230919397971}, {"xValue": 0.2541023888213584}, {"xValue": 0.26257246844873705}, {"xValue": 0.2710425480761155}, {"xValue": 0.27951262770349394}, {"xValue": 0.2879827073308726}, {"xValue": 0.2964527869582513}, {"xValue": 0.3049228665856297}, {"xValue": 0.31339294621300817}, {"xValue": 0.32186302584038684}, {"xValue": 0.3303331054677655}, {"xValue": 0.33880318509514395}, {"xValue": 0.3472732647225224}, {"xValue": 0.35574334434990107}, {"xValue": 0.36421342397727974}, {"xValue": 0.3726835036046582}, {"xValue": 0.38115358323203663}, {"xValue": 0.3896236628594153}, {"xValue": 0.39809374248679397}, {"xValue": 0.4065638221141724}, {"xValue": 0.41503390174155086}, {"xValue": 0.4235039813689295}, {"xValue": 0.4319740609963082}, {"xValue": 0.44044414062368664}, {"xValue": 0.4489142202510651}, {"xValue": 0.45738429987844376}, {"xValue": 0.4658543795058224}, {"xValue": 0.47432445913320087}, {"xValue": 0.4827945387605793}, {"xValue": 0.491264618387958}, {"xValue": 0.49973469801533665}, {"xValue": 0.5082047776427151}, {"xValue": 0.5166748572700935}, {"xValue": 0.5251449368974722}, {"xValue": 0.5336150165248509}, {"xValue": 0.5420850961522293}, {"xValue": 0.5505551757796078}, {"xValue": 0.5590252554069864}, {"xValue": 0.5674953350343651}, {"xValue": 0.5759654146617436}, {"xValue": 0.584435494289122}, {"xValue": 0.5929055739165007}, {"xValue": 0.6013756535438793}, {"xValue": 0.6098457331712578}, {"xValue": 0.6183158127986362}, {"xValue": 0.6267858924260149}, {"xValue": 0.6352559720533936}, {"xValue": 0.643726051680772}, {"xValue": 0.6521961313081505}, {"xValue": 0.6606662109355291}, {"xValue": 0.6691362905629078}, {"xValue": 0.6776063701902862}, {"xValue": 0.6860764498176647}, {"xValue": 0.6945465294450434}, {"xValue": 0.703016609072422}, {"xValue": 0.7114866886998005}, {"xValue": 0.7199567683271789}, {"xValue": 0.7284268479545576}, {"xValue": 0.7368969275819363}, {"xValue": 0.7453670072093147}, {"xValue": 0.7538370868366931}, {"xValue": 0.7623071664640718}, {"xValue": 0.7707772460914505}, {"xValue": 0.7792473257188289}, {"xValue": 0.7877174053462074}, {"xValue": 0.796187484973586}, {"xValue": 0.8046575646009647}, {"xValue": 0.8131276442283432}, {"xValue": 0.8215977238557216}, {"xValue": 0.8300678034831003}, {"xValue": 0.8385378831104789}, {"xValue": 0.8470079627378574}], "data-c7bc3ae69e1253e8223f70a11d04b99d": [{"y": 0, "x": -0.5, "x2": 0.5}], "data-3543b32c4654533cf48a041c66311614": [{"name": "duration_in_month", "value": 0.8470079627378541}, {"name": "credit_amount", "value": 0.6944189404874552}, {"name": "installment_as_income_perc", "value": 0.3043826317623826}, {"name": "present_res_since", "value": -0.017915878343538215}, {"name": "age", "value": -0.005163583410577356}, {"name": "credits_this_bank", "value": -0.20402960332384254}, {"name": "people_under_maintenance", "value": -0.056755931097354474}, {"name": "account_check_status=0 <= ... < 200 DM", "value": 0.2939399436033418}, {"name": "account_check_status=< 0 DM", "value": -0.21818023774927736}, {"name": "account_check_status=>= 200 DM / salary assignments for at least 1 year", "value": 9.60072863884819e-05}, {"name": "account_check_status=no checking account", "value": 0.3502124003353961}, {"name": "credit_history=all credits at this bank paid back duly", "value": 0.6337640692749543}, {"name": "credit_history=critical account/ other credits existing (not at this bank)", "value": 0.21823305363235895}, {"name": "credit_history=delay in paying off in the past", "value": -0.011253602415574547}, {"name": "credit_history=existing credits paid back duly till now", "value": -0.13292335773836597}, {"name": "credit_history=no credits taken/ all credits paid back duly", "value": -0.029597808453158823}, {"name": "purpose=(vacation - does not exist?)", "value": -0.06856154357807029}, {"name": "purpose=business", "value": 0.003674153425649057}, {"name": "purpose=car (new)", "value": 0.2513672502321305}, {"name": "purpose=car (used)", "value": 0.08468160953031668}, {"name": "purpose=domestic appliances", "value": 0.03854879546694716}, {"name": "purpose=education", "value": 0.0}, {"name": "purpose=furniture/equipment", "value": -2.9446802618582078e-18}, {"name": "purpose=radio/television", "value": 0.006492757319555031}, {"name": "purpose=repairs", "value": 0.005963146482736863}, {"name": "purpose=retraining", "value": 2.3901727085545897e-18}, {"name": "savings=.. >= 1000 DM ", "value": 0.056705276861560266}, {"name": "savings=... < 100 DM", "value": -0.33819273164897024}, {"name": "savings=100 <= ... < 500 DM", "value": -0.012064219528328623}, {"name": "savings=500 <= ... < 1000 DM ", "value": 0.0010553301554828342}, {"name": "savings=unknown/ no savings account", "value": -0.5556654011176968}, {"name": "present_emp_since=.. >= 7 years", "value": 0.0052940900934866746}, {"name": "present_emp_since=... < 1 year ", "value": -0.04654979417893307}, {"name": "present_emp_since=1 <= ... < 4 years", "value": -0.017047143561136142}, {"name": "present_emp_since=4 <= ... < 7 years", "value": 0.09509224367078725}, {"name": "present_emp_since=unemployed", "value": 0.72638253902645}, {"name": "personal_status_sex=female : divorced/separated/married", "value": -0.05151278954058162}, {"name": "personal_status_sex=male : divorced/separated", "value": -0.023431119320486585}, {"name": "personal_status_sex=male : married/widowed", "value": -0.01650280113349013}, {"name": "personal_status_sex=male : single", "value": -0.134994120205601}, {"name": "other_debtors=co-applicant", "value": 0.421695043431072}, {"name": "other_debtors=guarantor", "value": 0.031225103977219948}, {"name": "other_debtors=none", "value": -0.11203996569130724}, {"name": "property=if not A121 : building society savings agreement/ life insurance", "value": 0.04236722282145007}, {"name": "property=if not A121/A122 : car or other, not in attribute 6", "value": 0.041922435650431605}, {"name": "property=real estate", "value": 0.0814789776398865}, {"name": "property=unknown / no property", "value": 0.7764063820618664}, {"name": "other_installment_plans=bank", "value": -0.07246505874542243}, {"name": "other_installment_plans=none", "value": -0.0821908358522365}, {"name": "other_installment_plans=stores", "value": 0.0016952408348179034}, {"name": "housing=for free", "value": -0.7476842519071202}, {"name": "housing=own", "value": 0.023375705983559408}, {"name": "housing=rent", "value": -0.105753305473695}, {"name": "job=management/ self-employed/ highly qualified employee/ officer", "value": -0.1219598759071389}, {"name": "job=skilled employee / official", "value": -0.028367937850261832}, {"name": "job=unemployed/ unskilled - non-resident", "value": 0.002873156187994504}, {"name": "job=unskilled - resident", "value": -0.014458079729267354}, {"name": "telephone=none", "value": -0.0750707003078665}, {"name": "telephone=yes, registered under the customers name ", "value": -0.0750707003078658}, {"name": "foreign_worker=no", "value": 0.04268973216067927}, {"name": "foreign_worker=yes", "value": 0.04268973216067925}], "data-9c00aa9dc2b1c1a0b4bf9b34ead12925": [{"x": 0}]}}, {"mode": "vega-lite"});
 </script><section id="id2">
-<h3>LORE explainer<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
+<h3>LORE explainer<a class="headerlink" href="#id2" title="Permalink to this headline"></a></h3>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>explainer = LoreTabularExplainer(bbox)
 config = {&#39;neigh_type&#39;:&#39;geneticp&#39;, &#39;size&#39;:1000, &#39;ocr&#39;:0.1, &#39;ngen&#39;:10}
 explainer.fit(df, class_field, config)
@@ -556,7 +558,7 @@ background-color:gold;
     </div>
 </div></section>
 <section id="id3">
-<h3>LIME explainer<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
+<h3>LIME explainer<a class="headerlink" href="#id3" title="Permalink to this headline"></a></h3>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>limeExplainer = LimeXAITabularExplainer(bbox)
 config = {&#39;feature_selection&#39;: &#39;lasso_path&#39;}
 limeExplainer.fit(df, class_field, config)
@@ -639,7 +641,8 @@ print(lime_exp.exp.as_list())
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../source/generated/lore_sa.util.html" class="btn btn-neutral float-left" title="lore_sa.util" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../get_started.html" class="btn btn-neutral float-left" title="Get started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../source/modules.html" class="btn btn-neutral float-right" title="Modules" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
