@@ -108,12 +108,14 @@ class NeighborhoodGenerator(object):
         return Z
     
     @abstractmethod
-    def generate(self, x:np.array, num_instances:int):
+    def generate(self, x:np.array, num_instances:int, descriptor: dict):
         """
         It generates similar instances 
 
         :param x[dict]: the starting instance from the real dataset
         :param num_instances[int]: the number of instances to generate
+        :param descriptor[dict]: data descriptor as generated from a Dataset object
+        The list (or range) associated to each key is used to randomly choice an element within the list.
         """
         return
 

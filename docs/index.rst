@@ -6,20 +6,18 @@
 lore_sa
 ===================================
 
+.. toctree::
+   :maxdepth: 1
+
+   Get started <get_started>
+   Tabular explanation <examples/tabular_explanations_example>
+
 **Modules**
 
 .. toctree::
    :maxdepth: 1
 
    source/modules
-
-
-**Examples**
-
-.. toctree::
-   :maxdepth: 1
-
-   Tabular explanation <examples/tabular_explanations_example>
 
 
 Indices and tables

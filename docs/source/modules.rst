@@ -37,6 +37,7 @@ Modules
    :toctree: generated/
 
    neighgen.RandomGenerator
+   neighgen.GeneticGenerator
 
 
 
