@@ -141,12 +141,12 @@ class TabularDataset(Dataset):
 
     def get_class_values(self):
         """
-        Provides the class_name
+        return the list of values of the target column
         :return:
         """
         if self.class_name is None:
             raise Exception("ERR: class_name is None. Set class_name with set_class_name('<column name>')")
-        return self.df[self.class_name].values
+        return self.descriptor['target'][self.class_name]['distinct_values']
 
 
     def get_numeric_columns(self):
@@ -156,8 +156,3 @@ class TabularDataset(Dataset):
     def get_features_names(self):
         return list(self.df.columns)
 
-    def get_feature_name(self, index):
-        for category in self.descriptor.keys():
-            for name in self.descriptor[category].keys():
-                if self.descriptor[category][name]['index'] == index:
-                    return name

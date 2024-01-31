@@ -67,7 +67,7 @@ class DatasetTest(unittest.TestCase):
 
     def test_get_class_value_as_exptected(self):
         dataset = TabularDataset.from_dict({'col1': [1, 2], 'col2': [3, 4], 'col3': ['America', 'Europe']},class_name='col3')
-        self.assertEqual(dataset.get_class_values().tolist(),['America', 'Europe'])
+        self.assertEqual(dataset.get_class_values(),['America', 'Europe'])
 
     def test_get_class_value_raise_error(self):
         dataset = TabularDataset.from_dict({'col1': [1, 2], 'col2': [3, 4], 'col3': ['America', 'Europe']})
