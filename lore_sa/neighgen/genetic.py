@@ -51,7 +51,7 @@ class GeneticGenerator(NeighborhoodGenerator):
         self.random_seed = random_seed
         random.seed(random_seed)
 
-    def generate(self, x, num_instances, descriptor):
+    def generate(self, x, num_instances: int):
         """
         The generation is based on the strategy of generating a number of instances for the same class as the input
         instance and a number of instances for a different class.
@@ -59,7 +59,6 @@ class GeneticGenerator(NeighborhoodGenerator):
         fuctions: one for the same class and one for the different class.
         :param x: the input instance
         :param num_instances: how many elements to generate
-        :param descriptor: the descriptor of the dataset
         :return:
         """
 
@@ -195,6 +194,10 @@ class GeneticGenerator(NeighborhoodGenerator):
         # y1 = self.bb_predict(x1.reshape(1, -1))[0]
         y = self.bbox.predict(x.reshape(1, -1))
         y1 = self.bbox.predict(x1.reshape(1, -1))
+        if (y.shape == ()):
+            y = self.bbox.predict(x.reshape(1, -1))
+        if (y1.shape == ()):
+            y1 = self.bbox.predict(x1.reshape(1, -1))
 
         target_similarity_score = 1.0 - hamming(y, y1)
         # target_similarity = target_similarity_score if target_similarity_score >= self.eta2 else 0.0
@@ -208,11 +211,12 @@ class GeneticGenerator(NeighborhoodGenerator):
         # feature_similarity = feature_similarity_score if feature_similarity_score >= self.eta1 else 0.0
         feature_similarity = sigmoid(feature_similarity_score)
 
-        # y = self.bb_predict(x.reshape(1, -1))[0]
-        # y1 = self.bb_predict(x1.reshape(1, -1))[0]
-
         y = self.bbox.predict(x.reshape(1, -1))
         y1 = self.bbox.predict(x1.reshape(1, -1))
+        if (y.shape == ()):
+            y = self.bbox.predict(x.reshape(1, -1))
+        if (y1.shape == ()):
+            y1 = self.bbox.predict(x1.reshape(1, -1))
 
         target_similarity_score = 1.0 - hamming(y, y1)
         # target_similarity = target_similarity_score if target_similarity_score < self.eta2 else 0.0
