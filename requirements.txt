@@ -6,9 +6,9 @@ scikit-learn~=1.2.0
 imblearn
 deap
 bitarray
-sphinx~=7.2.6
+sphinx~=5.0
 furo
-sphinx_rtd_theme
+sphinx_rtd_theme~=1.2.0
 sphinx_material
 category_encoders
 scikit-multilearn~=0.2.0

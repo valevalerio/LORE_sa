@@ -14,8 +14,10 @@
    .. autosummary::
    
       ~RandomGenerator.__init__
+      ~RandomGenerator.balance_neigh
       ~RandomGenerator.check_generated
       ~RandomGenerator.generate
+      ~RandomGenerator.generate_synthetic_instance
    
    
 
