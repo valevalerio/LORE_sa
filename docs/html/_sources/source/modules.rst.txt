@@ -40,8 +40,6 @@ Modules
    neighgen.GeneticGenerator
 
 
-
-
 :mod:`lore_sa.discretizer`: Discretizer classes and functions
 =============================================================
 
