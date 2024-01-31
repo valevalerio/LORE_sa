@@ -3,8 +3,6 @@ import pickle
 import random
 
 from scipy.spatial.distance import cdist, hamming
-
-from lore_sa.logger import logger
 from lore_sa.neighgen.neighborhood_generator import NeighborhoodGenerator
 from deap import base, creator, tools, algorithms
 

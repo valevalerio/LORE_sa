@@ -12,7 +12,7 @@ from sklearn.tree._tree import TREE_LEAF
 from sklearn.tree import DecisionTreeClassifier
 import sklearn.model_selection
 
-__all__ = ["Surrogate","DecisionTreeSurrogate"]
+__all__ = ["Surrogate", "DecisionTreeSurrogate"]
 
 from lore_sa.rule import Expression, Rule
 from lore_sa.surrogate.surrogate import Surrogate
@@ -22,11 +22,12 @@ import lore_sa
 
 class DecisionTreeSurrogate(Surrogate):
 
-    def __init__(self, kind = None, preprocessing=None):
+    def __init__(self, kind=None, preprocessing=None):
         super().__init__(kind, preprocessing)
         self.dt = None
 
-    def train(self, Z, Yb, weights = None, class_values = None, multi_label: bool= False, one_vs_rest: bool = False, cv = 5, prune_tree: bool = False):
+    def train(self, Z, Yb, weights=None, class_values=None, multi_label: bool = False, one_vs_rest: bool = False, cv=5,
+              prune_tree: bool = False):
         """
 
         :param Z: The training input samples
@@ -41,9 +42,9 @@ class DecisionTreeSurrogate(Surrogate):
         """
         self.dt = DecisionTreeClassifier()
         if prune_tree is True:
-            param_list = {'min_samples_split': [ 0.01, 0.05, 0.1, 0.2, 3, 2],
-                          'min_samples_leaf': [0.001, 0.01, 0.05, 0.1,  2, 4],
-                          'splitter' : ['best', 'random'],
+            param_list = {'min_samples_split': [0.01, 0.05, 0.1, 0.2, 3, 2],
+                          'min_samples_leaf': [0.001, 0.01, 0.05, 0.1, 2, 4],
+                          'splitter': ['best', 'random'],
                           'max_depth': [None, 2, 10, 12, 16, 20, 30],
                           'criterion': ['entropy', 'gini'],
                           'max_features': [0.2, 1, 5, 'auto', 'sqrt', 'log2']
@@ -57,7 +58,8 @@ class DecisionTreeSurrogate(Surrogate):
             else:
                 scoring = 'precision_samples'
 
-            dt_search = sklearn.model_selection.HalvingGridSearchCV(self.dt, param_grid=param_list, scoring=scoring, cv=cv, n_jobs=-1)
+            dt_search = sklearn.model_selection.HalvingGridSearchCV(self.dt, param_grid=param_list, scoring=scoring,
+                                                                    cv=cv, n_jobs=-1)
             logger.info('Search the best estimator')
             logger.info('Start time: {0}'.format(datetime.datetime.now()))
             dt_search.fit(Z, Yb, sample_weight=weights)
@@ -70,12 +72,10 @@ class DecisionTreeSurrogate(Surrogate):
 
         return self.dt
 
-
     def is_leaf(self, inner_tree, index):
         """Check whether node is leaf node"""
         return (inner_tree.children_left[index] == TREE_LEAF and
                 inner_tree.children_right[index] == TREE_LEAF)
-
 
     def prune_index(self, inner_tree, decisions, index=0):
         """
@@ -90,21 +90,18 @@ class DecisionTreeSurrogate(Surrogate):
 
         # Prune children if both children are leaves now and make the same decision:
         if (self.is_leaf(inner_tree, inner_tree.children_left[index]) and
-            self.is_leaf(inner_tree, inner_tree.children_right[index]) and
-            (decisions[index] == decisions[inner_tree.children_left[index]]) and
-            (decisions[index] == decisions[inner_tree.children_right[index]])):
+                self.is_leaf(inner_tree, inner_tree.children_right[index]) and
+                (decisions[index] == decisions[inner_tree.children_left[index]]) and
+                (decisions[index] == decisions[inner_tree.children_right[index]])):
             # turn node into a leaf by "unlinking" its children
             inner_tree.children_left[index] = TREE_LEAF
             inner_tree.children_right[index] = TREE_LEAF
             logger.info("Pruned {}".format(index))
 
-
     def prune_duplicate_leaves(self, dt):
         """Remove leaves if both"""
         decisions = dt.tree_.value.argmax(axis=2).flatten().tolist()  # Decision for each node
         self.prune_index(dt.tree_, decisions)
-
-
 
     def get_rule(self, x: np.array, dataset: TabularDataset, encoder: EncDec = None):
         """
@@ -124,7 +121,8 @@ class DecisionTreeSurrogate(Surrogate):
         threshold = self.dt.tree_.threshold
         predicted_class = self.dt.predict(x)
 
-        consequence = Expression(variable=dataset.class_name, operator=operator.eq, value=encoder.decode_target_class(predicted_class))
+        consequence = Expression(variable=dataset.class_name, operator=operator.eq,
+                                 value=encoder.decode_target_class(predicted_class))
 
         leave_id = self.dt.apply(x)
         node_index = self.dt.decision_path(x).indices
@@ -141,14 +139,14 @@ class DecisionTreeSurrogate(Surrogate):
                     if isinstance(encoder, OneHotEnc) or isinstance(encoder, TabularEnc):
                         attribute = feature_names[feature[node_id]]
                         if attribute not in numeric_columns:
-                            print (attribute)
+                            print(attribute)
                             thr = False if x[0][feature[node_id]] <= threshold[node_id] else True
                             op = operator.eq
                         else:
                             thr = threshold[node_id]
                             op = operator.le if x[0][feature[node_id]] <= threshold[node_id] else operator.gt
                     else:
-                        print (type(encoder))
+                        print(type(encoder))
                         raise Exception('unknown encoder instance ')
                 else:
                     op = operator.le if x[0][feature[node_id]] <= threshold[node_id] else operator.gt
@@ -191,7 +189,8 @@ class DecisionTreeSurrogate(Surrogate):
         return compact_plist
 
     def get_counterfactual_rules(self, x: np.array, class_name, feature_names, neighborhood_dataset: TabularDataset,
-                                 features_map_inv = None, multi_label: bool =False, encoder: EncDec = None, filter_crules=None,
+                                 features_map_inv=None, multi_label: bool = False, encoder: EncDec = None,
+                                 filter_crules=None,
                                  constraints: dict = None, unadmittible_features: list = None):
         """
 
@@ -214,23 +213,22 @@ class DecisionTreeSurrogate(Surrogate):
         crule_list = list()
         delta_list = list()
 
-        #y = self.dt.predict(neighborhood_dataset.df)[0]
-        #Y = self.dt.predict(neighborhood_dataset.df)
+        # y = self.dt.predict(neighborhood_dataset.df)[0]
+        # Y = self.dt.predict(neighborhood_dataset.df)
 
-        Z_list = neighborhood_dataset.df[[x for x in feature_names if x!=class_name]].to_numpy()
+        Z_list = neighborhood_dataset.df[[x for x in feature_names if x != class_name]].to_numpy()
         x_dict = vector2dict(x, neighborhood_dataset.get_features_names())
         for z in Z_list:
-            
+
             # estraggo la regola per ognuno
-            crule = self.get_rule(x = z, dataset= neighborhood_dataset, encoder = encoder)
-            
+            crule = self.get_rule(x=z, dataset=neighborhood_dataset, encoder=encoder)
+
             delta = self.get_falsified_conditions(x_dict, crule)
             num_falsified_conditions = len(delta)
-            
+
             if unadmittible_features is not None:
                 is_feasible = self.check_feasibility_of_falsified_conditions(delta, unadmittible_features)
                 if is_feasible is False:
-                    
                     continue
 
             if constraints is not None:
@@ -265,12 +263,12 @@ class DecisionTreeSurrogate(Surrogate):
                     clen = num_falsified_conditions
                     crule_list = [crule]
                     delta_list = [delta]
-                    print (crule,delta)
+                    print(crule, delta)
                 elif num_falsified_conditions == clen:
                     if delta not in delta_list:
                         crule_list.append(crule)
                         delta_list.append(delta)
-        
+
         return crule_list, delta_list
 
     def get_falsified_conditions(self, x_dict: dict, crule: Rule):
@@ -288,8 +286,8 @@ class DecisionTreeSurrogate(Surrogate):
                 elif p.operator == operator.gt and x_dict[p.variable] <= p.value:
                     delta.append(p)
             except:
-                #print('pop', p.operator2string(), 'xd', x_dict, 'xd di p ', p.variable, 'hthrr', p.value)
-                
+                # print('pop', p.operator2string(), 'xd', x_dict, 'xd di p ', p.variable, 'hthrr', p.value)
+
                 continue
         return delta
 
@@ -309,7 +307,7 @@ class DecisionTreeSurrogate(Surrogate):
                         return False
         return True
 
-    def apply_counterfactual(self, x, delta, dataset,  features_map=None, features_map_inv=None, numeric_columns=None):
+    def apply_counterfactual(self, x, delta, dataset, features_map=None, features_map_inv=None, numeric_columns=None):
         feature_names = dataset.get_features_names()
         x_dict = vector2dict(x, feature_names)
         x_copy_dict = copy.deepcopy(x_dict)

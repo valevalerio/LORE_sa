@@ -39,21 +39,6 @@ def record2str(x, feature_names, numeric_columns, encdec=None):
                 att_split = att.split('=')
                 s += '%s = %s, ' % (att_split[0], att_split[1])
 
-            '''
-            if encdec:
-                att_split = [None]*2
-                att_split[0] = att
-                try:
-                    ind = feature_names.tolist().index(att)
-                except:
-                    print('in except', feature_names)
-                    ind = feature_names.index(att)
-                att_split[1] = x_dec[0][ind]
-            else:
-                att_split = att.split('=')
-            #print('att split ', att_split)
-            s += '%s = %s, ' % (att_split[0], att_split[1])'''
-
     s = s[:-2] + ' }'
     return s
 
@@ -216,45 +201,6 @@ def best_fit_distribution(data, bins=200, ax=None):
 
     return best_distribution.name, best_params
 
-
-# def amp2math(c):
-#     if '&le;' in c:
-#         idx = c.find('&le;')
-#         cnew = '%s%s%s' % (c[:idx], '<=', c[idx + 4:])
-#         return cnew
-#     elif '&lt;' in c:
-#         idx = c.find('&lt;')
-#         cnew = '%s%s%s' % (c[:idx], '<', c[idx + 4:])
-#         return cnew
-#     elif '&gl;' in c:
-#         idx = c.find('&gl;')
-#         cnew = '%s%s%s' % (c[:idx], '>=', c[idx + 4:])
-#         return cnew
-#     elif '&gt;' in c:
-#         idx = c.find('&gt;')
-#         cnew = '%s%s%s' % (c[:idx], '>', c[idx + 4:])
-#         return cnew
-#     return c
-#
-#
-# def math2amp(c):
-#     if '<=' in c:
-#         idx = c.find('<=')
-#         cnew = '%s%s%s' % (c[:idx], '&le;', c[idx + 2:])
-#         return cnew
-#     elif '<' in c:
-#         idx = c.find('<')
-#         cnew = '%s%s%s' % (c[:idx], '&lt;', c[idx + 1:])
-#         return cnew
-#     elif '>=' in c:
-#         idx = c.find('>=')
-#         cnew = '%s%s%s' % (c[:idx], '&gl;', c[idx + 2:])
-#         return cnew
-#     elif '>' in c:
-#         idx = c.find('>')
-#         cnew = '%s%s%s' % (c[:idx], '&gt;', c[idx + 1:])
-#         return cnew
-#     return c
 
 
 def sigmoid(x, x0=0.5, k=10.0, L=1.0):
