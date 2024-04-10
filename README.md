@@ -1,5 +1,30 @@
 # LORE_sa
-Code for LORE (under refactoring)
+This is the official repository of the LORE (Local Rule-Based Explanation) algorithm. 
+
+## Getting started
+
+We suggest to install the library and its requirements into a dedicated environment.
+```bash
+virtualenv venv
+source venv/bin/activate
+pip install -r requirements.txt 
+```
+
+To use the library within your project just import the needed packages:
+```python
+from lore_sa.dataset import TabularDataset
+
+# load the training data
+dataset = TabularDataset.from_csv('my_data.csv', class_name = "class")
+
+```
+
+## Issue tracking
+For any issue or bug, please open a new issue in the issue tracker available at: https://github.com/kdd-lab/LORE_sa/issues
+
+## Contributing
+If you want to contribute to the library, please fork the repository and submit a pull request with the changes. The pull request will be reviewed by the maintainers and merged into the main branch if the changes are considered appropriate.
+
 
 ## Documentation
 
