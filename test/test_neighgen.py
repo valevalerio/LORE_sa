@@ -1,5 +1,5 @@
 import os
-import pickle
+import joblib
 import unittest
 
 import pandas as pd
@@ -25,8 +25,7 @@ class NeighgenTest(unittest.TestCase):
 
         model_pkl_file = "resources/adult_random_forest.pkl"
         if os.path.exists(model_pkl_file):
-            with open(model_pkl_file, 'rb') as f:
-                bb = pickle.load(f)
+            bb = joblib.load(model_pkl_file)
         else:
             encoded = []
             for x in self.dataset.df.iloc:
@@ -44,8 +43,7 @@ class NeighgenTest(unittest.TestCase):
                                                                 stratify=ext_dataset[class_name].values)
             bb = RandomForestClassifier(n_estimators=100, random_state=random_state)
             bb.fit(X_train, y_train)
-            with open(model_pkl_file, 'wb') as f:
-                pickle.dump(bb, f)
+            joblib.dump(bb, model_pkl_file)
 
         self.bbox = sklearn_classifier_bbox.sklearnBBox(bb)
 
