@@ -17,7 +17,7 @@ class TabularDataset(Dataset):
         df (pandas.DataFrame): dataframe containing the whole dataset
         descriptor (dict): it contains the essential informationregarding each feature. Format:
 
-            >>> {'numeric': {'feature name' :
+            {'numeric': {'feature name' :
                             {
                                 'index' : <index of feature column>,
                                 'min' : <min value>,

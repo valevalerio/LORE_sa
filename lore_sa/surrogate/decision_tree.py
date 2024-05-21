@@ -6,7 +6,7 @@ from collections import defaultdict
 import numpy as np
 
 from lore_sa.dataset import TabularDataset
-from lore_sa.encoder_decoder import EncDec, OneHotEnc, TabularEnc
+from lore_sa.encoder_decoder import EncDec, ColumnTransformerEnc
 from lore_sa.logger import logger
 from sklearn.tree._tree import TREE_LEAF
 from sklearn.tree import DecisionTreeClassifier
@@ -136,7 +136,7 @@ class DecisionTreeSurrogate(Surrogate):
                 break
             else:
                 if encoder is not None:
-                    if isinstance(encoder, OneHotEnc) or isinstance(encoder, TabularEnc):
+                    if isinstance(encoder, ColumnTransformerEnc):
                         attribute = feature_names[feature[node_id]]
                         if attribute not in numeric_columns:
                             print(attribute)
