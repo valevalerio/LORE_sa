@@ -21,7 +21,7 @@ class EncDecTest(unittest.TestCase):
                                                  'q3': 1.75,'std': 0.7071067811865476},
                                         'col2': {'index': 1,'max': 4,'mean': 3.5,'median': 3.5,'min': 3,'q1': 3.25,
                                                  'q3': 3.75,'std': 0.7071067811865476}},
-                            'ordinal': {'education': {'index': 3,
+                            'target': {'education': {'index': 3,
                                                       'distinct_values': ['Elementary', 'High School', 'College',
                                                                           'Graduate', 'Post-graduate']}
                                         }}
@@ -43,6 +43,11 @@ class EncDecTest(unittest.TestCase):
                                                                                'Graduate', 'Post-graduate']}
                                              }}
 
+        # We create an instance from a dataset to check the correct work of the pair encoder-decoder
+        self.dataset = TabularDataset.from_csv('resources/adult.csv', class_name='class')
+        self.dataset.df.dropna(inplace=True)
+        self.dataset.update_descriptor()
+
 
     def test_one_hot_encoder_init(self):
         one_hot_enc = OneHotEnc(self.descriptor_dummy)
@@ -57,9 +62,9 @@ class EncDecTest(unittest.TestCase):
 
     def test_one_hot_encoder_init_with_features_encoder(self):
         one_hot_enc = OneHotEnc(self.descriptor_dummy)
-        encoded = one_hot_enc.encode(np.array([1, 2, "Europe", "Graduate", "Green"]))
+        encoded = one_hot_enc.encode([[1, 2, "Europe", "Graduate", "Green"]])
         self.assertEqual(one_hot_enc.__str__(),"OneHotEncoder - features encoded: col3=America,col3=Europe,col3=Africa,colours=White,colours=Black,colours=Red,colours=Blue,colours=Green")
-        self.assertEqual(encoded.tolist(),np.array([1, 2, 0, 1, 0, "Graduate", 0, 0, 0, 0, 1]).tolist())
+        self.assertEqual(encoded.tolist(),np.array([1, 2, 0, 1, 0, 0, 0, 0, 0, 1, "Graduate"]).tolist())
         self.assertEqual(one_hot_enc.encoded_descriptor['numeric']['col1']['index'], 0)
         self.assertEqual(one_hot_enc.encoded_descriptor['numeric']['col2']['index'], 1)
         self.assertEqual(one_hot_enc.encoded_descriptor['ordinal']['education']['index'], 5)
@@ -83,9 +88,9 @@ class EncDecTest(unittest.TestCase):
 
     def test_one_hot_decode_init_with_features_encoder(self):
         one_hot_enc = OneHotEnc(self.descriptor_dummy)
-        decoded = one_hot_enc.decode(np.array([1, 2, 0, 0, 1, "Graduate", 0, 0, 0, 1, 0]))
+        decoded = one_hot_enc.decode(np.array([1, 2, 1, 0, 0, 0, 1, 0, 0, 0, 2]).reshape(1, -1))
 
-        self.assertEqual(decoded.tolist(), np.array([1, 2, "Africa", "Graduate", "Blue"]).tolist())
+        self.assertEqual(decoded.tolist(), [[1, 2, "Africa", "Graduate", "Blue"]])
 
     def test_label_init_no_ordinal_field(self):
         wrong_descriptor = {}
@@ -170,6 +175,17 @@ class EncDecTest(unittest.TestCase):
         tabular_enc = TabularEnc(self.tabular_descriptor)
         decoded = tabular_enc.decode_target_class(np.array([2]))
         self.assertEqual(decoded, 'College')
+
+
+    def test_creation_of_descriptor_from_dataset(self):
+        tabular_enc = TabularEnc(self.dataset.descriptor)
+        ref_value = self.dataset.df.iloc[0].values
+        encoded = tabular_enc.encode(ref_value)
+        print('encoded',encoded)
+        decoded = tabular_enc.decode(encoded)
+        print('ref-value', ref_value)
+        print('decoded', decoded)
+        self.assertTrue(np.array_equal(ref_value, decoded))
 
 if __name__ == '__main__':
     unittest.main()
