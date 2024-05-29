@@ -92,11 +92,11 @@ class Rule(object):
             decoded_label = rule.variable.split("=")[0]
             decoded_value = rule.variable.split("=")[1]
             rule.variable = decoded_label
-            rule.value = decoded_value
-            if rule.operator == operator.le:
-                rule.operator = operator.ne
-            if rule.operator == operator.gt:
+            if rule.value:
                 rule.operator = operator.eq
+            else:
+                rule.operator = operator.ne
+            rule.value = decoded_value
             return rule
         else:
             return rule

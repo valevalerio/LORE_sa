@@ -103,16 +103,15 @@ class DecisionTreeSurrogate(Surrogate):
         decisions = dt.tree_.value.argmax(axis=2).flatten().tolist()  # Decision for each node
         self.prune_index(dt.tree_, decisions)
 
-    def get_rule(self, x: np.array, dataset: TabularDataset, encoder: EncDec = None):
+    def get_rule(self, x: np.array, encoder: EncDec = None):
         """
         Extract the rules as the promises and consequences {p -> y}, starting from a Decision Tree
 
-            >>> {( income > 90) -> grant),
+             {( income > 90) -> grant),
                 ( job = employer) -> grant)
             }
 
         :param [Numpy Array] x: instance encoded of the dataset to extract the rule
-        :param [TabularDataset] dataset: Neighborhood instances
         :param [EncDec] encdec:
         :return [Rule]: Rule objects
         """
@@ -120,38 +119,35 @@ class DecisionTreeSurrogate(Surrogate):
         feature = self.dt.tree_.feature
         threshold = self.dt.tree_.threshold
         predicted_class = self.dt.predict(x)
+        inv_transform_predicted_class = encoder.encoder.named_transformers_.get('target')\
+            .inverse_transform([predicted_class])[0]
 
-        consequence = Expression(variable=dataset.class_name, operator=operator.eq,
-                                 value=encoder.decode_target_class(predicted_class))
+        target_feature_name = list(encoder.encoded_descriptor['target'].keys())[0]
+
+        consequence = Expression(variable=target_feature_name, operator=operator.eq,
+                                 value=inv_transform_predicted_class[0])
 
         leave_id = self.dt.apply(x)
         node_index = self.dt.decision_path(x).indices
 
-        feature_names = dataset.get_features_names()
-        numeric_columns = dataset.get_numeric_columns()
+        feature_names = list(encoder.encoded_features.values())
+        numeric_columns = list(encoder.encoded_descriptor['numeric'].keys())
 
         premises = list()
         for node_id in node_index:
             if leave_id[0] == node_id:
                 break
             else:
-                if encoder is not None:
-                    if isinstance(encoder, ColumnTransformerEnc):
-                        attribute = feature_names[feature[node_id]]
-                        if attribute not in numeric_columns:
-                            print(attribute)
-                            thr = False if x[0][feature[node_id]] <= threshold[node_id] else True
-                            op = operator.eq
-                        else:
-                            thr = threshold[node_id]
-                            op = operator.le if x[0][feature[node_id]] <= threshold[node_id] else operator.gt
-                    else:
-                        print(type(encoder))
-                        raise Exception('unknown encoder instance ')
+                attribute = feature_names[feature[node_id]]
+                if attribute not in numeric_columns:
+                    # this is a categorical feature
+                    # print(f"{attribute} has value {x[0][feature[node_id]]} and threshold is {threshold[node_id]}")
+                    thr = False if x[0][feature[node_id]] <= threshold[node_id] else True
+                    op = operator.eq
                 else:
-                    op = operator.le if x[0][feature[node_id]] <= threshold[node_id] else operator.gt
-                    attribute = feature_names[feature[node_id]]
                     thr = threshold[node_id]
+                    op = operator.le if x[0][feature[node_id]] <= threshold[node_id] else operator.gt
+
                 premises.append(Expression(attribute, op, thr))
 
         premises = self.compact_premises(premises)
