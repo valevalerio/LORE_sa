@@ -184,26 +184,21 @@ class DecisionTreeSurrogate(Surrogate):
                 compact_plist.append(alist[0])
         return compact_plist
 
-    def get_counterfactual_rules(self, x: np.array, class_name, feature_names, neighborhood_dataset: TabularDataset,
-                                 features_map_inv=None, multi_label: bool = False, encoder: EncDec = None,
-                                 filter_crules=None,
-                                 constraints: dict = None, unadmittible_features: list = None):
-        """
+    def get_counterfactual_rules(self, x: np.array, neighborhood_train_X: np.array, neighborhood_train_Y: np.array,
+                                 encoder: EncDec = None,
+                                 filter_crules=None, constraints: dict = None, unadmittible_features: list = None):
 
-        :param [Numpy Array] x: instance encoded of the dataset
-        :param [Numpy Array] neighborhood_dataset: Neighborhood instances
-        :param [TabularDataset] dataset:
-        :param features_map_inv:
-        :param [bool] multi_label:
-        :param [EncDec] encdec:
-        :param filter_crules:
-        :param [dict] constraints:
-        :param [list] unadmittible_features: List of unadmittible features
-        :return:
-        """
 
-        class_values = neighborhood_dataset.get_class_values()
-        class_name = neighborhood_dataset.class_name
+        feature_names = list(encoder.encoded_features.values())
+        # numeric_columns = list(encoder.encoded_descriptor['numeric'].keys())
+
+        predicted_class = self.dt.predict(x.reshape(1, -1))[0]
+        # inv_transform_predicted_class = encoder.encoder.named_transformers_.get('target')\
+        #     .inverse_transform([predicted_class])[0] #TODO: modify to generalize to multiclasses
+
+        class_name = list(encoder.encoded_descriptor['target'].keys())[0]
+        class_values = list(encoder.encoded_descriptor['target'].values())[0]['distinct_values']
+
 
         clen = np.inf
         crule_list = list()
@@ -212,12 +207,14 @@ class DecisionTreeSurrogate(Surrogate):
         # y = self.dt.predict(neighborhood_dataset.df)[0]
         # Y = self.dt.predict(neighborhood_dataset.df)
 
-        Z_list = neighborhood_dataset.df[[x for x in feature_names if x != class_name]].to_numpy()
-        x_dict = vector2dict(x, neighborhood_dataset.get_features_names())
-        for z in Z_list:
+        x_dict = vector2dict(x, feature_names)
+        # select the subset of ```neighborhood_train_X``` that have a classification different from the input x
+        Z1 = neighborhood_train_X[np.where(neighborhood_train_Y != predicted_class)]
 
-            # estraggo la regola per ognuno
-            crule = self.get_rule(x=z, dataset=neighborhood_dataset, encoder=encoder)
+        # We search for the shortest rule among those that support the elements in Z1
+        for z in Z1:
+            #
+            crule = self.get_rule(x=z, encoder=encoder)
 
             delta = self.get_falsified_conditions(x_dict, crule)
             num_falsified_conditions = len(delta)
@@ -239,7 +236,7 @@ class DecisionTreeSurrogate(Surrogate):
                 ##TODO
 
             if filter_crules is not None:
-                xc = self.apply_counterfactual(x, delta, neighborhood_dataset)
+                xc = self.apply_counterfactual(x, delta, feature_names)
                 bb_outcomec = filter_crules(xc.reshape(1, -1))[0]
                 bb_outcomec = class_values[bb_outcomec] if isinstance(class_name, str) else multilabel2str(bb_outcomec,
                                                                                                            class_values)
@@ -259,7 +256,7 @@ class DecisionTreeSurrogate(Surrogate):
                     clen = num_falsified_conditions
                     crule_list = [crule]
                     delta_list = [delta]
-                    print(crule, delta)
+                    # print(crule, delta)
                 elif num_falsified_conditions == clen:
                     if delta not in delta_list:
                         crule_list.append(crule)
@@ -303,8 +300,7 @@ class DecisionTreeSurrogate(Surrogate):
                         return False
         return True
 
-    def apply_counterfactual(self, x, delta, dataset, features_map=None, features_map_inv=None, numeric_columns=None):
-        feature_names = dataset.get_features_names()
+    def apply_counterfactual(self, x, delta, feature_names:list, features_map=None, features_map_inv=None, numeric_columns=None):
         x_dict = vector2dict(x, feature_names)
         x_copy_dict = copy.deepcopy(x_dict)
         for p in delta:

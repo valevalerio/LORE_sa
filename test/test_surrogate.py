@@ -74,9 +74,15 @@ class SurrogateTest(unittest.TestCase):
 
         dt = DecisionTreeSurrogate()
         dt.train(neighb_train_X, neighb_train_y)
-        print(export_text(dt.dt, feature_names=list(self.enc.encoded_features.values())[:-1]))
+        # print(export_text(dt.dt, feature_names=list(self.enc.encoded_features.values())[:-1]))
         rule = dt.get_rule(z, self.enc)
         print('rule', rule)
+        crules, deltas = dt.get_counterfactual_rules(z, neighb_train_X, neighb_train_y, self.enc)
+        print('\n crules')
+        for c in crules:
+            print(c)
+        for d in deltas:
+            print(d)
 
 if __name__ == '__main__':
     unittest.main()

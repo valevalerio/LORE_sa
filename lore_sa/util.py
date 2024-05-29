@@ -10,7 +10,8 @@ from lore_sa.encoder_decoder import ColumnTransformerEnc
 
 def vector2dict(x, feature_names):
     """
-    Return a dictionary feature name : value
+    Given an array ```x''' and an ordered list of feature names, returns a dictionary
+    where each entry has the form ```feature_name : value''' for each feature in x.
     :param x: list of values
     :param feature_names: ordered feature list as the x instance
     :return:
