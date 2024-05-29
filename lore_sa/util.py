@@ -5,7 +5,7 @@ import scipy.stats as st
 from scipy.spatial.distance import jaccard
 import warnings
 
-from lore_sa.encoder_decoder import OneHotEnc
+from lore_sa.encoder_decoder import ColumnTransformerEnc
 
 
 def vector2dict(x, feature_names):
@@ -35,7 +35,7 @@ def record2str(x, feature_names, numeric_columns, encdec=None):
         elif encdec is None:
             s += '%s = %s' % (att, val)
         else:
-            if isinstance(encdec, OneHotEnc):
+            if isinstance(encdec, ColumnTransformerEnc):
                 att_split = att.split('=')
                 s += '%s = %s, ' % (att_split[0], att_split[1])
 
@@ -217,7 +217,7 @@ def sigmoid(x, x0=0.5, k=10.0, L=1.0):
 
 
 def neuclidean(x, y):
-    return 0.5 * np.var(x - y) / (np.var(x) + np.var(y))
+    return 0.5 * np.var(x - y) / (np.var(x) + np.var(y) + 0.0000001)
 
 
 def nmeandev(x, y):  # normalized mean deviation

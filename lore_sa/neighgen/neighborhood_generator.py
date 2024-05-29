@@ -189,7 +189,7 @@ class NeighborhoodGenerator(object):
                 Z1 = self.__rndgen_not_class(x, ocs, self.bbox.predict(x.reshape(1, -1))[0])
                 if len(Z1) > 0:
                     Z = np.concatenate((Z, Z1), axis=0)
-        return Z
+        return np.hstack((Z, self.bbox.predict(Z).reshape(-1, 1)))
 
     def __rndgen_not_class(self, x, num_samples, class_value, max_iter=1000):
         Z = list()

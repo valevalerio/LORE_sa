@@ -63,6 +63,7 @@ class GeneticGenerator(NeighborhoodGenerator):
         :param descriptor: the descriptor of the dataset
         :return:
         """
+        new_x = np.concatenate((x.copy(), self.bbox.predict(x.reshape(1, -1))), axis=0)
 
         # determine the number of instances to generate for the same class and for a different class
         num_samples_eq = int(np.round(num_instances * 0.5))
@@ -86,7 +87,8 @@ class GeneticGenerator(NeighborhoodGenerator):
         # balance the instances according to the minority class
         Z = super(GeneticGenerator, self).balance_neigh(x, Z, num_instances)
         # the first element is the input instance
-        Z[0] = x.copy()
+
+        Z[0] = new_x
         return Z
 
     def add_halloffame(self, population, halloffame):

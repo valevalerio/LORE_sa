@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split
 
 from lore_sa.bbox import sklearn_classifier_bbox
 from lore_sa.dataset import TabularDataset
-from lore_sa.encoder_decoder import TabularEnc
+from lore_sa.encoder_decoder import ColumnTransformerEnc
 from lore_sa.neighgen import RandomGenerator
 from lore_sa.neighgen.genetic import GeneticGenerator
 from lore_sa.neighgen.neighborhood_generator import NeighborhoodGenerator
@@ -21,17 +21,23 @@ class NeighgenTest(unittest.TestCase):
         self.dataset.df.dropna(inplace=True)
         self.dataset.df.drop(['fnlwgt', 'education-num'], axis=1, inplace=True)
         self.dataset.update_descriptor()
-        self.enc = TabularEnc(self.dataset.descriptor)
+        # print('descriptor', self.dataset.descriptor)
+        self.enc = ColumnTransformerEnc(self.dataset.descriptor)
 
         model_pkl_file = "resources/adult_random_forest.pkl"
         if os.path.exists(model_pkl_file):
             bb = joblib.load(model_pkl_file)
         else:
-            encoded = []
-            for x in self.dataset.df.iloc:
-                encoded.append(self.enc.encode(x.values))
+            # print("Training the model", self.dataset.df.values)
+            encoded = self.enc.encode(self.dataset.df.values)
+            # print('original', self.dataset.df.iloc[0].values)
+            # print('encoded', encoded[0])
+            # for x in self.dataset.df.iloc:
+            #     encoded.append(self.enc.encode(x.values))
 
             ext_dataset = pd.DataFrame(encoded, columns=[self.enc.encoded_features[i] for i in range(len(encoded[0]))])
+            # print(self.dataset.df.head())
+            # print(ext_dataset.head())
             self.feature_names = [c for c in ext_dataset.columns if c != self.dataset.class_name]
             class_name = self.dataset.class_name
             test_size = 0.3
@@ -41,36 +47,37 @@ class NeighgenTest(unittest.TestCase):
                                                                 ext_dataset[class_name].values, test_size=test_size,
                                                                 random_state=random_state,
                                                                 stratify=ext_dataset[class_name].values)
+
             bb = RandomForestClassifier(n_estimators=100, random_state=random_state)
-            bb.fit(X_train, y_train)
+            bb.fit(X_train, [int(v) for v in y_train]) # it seems that RF needs this explicit cast. I do not know why!
             joblib.dump(bb, model_pkl_file)
 
         self.bbox = sklearn_classifier_bbox.sklearnBBox(bb)
 
     def test_random_generator(self):
-        gen = RandomGenerator()
+        gen = RandomGenerator(bbox=self.bbox, dataset=self.dataset, encoder=self.enc, ocr=0.1)
         self.assertIsInstance(gen, NeighborhoodGenerator)
         self.assertIsInstance(gen, RandomGenerator)
 
     def test_random_generator_generate_balanced(self):
         num_row = 10
         x = self.dataset.df.iloc[num_row]
-        z = self.enc.encode(x.values)[:-1] # remove the class feature from the input instance
+        z = self.enc.encode([x.values])[0][:-1] # remove the class feature from the input instance
 
-        gen = RandomGenerator()
+        gen = RandomGenerator(bbox=self.bbox, dataset=self.dataset, encoder=self.enc, ocr=0.1)
         neighbour = gen.generate(z, 1000, self.dataset.descriptor, self.enc)
         # Assert the lenght of the generated dataset is at least 1000
-        self.assertGreaterEqual(neighbour.df.shape[0], 1000)
+        self.assertGreaterEqual(neighbour.shape[0], 1000)
 
     def test_random_generator_generate_raw(self):
         num_row = 10
         x = self.dataset.df.iloc[num_row]
-        z = self.enc.encode(x.values)[:-1] # remove the class feature from the input instance
+        z = self.enc.encode([x.values])[0][:-1] # remove the class feature from the input instance
 
-        gen = RandomGenerator()
+        gen = RandomGenerator(bbox=self.bbox, dataset=self.dataset, encoder=self.enc, ocr=0.1)
         neighbour = gen.generate(z, 1000, self.dataset.descriptor, self.enc)
-        self.assertEqual(neighbour.df.shape[0], 1000)
-        self.assertEqual(neighbour.df.shape[1], len(z))
+        self.assertGreaterEqual(neighbour.shape[0], 1000)
+        self.assertEqual(neighbour.shape[1], len(z)+1)
 
 
     def test_genetic_generator(self):
@@ -81,7 +88,7 @@ class NeighgenTest(unittest.TestCase):
     def test_genetic_generator_generate_balanced(self):
         num_row = 10
         x = self.dataset.df.iloc[num_row]
-        z = self.enc.encode(x.values)[:-1] # remove the class feature from the input instance
+        z = self.enc.encode([x.values])[0][:-1] # remove the class feature from the input instance
 
         gen = GeneticGenerator(bbox=self.bbox, dataset=self.dataset, encoder=self.enc, ocr=0.1, ngen=20)
         neighbour = gen.generate(z, 1000, self.dataset.descriptor)

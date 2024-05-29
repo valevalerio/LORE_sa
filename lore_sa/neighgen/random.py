@@ -1,3 +1,6 @@
+from lore_sa.bbox import AbstractBBox
+from lore_sa.dataset import Dataset
+from lore_sa.encoder_decoder import EncDec
 from lore_sa.neighgen.neighborhood_generator import NeighborhoodGenerator
 
 from lore_sa.dataset.tabular_dataset import TabularDataset
@@ -12,10 +15,18 @@ class RandomGenerator(NeighborhoodGenerator):
     Random Generator creates neighbor instances by generating random values starting from the instance to explain
     """
 
-    def __init__(self):
+    def __init__(self, bbox: AbstractBBox, dataset: Dataset, encoder: EncDec, ocr=0.1):
+        """
+        :param bbox: the Black Box model to explain
+        :param dataset: the dataset with the descriptor of the original dataset
+        :param encoder: an encoder to transfrom the data from/to the black box model
+        :param ocr: acronym for One Class Ratio, it is the ratio of the number of instances of the minority class
+        """
+        super().__init__(bbox, dataset, encoder, ocr)
         self.generated_data = None
 
-    def generate(self, x, num_instances, descriptor, onehotencoder=None):
+
+    def generate(self, x, num_instances, descriptor, encoder=None):
         """
         random generation of new instances. The starting instance x is only used to detect the value type of each feature, in order
         to generate new values only for numeric features.
@@ -35,12 +46,13 @@ class RandomGenerator(NeighborhoodGenerator):
         for n in range(num_instances):
             instance = [None for e in range(len(x))]
 
+            # TODO: needs refactoring to improve efficiency
             for name, feature in descriptor['categorical'].items():
-                if onehotencoder is not None:
+                if encoder is not None:
                     # feature is encoded, so i need to random generate chunks of one-hot-encoded values
 
                     # finding the vector index of the feature
-                    indices = [k for k, v in onehotencoder.get_encoded_features().items() if v.split("=")[0] == name]
+                    indices = [k for k, v in encoder.get_encoded_features().items() if v.split("=")[0] == name]
                     index_choice = np.random.choice(list(range(len(indices))))
 
                     for i, idx in enumerate(indices):
@@ -48,7 +60,7 @@ class RandomGenerator(NeighborhoodGenerator):
                             instance[idx] = 1
                         else:
                             instance[idx] = 0
-                        columns[idx] = onehotencoder.get_encoded_features()[idx]
+                        columns[idx] = encoder.get_encoded_features()[idx]
 
 
                 else:
@@ -59,8 +71,8 @@ class RandomGenerator(NeighborhoodGenerator):
 
             for name, feature in descriptor['numeric'].items():
                 idx = None
-                if onehotencoder is not None:
-                    idx = [k for k, v in onehotencoder.get_encoded_features().items() if v == name][0]
+                if encoder is not None:
+                    idx = [k for k, v in encoder.get_encoded_features().items() if v == name][0]
                 else:
                     idx = feature['index']
                 columns[idx] = name
@@ -69,6 +81,8 @@ class RandomGenerator(NeighborhoodGenerator):
 
             generated_list.append(instance)
 
-        self.generated_data = generated_list
+        balanced_list = super().balance_neigh(x, generated_list, num_instances)
+        self.generated_data = balanced_list
 
-        return TabularDataset(pd.DataFrame(generated_list, columns=columns))
+        return balanced_list
+
