@@ -5,7 +5,6 @@ from collections import defaultdict
 
 import numpy as np
 
-from lore_sa.dataset import TabularDataset
 from lore_sa.encoder_decoder import EncDec, ColumnTransformerEnc
 from lore_sa.logger import logger
 from sklearn.tree._tree import TREE_LEAF
@@ -119,8 +118,7 @@ class DecisionTreeSurrogate(Surrogate):
         feature = self.dt.tree_.feature
         threshold = self.dt.tree_.threshold
         predicted_class = self.dt.predict(x)
-        inv_transform_predicted_class = encoder.encoder.named_transformers_.get('target')\
-            .inverse_transform([predicted_class])[0]
+        inv_transform_predicted_class = encoder.decode_target_class([predicted_class])[0]
 
         target_feature_name = list(encoder.encoded_descriptor['target'].keys())[0]
 

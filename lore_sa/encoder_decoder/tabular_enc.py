@@ -177,3 +177,12 @@ class ColumnTransformerEnc(EncDec):
 
         return decoded
 
+    def decode_target_class(self, Z: np.array):
+        """
+        Decode the target class
+
+        :param [Numpy array] x: Array containing the target class values to be decoded
+        """
+
+        return self.encoder.named_transformers_.get('target').inverse_transform(Z)
+

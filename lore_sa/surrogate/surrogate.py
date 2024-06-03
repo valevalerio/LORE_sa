@@ -23,7 +23,7 @@ class Surrogate(ABC):
         pass
 
     @abstractmethod
-    def get_rule(self, x: np.array, dataset: Dataset, encdec: EncDec = None):
+    def get_rule(self, x: np.array, encdec: EncDec = None):
         pass
 
     @abstractmethod
