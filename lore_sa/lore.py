@@ -35,8 +35,13 @@ class Lore(object):
 
 
     def explain(self, x: np.array):
+        """
+        Explains a single instance of the dataset.
+        :param x: an array with the values of the instance to explain (the target class is not included)
+        :return:
+        """
         # map the single record in input to the encoded space
-        z = self.encoder.encode([x])[0][:-1]
+        [z] = self.encoder.encode([x])
         # generate a neighborhood of instances around the projected instance `z`
         neighbour = self.generator.generate(z, 1000, self.descriptor, self.encoder)
         dec_neighbor = self.encoder.decode(neighbour)

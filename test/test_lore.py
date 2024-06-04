@@ -52,7 +52,7 @@ class LoremTest(unittest.TestCase):
     def test_explain_instance(self):
         # given
         num_row = 10
-        x = self.dataset.df.iloc[num_row]
+        x = self.dataset.df.iloc[num_row][:-1]
         # when
         explanation = self.tabularLore.explain(x)
         # then

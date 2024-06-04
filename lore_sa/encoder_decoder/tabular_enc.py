@@ -20,15 +20,13 @@ class InvertableColumnTransformer(ColumnTransformer):
 
     taken from: https://github.com/scikit-learn/scikit-learn/issues/11463
     """
-    def inverse_transform(self, X:np.array, with_target=False):
+    def inverse_transform(self, X:np.array):
         # print(X)
         arrays = []
         for name, indices in self.output_indices_.items():
             transformer = self.named_transformers_.get(name, None)
             # print(name, indices.start, indices.stop, transformer)
             arr = X[:, indices.start: indices.stop]
-            if(name == 'target' and not with_target):
-                continue
             if transformer in (None, "passthrough", "drop"):
                 pass
             elif arr.size >0:
@@ -40,8 +38,6 @@ class InvertableColumnTransformer(ColumnTransformer):
         # apply the original order of the columns
         dest_indexes = []
         for t in self.transformers_:
-            if (t[0] == 'target' and not with_target):
-                continue
             dest_indexes.extend(t[2])
 
         for i, d in enumerate(dest_indexes):
@@ -69,9 +65,9 @@ class ColumnTransformerEnc(EncDec):
                 for k, v in self.dataset_descriptor[l].items():
                     if v['index'] > max_index:
                         max_index = v['index']
-        categories = np.zeros(max_index + 1, dtype=object)
+        categories = np.empty(max_index+1, dtype=object)
 
-        for l in ['numeric', 'categorical', 'ordinal', 'target']:
+        for l in ['numeric', 'categorical', 'ordinal', 'target']: #remove target from the scan
             if l in self.dataset_descriptor:
                 if l == 'numeric':
                     for k, v in self.dataset_descriptor[l].items():
@@ -84,6 +80,7 @@ class ColumnTransformerEnc(EncDec):
         # each entry of the datasets should contain the corersponding values in the right position
         # of the categories array
 
+
         # compute the max length of the categories
         max_len = max([ len(c) for c in categories])
         for i, c in enumerate(categories):
@@ -92,18 +89,30 @@ class ColumnTransformerEnc(EncDec):
                 categories[i] = np.tile(c, repetitions)[:max_len]
 
         mock_data = list(map(list, zip(*categories)))
+        # extract the column index of the target attribute from descriptor
+        target_index = -1
+        for k, v in self.dataset_descriptor['target'].items():
+            target_index = v['index']
+        # from mock_data, separate the target column in a separate array
+        target_column = [row.pop(target_index) for row in mock_data]
+
+
 
         # Create the column transformer to apply OneHotEncoder only to categorical features
         self.encoder = InvertableColumnTransformer(
             transformers=[
                 ('numeric', FunctionTransformer(lambda x: x), [ v['index'] for v in self.dataset_descriptor['numeric'].values()]),
-                ('categorical', OneHotEncoder(sparse_output=False, handle_unknown='ignore', dtype=np.int16), [ v['index'] for v in self.dataset_descriptor['categorical'].values()]),
-                ('target', OrdinalEncoder(dtype=np.int16), [ v['index'] for v in self.dataset_descriptor['target'].values()])
+                ('categorical',
+                     OneHotEncoder(sparse_output=False, handle_unknown='ignore', dtype=np.int16),
+                     [ v['index'] for v in self.dataset_descriptor['categorical'].values()]
+                ),
             ],
             remainder='passthrough'
         )
+        self.target_encoder = OrdinalEncoder(dtype=np.int16)
 
         self.encoder.fit(mock_data)
+        self.target_encoder.fit(np.array(target_column).reshape(-1, 1))
 
         # print('transformers', self.encoder.transformers_)
         # print('output indices', self.encoder.output_indices_)
@@ -190,5 +199,5 @@ class ColumnTransformerEnc(EncDec):
         :param [Numpy array] x: Array containing the target class values to be decoded
         """
 
-        return self.encoder.named_transformers_.get('target').inverse_transform(Z)
+        return self.target_encoder.inverse_transform(Z)
 
