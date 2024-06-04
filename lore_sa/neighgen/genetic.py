@@ -63,7 +63,7 @@ class GeneticGenerator(NeighborhoodGenerator):
         :param descriptor: the descriptor of the dataset
         :return:
         """
-        new_x = np.concatenate((x.copy(), self.bbox.predict(x.reshape(1, -1))), axis=0)
+        new_x = x.copy()
 
         # determine the number of instances to generate for the same class and for a different class
         num_samples_eq = int(np.round(num_instances * 0.5))

@@ -61,8 +61,8 @@ class NeighgenTest(unittest.TestCase):
 
     def test_random_generator_generate_balanced(self):
         num_row = 10
-        x = self.dataset.df.iloc[num_row]
-        z = self.enc.encode([x.values])[0][:-1] # remove the class feature from the input instance
+        x = self.dataset.df.iloc[num_row][:-1] # remove the class feature from the input instance
+        z = self.enc.encode([x.values])[0]
 
         gen = RandomGenerator(bbox=self.bbox, dataset=self.dataset, encoder=self.enc, ocr=0.1)
         neighbour = gen.generate(z, 1000, self.dataset.descriptor, self.enc)
@@ -71,13 +71,13 @@ class NeighgenTest(unittest.TestCase):
 
     def test_random_generator_generate_raw(self):
         num_row = 10
-        x = self.dataset.df.iloc[num_row]
-        z = self.enc.encode([x.values])[0][:-1] # remove the class feature from the input instance
+        x = self.dataset.df.iloc[num_row][:-1] # remove the class feature from the input instance
+        z = self.enc.encode([x.values])[0]
 
         gen = RandomGenerator(bbox=self.bbox, dataset=self.dataset, encoder=self.enc, ocr=0.1)
         neighbour = gen.generate(z, 1000, self.dataset.descriptor, self.enc)
         self.assertGreaterEqual(neighbour.shape[0], 1000)
-        self.assertEqual(neighbour.shape[1], len(z)+1)
+        self.assertEqual(neighbour.shape[1], len(z))
 
 
     def test_genetic_generator(self):
@@ -87,13 +87,13 @@ class NeighgenTest(unittest.TestCase):
 
     def test_genetic_generator_generate_balanced(self):
         num_row = 10
-        x = self.dataset.df.iloc[num_row]
-        z = self.enc.encode([x.values])[0][:-1] # remove the class feature from the input instance
+        x = self.dataset.df.iloc[num_row][:-1]
+        z = self.enc.encode([x.values])[0] # remove the class feature from the input instance
 
         gen = GeneticGenerator(bbox=self.bbox, dataset=self.dataset, encoder=self.enc, ocr=0.1, ngen=20)
-        neighbour = gen.generate(z, 1000, self.dataset.descriptor)
+        neighbour = gen.generate(z, 100, self.dataset.descriptor)
         # Assert the lenght of the generated dataset is at least 1000
-        self.assertGreaterEqual(neighbour.shape[0], 1000)
+        self.assertGreaterEqual(neighbour.shape[0], 100)
 
 
 

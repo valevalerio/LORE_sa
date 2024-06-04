@@ -62,18 +62,20 @@ class SurrogateTest(unittest.TestCase):
 
     def test_fit_from_random_neighborhood(self):
         num_row = 10
-        x = self.dataset.df.iloc[num_row]
-        z = self.enc.encode([x.values])[0][:-1] # remove the class feature from the input instance
+        x = self.dataset.df.iloc[num_row][:-1] # remove the class feature from the input instance
+        z = self.enc.encode([x.values])[0]
 
         gen = RandomGenerator(bbox=self.bbox, dataset=self.dataset, encoder=self.enc, ocr=0.1)
         neighbour = gen.generate(z, 1000, self.dataset.descriptor, self.enc)
 
         # split neighbor in features and class using train_test_split
-        neighb_train_X = neighbour[:, :-1]
-        neighb_train_y = neighbour[:, -1].astype(int) # cast to int because the classifier needs it. Why?
+        neighb_train_Z = neighbour[:, :]
+        neighb_train_X = self.enc.decode(neighb_train_Z)
+        neighb_train_y = self.bbox.predict(neighb_train_X)
+        neighb_train_yz = self.enc.decode_target_class(neighb_train_y)
 
         dt = DecisionTreeSurrogate()
-        dt.train(neighb_train_X, neighb_train_y)
+        dt.train(neighb_train_Z, neighb_train_yz)
         # print(export_text(dt.dt, feature_names=list(self.enc.encoded_features.values())[:-1]))
         rule = dt.get_rule(z, self.enc)
         print('rule', rule)

@@ -97,7 +97,6 @@ class ColumnTransformerEnc(EncDec):
         target_column = [row.pop(target_index) for row in mock_data]
 
 
-
         # Create the column transformer to apply OneHotEncoder only to categorical features
         self.encoder = InvertableColumnTransformer(
             transformers=[
