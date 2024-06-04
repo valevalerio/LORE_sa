@@ -75,6 +75,7 @@ class ColumnTransformerEnc(EncDec):
                 else:
                     for k, v in self.dataset_descriptor[l].items():
                         categories[v['index']] = v['distinct_values']
+
         # create a dataset to fit the encoder with the categories
         # each entry of the datasets should contain the corersponding values in the right position
         # of the categories array
@@ -108,36 +109,37 @@ class ColumnTransformerEnc(EncDec):
         encoded_features = {}
         for name, indices in self.encoder.output_indices_.items():
             # print(name, indices.start, indices.stop)
-            if name == 'categorical':
-                # print(self.encoder.named_transformers_.get(name).categories_)
-                cat_categories = self.encoder.named_transformers_.get(name).categories_
-                i = indices.start
-                for j, k in enumerate(self.dataset_descriptor['categorical'].keys()):
-                    # print('categorical', k,  cat_categories[j], self.dataset_descriptor['categorical'][k]['index'], i)
-                    self.encoded_descriptor['categorical'][k]['index'] = i
-                    for v in cat_categories[j]:
-                        # print('   ', i, f"{k}={v}")
-                        encoded_features[i] = f"{k}={v}"
+            if (indices.start != indices.stop): # make sure the transformer is not a passthrough
+                if (name == 'categorical'):
+                    # print(self.encoder.named_transformers_.get(name).categories_)
+                    cat_categories = self.encoder.named_transformers_.get(name).categories_
+                    i = indices.start
+                    for j, k in enumerate(self.dataset_descriptor['categorical'].keys()):
+                        # print('categorical', k,  cat_categories[j], self.dataset_descriptor['categorical'][k]['index'], i)
+                        self.encoded_descriptor['categorical'][k]['index'] = i
+                        for v in cat_categories[j]:
+                            # print('   ', i, f"{k}={v}")
+                            encoded_features[i] = f"{k}={v}"
+                            i += 1
+                if name == 'target':
+                    # print(self.encoder.named_transformers_.get(name).categories_)
+                    target_categories = self.encoder.named_transformers_.get(name).categories_
+                    i = indices.start
+                    for j, k in enumerate(self.dataset_descriptor['target'].keys()):
+                        # print('target', k,  target_categories[j], self.dataset_descriptor['target'][k]['index'], i)
+                        self.encoded_descriptor['target'][k]['index'] = i
+                        encoded_features[i] = k
+                        # for v in target_categories[j]:
+                            # print('   ', i, f"{k}={v} [{self.encoder.named_transformers_.get(name).transform([[v]])[0]}]")
                         i += 1
-            if name == 'target':
-                # print(self.encoder.named_transformers_.get(name).categories_)
-                target_categories = self.encoder.named_transformers_.get(name).categories_
-                i = indices.start
-                for j, k in enumerate(self.dataset_descriptor['target'].keys()):
-                    # print('target', k,  target_categories[j], self.dataset_descriptor['target'][k]['index'], i)
-                    self.encoded_descriptor['target'][k]['index'] = i
-                    encoded_features[i] = k
-                    # for v in target_categories[j]:
-                        # print('   ', i, f"{k}={v} [{self.encoder.named_transformers_.get(name).transform([[v]])[0]}]")
-                    i += 1
-            if name == 'numeric':
-                # print('numeric', indices.start, indices.stop)
-                i = indices.start
-                for k, v in self.dataset_descriptor['numeric'].items():
-                    # print('   ',i , k)
-                    self.encoded_descriptor['numeric'][k]['index'] = i
-                    encoded_features[i] = k
-                    i += 1
+                if name == 'numeric':
+                    # print('numeric', indices.start, indices.stop)
+                    i = indices.start
+                    for k, v in self.dataset_descriptor['numeric'].items():
+                        # print('   ',i , k)
+                        self.encoded_descriptor['numeric'][k]['index'] = i
+                        encoded_features[i] = k
+                        i += 1
         # print('encoded features', encoded_features)
         self.encoded_features = encoded_features
 

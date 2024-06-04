@@ -94,13 +94,12 @@ class TabularDataset(Dataset):
         :param descriptor:
         :return:
         """
-        if self.class_name is None:
-            logger.warning("No target class is defined")
-            return descriptor
-
         for type in descriptor:
             for k in descriptor[type]:
                 if k == self.class_name:
+                    if type == 'numeric':
+                        raise Exception("ERR: target column cannot be continuous. Please, set a categorical column as target."
+                                        "You can force the content of target column by discretize it.")
                     descriptor['target'] = {k: descriptor[type][k]}
                     descriptor[type].pop(k)
                     return descriptor
@@ -108,7 +107,7 @@ class TabularDataset(Dataset):
         return descriptor
 
     @classmethod
-    def from_csv(cls, filename: str, class_name: str = None):
+    def from_csv(cls, filename: str, class_name: str = None, dropna: bool = True):
         """
         Read a comma-separated values (csv) file into Dataset object.
         :param [str] filename:
@@ -116,6 +115,8 @@ class TabularDataset(Dataset):
         :return:
         """
         df = pd.read_csv(filename, skipinitialspace=True, na_values='?', keep_default_na=True)
+        if dropna:
+            df.dropna(inplace=True)
         dataset_obj = cls(df, class_name=class_name)
         dataset_obj.filename = filename
         logger.info('{0} file imported'.format(filename))
