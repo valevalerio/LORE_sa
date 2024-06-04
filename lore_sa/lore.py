@@ -2,82 +2,101 @@ from lore_sa.bbox import AbstractBBox
 import pandas as pd
 import numpy as np
 
-from lore_sa.dataset import TabularDataset
-from lore_sa.encoder_decoder import TabularEnc, LabelEnc, OneHotEnc
+from lore_sa.dataset import TabularDataset, Dataset
+from lore_sa.encoder_decoder import ColumnTransformerEnc, EncDec
+from lore_sa.neighgen import GeneticGenerator
+from lore_sa.neighgen.neighborhood_generator import NeighborhoodGenerator
 from lore_sa.neighgen.random import RandomGenerator
-from lore_sa.surrogate import DecisionTreeSurrogate
+from lore_sa.surrogate import DecisionTreeSurrogate, Surrogate
+
 
 class Lore(object):
 
-    def __init__(self, bbox: AbstractBBox):
+    def __init__(self, bbox: AbstractBBox, dataset: Dataset, encoder: EncDec,
+                 generator: NeighborhoodGenerator, surrogate: Surrogate):
         """
-        LOREM Explainer for tabular data.
-        Parameters
-        ----------
-        bbox [AbstractBBox]:
+        Creates a new instance of the LORE method.
+
+
+        :param bbox: The black box model to be explained wrapped in a ``AbstractBBox`` object.
+        :param dataset:
+        :param encoder:
+        :param generator:
+        :param surrogate:
         """
+
         super().__init__()
         self.bbox = bbox
+        self.descriptor = dataset.descriptor
+        self.encoder = encoder
+        self.generator = generator
+        self.surrogate = surrogate
+        self.class_name = dataset.class_name
 
-    def fit(self, df: pd.DataFrame, class_name, config: dict = None):
-        """
-
-        Parameters
-        ----------
-        df [DataFrame]: tabular dataset
-        class_name [str]: column that contains the observed class
-        config [dict]: configuration dictionary with the following keys: 'enc_dec','neigh_type','surrogate'
-
-        Returns
-        -------
-
-        """
-        self.class_name = class_name
-        self.dataset = TabularDataset(data=df, class_name=self.class_name)
-        self.dataset.df.dropna(inplace=True)
-        self.config = config
-
-        # encode dataset
-        if self.config is not None and 'enc_dec' in self.config.keys():
-            if config['enc_dec'] == 'label':
-                self.encoded = LabelEnc(self.dataset.descriptor)
-            elif config['enc_dec'] == 'one_hot':
-                self.encoded = OneHotEnc(self.dataset.descriptor)
-        else:
-            self.encoder = TabularEnc(self.dataset.descriptor)
-
-        self.encoded = []
-        for x in self.dataset.df.iloc:
-            self.encoded.append(self.encoder.encode(x.values))
-
-        self.features = [c for c in self.dataset.df.columns if c != self.dataset.class_name]
 
     def explain(self, x: np.array):
-        # random generation
-        if self.config is not None and 'neigh_type' in self.config.keys():
-            if self.config['neigh_type'] == 'rndgen':
-                gen = RandomGenerator()
-        else:
-            gen = RandomGenerator()
+        # map the single record in input to the encoded space
+        z = self.encoder.encode([x])[0][:-1]
+        # generate a neighborhood of instances around the projected instance `z`
+        neighbour = self.generator.generate(z, 1000, self.descriptor, self.encoder)
 
-        self.neighbour = gen.generate(x, 10000, self.dataset.descriptor, onehotencoder=self.encoder)
+        # split neighbor in features and class using train_test_split
+        neighb_train_X = neighbour[:, :-1]
+        neighb_train_y = neighbour[:, -1].astype(int) # cast to int because the classifier needs it. Why?
 
-        # neighbour classification
-        self.neighbour.df[self.class_name] = self.bbox.predict(self.neighbour.df[self.features])
-        self.neighbour.set_class_name(self.class_name)
+        # train the surrogate model on the neighborhood
+        self.surrogate.train(neighb_train_X, neighb_train_y)
 
-        # surrogate
-        if self.config is not None and 'surrogate' in self.config.keys():
-            if self.config['surrogate'] == 'decision':
-                self.surrogate = DecisionTreeSurrogate()
-        else:
-            self.surrogate = DecisionTreeSurrogate()
+        # get the rule for the instance `z`, decode using the encoder class
+        rule = self.surrogate.get_rule(z, self.encoder)
+        print('rule', rule)
+
+        self.crules, self.deltas = self.surrogate.get_counterfactual_rules(z, neighb_train_X, neighb_train_y, self.encoder)
+
+        return {'x': x, 'rule': rule, 'counterfactuals': self.crules, 'deltas': self.deltas}
 
 
-        self.surrogate.train(self.neighbour.df[self.features].values, self.neighbour.df['class'])
 
-        self.rule = self.surrogate.get_rule(x, self.neighbour, self.encoder)
-        self.crules, self.deltas = self.surrogate.get_counterfactual_rules(x=x, class_name=self.class_name,
-                                                                      feature_names=self.features,
-                                                                      neighborhood_dataset=self.neighbour,
-                                                                      encoder=self.encoder)
+class TabularRandomGeneratorLore(Lore):
+
+        def __init__(self, bbox: AbstractBBox, dataset: TabularDataset):
+            """
+            Creates a new instance of the LORE method.
+
+
+            :param bbox: The black box model to be explained wrapped in a ``AbstractBBox`` object.
+            :param dataset:
+            :param encoder:
+            :param generator:
+            :param surrogate:
+            """
+            encoder = ColumnTransformerEnc(dataset.descriptor)
+            generator = RandomGenerator(bbox, dataset, encoder, 0.1)
+            surrogate = DecisionTreeSurrogate()
+
+            super().__init__(bbox, dataset, encoder, generator, surrogate)
+
+        def explain_instance(self, x: np.array):
+            return self.explain(x.values)
+
+class TabularGeneticGeneratorLore(Lore):
+
+        def __init__(self, bbox: AbstractBBox, dataset: TabularDataset):
+            """
+            Creates a new instance of the LORE method.
+
+
+            :param bbox: The black box model to be explained wrapped in a ``AbstractBBox`` object.
+            :param dataset:
+            :param encoder:
+            :param generator:
+            :param surrogate:
+            """
+            encoder = ColumnTransformerEnc(dataset.descriptor)
+            generator = GeneticGenerator(bbox, dataset, encoder, 0.1)
+            surrogate = DecisionTreeSurrogate()
+
+            super().__init__(bbox, dataset, encoder, generator, surrogate)
+
+        def explain_instance(self, x: np.array):
+            return self.explain(x.values)
