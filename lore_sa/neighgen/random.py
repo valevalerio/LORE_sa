@@ -40,11 +40,11 @@ class RandomGenerator(NeighborhoodGenerator):
         :return [TabularDataset]: a tabular dataset instance with the new data generated
         """
 
-        generated_list, columns = [], []
+        generated_list = np.array([])
+        columns = np.empty(len(x), dtype=object)
 
-        columns = [None for e in range(len(x))]
         for n in range(num_instances):
-            instance = [None for e in range(len(x))]
+            instance = np.empty(len(x), dtype=object)
 
             # TODO: needs refactoring to improve efficiency
             for name, feature in descriptor['categorical'].items():
@@ -79,7 +79,11 @@ class RandomGenerator(NeighborhoodGenerator):
 
                 instance[idx] = np.random.uniform(low=feature['min'], high=feature['max'])
 
-            generated_list.append(instance)
+            # append instance array to generated_list
+            if generated_list.size == 0:
+                generated_list = instance
+            else:
+                generated_list = np.vstack((generated_list, instance))
 
         balanced_list = super().balance_neigh(x, generated_list, num_instances)
         self.generated_data = balanced_list

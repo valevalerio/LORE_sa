@@ -39,10 +39,10 @@ class Lore(object):
         z = self.encoder.encode([x])[0][:-1]
         # generate a neighborhood of instances around the projected instance `z`
         neighbour = self.generator.generate(z, 1000, self.descriptor, self.encoder)
-
+        dec_neighbor = self.encoder.decode(neighbour)
         # split neighbor in features and class using train_test_split
-        neighb_train_X = neighbour[:, :-1]
-        neighb_train_y = neighbour[:, -1].astype(int) # cast to int because the classifier needs it. Why?
+        neighb_train_X = dec_neighbor[:, :]
+        neighb_train_y = self.bbox.predict(neighb_train_X) # cast to int because the classifier needs it. Why?
 
         # train the surrogate model on the neighborhood
         self.surrogate.train(neighb_train_X, neighb_train_y)

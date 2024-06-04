@@ -20,16 +20,18 @@ class InvertableColumnTransformer(ColumnTransformer):
 
     taken from: https://github.com/scikit-learn/scikit-learn/issues/11463
     """
-    def inverse_transform(self, X):
+    def inverse_transform(self, X:np.array, with_target=False):
         # print(X)
         arrays = []
         for name, indices in self.output_indices_.items():
             transformer = self.named_transformers_.get(name, None)
             # print(name, indices.start, indices.stop, transformer)
             arr = X[:, indices.start: indices.stop]
+            if(name == 'target' and not with_target):
+                continue
             if transformer in (None, "passthrough", "drop"):
                 pass
-            else:
+            elif arr.size >0:
                 arr = transformer.inverse_transform(arr)
             arrays.append(arr)
         retarr = np.concatenate(arrays, axis=1)
@@ -38,6 +40,8 @@ class InvertableColumnTransformer(ColumnTransformer):
         # apply the original order of the columns
         dest_indexes = []
         for t in self.transformers_:
+            if (t[0] == 'target' and not with_target):
+                continue
             dest_indexes.extend(t[2])
 
         for i, d in enumerate(dest_indexes):
