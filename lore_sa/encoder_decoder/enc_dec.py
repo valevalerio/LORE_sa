@@ -40,3 +40,7 @@ class EncDec():
     @abstractmethod
     def decode_target_class(self, x: np.array):
         return
+
+    @abstractmethod
+    def encode_target_class(self, param):
+        pass

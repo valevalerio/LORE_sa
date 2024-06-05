@@ -72,15 +72,16 @@ class NeighborhoodGenerator(object):
         self.columns = columns
         return instance
 
-    def balance_neigh(self, x, Z, num_samples):
+    def balance_neigh(self, z, Z, num_samples):
         X = self.encoder.decode(Z)
         Yb = self.bbox.predict(X)
+        x = self.encoder.decode(z.reshape(1, -1))[0]
 
         class_counts = np.unique(Yb, return_counts=True)
 
         if len(class_counts[0]) <= 2:
             ocs = int(np.round(num_samples * self.ocr))
-            Z1 = self.__rndgen_not_class(x, ocs, self.bbox.predict(x.reshape(1, -1))[0])
+            Z1 = self.__rndgen_not_class(z, ocs, self.bbox.predict(x.reshape(1, -1))[0])
             if len(Z1) > 0:
                 Z = np.concatenate((Z, Z1), axis=0)
         else:
@@ -88,7 +89,7 @@ class NeighborhoodGenerator(object):
             max_cc2 = np.max([cc for cc in class_counts[1] if cc != max_cc])
             if max_cc2 / len(Yb) < self.ocr:
                 ocs = int(np.round(num_samples * self.ocr)) - max_cc2
-                Z1 = self.__rndgen_not_class(x, ocs, self.bbox.predict(x.reshape(1, -1))[0])
+                Z1 = self.__rndgen_not_class(z, ocs, self.bbox.predict(x.reshape(1, -1))[0])
                 if len(Z1) > 0:
                     Z = np.concatenate((Z, Z1), axis=0)
         return Z
@@ -111,7 +112,7 @@ class NeighborhoodGenerator(object):
         return Z
     
     @abstractmethod
-    def generate(self, x:np.array, num_instances:int, descriptor: dict):
+    def generate(self, x: np.array, num_instances: int, descriptor: dict, encoder):
         """
         It generates similar instances 
 
@@ -136,7 +137,8 @@ class NeighborhoodGenerator(object):
         multi_label = isinstance(class_value, np.ndarray)
         while len(Z) < num_samples:
             z = self.generate_synthetic_instance(x)
-            y = self.bbox.predict([z])[0]
+            xz = self.encoder.decode(z.reshape(1, -1))[0]
+            y = self.bbox.predict(xz.reshape(1, -1))[0]
             flag = y != class_value if not multi_label else np.all(y != class_value)
             if flag:
                 Z.append(z)

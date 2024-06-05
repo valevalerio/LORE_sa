@@ -52,7 +52,7 @@ class GeneticGenerator(NeighborhoodGenerator):
         self.random_seed = random_seed
         random.seed(random_seed)
 
-    def generate(self, x, num_instances, descriptor):
+    def generate(self, x, num_instances, descriptor, encoder):
         """
         The generation is based on the strategy of generating a number of instances for the same class as the input
         instance and a number of instances for a different class.
@@ -186,18 +186,20 @@ class GeneticGenerator(NeighborhoodGenerator):
         z = self.generate_synthetic_instance(from_z=z, mutpb=self.mutpb)
         return z,
 
-    def fitness_equal(self, x, x1):
+    def fitness_equal(self, z, z1):
         if isinstance(self.metric, numbers.Number):
             self.metric = neuclidean
-        feature_similarity_score = 1.0 - cdist(x.reshape(1, -1), x1.reshape(1, -1), metric=self.metric).ravel()[0]
+        feature_similarity_score = 1.0 - cdist(z.reshape(1, -1), z1.reshape(1, -1), metric=self.metric).ravel()[0]
         # feature_similarity = feature_similarity_score if feature_similarity_score >= self.eta1 else 0.0
         feature_similarity = sigmoid(feature_similarity_score) if feature_similarity_score < 1.0 else 0.0
         # feature_similarity = sigmoid(feature_similarity_score)
 
         # y = self.bb_predict(x.reshape(1, -1))[0]
         # y1 = self.bb_predict(x1.reshape(1, -1))[0]
-        y = self.bbox.predict(x.reshape(1, -1))
-        y1 = self.bbox.predict(x1.reshape(1, -1))
+        x = self.encoder.decode(z.reshape(1, -1))
+        x1 = self.encoder.decode(z1.reshape(1, -1))
+        y = self.bbox.predict(x)
+        y1 = self.bbox.predict(x1)
 
         target_similarity_score = 1.0 - hamming(y, y1)
         # target_similarity = target_similarity_score if target_similarity_score >= self.eta2 else 0.0
@@ -206,16 +208,17 @@ class GeneticGenerator(NeighborhoodGenerator):
         evaluation = self.alpha1 * feature_similarity + self.alpha2 * target_similarity
         return evaluation,
 
-    def fitness_notequal(self, x, x1):
-        feature_similarity_score = 1.0 - cdist(x.reshape(1, -1), x1.reshape(1, -1), metric=self.metric).ravel()[0]
+    def fitness_notequal(self, z, z1):
+        feature_similarity_score = 1.0 - cdist(z.reshape(1, -1), z1.reshape(1, -1), metric=self.metric).ravel()[0]
         # feature_similarity = feature_similarity_score if feature_similarity_score >= self.eta1 else 0.0
         feature_similarity = sigmoid(feature_similarity_score)
 
         # y = self.bb_predict(x.reshape(1, -1))[0]
         # y1 = self.bb_predict(x1.reshape(1, -1))[0]
-
-        y = self.bbox.predict(x.reshape(1, -1))
-        y1 = self.bbox.predict(x1.reshape(1, -1))
+        x = self.encoder.decode(z.reshape(1, -1))
+        x1 = self.encoder.decode(z1.reshape(1, -1))
+        y = self.bbox.predict(x)
+        y1 = self.bbox.predict(x1)
 
         target_similarity_score = 1.0 - hamming(y, y1)
         # target_similarity = target_similarity_score if target_similarity_score < self.eta2 else 0.0

@@ -26,7 +26,7 @@ class RandomGenerator(NeighborhoodGenerator):
         self.generated_data = None
 
 
-    def generate(self, x, num_instances, descriptor, encoder=None):
+    def generate(self, x, num_instances, descriptor, encoder):
         """
         random generation of new instances. The starting instance x is only used to detect the value type of each feature, in order
         to generate new values only for numeric features.

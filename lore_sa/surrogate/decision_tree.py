@@ -102,7 +102,7 @@ class DecisionTreeSurrogate(Surrogate):
         decisions = dt.tree_.value.argmax(axis=2).flatten().tolist()  # Decision for each node
         self.prune_index(dt.tree_, decisions)
 
-    def get_rule(self, x: np.array, encoder: EncDec = None):
+    def get_rule(self, z: np.array, encoder: EncDec = None):
         """
         Extract the rules as the promises and consequences {p -> y}, starting from a Decision Tree
 
@@ -110,14 +110,14 @@ class DecisionTreeSurrogate(Surrogate):
                 ( job = employer) -> grant)
             }
 
-        :param [Numpy Array] x: instance encoded of the dataset to extract the rule
+        :param [Numpy Array] z: instance encoded of the dataset to extract the rule
         :param [EncDec] encdec:
         :return [Rule]: Rule objects
         """
-        x = x.reshape(1, -1)
+        z = z.reshape(1, -1)
         feature = self.dt.tree_.feature
         threshold = self.dt.tree_.threshold
-        predicted_class = self.dt.predict(x)
+        predicted_class = self.dt.predict(z)
         inv_transform_predicted_class = encoder.decode_target_class([predicted_class])[0]
 
         target_feature_name = list(encoder.encoded_descriptor['target'].keys())[0]
@@ -125,8 +125,8 @@ class DecisionTreeSurrogate(Surrogate):
         consequence = Expression(variable=target_feature_name, operator=operator.eq,
                                  value=inv_transform_predicted_class[0])
 
-        leave_id = self.dt.apply(x)
-        node_index = self.dt.decision_path(x).indices
+        leave_id = self.dt.apply(z)
+        node_index = self.dt.decision_path(z).indices
 
         feature_names = list(encoder.encoded_features.values())
         numeric_columns = list(encoder.encoded_descriptor['numeric'].keys())
@@ -140,11 +140,11 @@ class DecisionTreeSurrogate(Surrogate):
                 if attribute not in numeric_columns:
                     # this is a categorical feature
                     # print(f"{attribute} has value {x[0][feature[node_id]]} and threshold is {threshold[node_id]}")
-                    thr = False if x[0][feature[node_id]] <= threshold[node_id] else True
+                    thr = False if z[0][feature[node_id]] <= threshold[node_id] else True
                     op = operator.eq
                 else:
                     thr = threshold[node_id]
-                    op = operator.le if x[0][feature[node_id]] <= threshold[node_id] else operator.gt
+                    op = operator.le if z[0][feature[node_id]] <= threshold[node_id] else operator.gt
 
                 premises.append(Expression(attribute, op, thr))
 
@@ -182,15 +182,14 @@ class DecisionTreeSurrogate(Surrogate):
                 compact_plist.append(alist[0])
         return compact_plist
 
-    def get_counterfactual_rules(self, x: np.array, neighborhood_train_X: np.array, neighborhood_train_Y: np.array,
+    def get_counterfactual_rules(self, z: np.array, neighborhood_train_X: np.array, neighborhood_train_Y: np.array,
                                  encoder: EncDec = None,
                                  filter_crules=None, constraints: dict = None, unadmittible_features: list = None):
 
 
         feature_names = list(encoder.encoded_features.values())
         # numeric_columns = list(encoder.encoded_descriptor['numeric'].keys())
-
-        predicted_class = self.dt.predict(x.reshape(1, -1))[0]
+        predicted_class = self.dt.predict(z.reshape(1, -1))[0]
         # inv_transform_predicted_class = encoder.encoder.named_transformers_.get('target')\
         #     .inverse_transform([predicted_class])[0] #TODO: modify to generalize to multiclasses
 
@@ -205,14 +204,14 @@ class DecisionTreeSurrogate(Surrogate):
         # y = self.dt.predict(neighborhood_dataset.df)[0]
         # Y = self.dt.predict(neighborhood_dataset.df)
 
-        x_dict = vector2dict(x, feature_names)
+        x_dict = vector2dict(z, feature_names)
         # select the subset of ```neighborhood_train_X``` that have a classification different from the input x
         Z1 = neighborhood_train_X[np.where(neighborhood_train_Y != predicted_class)]
 
         # We search for the shortest rule among those that support the elements in Z1
-        for z in Z1:
+        for zi in Z1:
             #
-            crule = self.get_rule(x=z, encoder=encoder)
+            crule = self.get_rule(z=zi, encoder=encoder)
 
             delta = self.get_falsified_conditions(x_dict, crule)
             num_falsified_conditions = len(delta)
@@ -234,7 +233,7 @@ class DecisionTreeSurrogate(Surrogate):
                 ##TODO
 
             if filter_crules is not None:
-                xc = self.apply_counterfactual(x, delta, feature_names)
+                xc = self.apply_counterfactual(z, delta, feature_names)
                 bb_outcomec = filter_crules(xc.reshape(1, -1))[0]
                 bb_outcomec = class_values[bb_outcomec] if isinstance(class_name, str) else multilabel2str(bb_outcomec,
                                                                                                            class_values)
