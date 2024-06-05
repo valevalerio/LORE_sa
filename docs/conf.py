@@ -20,8 +20,8 @@ author = 'Kode srl'
 extensions = ["sphinx.ext.autodoc",
               "sphinx.ext.coverage",
               'sphinx.ext.viewcode',
-              "sphinx.ext.napoleon",'sphinx.ext.duration',
-              'sphinx.ext.autosummary'
+              "sphinx.ext.napoleon",'sphinx.ext.duration'
+              # 'sphinx.ext.autosummary'
               ]
 
 
