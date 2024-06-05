@@ -47,16 +47,17 @@ class Lore(object):
         dec_neighbor = self.encoder.decode(neighbour)
         # split neighbor in features and class using train_test_split
         neighb_train_X = dec_neighbor[:, :]
-        neighb_train_y = self.bbox.predict(neighb_train_X) # cast to int because the classifier needs it. Why?
+        neighb_train_y = self.bbox.predict(neighb_train_X)
+        neighb_train_yb = self.encoder.encode_target_class(neighb_train_y.reshape(-1, 1)).squeeze()
 
         # train the surrogate model on the neighborhood
-        self.surrogate.train(neighb_train_X, neighb_train_y)
+        self.surrogate.train(neighbour, neighb_train_yb)
 
         # get the rule for the instance `z`, decode using the encoder class
         rule = self.surrogate.get_rule(z, self.encoder)
         print('rule', rule)
 
-        self.crules, self.deltas = self.surrogate.get_counterfactual_rules(z, neighb_train_X, neighb_train_y, self.encoder)
+        self.crules, self.deltas = self.surrogate.get_counterfactual_rules(z, neighbour, neighb_train_yb, self.encoder)
 
         return {'x': x, 'rule': rule, 'counterfactuals': self.crules, 'deltas': self.deltas}
 

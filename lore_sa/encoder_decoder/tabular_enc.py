@@ -200,3 +200,11 @@ class ColumnTransformerEnc(EncDec):
 
         return self.target_encoder.inverse_transform(Z)
 
+    def encode_target_class(self, X: np.array):
+        """
+        Encode the target class
+        :param X:
+        :return:
+        """
+        return self.target_encoder.transform(X)
+

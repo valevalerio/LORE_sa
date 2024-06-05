@@ -73,7 +73,9 @@ class NeighborhoodGenerator(object):
         return instance
 
     def balance_neigh(self, x, Z, num_samples):
-        Yb = self.bbox.predict(Z)
+        X = self.encoder.decode(Z)
+        Yb = self.bbox.predict(X)
+
         class_counts = np.unique(Yb, return_counts=True)
 
         if len(class_counts[0]) <= 2:
