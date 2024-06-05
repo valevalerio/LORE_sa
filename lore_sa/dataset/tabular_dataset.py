@@ -17,32 +17,32 @@ class TabularDataset(Dataset):
         df (pandas.DataFrame): dataframe containing the whole dataset
         descriptor (dict): it contains the essential informationregarding each feature. Format:
 
-            {'numeric': {'feature name' :
-                            {
-                                'index' : <index of feature column>,
-                                'min' : <min value>,
-                                'max' : <max value>,
-                                'mean': <mean value>,
-                                'std': <standard deviation>,
-                                'median': <median value>,
-                                'q1': <first quartile of the distribution>,
-                                'q3': <third quartile of the distribution,
-                            },
-                        ...,
-                        ...,
-                        },
-            'categorical: {'feature name':
-                                {
-                                    'index' : <index of feature column>,
-                                    'distinct_values' : <distinct categorical values>,
-                                    'value_counts' : {'distinct value' : <elements count>,
-                                                    ... }
-                                }
-                            },
-                            ...
-                            ...
-                            ...     
-            }
+         >>>   {'numeric': {'feature name' :
+         >>>                   {
+         >>>                       'index' : <index of feature column>,
+         >>>                       'min' : <min value>,
+         >>>                       'max' : <max value>,
+         >>>                       'mean': <mean value>,
+         >>>                       'std': <standard deviation>,
+         >>>                       'median': <median value>,
+         >>>                       'q1': <first quartile of the distribution>,
+         >>>                       'q3': <third quartile of the distribution,
+         >>>                   },
+         >>>               ...,
+         >>>               ...,
+         >>>               },
+         >>>   'categorical: {'feature name':
+         >>>                       {
+         >>>                           'index' : <index of feature column>,
+         >>>                           'distinct_values' : <distinct categorical values>,
+         >>>                           'value_counts' : {'distinct value' : <elements count>,
+         >>>                                           ... }
+         >>>                       }
+         >>>                   },
+         >>>                   ...
+         >>>                   ...
+         >>>                   ...
+         >>>   }
     """
 
     def __init__(self, data: DataFrame, class_name: str = None):
