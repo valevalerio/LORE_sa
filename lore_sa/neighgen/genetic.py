@@ -52,31 +52,31 @@ class GeneticGenerator(NeighborhoodGenerator):
         self.random_seed = random_seed
         random.seed(random_seed)
 
-    def generate(self, x, num_instances, descriptor, encoder):
+    def generate(self, z, num_instances, descriptor, encoder):
         """
         The generation is based on the strategy of generating a number of instances for the same class as the input
         instance and a number of instances for a different class.
         The generation of the instances for each subgroup is done through a genetic algorithm based on two fitness
         fuctions: one for the same class and one for the different class.
-        :param x: the input instance
+        :param z: the input instance
         :param num_instances: how many elements to generate
         :param descriptor: the descriptor of the dataset
         :return:
         """
-        new_x = x.copy()
+        new_x = z.copy()
 
         # determine the number of instances to generate for the same class and for a different class
         num_samples_eq = int(np.round(num_instances * 0.5))
         num_samples_neq = num_instances - num_samples_eq
 
         # generate the instances for the same class
-        toolbox_eq = self.setup_toolbox(x, self.fitness_equal, num_samples_eq)
+        toolbox_eq = self.setup_toolbox(z, self.fitness_equal, num_samples_eq)
         population_eq, halloffame_eq, logbook_eq = self.fit(toolbox_eq, num_samples_eq)
         Z_eq = self.add_halloffame(population_eq, halloffame_eq)
         # print(logbook_eq)
 
         # generate the instances for a different class
-        toolbox_noteq = self.setup_toolbox(x, self.fitness_notequal, num_samples_neq)
+        toolbox_noteq = self.setup_toolbox(z, self.fitness_notequal, num_samples_neq)
         population_noteq, halloffame_noteq, logbook_noteq = self.fit(toolbox_noteq, num_samples_neq)
         Z_noteq = self.add_halloffame(population_noteq, halloffame_noteq)
         # print(logbook_noteq)
@@ -85,7 +85,7 @@ class GeneticGenerator(NeighborhoodGenerator):
         Z = np.concatenate((Z_eq, Z_noteq), axis=0)
 
         # balance the instances according to the minority class
-        Z = super(GeneticGenerator, self).balance_neigh(x, Z, num_instances)
+        Z = super(GeneticGenerator, self).balance_neigh(z, Z, num_instances)
         # the first element is the input instance
 
         Z[0] = new_x
@@ -173,6 +173,12 @@ class GeneticGenerator(NeighborhoodGenerator):
 
     def random_init(self):
         z = self.generate_synthetic_instance()
+        x = self.encoder.decode(z.reshape(1, -1))
+        if None in x :
+            print('None in generated z')
+            print('z', z)
+            print('x', x)
+
         return z
 
     def clone(self, x):
@@ -184,6 +190,11 @@ class GeneticGenerator(NeighborhoodGenerator):
         #         #     if np.random.random() <= self.mutpb:
         #         #         z[i] = np.random.choice(self.feature_values[i], size=1, replace=True)
         z = self.generate_synthetic_instance(from_z=z, mutpb=self.mutpb)
+        x = self.encoder.decode(z.reshape(1, -1))
+        if None in x :
+            print('None in mutated z')
+            print('z', z)
+            print('x', x)
         return z,
 
     def fitness_equal(self, z, z1):
@@ -198,6 +209,9 @@ class GeneticGenerator(NeighborhoodGenerator):
         # y1 = self.bb_predict(x1.reshape(1, -1))[0]
         x = self.encoder.decode(z.reshape(1, -1))
         x1 = self.encoder.decode(z1.reshape(1, -1))
+        if None in x or None in x1:
+            return 0.0, # TODO: check if this is the correct way to return a tuple
+
         y = self.bbox.predict(x)
         y1 = self.bbox.predict(x1)
 
@@ -217,6 +231,8 @@ class GeneticGenerator(NeighborhoodGenerator):
         # y1 = self.bb_predict(x1.reshape(1, -1))[0]
         x = self.encoder.decode(z.reshape(1, -1))
         x1 = self.encoder.decode(z1.reshape(1, -1))
+        if None in x or None in x1:
+            return 0.0, #TODO: check why we get here in the code
         y = self.bbox.predict(x)
         y1 = self.bbox.predict(x1)
 

@@ -17,6 +17,69 @@ from lore_sa.dataset import TabularDataset
 # load the training data
 dataset = TabularDataset.from_csv('my_data.csv', class_name = "class")
 
+...
+
+```
+## Your first LORE explanation
+Let's consider a simple example to explain the prediction of a model on a tabular dataset. We have a tabular dataset
+containing observation of a Credit Risk use case. We will create an opaque model using a Random Forest classifier and
+then we will use LORE to explain the prediction of the model on a specific instance.
+
+Let's start by loading the dataset and creating the model:
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import StandardScaler, OrdinalEncoder
+from sklearn.pipeline import make_pipeline
+from sklearn.model_selection import train_test_split
+
+from lore_sa import sklearn_classifier_bbox
+
+df = pd.read_csv('data/credit_risk.csv')
+preprocessor = ColumnTransformer(
+    transformers=[
+        ('num', StandardScaler(), [0,8,9,10]),
+        ('cat', OrdinalEncoder(), [1,2,3,4,5,6,7,11])
+    ]
+)
+model = make_pipeline(preprocessor, RandomForestClassifier(n_estimators=100, random_state=42))
+
+X_train, X_test, y_train, y_test = train_test_split(df.loc[:, 'age':'native-country'].values, df['class'].values,
+                                            test_size=0.3, random_state=42, stratify=df['class'].values)
+model.fit(X_train, y_train)
+
+bbox = sklearn_classifier_bbox.sklearnBBox(model)
+```
+
+We wrap the model into a `sklearnBBox` object, which is a wrapper that allows LORE to interact with the model. 
+Now we can use LORE to explain the prediction of the model on a specific instance. 
+We need to provide LORE with information on the internal structure of the dataset. We will use the `TabularDataset` 
+class to do so.
+```python
+from lore_sa.dataset import TabularDataset
+from lore_sa.generator import GeneticGenerator
+from lore_sa.encoder_decoder import ColumnTransformerEnc
+from lore_sa.lore import Lore
+from lore_sa.surrogate import DecisionTreeSurrogate
+
+dataset = TabularDataset.from_csv('resources/adult.csv', class_name='class')
+dataset.df.dropna(inplace=True)
+dataset.df.drop(['fnlwgt', 'education-num'], axis=1, inplace=True)
+dataset.update_descriptor()
+
+enc = ColumnTransformerEnc(dataset.descriptor)
+generator = GeneticGenerator(bbox, dataset, enc)
+surrogate = DecisionTreeSurrogate()
+
+tabularLore = Lore(bbox, dataset, encoder, generator, surrogate)
+```
+Now we have an instance of the `Lore` class that we can use to explain the prediction of the model on a specific instance.
+Let's consider the first instance of the test set and explain the prediction of the model on this instance.
+```python
+instance = X_test[0]
+explanation = tabularLore.explain_instance(instance)
+print(explanation)
 ```
 
 ## Issue tracking

@@ -25,17 +25,18 @@ class LoremTest(unittest.TestCase):
         self.dataset.update_descriptor()
         # print('descriptor', self.dataset.descriptor)
         self.enc = ColumnTransformerEnc(self.dataset.descriptor)
-        preprocessor = ColumnTransformer(
-            transformers=[
-                ('num', StandardScaler(), [0,8,9,10]),
-                ('cat', OrdinalEncoder(), [1,2,3,4,5,6,7,11])
-            ]
-        )
+
 
         model_pkl_file = "resources/adult_random_forest.pkl"
         if os.path.exists(model_pkl_file):
             model = joblib.load(model_pkl_file)
         else:
+            preprocessor = ColumnTransformer(
+                transformers=[
+                    ('num', StandardScaler(), [0,8,9,10]),
+                    ('cat', OrdinalEncoder(), [1,2,3,4,5,6,7,11])
+                ]
+            )
             model = make_pipeline(preprocessor, RandomForestClassifier(n_estimators=100, random_state=42))
 
             X_train, X_test, y_train, y_test = train_test_split(self.dataset.df.loc[:, 'age':'native-country'].values, self.dataset.df['class'].values,
