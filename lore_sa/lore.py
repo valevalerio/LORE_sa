@@ -55,7 +55,7 @@ class Lore(object):
 
         # get the rule for the instance `z`, decode using the encoder class
         rule = self.surrogate.get_rule(z, self.encoder)
-        print('rule', rule)
+        # print('rule', rule)
 
         self.crules, self.deltas = self.surrogate.get_counterfactual_rules(z, neighbour, neighb_train_yb, self.encoder)
 
