@@ -39,13 +39,21 @@ class TabularDataset(Dataset):
          >>>                                           ... }
          >>>                       }
          >>>                   },
+         >>>   'ordinal: {'feature name':
+         >>>                       {
+         >>>                           'index' : <index of feature column>,
+         >>>                           'distinct_values' : <distinct categorical values>,
+         >>>                           'value_counts' : {'distinct value' : <elements count>,
+         >>>                                           ... }
+         >>>                       }
+         >>>                   },
          >>>                   ...
          >>>                   ...
          >>>                   ...
          >>>   }
     """
 
-    def __init__(self, data: DataFrame, class_name: str = None):
+    def __init__(self, data: DataFrame, class_name: str = None, categorial_columns:list = None, ordinal_columns:list = None):
 
         self.class_name = class_name
         self.df = data
@@ -54,16 +62,16 @@ class TabularDataset(Dataset):
         if class_name is not None:
             self.df = self.df[[x for x in self.df.columns if x != class_name] + [class_name]]
 
-        self.descriptor = {'numeric': {}, 'categorical': {}}
+        self.descriptor = {'numeric': {}, 'categorical': {}, 'ordinal': {}}
 
         # creation of a default version of descriptor
         self.update_descriptor()
 
-    def update_descriptor(self):
+    def update_descriptor(self, categorial_columns:list = None, ordinal_columns:list = None):
         """
         it creates the dataset descriptor dictionary
         """
-        self.descriptor = {'numeric': {}, 'categorical': {}}
+        self.descriptor = {'numeric': {}, 'categorical': {}, 'ordinal': {}}
         for feature in self.df.columns:
             index = self.df.columns.get_loc(feature)
             if feature in self.df.select_dtypes(include=np.number).columns.tolist():
@@ -79,11 +87,22 @@ class TabularDataset(Dataset):
                         }
                 self.descriptor['numeric'][feature] = desc
             else:
-                # categorical feature
-                desc = {'index': index,
-                        'distinct_values': list(self.df[feature].unique()),
-                        'count': {x: len(self.df[self.df[feature] == x]) for x in list(self.df[feature].unique())}}
-                self.descriptor['categorical'][feature] = desc
+                # categorical feature?
+                if categorial_columns is not None and feature in categorial_columns:
+                    desc = {'index': index,
+                            'distinct_values': list(self.df[feature].unique()),
+                            'count': {x: len(self.df[self.df[feature] == x]) for x in list(self.df[feature].unique())}}
+                    self.descriptor['categorical'][feature] = desc
+                elif ordinal_columns is not None and feature in ordinal_columns:
+                    desc = {'index': index,
+                            'distinct_values': list(self.df[feature].unique()),
+                            'count': {x: len(self.df[self.df[feature] == x]) for x in list(self.df[feature].unique())}}
+                    self.descriptor['ordinal'][feature] = desc
+                else:
+                    desc = {'index': index,
+                            'distinct_values': list(self.df[feature].unique()),
+                            'count': {x: len(self.df[self.df[feature] == x]) for x in list(self.df[feature].unique())}}
+                    self.descriptor['categorical'][feature] = desc
 
         self.descriptor = self.set_target_label(self.descriptor)
 

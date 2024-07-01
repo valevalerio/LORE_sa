@@ -21,7 +21,8 @@ descriptor_dummy = {'categorical': {'col3': {'count': {'America': 1, 'Europe': 1
                                           'min': 3,
                                           'q1': 3.25,
                                           'q3': 3.75,
-                                          'std': 0.7071067811865476}}}
+                                          'std': 0.7071067811865476}},
+                    'ordinal':{}}
 
 class DatasetTest(unittest.TestCase):
 

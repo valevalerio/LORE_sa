@@ -1,5 +1,7 @@
 import unittest
 
+import pandas as pd
+
 from lore_sa.dataset import TabularDataset
 from lore_sa.encoder_decoder import ColumnTransformerEnc
 import numpy as np
@@ -38,15 +40,19 @@ class EncDecTest(unittest.TestCase):
                                               'q3': 1.75, 'std': 0.7071067811865476},
                                      'col2': {'index': 1, 'max': 4, 'mean': 3.5, 'median': 3.5, 'min': 3, 'q1': 3.25,
                                               'q3': 3.75, 'std': 0.7071067811865476}},
+                                'ordinal' : {},
                                  'target': {'education': {'index': 4,
                                                            'distinct_values': ['Elementary', 'High School', 'College',
                                                                                'Graduate', 'Post-graduate']}
                                              }}
 
         # We create an instance from a dataset to check the correct work of the pair encoder-decoder
-        self.dataset = TabularDataset.from_csv('resources/adult.csv', class_name='class')
+        adult_df = pd.read_csv('resources/adult.csv',skipinitialspace=True, na_values='?', keep_default_na=True)
+        adult_df.dropna(inplace=True)
+
+        self.dataset = TabularDataset(adult_df, class_name='class')
         self.dataset.df.dropna(inplace=True)
-        self.dataset.update_descriptor()
+        self.dataset.update_descriptor(ordinal_columns=['education'])
 
 
     def test_column_transformer_encoder_init(self):

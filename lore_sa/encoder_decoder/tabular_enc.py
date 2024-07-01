@@ -105,6 +105,10 @@ class ColumnTransformerEnc(EncDec):
                      OneHotEncoder(sparse_output=False, handle_unknown='ignore', dtype=np.int16),
                      [ v['index'] for v in self.dataset_descriptor['categorical'].values()]
                 ),
+                ('ordinal',
+                     OrdinalEncoder(dtype=np.int16),
+                     [v['index'] for v in self.dataset_descriptor['ordinal'].values()]
+                )
             ],
             remainder='passthrough'
         )
@@ -129,6 +133,17 @@ class ColumnTransformerEnc(EncDec):
                     for j, k in enumerate(self.dataset_descriptor['categorical'].keys()):
                         # print('categorical', k,  cat_categories[j], self.dataset_descriptor['categorical'][k]['index'], i)
                         self.encoded_descriptor['categorical'][k]['index'] = i
+                        for v in cat_categories[j]:
+                            # print('   ', i, f"{k}={v}")
+                            encoded_features[i] = f"{k}={v}"
+                            i += 1
+                if (name == 'ordinal'):
+                    # print(self.encoder.named_transformers_.get(name).categories_)
+                    cat_categories = self.encoder.named_transformers_.get(name).categories_
+                    i = indices.start
+                    for j, k in enumerate(self.dataset_descriptor['ordinal'].keys()):
+                        # print('categorical', k,  cat_categories[j], self.dataset_descriptor['categorical'][k]['index'], i)
+                        self.encoded_descriptor['ordinal'][k]['index'] = i
                         for v in cat_categories[j]:
                             # print('   ', i, f"{k}={v}")
                             encoded_features[i] = f"{k}={v}"
