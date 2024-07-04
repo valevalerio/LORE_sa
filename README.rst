@@ -29,9 +29,9 @@
 
 |
 
-=======
+==========================
 LORE Stable and Actionable
-=======
+==========================
 
 This is the official repository of the LORE (Local Rule-Based Explanation) algorithm.
 
@@ -54,6 +54,7 @@ The last command will create a development installation of the library, so you c
 To use the library within your project just import the needed packages:
 
 .. code-block:: python
+
    from src.lore_sa.dataset import TabularDataset
 
    # load the training data
@@ -69,6 +70,7 @@ then we will use LORE to explain the prediction of the model on a specific insta
 Let's start by loading the dataset and creating the model:
 
 .. code-block:: python
+
       import pandas as pd
       from sklearn.ensemble import RandomForestClassifier
       from sklearn.compose import ColumnTransformer
