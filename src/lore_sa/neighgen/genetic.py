@@ -3,14 +3,14 @@ import pickle
 import random
 
 from scipy.spatial.distance import cdist, hamming
-from src.lore_sa.neighgen.neighborhood_generator import NeighborhoodGenerator
+from lore_sa.neighgen.neighborhood_generator import NeighborhoodGenerator
 from deap import base, creator, tools, algorithms
 
 import numpy as np
 
 __all__ = ["NeighborhoodGenerator", "GeneticGenerator"]
 
-from src.lore_sa.util import neuclidean, sigmoid
+from lore_sa.util import neuclidean, sigmoid
 
 
 class GeneticGenerator(NeighborhoodGenerator):

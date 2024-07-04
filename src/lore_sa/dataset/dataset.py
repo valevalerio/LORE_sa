@@ -2,7 +2,7 @@ __all__ = ["Dataset"]
 
 from abc import abstractmethod
 
-from src.lore_sa.logger import logger
+from lore_sa.logger import logger
 
 
 class Dataset():

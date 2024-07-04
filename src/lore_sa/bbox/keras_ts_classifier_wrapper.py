@@ -1,4 +1,4 @@
-from src.lore_sa.bbox.bbox import AbstractBBox
+from lore_sa.bbox.bbox import AbstractBBox
 import numpy as np
 
 __all__ = ["AbstractBBox", "keras_ts_classifier_wrapper"]

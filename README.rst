@@ -55,7 +55,7 @@ To use the library within your project just import the needed packages:
 
 .. code-block:: python
 
-   from src.lore_sa.dataset import TabularDataset
+   from lore_sa.dataset import TabularDataset
 
    # load the training data
    dataset = TabularDataset.from_csv('my_data.csv', class_name = "class")
@@ -101,11 +101,11 @@ Now we can use LORE to explain the prediction of the model on a specific instanc
 We need to provide LORE with information on the internal structure of the dataset. We will use the ``TabularDataset``
 class to do so. ::
 
-   from src.lore_sa.dataset import TabularDataset
+   from lore_sa.dataset import TabularDataset
    from lore_sa.generator import GeneticGenerator
-   from src.lore_sa.encoder_decoder import ColumnTransformerEnc
-   from src.lore_sa.lore import Lore
-   from src.lore_sa.surrogate import DecisionTreeSurrogate
+   from lore_sa.encoder_decoder import ColumnTransformerEnc
+   from lore_sa.lore import Lore
+   from lore_sa.surrogate import DecisionTreeSurrogate
 
    dataset = TabularDataset.from_csv('resources/adult.csv', class_name='class')
    dataset.df.dropna(inplace=True)

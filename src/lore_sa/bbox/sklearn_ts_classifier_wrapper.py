@@ -1,4 +1,4 @@
-from src.lore_sa.bbox.bbox import AbstractBBox
+from lore_sa.bbox.bbox import AbstractBBox
 
 __all__ = ["AbstractBBox","sklearn_ts_classifier_wrapper"]
 class sklearn_ts_classifier_wrapper(AbstractBBox):

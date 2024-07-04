@@ -3,9 +3,9 @@ import warnings
 
 import numpy as np
 
-from src.lore_sa.bbox import AbstractBBox
-from src.lore_sa.dataset import Dataset
-from src.lore_sa.encoder_decoder import EncDec
+from lore_sa.bbox import AbstractBBox
+from lore_sa.dataset import Dataset
+from lore_sa.encoder_decoder import EncDec
 
 warnings.filterwarnings("ignore")
 

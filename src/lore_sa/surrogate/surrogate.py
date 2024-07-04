@@ -4,7 +4,7 @@ __all__ = ["Surrogate"]
 
 import numpy as np
 
-from src.lore_sa.encoder_decoder import EncDec
+from lore_sa.encoder_decoder import EncDec
 
 
 class Surrogate(ABC):
