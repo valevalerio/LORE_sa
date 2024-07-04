@@ -5,6 +5,6 @@ Changelog
 Version 0.1
 ===========
 
-- Feature A added
-- FIX: nasty bug #1729 fixed
-- add your changes here!
+- Migration of the library under a PyScaffold structure
+- Starting to migrate the documentation to Sphinx
+
