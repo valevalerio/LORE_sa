@@ -1,10 +1,8 @@
-from lore_sa.bbox import AbstractBBox
-from lore_sa.dataset import Dataset
-from lore_sa.encoder_decoder import EncDec
-from lore_sa.neighgen.neighborhood_generator import NeighborhoodGenerator
+from src.lore_sa.bbox import AbstractBBox
+from src.lore_sa.dataset import Dataset
+from src.lore_sa.encoder_decoder import EncDec
+from src.lore_sa.neighgen.neighborhood_generator import NeighborhoodGenerator
 
-from lore_sa.dataset.tabular_dataset import TabularDataset
-import pandas as pd
 import numpy as np
 
 __all__ = ["NeighborhoodGenerator", "RandomGenerator"]

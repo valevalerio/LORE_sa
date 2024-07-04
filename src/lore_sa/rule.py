@@ -1,7 +1,7 @@
 import json
 
-from lore_sa.encoder_decoder import EncDec
-from lore_sa.util import vector2dict
+from src.lore_sa.encoder_decoder import EncDec
+from src.lore_sa.util import vector2dict
 from typing import Callable
 import operator
 

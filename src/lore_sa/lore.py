@@ -1,13 +1,12 @@
-from lore_sa.bbox import AbstractBBox
-import pandas as pd
+from src.lore_sa.bbox import AbstractBBox
 import numpy as np
 
-from lore_sa.dataset import TabularDataset, Dataset
-from lore_sa.encoder_decoder import ColumnTransformerEnc, EncDec
-from lore_sa.neighgen import GeneticGenerator
-from lore_sa.neighgen.neighborhood_generator import NeighborhoodGenerator
-from lore_sa.neighgen.random import RandomGenerator
-from lore_sa.surrogate import DecisionTreeSurrogate, Surrogate
+from src.lore_sa.dataset import TabularDataset, Dataset
+from src.lore_sa.encoder_decoder import ColumnTransformerEnc, EncDec
+from src.lore_sa.neighgen import GeneticGenerator
+from src.lore_sa.neighgen.neighborhood_generator import NeighborhoodGenerator
+from src.lore_sa.neighgen.random import RandomGenerator
+from src.lore_sa.surrogate import DecisionTreeSurrogate, Surrogate
 
 
 class Lore(object):

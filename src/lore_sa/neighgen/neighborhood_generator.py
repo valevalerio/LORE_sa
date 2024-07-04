@@ -1,12 +1,11 @@
 from abc import abstractmethod
 import warnings
-import numpy as np
 
 import numpy as np
 
-from lore_sa.bbox import AbstractBBox
-from lore_sa.dataset import Dataset
-from lore_sa.encoder_decoder import EncDec
+from src.lore_sa.bbox import AbstractBBox
+from src.lore_sa.dataset import Dataset
+from src.lore_sa.encoder_decoder import EncDec
 
 warnings.filterwarnings("ignore")
 
