@@ -11,8 +11,9 @@ pip install -r requirements.txt
 ```
 
 To use the library within your project just import the needed packages:
+
 ```python
-from lore_sa.dataset import TabularDataset
+from src.lore_sa.dataset import TabularDataset
 
 # load the training data
 dataset = TabularDataset.from_csv('my_data.csv', class_name = "class")
@@ -56,12 +57,13 @@ We wrap the model into a `sklearnBBox` object, which is a wrapper that allows LO
 Now we can use LORE to explain the prediction of the model on a specific instance. 
 We need to provide LORE with information on the internal structure of the dataset. We will use the `TabularDataset` 
 class to do so.
+
 ```python
-from lore_sa.dataset import TabularDataset
+from src.lore_sa.dataset import TabularDataset
 from lore_sa.generator import GeneticGenerator
-from lore_sa.encoder_decoder import ColumnTransformerEnc
-from lore_sa.lore import Lore
-from lore_sa.surrogate import DecisionTreeSurrogate
+from src.lore_sa.encoder_decoder import ColumnTransformerEnc
+from src.lore_sa.lore import Lore
+from src.lore_sa.surrogate import DecisionTreeSurrogate
 
 dataset = TabularDataset.from_csv('resources/adult.csv', class_name='class')
 dataset.df.dropna(inplace=True)
