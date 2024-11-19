@@ -121,6 +121,8 @@ class NeighborhoodGenerator(object):
         :param descriptor[dict]: data descriptor as generated from a Dataset object
         The list (or range) associated to each key is used to randomly choice an element within the list.
         """
+        raise Exception("ERR: You should implement your own version of the generate() function in the subclass.")
+
         return
 
     @abstractmethod

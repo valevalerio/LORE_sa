@@ -65,7 +65,7 @@ class TabularDataset(Dataset):
         self.descriptor = {'numeric': {}, 'categorical': {}, 'ordinal': {}}
 
         # creation of a default version of descriptor
-        self.update_descriptor()
+        self.update_descriptor(categorial_columns=categorial_columns, ordinal_columns=ordinal_columns)
 
     def update_descriptor(self, categorial_columns:list = None, ordinal_columns:list = None):
         """
@@ -74,7 +74,19 @@ class TabularDataset(Dataset):
         self.descriptor = {'numeric': {}, 'categorical': {}, 'ordinal': {}}
         for feature in self.df.columns:
             index = self.df.columns.get_loc(feature)
-            if feature in self.df.select_dtypes(include=np.number).columns.tolist():
+
+            # categorical feature?
+            if categorial_columns is not None and feature in categorial_columns:
+                desc = {'index': index,
+                        'distinct_values': list(self.df[feature].unique()),
+                        'count': {x: len(self.df[self.df[feature] == x]) for x in list(self.df[feature].unique())}}
+                self.descriptor['categorical'][feature] = desc
+            elif ordinal_columns is not None and feature in ordinal_columns:
+                desc = {'index': index,
+                        'distinct_values': list(self.df[feature].unique()),
+                        'count': {x: len(self.df[self.df[feature] == x]) for x in list(self.df[feature].unique())}}
+                self.descriptor['ordinal'][feature] = desc
+            elif feature in self.df.select_dtypes(include=np.number).columns.tolist():
                 # numerical
                 desc = {'index': index,
                         'min': self.df[feature].min(),
@@ -87,22 +99,10 @@ class TabularDataset(Dataset):
                         }
                 self.descriptor['numeric'][feature] = desc
             else:
-                # categorical feature?
-                if categorial_columns is not None and feature in categorial_columns:
-                    desc = {'index': index,
-                            'distinct_values': list(self.df[feature].unique()),
-                            'count': {x: len(self.df[self.df[feature] == x]) for x in list(self.df[feature].unique())}}
-                    self.descriptor['categorical'][feature] = desc
-                elif ordinal_columns is not None and feature in ordinal_columns:
-                    desc = {'index': index,
-                            'distinct_values': list(self.df[feature].unique()),
-                            'count': {x: len(self.df[self.df[feature] == x]) for x in list(self.df[feature].unique())}}
-                    self.descriptor['ordinal'][feature] = desc
-                else:
-                    desc = {'index': index,
-                            'distinct_values': list(self.df[feature].unique()),
-                            'count': {x: len(self.df[self.df[feature] == x]) for x in list(self.df[feature].unique())}}
-                    self.descriptor['categorical'][feature] = desc
+                desc = {'index': index,
+                        'distinct_values': list(self.df[feature].unique()),
+                        'count': {x: len(self.df[self.df[feature] == x]) for x in list(self.df[feature].unique())}}
+                self.descriptor['categorical'][feature] = desc
 
         self.descriptor = self.set_target_label(self.descriptor)
 
