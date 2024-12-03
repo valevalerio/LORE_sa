@@ -91,7 +91,7 @@ class NeighgenTest(unittest.TestCase):
         z = self.enc.encode([x.values])[0] # remove the class feature from the input instance
 
         gen = GeneticGenerator(bbox=self.bbox, dataset=self.dataset, encoder=self.enc, ocr=0.1, ngen=20)
-        neighbour = gen.generate(z, 100, self.dataset.descriptor, self.enc)
+        neighbour = gen.generate(z, 1000, self.dataset.descriptor, self.enc)
         # Assert the lenght of the generated dataset is at least 1000
         self.assertGreaterEqual(neighbour.shape[0], 100)
 

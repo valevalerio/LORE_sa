@@ -125,7 +125,7 @@ class GeneticGenerator(NeighborhoodGenerator):
         toolbox.register("population", tools.initRepeat, list, toolbox.individual, n=population_size)
 
         toolbox.register("clone", self.clone)
-        toolbox.register("evaluate", evaluate, x)
+        toolbox.register("evaluate", self.constraint_decorator(evaluate, x))
         toolbox.register("mate", tools.cxTwoPoint)
         toolbox.register("mutate", self.mutate, toolbox)
         toolbox.register("select", tools.selTournament, tournsize=self.tournsize)
@@ -143,12 +143,37 @@ class GeneticGenerator(NeighborhoodGenerator):
         toolbox.register("population", tools.initRepeat, list, toolbox.individual, n=population_size)
 
         toolbox.register("clone", self.clone)
-        toolbox.register("evaluate", evaluate, x)
+        toolbox.register("evaluate", self.constraint_decorator(evaluate, x))
         toolbox.register("mate", tools.cxTwoPoint)
         toolbox.register("mutate", self.mutate, toolbox)
         toolbox.register("select", tools.selTournament, tournsize=self.tournsize)
 
         return toolbox
+
+
+    def check_constraints(self, z):
+        '''
+        Check if the generated instance meets the constraints
+        :param z: the generated instance to be checked
+        :return: True if the instance meets the constraints, False otherwise
+        '''
+        x = self.encoder.decode(z.reshape(1, -1))[0]
+        if None in x:
+            return False
+        return True
+
+    # Create a decorator for the evaluation function
+    def constraint_decorator(self, evaluate, z_ref):
+        def wrapper(individual):
+            if self.check_constraints(individual):
+                return evaluate(individual, z_ref)
+            else:
+                # Penalize individuals that do not meet the constraints
+                return -np.inf,
+
+        return wrapper
+
+
 
     def fit(self, toolbox, population_size):
 
@@ -169,15 +194,16 @@ class GeneticGenerator(NeighborhoodGenerator):
         return population, halloffame, logbook
 
     def record_init(self, x):
+        '''
+        This function is used to generate a random instance to start the evolutionary algorithm. In this case
+        we repeat the input instance x for all the initial population
+
+        :return: a (not so) random instance
+        '''
         return x
 
     def random_init(self):
         z = self.generate_synthetic_instance()
-        x = self.encoder.decode(z.reshape(1, -1))
-        if None in x :
-            print('None in generated z')
-            print('z', z)
-            print('x', x)
 
         return z
 
@@ -190,11 +216,7 @@ class GeneticGenerator(NeighborhoodGenerator):
         #         #     if np.random.random() <= self.mutpb:
         #         #         z[i] = np.random.choice(self.feature_values[i], size=1, replace=True)
         z = self.generate_synthetic_instance(from_z=z, mutpb=self.mutpb)
-        x = self.encoder.decode(z.reshape(1, -1))
-        if None in x :
-            print('None in mutated z')
-            print('z', z)
-            print('x', x)
+
         return z,
 
     def fitness_equal(self, z, z1):
@@ -209,9 +231,6 @@ class GeneticGenerator(NeighborhoodGenerator):
         # y1 = self.bb_predict(x1.reshape(1, -1))[0]
         x = self.encoder.decode(z.reshape(1, -1))
         x1 = self.encoder.decode(z1.reshape(1, -1))
-        if None in x or None in x1:
-            return 0.0, # TODO: check if this is the correct way to return a tuple
-
         y = self.bbox.predict(x)
         y1 = self.bbox.predict(x1)
 
@@ -231,8 +250,6 @@ class GeneticGenerator(NeighborhoodGenerator):
         # y1 = self.bb_predict(x1.reshape(1, -1))[0]
         x = self.encoder.decode(z.reshape(1, -1))
         x1 = self.encoder.decode(z1.reshape(1, -1))
-        if None in x or None in x1:
-            return 0.0, #TODO: check why we get here in the code
         y = self.bbox.predict(x)
         y1 = self.bbox.predict(x1)
 
