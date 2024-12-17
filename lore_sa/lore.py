@@ -1,4 +1,4 @@
-from lore_sa.bbox import AbstractBBox
+from .bbox import AbstractBBox
 import pandas as pd
 import numpy as np
 
@@ -7,6 +7,7 @@ from lore_sa.encoder_decoder import ColumnTransformerEnc, EncDec
 from lore_sa.neighgen import GeneticGenerator
 from lore_sa.neighgen.neighborhood_generator import NeighborhoodGenerator
 from lore_sa.neighgen.random import RandomGenerator
+from lore_sa.neighgen.genetic_proba_generator import GeneticProbaGenerator
 from lore_sa.surrogate import DecisionTreeSurrogate, Surrogate
 
 
@@ -105,4 +106,26 @@ class TabularGeneticGeneratorLore(Lore):
             super().__init__(bbox, dataset, encoder, generator, surrogate)
 
         def explain_instance(self, x: np.array):
+            return self.explain(x.values)
+        
+class TabularGeneticProbaGeneratorLore(Lore):
+     
+        def __init__(self, bbox: AbstractBBox, dataset: TabularDataset):
+            """
+                Creates a new instance of the LORE method.
+                :param bbox: The black box model to be explained wrapped in a ``AbstractBBox`` object.
+                :param dataset:
+                :param encoder:
+                :param generator:
+                :param surrogate:
+            """
+            encoder = ColumnTransformerEnc(dataset.descriptor)
+            generator = GeneticProbaGenerator(bbox,
+                                             dataset,
+                                             encoder,
+                                                0.1)
+            surrogate = DecisionTreeSurrogate()
+            super().__init__(bbox, dataset, encoder, generator, surrogate)
+
+        def explain_instance(self, x:np.array):
             return self.explain(x.values)
