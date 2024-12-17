@@ -68,8 +68,6 @@ class TabularRandomGeneratorLore(Lore):
         def __init__(self, bbox: AbstractBBox, dataset: TabularDataset):
             """
             Creates a new instance of the LORE method.
-
-
             :param bbox: The black box model to be explained wrapped in a ``AbstractBBox`` object.
             :param dataset:
             :param encoder:
@@ -77,7 +75,7 @@ class TabularRandomGeneratorLore(Lore):
             :param surrogate:
             """
             encoder = ColumnTransformerEnc(dataset.descriptor)
-            generator = RandomGenerator(bbox, dataset, encoder, 0.1)
+            generator = RandomGenerator(bbox, dataset, encoder, 0.1) # the last parameter is the ocr
             surrogate = DecisionTreeSurrogate()
 
             super().__init__(bbox, dataset, encoder, generator, surrogate)
