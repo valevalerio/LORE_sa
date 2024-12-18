@@ -1,3 +1,12 @@
+# Lore TODO
+- [ ] modify mergeTrees
+- [ ] refactor the names of the generators (could be better also to have a single generator file)
+- [ ] add the test of the other generators
+- [ ] make it so it passes the tests on github
+- [ ] Understand the difference between explain_instance and explain
+
+
+
 # LORE_sa
 This is the official repository of the LORE (Local Rule-Based Explanation) algorithm. 
 

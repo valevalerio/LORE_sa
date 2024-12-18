@@ -52,6 +52,8 @@ class Lore(object):
         neighb_train_yb = self.encoder.encode_target_class(neighb_train_y.reshape(-1, 1)).squeeze()
 
         # train the surrogate model on the neighborhood
+        # this surrogate could be another model. I would love to try with apriori 
+        # or the modified version of SAME (Single tree Approximation MEthod <3 )
         self.surrogate.train(neighbour, neighb_train_yb)
 
         # get the rule for the instance `z`, decode using the encoder class
@@ -66,23 +68,23 @@ class Lore(object):
 
 class TabularRandomGeneratorLore(Lore):
 
-        def __init__(self, bbox: AbstractBBox, dataset: TabularDataset):
-            """
-            Creates a new instance of the LORE method.
-            :param bbox: The black box model to be explained wrapped in a ``AbstractBBox`` object.
-            :param dataset:
-            :param encoder:
-            :param generator:
-            :param surrogate:
-            """
-            encoder = ColumnTransformerEnc(dataset.descriptor)
-            generator = RandomGenerator(bbox, dataset, encoder, 0.1) # the last parameter is the ocr
-            surrogate = DecisionTreeSurrogate()
+    def __init__(self, bbox: AbstractBBox, dataset: TabularDataset):
+        """
+        Creates a new instance of the LORE method.
+        :param bbox: The black box model to be explained wrapped in a ``AbstractBBox`` object.
+        :param dataset:
+        :param encoder:
+        :param generator:
+        :param surrogate:
+        """
+        encoder = ColumnTransformerEnc(dataset.descriptor)
+        generator = RandomGenerator(bbox, dataset, encoder, 0.1) # the last parameter is the ocr
+        surrogate = DecisionTreeSurrogate()
 
-            super().__init__(bbox, dataset, encoder, generator, surrogate)
+        super().__init__(bbox, dataset, encoder, generator, surrogate)
 
-        def explain_instance(self, x: np.array):
-            return self.explain(x.values)
+    def explain_instance(self, x: np.array):
+        return self.explain(x.values)
 
 class TabularGeneticGeneratorLore(Lore):
 
