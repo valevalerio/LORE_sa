@@ -15,13 +15,12 @@ __all__ = ["NeighborhoodGenerator", "GeneticGenerator", "GeneticProbaGenerator"]
 
 class GeneticProbaGenerator(GeneticGenerator):
 
-    def __init__(self, bb_predict, feature_values, features_map,
+    def __init__(self, bb_predict, feature_values, encoder,
                  ocr=0.1, alpha1=0.5, alpha2=0.5, metric=neuclidean, ngen=100, mutpb=0.2,
                  cxpb=0.5, tournsize=3, halloffame_ratio=0.1, bb_predict_proba=None, random_seed=None, verbose=False):
-        super(GeneticProbaGenerator, self).__init__(bb_predict, feature_values, features_map,
+        super(GeneticProbaGenerator, self).__init__(bb_predict, feature_values, encoder,
                                                     ocr, alpha1, alpha2, metric, ngen, mutpb,
-                                                    cxpb, tournsize, halloffame_ratio, random_seed,
-                                                    verbose)
+                                                    cxpb, tournsize, halloffame_ratio, random_seed)
         self.bb_predict_proba = bb_predict_proba
 
     def fitness_equal(self, x, x1):
