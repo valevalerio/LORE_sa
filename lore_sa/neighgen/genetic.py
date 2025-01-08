@@ -134,13 +134,13 @@ class GeneticGenerator(NeighborhoodGenerator):
 
     def setup_toolbox_noteq(self, x, x1, evaluate, population_size):
 
-        creator.create("fitness", base.Fitness, weights=(1.0,))
-        creator.create("individual", np.ndarray, fitness=creator.fitness)
+        creator.create("fitness_noteg", base.Fitness, weights=(1.0,))
+        creator.create("individual_noteq", np.ndarray, fitness=creator.fitness_noteq)
 
         toolbox = base.Toolbox()
         toolbox.register("feature_values", self.record_init, x1)
-        toolbox.register("individual", tools.initIterate, creator.individual, toolbox.feature_values)
-        toolbox.register("population", tools.initRepeat, list, toolbox.individual, n=population_size)
+        toolbox.register("individual", tools.initIterate, creator.individual_noteq, toolbox.feature_values)
+        toolbox.register("population", tools.initRepeat, list, toolbox.individual_noteq, n=population_size)
 
         toolbox.register("clone", self.clone)
         toolbox.register("evaluate", self.constraint_decorator(evaluate, x))

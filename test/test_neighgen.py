@@ -87,7 +87,7 @@ class NeighgenTest(unittest.TestCase):
         self.assertIsInstance(gen, GeneticGenerator)
 
     def test_genetic_generator_generate_balanced(self):
-        num_row = 10
+        num_row = 100
         x = self.dataset.df.iloc[num_row][:-1]
         z = self.enc.encode([x.values])[0] # remove the class feature from the input instance
 
