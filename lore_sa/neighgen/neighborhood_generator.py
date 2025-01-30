@@ -137,20 +137,3 @@ class NeighborhoodGenerator(object):
         raise NotImplementedError("This method is not implemented yet")
         return
 
-    def __rndgen_not_class(self, x, num_samples, class_value, max_iter=1000):
-        Z = list()
-        iter_count = 0
-        multi_label = isinstance(class_value, np.ndarray)
-        while len(Z) < num_samples:
-            z = self.generate_synthetic_instance(x)
-            xz = self.encoder.decode(z.reshape(1, -1))[0]
-            y = self.bbox.predict(xz.reshape(1, -1))[0]
-            flag = y != class_value if not multi_label else np.all(y != class_value)
-            if flag:
-                Z.append(z)
-            iter_count += 1
-            if iter_count >= max_iter:
-                break
-
-        Z = np.array(Z)
-        return Z

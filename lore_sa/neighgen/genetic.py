@@ -2,6 +2,7 @@ import numbers
 import pickle
 import random
 
+from deap.algorithms import varAnd
 from scipy.spatial.distance import cdist, hamming
 from lore_sa.neighgen.neighborhood_generator import NeighborhoodGenerator
 from deap import base, creator, tools, algorithms
@@ -70,13 +71,13 @@ class GeneticGenerator(NeighborhoodGenerator):
         num_samples_neq = num_instances - num_samples_eq
 
         # generate the instances for the same class
-        toolbox_eq = self.setup_toolbox(z, self.fitness_equal, num_samples_eq)
+        toolbox_eq = self.setup_toolbox(z, self.population_fitness_equal(z), num_samples_eq)
         population_eq, halloffame_eq, logbook_eq = self.fit(toolbox_eq, num_samples_eq)
         Z_eq = self.add_halloffame(population_eq, halloffame_eq)
         # print(logbook_eq)
 
         # generate the instances for a different class
-        toolbox_noteq = self.setup_toolbox(z, self.fitness_notequal, num_samples_neq)
+        toolbox_noteq = self.setup_toolbox(z, self.population_fitness_notequal(z), num_samples_neq)
         population_noteq, halloffame_noteq, logbook_noteq = self.fit(toolbox_noteq, num_samples_neq)
         Z_noteq = self.add_halloffame(population_noteq, halloffame_noteq)
         # print(logbook_noteq)
@@ -125,7 +126,8 @@ class GeneticGenerator(NeighborhoodGenerator):
         toolbox.register("population", tools.initRepeat, list, toolbox.individual, n=population_size)
 
         toolbox.register("clone", self.clone)
-        toolbox.register("evaluate", self.constraint_decorator(evaluate, x))
+        # toolbox.register("evaluate", self.constraint_decorator(evaluate, x))
+        toolbox.register("evaluate", evaluate)
         toolbox.register("mate", tools.cxTwoPoint)
         toolbox.register("mutate", self.mutate, toolbox)
         toolbox.register("select", tools.selTournament, tournsize=self.tournsize)
@@ -187,11 +189,82 @@ class GeneticGenerator(NeighborhoodGenerator):
         stats.register("min", np.min)
         stats.register("max", np.max)
 
-        population, logbook = algorithms.eaSimple(population, toolbox, cxpb=self.cxpb, mutpb=self.mutpb,
+        population, logbook = GeneticGenerator.eaSimple(population, toolbox, cxpb=self.cxpb, mutpb=self.mutpb,
                                                   ngen=self.ngen, stats=stats, halloffame=halloffame,
                                                   verbose=True)
 
         return population, halloffame, logbook
+
+    def eaSimple(population, toolbox, cxpb, mutpb, ngen, stats=None,
+                 halloffame=None, verbose=__debug__):
+        """This algorithm reproduce the simplest evolutionary algorithm as
+        presented in chapter 7 of [Back2000]_.
+
+        :param population: A list of individuals.
+        :param toolbox: A :class:`~deap.base.Toolbox` that contains the evolution
+                        operators.
+        :param cxpb: The probability of mating two individuals.
+        :param mutpb: The probability of mutating an individual.
+        :param ngen: The number of generation.
+        :param stats: A :class:`~deap.tools.Statistics` object that is updated
+                      inplace, optional.
+        :param halloffame: A :class:`~deap.tools.HallOfFame` object that will
+                           contain the best individuals, optional.
+        :param verbose: Whether or not to log the statistics.
+        :returns: The final population
+        :returns: A class:`~deap.tools.Logbook` with the statistics of the
+                  evolution
+
+        This implementation is an adaptation of the original algorithm implemented in the DEAP library.
+
+        .. [Back2000] Back, Fogel and Michalewicz, "Evolutionary Computation 1 :
+           Basic Algorithms and Operators", 2000.
+        """
+        logbook = tools.Logbook()
+        logbook.header = ['gen', 'nevals'] + (stats.fields if stats else [])
+
+        # Evaluate the individuals with an invalid fitness
+        invalid_ind = [ind for ind in population if not ind.fitness.valid]
+        fitnesses = toolbox.evaluate(invalid_ind)
+        for ind, fit in zip(invalid_ind, fitnesses):
+            ind.fitness.values = (fit,)
+
+        if halloffame is not None:
+            halloffame.update(population)
+
+        record = stats.compile(population) if stats else {}
+        logbook.record(gen=0, nevals=len(invalid_ind), **record)
+        if verbose:
+            print(logbook.stream)
+
+        # Begin the generational process
+        for gen in range(1, ngen + 1):
+            # Select the next generation individuals
+            offspring = toolbox.select(population, len(population))
+
+            # Vary the pool of individuals
+            offspring = varAnd(offspring, toolbox, cxpb, mutpb)
+
+            # Evaluate the individuals with an invalid fitness
+            invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
+            fitnesses = toolbox.evaluate(invalid_ind)
+            for ind, fit in zip(invalid_ind, fitnesses):
+                ind.fitness.values = (fit, )
+
+            # Update the hall of fame with the generated individuals
+            if halloffame is not None:
+                halloffame.update(offspring)
+
+            # Replace the current population by the offspring
+            population[:] = offspring
+
+            # Append the current generation statistics to the logbook
+            record = stats.compile(population) if stats else {}
+            logbook.record(gen=gen, nevals=len(invalid_ind), **record)
+            if verbose:
+                print(logbook.stream)
+
+        return population, logbook
 
     def record_init(self, x):
         '''
@@ -241,6 +314,27 @@ class GeneticGenerator(NeighborhoodGenerator):
         evaluation = self.alpha1 * feature_similarity + self.alpha2 * target_similarity
         return evaluation,
 
+    def population_fitness_equal(self, z):
+        def wrapper(population):
+            if isinstance(self.metric, numbers.Number):
+                self.metric = neuclidean
+            feature_similarity_score = 1.0 - cdist(z.reshape(1, -1), population, metric=self.metric).ravel()
+            feature_similarity = sigmoid(feature_similarity_score)
+
+            x = self.encoder.decode(z.reshape(1, -1))
+            pop = self.encoder.decode(np.array(population))
+            pop_y = self.bbox.predict(pop)
+            y = self.bbox.predict(x)
+
+            target_similarity = np.array([sigmoid(1.0 - hamming(y, [y1])) for y1 in pop_y])
+
+
+            evaluation = self.alpha1 * feature_similarity + self.alpha2 * target_similarity
+
+            return evaluation
+        return wrapper
+
+
     def fitness_notequal(self, z, z1):
         feature_similarity_score = 1.0 - cdist(z.reshape(1, -1), z1.reshape(1, -1), metric=self.metric).ravel()[0]
         # feature_similarity = feature_similarity_score if feature_similarity_score >= self.eta1 else 0.0
@@ -259,3 +353,29 @@ class GeneticGenerator(NeighborhoodGenerator):
 
         evaluation = self.alpha1 * feature_similarity + self.alpha2 * target_similarity
         return evaluation,
+
+    def population_fitness_notequal(self, z):
+        def wrapper(population):
+            if isinstance(self.metric, numbers.Number):
+                self.metric = neuclidean
+            feature_similarity_score = 1.0 - cdist(z.reshape(1, -1), population, metric=self.metric).ravel()
+            feature_similarity = sigmoid(feature_similarity_score)
+
+            x = self.encoder.decode(z.reshape(1, -1))
+            pop = self.encoder.decode(np.array(population))
+            # if a row contains None, change the row with the original instance
+            for i in range(len(pop)):
+                if None in pop[i]:
+                    pop[i] = x[0]
+            
+
+            pop_y = self.bbox.predict(pop)
+            y = self.bbox.predict(x)
+
+            target_similarity = np.array([sigmoid(hamming(y, [y1])) for y1 in pop_y])
+
+
+            evaluation = self.alpha1 * feature_similarity + self.alpha2 * target_similarity
+
+            return evaluation
+        return wrapper
