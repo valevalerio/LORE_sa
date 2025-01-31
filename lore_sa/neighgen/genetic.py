@@ -367,7 +367,7 @@ class GeneticGenerator(NeighborhoodGenerator):
             for i in range(len(pop)):
                 if None in pop[i]:
                     pop[i] = x[0]
-            
+
 
             pop_y = self.bbox.predict(pop)
             y = self.bbox.predict(x)

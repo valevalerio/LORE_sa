@@ -34,7 +34,7 @@ class Lore(object):
         self.class_name = dataset.class_name
 
 
-    def explain(self, x: np.array):
+    def explain(self, x: np.array, num_instances=1000):
         """
         Explains a single instance of the dataset.
         :param x: an array with the values of the instance to explain (the target class is not included)
@@ -43,7 +43,7 @@ class Lore(object):
         # map the single record in input to the encoded space
         [z] = self.encoder.encode([x])
         # generate a neighborhood of instances around the projected instance `z`
-        neighbour = self.generator.generate(z, 1000, self.descriptor, self.encoder)
+        neighbour = self.generator.generate(z, num_instances, self.descriptor, self.encoder)
         dec_neighbor = self.encoder.decode(neighbour)
         # split neighbor in features and class using train_test_split
         neighb_train_X = dec_neighbor[:, :]
