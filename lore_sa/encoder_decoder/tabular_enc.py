@@ -187,6 +187,23 @@ class ColumnTransformerEnc(EncDec):
     def get_encoded_features(self):
         return dict(sorted(self.encoded_features.items()))
 
+    def get_encoded_intervals(self):
+        enc_features = self.get_encoded_features()
+        start = 0
+        end = 1
+        intervals = []
+        for j in range(1, len(enc_features)):
+            f = enc_features[j]
+            prev_prefix = enc_features[j-1].split('=')[0]
+            curr_prefix = f.split('=')[0]
+            if curr_prefix != prev_prefix:
+                intervals.append([start, end])
+                start = end
+            end += 1
+        intervals.append([start, end])
+
+        return intervals
+
     def __str__(self):
         if len(self.encoded_features) > 0:
             return "ColumnTransformerEncoder - features encoded: %s" % (",".join(self.encoded_features.values()))

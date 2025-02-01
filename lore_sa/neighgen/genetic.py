@@ -358,25 +358,7 @@ class GeneticGenerator(NeighborhoodGenerator):
 
         toolbox.register("clone", self.clone)
         toolbox.register("evaluate", evaluate)
-        toolbox.register("mate", tools.cxTwoPoint)
-        toolbox.register("mutate", self.mutate, toolbox)
-        toolbox.register("select", tools.selTournament, tournsize=self.tournsize)
-
-        return toolbox
-
-    def setup_toolbox_noteq(self, x, x1, evaluate, population_size):
-
-        creator.create("fitness_noteg", base.Fitness, weights=(1.0,))
-        creator.create("individual_noteq", np.ndarray, fitness=creator.fitness_noteq)
-
-        toolbox = base.Toolbox()
-        toolbox.register("feature_values", self.record_init, x1)
-        toolbox.register("individual", tools.initIterate, creator.individual_noteq, toolbox.feature_values)
-        toolbox.register("population", tools.initRepeat, list, toolbox.individual_noteq, n=population_size)
-
-        toolbox.register("clone", self.clone)
-        toolbox.register("evaluate", evaluate)
-        toolbox.register("mate", tools.cxTwoPoint)
+        toolbox.register("mate", self.mate)
         toolbox.register("mutate", self.mutate, toolbox)
         toolbox.register("select", tools.selTournament, tournsize=self.tournsize)
 
@@ -491,12 +473,50 @@ class GeneticGenerator(NeighborhoodGenerator):
 
     def mutate(self, toolbox, x):
         z = toolbox.clone(x)
-        # for i in range(self.nbr_features):
-        #         #     if np.random.random() <= self.mutpb:
-        #         #         z[i] = np.random.choice(self.feature_values[i], size=1, replace=True)
         z = self.generate_synthetic_instance(from_z=z, mutpb=self.mutpb)
 
         return z,
+
+    def mate(self, ind1, ind2):
+        """Executes a two-point crossover on the input :term:`sequence`
+        individuals. The two individuals are modified in place and both keep
+        their original length.
+        This implementation uses the original implementation of the DEAP library. It adds a special case for the
+        one-hot encoding, where the crossover is done taking into account the intervals of values imposed by
+        the one-hot encoding.
+
+        :param ind1: The first individual participating in the crossover.
+        :param ind2: The second individual participating in the crossover.
+        :returns: A tuple of two individuals.
+
+        This function uses the :func:`~random.randint` function from the Python
+        base :mod:`random` module.
+        """
+        if self.encoder.type == 'one-hot':
+            intervals = self.encoder.get_encoded_intervals()
+            cxInterval1 = random.randint(0, len(intervals) - 1)
+            cxInterval2 = random.randint(0, len(intervals) - 1)
+            if cxInterval1 > cxInterval2:
+                # Swap the two cx intervals
+                cxInterval1, cxInterval2 = cxInterval2, cxInterval1
+
+            cxpoint1 = intervals[cxInterval1][0]
+            cxpoint2 = intervals[cxInterval2][1]
+            ind1[cxpoint1:cxpoint2], ind2[cxpoint1:cxpoint2] \
+                = ind2[cxpoint1:cxpoint2], ind1[cxpoint1:cxpoint2]
+        else:
+            size = min(len(ind1), len(ind2))
+            cxpoint1 = random.randint(1, size)
+            cxpoint2 = random.randint(1, size - 1)
+            if cxpoint2 >= cxpoint1:
+                cxpoint2 += 1
+            else:  # Swap the two cx points
+                cxpoint1, cxpoint2 = cxpoint2, cxpoint1
+
+            ind1[cxpoint1:cxpoint2], ind2[cxpoint1:cxpoint2] \
+                = ind2[cxpoint1:cxpoint2], ind1[cxpoint1:cxpoint2]
+
+        return ind1, ind2
 
 
     def population_fitness_equal(self, z):
@@ -508,10 +528,6 @@ class GeneticGenerator(NeighborhoodGenerator):
 
             x = self.encoder.decode(z.reshape(1, -1))
             pop = self.encoder.decode(np.array(population))
-            # if a row contains None, change the row with the original instance
-            for i in range(len(pop)):
-                if None in pop[i]:
-                    pop[i] = x[0]
             pop_y = self.bbox.predict(pop)
             y = self.bbox.predict(x)
 
@@ -532,12 +548,6 @@ class GeneticGenerator(NeighborhoodGenerator):
 
             x = self.encoder.decode(z.reshape(1, -1))
             pop = self.encoder.decode(np.array(population))
-            # if a row contains None, change the row with the original instance
-            for i in range(len(pop)):
-                if None in pop[i]:
-                    pop[i] = x[0]
-
-
             pop_y = self.bbox.predict(pop)
             y = self.bbox.predict(x)
 
