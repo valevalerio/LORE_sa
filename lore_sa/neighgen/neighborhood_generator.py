@@ -78,6 +78,9 @@ class NeighborhoodGenerator(object):
 
     def balance_neigh(self, z, Z, num_samples):
         X = self.encoder.decode(Z)
+        for i in range(len(X)):
+            if None in X[i]:
+                X[i] = self.encoder.decode(z.reshape(1, -1))[0]
         Yb = self.bbox.predict(X)
         x = self.encoder.decode(z.reshape(1, -1))[0]
 
@@ -98,16 +101,17 @@ class NeighborhoodGenerator(object):
                     Z = np.concatenate((Z, Z1), axis=0)
         return Z
 
-    def __rndgen_not_class(self, x, num_samples, class_value, max_iter=1000):
+    def __rndgen_not_class(self, z, num_samples, class_value, max_iter=1000):
         Z = list()
         iter_count = 0
         multi_label = isinstance(class_value, np.ndarray)
         while len(Z) < num_samples:
-            z = self.generate_synthetic_instance(x)
-            y = self.bbox.predict([z])[0]
+            z1 = self.generate_synthetic_instance(z)
+            x1 = self.encoder.decode(z1.reshape(1, -1))[0]
+            y = self.bbox.predict([x1])[0]
             flag = y != class_value if not multi_label else np.all(y != class_value)
             if flag:
-                Z.append(z)
+                Z.append(z1)
             iter_count += 1
             if iter_count >= max_iter:
                 break

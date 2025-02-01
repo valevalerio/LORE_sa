@@ -11,7 +11,7 @@ from lore_sa.bbox import sklearn_classifier_bbox
 from lore_sa.dataset import TabularDataset
 from lore_sa.encoder_decoder import ColumnTransformerEnc
 from lore_sa.neighgen import RandomGenerator
-from lore_sa.neighgen.genetic import GeneticGenerator
+from lore_sa.neighgen.genetic import GeneticGenerator, LegacyGeneticGenerator
 from lore_sa.neighgen.neighborhood_generator import NeighborhoodGenerator
 
 
@@ -92,7 +92,7 @@ class NeighgenTest(unittest.TestCase):
         z = self.enc.encode([x.values])[0] # remove the class feature from the input instance
 
         gen = GeneticGenerator(bbox=self.bbox, dataset=self.dataset, encoder=self.enc, ocr=0.1, ngen=20)
-        neighbour = gen.generate(z, 500, self.dataset.descriptor, self.enc)
+        neighbour = gen.generate(z, 5000, self.dataset.descriptor, self.enc)
         # Assert the lenght of the generated dataset is at least 1000
         self.assertGreaterEqual(neighbour.shape[0], 100)
 
@@ -106,8 +106,23 @@ class NeighgenTest(unittest.TestCase):
         print('count', count)
         self.assertTrue(len(classes) > 1, "The generated dataset should contain at least two classes")
 
-
-
+    def test_legacy_genetic_generator_generate_balanced(self):
+        num_row = 100
+        x = self.dataset.df.iloc[num_row][:-1]
+        z = self.enc.encode([x.values])[0] # remove the class feature from the input instance
+        gen = LegacyGeneticGenerator(bbox=self.bbox, dataset=self.dataset, encoder=self.enc, ocr=0.1, ngen=20)
+        neighbour = gen.generate(z, 5000, self.dataset.descriptor, self.enc)
+        # Assert the lenght of the generated dataset is at least 1000
+        self.assertGreaterEqual(neighbour.shape[0], 100)
+        dec_neighbour = self.enc.decode(neighbour)
+        # checking and filtering the rows in dec_neighbour that contains a None value
+        # if there is a None value, the row is removed
+        dec_neighbour = dec_neighbour[~pd.isnull(dec_neighbour).any(axis=1)]
+        pred_neighbour = self.bbox.predict(dec_neighbour)
+        classes, count = np.unique(pred_neighbour, return_counts=True)
+        print('classes', classes)
+        print('count', count)
+        self.assertTrue(len(classes) > 1, "The generated dataset should contain at least two classes")
 
 if __name__ == '__main__':
     unittest.main()
