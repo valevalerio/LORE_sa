@@ -5,7 +5,7 @@ import random
 from deap.algorithms import varAnd, eaSimple
 from scipy.spatial.distance import cdist, hamming
 from lore_sa.neighgen.neighborhood_generator import NeighborhoodGenerator
-from deap import base, creator, tools, algorithms
+from deap import base, creator, tools
 
 import numpy as np
 
@@ -128,7 +128,7 @@ class LegacyGeneticGenerator(NeighborhoodGenerator):
         toolbox.register("clone", self.clone)
         # toolbox.register("evaluate", self.constraint_decorator(evaluate, x))
         toolbox.register("evaluate", evaluate, x)
-        toolbox.register("mate", tools.cxTwoPoint)
+        toolbox.register("mate", self.mate)
         toolbox.register("mutate", self.mutate, toolbox)
         toolbox.register("select", tools.selTournament, tournsize=self.tournsize)
 
@@ -193,6 +193,49 @@ class LegacyGeneticGenerator(NeighborhoodGenerator):
 
         return z,
 
+    def mate(self, ind1, ind2):
+        """Executes a two-point crossover on the input :term:`sequence`
+        individuals. The two individuals are modified in place and both keep
+        their original length.
+        This implementation uses the original implementation of the DEAP library. It adds a special case for the
+        one-hot encoding, where the crossover is done taking into account the intervals of values imposed by
+        the one-hot encoding.
+
+        :param ind1: The first individual participating in the crossover.
+        :param ind2: The second individual participating in the crossover.
+        :returns: A tuple of two individuals.
+
+        This function uses the :func:`~random.randint` function from the Python
+        base :mod:`random` module.
+        """
+        if self.encoder.type == 'one-hot':
+            intervals = self.encoder.get_encoded_intervals()
+            cxInterval1 = random.randint(0, len(intervals) - 1)
+            cxInterval2 = random.randint(0, len(intervals) - 1)
+            if cxInterval1 > cxInterval2:
+                # Swap the two cx intervals
+                cxInterval1, cxInterval2 = cxInterval2, cxInterval1
+
+            cxpoint1 = intervals[cxInterval1][0]
+            cxpoint2 = intervals[cxInterval2][1]
+            ind1[cxpoint1:cxpoint2], ind2[cxpoint1:cxpoint2] \
+                = ind2[cxpoint1:cxpoint2], ind1[cxpoint1:cxpoint2]
+        else:
+            size = min(len(ind1), len(ind2))
+            cxpoint1 = random.randint(1, size)
+            cxpoint2 = random.randint(1, size - 1)
+            if cxpoint2 >= cxpoint1:
+                cxpoint2 += 1
+            else:  # Swap the two cx points
+                cxpoint1, cxpoint2 = cxpoint2, cxpoint1
+
+            ind1[cxpoint1:cxpoint2], ind2[cxpoint1:cxpoint2] \
+                = ind2[cxpoint1:cxpoint2], ind1[cxpoint1:cxpoint2]
+
+        return ind1, ind2
+
+
+
     def fitness_equal(self, z, z1):
         if isinstance(self.metric, numbers.Number):
             self.metric = neuclidean
@@ -207,8 +250,8 @@ class LegacyGeneticGenerator(NeighborhoodGenerator):
         y = self.bbox.predict(x)
 
         x1 = self.encoder.decode(z1.reshape(1, -1))
-        if None in x1[0]:
-            x1 = x
+        # if None in x1[0]:
+        #     x1 = x
         y1 = self.bbox.predict(x1)
 
         target_similarity_score = 1.0 - hamming(y, y1)
@@ -230,8 +273,8 @@ class LegacyGeneticGenerator(NeighborhoodGenerator):
         y = self.bbox.predict(x)
 
         x1 = self.encoder.decode(z1.reshape(1, -1))
-        if None in x1[0]:
-            x1 = x
+        # if None in x1[0]:
+        #     x1 = x
         y1 = self.bbox.predict(x1)
 
         target_similarity_score = 1.0 - hamming(y, y1)
@@ -243,7 +286,7 @@ class LegacyGeneticGenerator(NeighborhoodGenerator):
 
 
 
-class GeneticGenerator(NeighborhoodGenerator):
+class GeneticGenerator(LegacyGeneticGenerator):
     """
     Random Generator creates neighbor instances by generating random values starting from an input instance and
     pruning the generation around a fitness function based on proximity to the instance to explain
@@ -323,28 +366,28 @@ class GeneticGenerator(NeighborhoodGenerator):
         Z[0] = new_x
         return Z
 
-    def add_halloffame(self, population, halloffame):
-        fitness_values = [p.fitness.wvalues[0] for p in population]
-        fitness_values = sorted(fitness_values)
-        fitness_diff = [fitness_values[i + 1] - fitness_values[i] for i in range(0, len(fitness_values) - 1)]
-
-        sorted_array = np.argwhere(fitness_diff == np.amax(fitness_diff)).flatten().tolist()
-        if len(sorted_array) == 0:
-            fitness_value_thr = -np.inf
-        else:
-            index = np.max(sorted_array)
-            fitness_value_thr = fitness_values[index]
-
-        Z = list()
-        for p in population:
-            # if p.fitness.wvalues[0] > fitness_value_thr:
-            Z.append(p)
-
-        for h in halloffame:
-            if h.fitness.wvalues[0] > fitness_value_thr:
-                Z.append(h)
-
-        return np.array(Z)
+    # def add_halloffame(self, population, halloffame):
+    #     fitness_values = [p.fitness.wvalues[0] for p in population]
+    #     fitness_values = sorted(fitness_values)
+    #     fitness_diff = [fitness_values[i + 1] - fitness_values[i] for i in range(0, len(fitness_values) - 1)]
+    #
+    #     sorted_array = np.argwhere(fitness_diff == np.amax(fitness_diff)).flatten().tolist()
+    #     if len(sorted_array) == 0:
+    #         fitness_value_thr = -np.inf
+    #     else:
+    #         index = np.max(sorted_array)
+    #         fitness_value_thr = fitness_values[index]
+    #
+    #     Z = list()
+    #     for p in population:
+    #         # if p.fitness.wvalues[0] > fitness_value_thr:
+    #         Z.append(p)
+    #
+    #     for h in halloffame:
+    #         if h.fitness.wvalues[0] > fitness_value_thr:
+    #             Z.append(h)
+    #
+    #     return np.array(Z)
 
     def setup_toolbox(self, x, evaluate, population_size):
 
@@ -454,72 +497,13 @@ class GeneticGenerator(NeighborhoodGenerator):
 
         return population, logbook
 
-    def record_init(self, x):
-        '''
-        This function is used to generate a random instance to start the evolutionary algorithm. In this case
-        we repeat the input instance x for all the initial population
-
-        :return: a (not so) random instance
-        '''
-        return x
-
-    def random_init(self):
-        z = self.generate_synthetic_instance()
-
-        return z
-
-    def clone(self, x):
-        return pickle.loads(pickle.dumps(x))
-
-    def mutate(self, toolbox, x):
-        z = toolbox.clone(x)
-        z = self.generate_synthetic_instance(from_z=z, mutpb=self.mutpb)
-
-        return z,
-
-    def mate(self, ind1, ind2):
-        """Executes a two-point crossover on the input :term:`sequence`
-        individuals. The two individuals are modified in place and both keep
-        their original length.
-        This implementation uses the original implementation of the DEAP library. It adds a special case for the
-        one-hot encoding, where the crossover is done taking into account the intervals of values imposed by
-        the one-hot encoding.
-
-        :param ind1: The first individual participating in the crossover.
-        :param ind2: The second individual participating in the crossover.
-        :returns: A tuple of two individuals.
-
-        This function uses the :func:`~random.randint` function from the Python
-        base :mod:`random` module.
-        """
-        if self.encoder.type == 'one-hot':
-            intervals = self.encoder.get_encoded_intervals()
-            cxInterval1 = random.randint(0, len(intervals) - 1)
-            cxInterval2 = random.randint(0, len(intervals) - 1)
-            if cxInterval1 > cxInterval2:
-                # Swap the two cx intervals
-                cxInterval1, cxInterval2 = cxInterval2, cxInterval1
-
-            cxpoint1 = intervals[cxInterval1][0]
-            cxpoint2 = intervals[cxInterval2][1]
-            ind1[cxpoint1:cxpoint2], ind2[cxpoint1:cxpoint2] \
-                = ind2[cxpoint1:cxpoint2], ind1[cxpoint1:cxpoint2]
-        else:
-            size = min(len(ind1), len(ind2))
-            cxpoint1 = random.randint(1, size)
-            cxpoint2 = random.randint(1, size - 1)
-            if cxpoint2 >= cxpoint1:
-                cxpoint2 += 1
-            else:  # Swap the two cx points
-                cxpoint1, cxpoint2 = cxpoint2, cxpoint1
-
-            ind1[cxpoint1:cxpoint2], ind2[cxpoint1:cxpoint2] \
-                = ind2[cxpoint1:cxpoint2], ind1[cxpoint1:cxpoint2]
-
-        return ind1, ind2
-
 
     def population_fitness_equal(self, z):
+        """
+        This fitness function evaluate the feature_similarity and the target_similarity of a population against a given
+        instance z. The two similarities are computed using optimezed functions of `numpy` and `scipy` libraries.
+        This improves the performance of the algorithm.
+        """
         def wrapper(population):
             if isinstance(self.metric, numbers.Number):
                 self.metric = neuclidean
