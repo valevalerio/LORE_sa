@@ -4,8 +4,11 @@ import unittest
 
 import numpy as np
 import pandas as pd
+from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler, OrdinalEncoder
 
 from lore_sa.bbox import sklearn_classifier_bbox
 from lore_sa.dataset import TabularDataset
@@ -27,33 +30,25 @@ class NeighgenTest(unittest.TestCase):
 
         model_pkl_file = "resources/adult_random_forest.pkl"
         if os.path.exists(model_pkl_file):
-            bb = joblib.load(model_pkl_file)
+            model = joblib.load(model_pkl_file)
         else:
-            # print("Training the model", self.dataset.df.values)
-            encoded = self.enc.encode(self.dataset.df.values)
-            # print('original', self.dataset.df.iloc[0].values)
-            # print('encoded', encoded[0])
-            # for x in self.dataset.df.iloc:
-            #     encoded.append(self.enc.encode(x.values))
+            preprocessor = ColumnTransformer(
+                transformers=[
+                    ('num', StandardScaler(), [0,8,9,10]),
+                    ('cat', OrdinalEncoder(), [1,2,3,4,5,6,7,11])
+                ]
+            )
+            model = make_pipeline(preprocessor, RandomForestClassifier(n_estimators=100, random_state=42))
 
-            ext_dataset = pd.DataFrame(encoded, columns=[self.enc.encoded_features[i] for i in range(len(encoded[0]))])
-            # print(self.dataset.df.head())
-            # print(ext_dataset.head())
-            self.feature_names = [c for c in ext_dataset.columns if c != self.dataset.class_name]
-            class_name = self.dataset.class_name
-            test_size = 0.3
-            random_state = 42
+            X_train, X_test, y_train, y_test = train_test_split(self.dataset.df.loc[:, 'age':'native-country'].values, self.dataset.df['class'].values,
+                                                                test_size=0.3, random_state=42, stratify=self.dataset.df['class'].values)
 
-            X_train, X_test, y_train, y_test = train_test_split(ext_dataset[self.feature_names].values,
-                                                                ext_dataset[class_name].values, test_size=test_size,
-                                                                random_state=random_state,
-                                                                stratify=ext_dataset[class_name].values)
 
-            bb = RandomForestClassifier(n_estimators=100, random_state=random_state)
-            bb.fit(X_train, [int(v) for v in y_train]) # it seems that RF needs this explicit cast. I do not know why!
-            joblib.dump(bb, model_pkl_file)
 
-        self.bbox = sklearn_classifier_bbox.sklearnBBox(bb)
+            model.fit(X_train, y_train)
+            joblib.dump(model, model_pkl_file)
+
+        self.bbox = sklearn_classifier_bbox.sklearnBBox(model)
 
     def test_random_generator(self):
         gen = RandomGenerator(bbox=self.bbox, dataset=self.dataset, encoder=self.enc, ocr=0.1)
@@ -111,7 +106,7 @@ class NeighgenTest(unittest.TestCase):
         x = self.dataset.df.iloc[num_row][:-1]
         z = self.enc.encode([x.values])[0] # remove the class feature from the input instance
         gen = LegacyGeneticGenerator(bbox=self.bbox, dataset=self.dataset, encoder=self.enc, ocr=0.1, ngen=20)
-        neighbour = gen.generate(z, 5000, self.dataset.descriptor, self.enc)
+        neighbour = gen.generate(z, 1000, self.dataset.descriptor, self.enc)
         # Assert the lenght of the generated dataset is at least 1000
         self.assertGreaterEqual(neighbour.shape[0], 100)
         dec_neighbour = self.enc.decode(neighbour)
