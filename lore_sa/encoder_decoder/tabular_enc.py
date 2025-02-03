@@ -56,6 +56,7 @@ class ColumnTransformerEnc(EncDec):
         super().__init__(descriptor)
         self.type='one-hot'
         self.encoded_descriptor = copy.deepcopy(self.dataset_descriptor)
+        self.intervals = None # intervals of indexes to map the features to the one-hot encoded features
 
         # from the dataset descriptor, we extract the number of features, calculating the maximum
         # index of the features in the sub-fields of the descriptor: categorical, numeric, target
@@ -188,21 +189,22 @@ class ColumnTransformerEnc(EncDec):
         return dict(sorted(self.encoded_features.items()))
 
     def get_encoded_intervals(self):
-        enc_features = self.get_encoded_features()
-        start = 0
-        end = 1
-        intervals = []
-        for j in range(1, len(enc_features)):
-            f = enc_features[j]
-            prev_prefix = enc_features[j-1].split('=')[0]
-            curr_prefix = f.split('=')[0]
-            if curr_prefix != prev_prefix:
-                intervals.append([start, end])
-                start = end
-            end += 1
-        intervals.append([start, end])
+        if self.intervals is None:
+            enc_features = self.get_encoded_features()
+            start = 0
+            end = 1
+            self.intervals = []
+            for j in range(1, len(enc_features)):
+                f = enc_features[j]
+                prev_prefix = enc_features[j-1].split('=')[0]
+                curr_prefix = f.split('=')[0]
+                if curr_prefix != prev_prefix:
+                    self.intervals.append([start, end])
+                    start = end
+                end += 1
+            self.intervals.append([start, end])
 
-        return intervals
+        return self.intervals
 
     def __str__(self):
         if len(self.encoded_features) > 0:
