@@ -50,6 +50,13 @@ class Expression(object):
 
         return "%s %s %s" % (self.variable, self.operator2string(), self.value)
 
+    def to_dict(self):
+        return {
+            'att': self.variable,
+            'op': self.operator2string(),
+            'thr': self.value
+        }
+
 
 class Rule(object):
 
@@ -83,6 +90,20 @@ class Rule(object):
 
     def __hash__(self):
         return hash(str(self))
+
+    def to_dict(self):
+        premises = [{'attr': e.variable, 'val': e.value, 'op': e.operator2string()}
+                    for e in self.premises]
+
+        return {
+            'premises': premises,
+            'consequence': {
+                'attr': self.consequences.variable,
+                'val': self.consequences.value,
+                'op': self.consequences.operator2string()
+            }
+        }
+
 
     def decode_rule(self, rule: Expression):
         if 'categorical' not in self.encoder.dataset_descriptor.keys() or self.encoder.dataset_descriptor['categorical'] == {}:

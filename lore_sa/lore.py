@@ -57,9 +57,13 @@ class Lore(object):
         rule = self.surrogate.get_rule(z, self.encoder)
         # print('rule', rule)
 
-        self.crules, self.deltas = self.surrogate.get_counterfactual_rules(z, neighbour, neighb_train_yb, self.encoder)
+        crules, deltas = self.surrogate.get_counterfactual_rules(z, neighbour, neighb_train_yb, self.encoder)
 
-        return {'x': x, 'rule': rule, 'counterfactuals': self.crules, 'deltas': self.deltas}
+        return {
+            # 'x': x.tolist(),
+            'rule': rule.to_dict(),
+            'counterfactuals': [c.to_dict() for c in crules],
+        }
 
 
 
