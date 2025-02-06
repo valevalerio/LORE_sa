@@ -50,6 +50,11 @@ class Expression(object):
 
         return "%s %s %s" % (self.variable, self.operator2string(), self.value)
 
+    def __eq__(self, other):
+        return (self.variable == other.variable and
+                self.operator == other.operator and
+                abs(self.value - other.value) < 1e-6)
+
     def to_dict(self):
         return {
             'att': self.variable,
