@@ -39,30 +39,28 @@ class NeighborhoodGenerator(object):
         if from_z is not None:
             instance = from_z # -1 because the target class is not generated
 
-        if random.random() < mutpb:
-            for name, feature in self.dataset.descriptor['categorical'].items():
-                if self.encoder is not None:
+
+        for name, feature in self.dataset.descriptor['categorical'].items():
+            if random.random() < mutpb:
+                if self.encoder is not None: # TO CHECK: it may be that the encoder does not exist?
                     # feature is encoded, so i need to random generate chunks of one-hot-encoded values
 
                     # finding the vector index of the feature
                     indices = [k for k, v in self.encoder.get_encoded_features().items() if v.split("=")[0] == name]
-                    index_choice = np.random.choice(list(range(len(indices))))
-
-                    for i, idx in enumerate(indices):
-                        if i == index_choice:
-                            instance[idx] = 1
-                        else:
-                            instance[idx] = 0
-                        columns[idx] = self.encoder.get_encoded_features()[idx]
-
-
+                    index_choice = np.random.choice(indices)
+                    instance[indices[0]:indices[-1]+1] = 0
+                    instance[index_choice] = 1
+                    # check if the instance within indices has at least one 1
+                    if np.sum(instance[indices[0]:indices[-1]+1]) == 0:
+                        print(f'Missing value: {name} - {indices}')
                 else:
                     # feature is not encoded: random choice among the distinct values of the feature
 
                     instance[feature['index']] = np.random.choice(feature['distinct_values'])
                     columns[feature['index']] = name
 
-            for name, feature in self.dataset.descriptor['numeric'].items():
+        for name, feature in self.dataset.descriptor['numeric'].items():
+            if random.random() < mutpb:
                 idx = None
                 if self.encoder is not None:
                     idx = [k for k, v in self.encoder.get_encoded_features().items() if v == name][0]
@@ -73,11 +71,13 @@ class NeighborhoodGenerator(object):
                 instance[idx] = np.random.uniform(low=feature['min'], high=feature['max'])
         self.columns = columns
 
-
         return instance
 
     def balance_neigh(self, z, Z, num_samples):
         X = self.encoder.decode(Z)
+        for i in range(len(X)):
+            if None in X[i]:
+                X[i] = self.encoder.decode(z.reshape(1, -1))[0]
         Yb = self.bbox.predict(X)
         x = self.encoder.decode(z.reshape(1, -1))[0]
 
@@ -98,16 +98,17 @@ class NeighborhoodGenerator(object):
                     Z = np.concatenate((Z, Z1), axis=0)
         return Z
 
-    def __rndgen_not_class(self, x, num_samples, class_value, max_iter=1000):
+    def __rndgen_not_class(self, z, num_samples, class_value, max_iter=1000):
         Z = list()
         iter_count = 0
         multi_label = isinstance(class_value, np.ndarray)
         while len(Z) < num_samples:
-            z = self.generate_synthetic_instance(x)
-            y = self.bbox.predict([z])[0]
+            z1 = self.generate_synthetic_instance(z)
+            x1 = self.encoder.decode(z1.reshape(1, -1))[0]
+            y = self.bbox.predict([x1])[0]
             flag = y != class_value if not multi_label else np.all(y != class_value)
             if flag:
-                Z.append(z)
+                Z.append(z1)
             iter_count += 1
             if iter_count >= max_iter:
                 break
@@ -137,20 +138,3 @@ class NeighborhoodGenerator(object):
         raise NotImplementedError("This method is not implemented yet")
         return
 
-    def __rndgen_not_class(self, x, num_samples, class_value, max_iter=1000):
-        Z = list()
-        iter_count = 0
-        multi_label = isinstance(class_value, np.ndarray)
-        while len(Z) < num_samples:
-            z = self.generate_synthetic_instance(x)
-            xz = self.encoder.decode(z.reshape(1, -1))[0]
-            y = self.bbox.predict(xz.reshape(1, -1))[0]
-            flag = y != class_value if not multi_label else np.all(y != class_value)
-            if flag:
-                Z.append(z)
-            iter_count += 1
-            if iter_count >= max_iter:
-                break
-
-        Z = np.array(Z)
-        return Z

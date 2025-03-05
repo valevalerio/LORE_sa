@@ -15,7 +15,7 @@ class RandomGenerator(NeighborhoodGenerator):
     Random Generator creates neighbor instances by generating random values starting from the instance to explain
     """
 
-    def __init__(self, bbox: AbstractBBox, dataset: Dataset, encoder: EncDec, ocr=0.1):
+    def __init__(self, bbox: AbstractBBox, dataset: Dataset, encoder: EncDec, ocr=0.1, mutpb=0.1):
         """
         :param bbox: the Black Box model to explain
         :param dataset: the dataset with the descriptor of the original dataset
@@ -24,6 +24,7 @@ class RandomGenerator(NeighborhoodGenerator):
         """
         super().__init__(bbox, dataset, encoder, ocr)
         self.generated_data = None
+        self.mutpb = mutpb
 
 
     def generate(self, x, num_instances, descriptor, encoder):
@@ -34,50 +35,17 @@ class RandomGenerator(NeighborhoodGenerator):
         :param x[dict]: the starting instance from the real dataset
         :param num_instances[int]: the number of instances to generate
         :param descriptor[dict]: data descriptor as generated from a Dataset object
-        :param onehotencoder[EncDec]: the onehotencoder eventually to encode the instance
+        :param encoder[EncDec]: the encoder eventually to encode the instance
         The list (or range) associated to each key is used to randomly choice an element within the list.
 
-        :return [TabularDataset]: a tabular dataset instance with the new data generated
+        :return [instances]: an array of instances with the new data generated
         """
 
         generated_list = np.array([])
         columns = np.empty(len(x), dtype=object)
 
         for n in range(num_instances):
-            instance = np.empty(len(x), dtype=object)
-
-            # TODO: needs refactoring to improve efficiency
-            for name, feature in descriptor['categorical'].items():
-                if encoder is not None:
-                    # feature is encoded, so i need to random generate chunks of one-hot-encoded values
-
-                    # finding the vector index of the feature
-                    indices = [k for k, v in encoder.get_encoded_features().items() if v.split("=")[0] == name]
-                    index_choice = np.random.choice(list(range(len(indices))))
-
-                    for i, idx in enumerate(indices):
-                        if i == index_choice:
-                            instance[idx] = 1
-                        else:
-                            instance[idx] = 0
-                        columns[idx] = encoder.get_encoded_features()[idx]
-
-
-                else:
-                    # feature is not encoded: random choice among the distinct values of the feature
-
-                    instance[feature['index']] = np.random.choice(feature['distinct_values'])
-                    columns[feature['index']] = name
-
-            for name, feature in descriptor['numeric'].items():
-                idx = None
-                if encoder is not None:
-                    idx = [k for k, v in encoder.get_encoded_features().items() if v == name][0]
-                else:
-                    idx = feature['index']
-                columns[idx] = name
-
-                instance[idx] = np.random.uniform(low=feature['min'], high=feature['max'])
+            instance = self.generate_synthetic_instance(x, self.mutpb)
 
             # append instance array to generated_list
             if generated_list.size == 0:

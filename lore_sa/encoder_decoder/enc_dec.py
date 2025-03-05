@@ -32,6 +32,13 @@ class EncDec():
         """
         return
 
+    def get_encoded_intervals(self):
+        """
+        Returns a list of intervals that contains the lower and upper indices of the encoded
+        values of features
+        """
+        return
+
     @abstractmethod
     def decode(self, x: np.array):
         return
