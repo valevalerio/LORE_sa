@@ -53,7 +53,7 @@ class Lore(object):
 
         # train the surrogate model on the neighborhood
         # this surrogate could be another model. I would love to try with apriori 
-        # or the improved version of Single tree Approximation MEthod
+        # or the modified version of SAME (Single tree Approximation MEthod <3 )
         self.surrogate.train(neighbour, neighb_train_yb)
 
         # get the rule for the instance `z`, decode using the encoder class
@@ -61,12 +61,18 @@ class Lore(object):
         # print('rule', rule)
 
         crules, deltas = self.surrogate.get_counterfactual_rules(z, neighbour, neighb_train_yb, self.encoder)
-
+        # I wants also the counterfactuals in the original space the so called "no_equal", as well the "equals"
+        original_class = self.bbox.predict([x])
+        no_equal = [x_c for x_c,y_c in zip(dec_neighbor, neighb_train_y) if y_c != original_class]
+        actual_class = [y_c for x_c,y_c in zip(dec_neighbor, neighb_train_y) if y_c != original_class]
         return {
             # 'x': x.tolist(),
             'rule': rule.to_dict(),
             'counterfactuals': [c.to_dict() for c in crules],
-            'fidelity': self.surrogate.fidelity
+            'fidelity': self.surrogate.fidelity,
+            'deltas': deltas,
+            'counterfactual_samples': no_equal,
+            'counterfactual_predictions': actual_class
         }
 
 
