@@ -71,7 +71,7 @@ class Lore(object):
             'counterfactuals': [c.to_dict() for c in crules],
             'fidelity': self.surrogate.fidelity,
             'deltas': deltas,
-            'counterfactual_samples': no_equal,
+            'counterfactual_samples': no_equal, # here are the cfs
             'counterfactual_predictions': actual_class
         }
 
