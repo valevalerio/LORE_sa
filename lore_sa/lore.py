@@ -53,7 +53,7 @@ class Lore(object):
 
         # train the surrogate model on the neighborhood
         # this surrogate could be another model. I would love to try with apriori 
-        # or the modified version of SAME (Single tree Approximation MEthod <3 )
+        # or the improved version of Single tree Approximation MEthod
         self.surrogate.train(neighbour, neighb_train_yb)
 
         # get the rule for the instance `z`, decode using the encoder class
