@@ -1,4 +1,4 @@
-![Tests](https://github.com/valevalerio/LORE_sa/workflows/tests.yml/badge.svg)
+![Tests](https://github.com/valevalerio/LORE_sa/actions/workflows/tests.yml/badge.svg)
 
 
 # Lore TODO
