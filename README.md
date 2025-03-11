@@ -1,14 +1,5 @@
 ![Tests](https://github.com/valevalerio/LORE_sa/actions/workflows/test.yml/badge.svg)
 
-
-# Lore TODO
-- [ ] add the test of the other generators
-- [x] make it so it passes the test on github
-# Low priority
-- [ ] modify mergeTrees
-
-
-
 # LORE_sa
 This is the official repository of the LORE (Local Rule-Based Explanation) algorithm. 
 
