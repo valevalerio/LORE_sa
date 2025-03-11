@@ -1,3 +1,6 @@
+![Tests](https://github.com/valevalerio/actions/workflows/tests.yml/badge.svg)
+
+
 # Lore TODO
 - [ ] refactor the names of the generators (could be better also to have a single generator file)
 - [ ] add the test of the other generators
