@@ -1,10 +1,10 @@
-![Tests](https://github.com/valevalerio/LORE_sa/actions/workflows/tests.yml/badge.svg)
+![Tests](https://github.com/valevalerio/LORE_sa/actions/workflows/test.yml/badge.svg)
 
 
 # Lore TODO
 - [ ] refactor the names of the generators (could be better also to have a single generator file)
 - [ ] add the test of the other generators
-- [ ] make it so it passes the tests on github
+- [x] make it so it passes the test on github
 - [ ] Understand the difference between explain_instance and explain
 - [ ] modify mergeTrees
 
