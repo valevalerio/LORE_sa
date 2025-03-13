@@ -1,8 +1,8 @@
 
 # LORE_sa
-This is the official repository of the LORE (Local Rule-Based Explanation) algorithm. 
-
 ![Tests](https://github.com/valevalerio/LORE_sa/actions/workflows/test.yml/badge.svg)
+Official repository of the LORE (Local Rule-Based Explanation) algorithm 
+
 
 ## Getting started
 
@@ -90,6 +90,7 @@ For any issue or bug, please open a new issue in the issue tracker available at:
 
 ## Contributing
 If you want to contribute to the library, please fork the repository and submit a pull request with the changes. The pull request will be reviewed by the maintainers and merged into the main branch if the changes are considered appropriate.
+The tests must pass before merging the pull request. 
 
 
 ## Documentation
