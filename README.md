@@ -1,13 +1,14 @@
 
 # LORE_sa
 ![Tests](https://github.com/valevalerio/LORE_sa/actions/workflows/test.yml/badge.svg)
+[![arxiv.org](http://img.shields.io/badge/cs.CV-arXiv%3A2207.02696-B31B1B.svg)](https://arxiv.org/abs/1805.10820)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 <!---
 "!|PyPi| "image:: https://img.shields.io/pypi/v/scikit-learn""
 [//]: # "[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/weiji14/deepbedmap/]"
 [//]: # "LORE_Tutorial.ipynb"
 -->
-[![arxiv.org](http://img.shields.io/badge/cs.CV-arXiv%3A2207.02696-B31B1B.svg)](https://arxiv.org/abs/1805.10820)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 Official repository of the LORE (Local Rule-Based Explanation) algorithm 
 
 
