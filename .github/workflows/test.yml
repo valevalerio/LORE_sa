@@ -18,6 +18,4 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Run tests
-      run: |
-        python -m pytest
-      working-directory: LORE_sa/tests
+      run: cd test | python -m pytest
