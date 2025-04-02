@@ -20,3 +20,4 @@ jobs:
     - name: Run tests
       run: |
         python -m pytest
+      working-directory: LORE_sa/tests
