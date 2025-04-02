@@ -29,5 +29,5 @@ jobs:
         pip install pytest
 
     - name: Run tests
-      working-directory: .
+      working-directory: test
       run: python -m pytest
