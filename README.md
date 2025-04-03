@@ -1,12 +1,11 @@
 
-# Local Rule-Based Explanation
-## LORE - Stable & Actionable
+# LOcal Rule-based Explanation
 ![Tests](https://github.com/valevalerio/LORE_sa/actions/workflows/test.yml/badge.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![IEEE](https://img.shields.io/badge/IEEE-LORE%20Paper-00629B.svg)](https://ieeexplore.ieee.org/document/8920138)
 [![arXiv](http://img.shields.io/badge/arXiv-1805.10820-B31B1B.svg)](https://arxiv.org/abs/1805.10820)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-
+Stable & Actionable
 
 
 <!---
