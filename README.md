@@ -1,11 +1,16 @@
 
 # LORE_sa
 ![Tests](https://github.com/valevalerio/LORE_sa/actions/workflows/test.yml/badge.svg)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-![License](https://img.shields.io/github/license/valevalerio/LORE_sa?color=blue&label=License)
-[![arxiv.org](http://img.shields.io/badge/cs.CV-arXiv%3A2207.02696-B31B1B.svg)](https://arxiv.org/abs/1805.10820)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![arxiv.org](http://img.shields.io/badge/cs.CV-arXiv%3A1805.10820-B31B1B.svg)](https://arxiv.org/abs/1805.10820)
+[![ieeexplore.ieee.org](http://img.shields.io/badge/IEEE-8920138-00629B.svg)](https://ieeexplore.ieee.org/document/8920138)
+[![IEEE](https://img.shields.io/badge/IEEE-LORE%20Paper-00629B.svg)](https://ieeexplore.ieee.org/document/8920138)
+[![IEEE](https://img.shields.io/badge/IEEE-8920138-00629B.svg)](https://ieeexplore.ieee.org/document/8920138)
+
+
 
 <!---
+![License](https://img.shields.io/github/license/valevalerio/LORE_sa?color=blue&label=License)
 "!|PyPi| "image:: https://img.shields.io/pypi/v/scikit-learn""
 [//]: # "[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/weiji14/deepbedmap/]"
 [//]: # "LORE_Tutorial.ipynb"
