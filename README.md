@@ -4,17 +4,16 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![IEEE](https://img.shields.io/badge/IEEE-LORE%20Paper-00629B.svg)](https://ieeexplore.ieee.org/document/8920138)
 [![arXiv](http://img.shields.io/badge/arXiv-1805.10820-B31B1B.svg)](https://arxiv.org/abs/1805.10820)
+[![GitHub contributors](https://img.shields.io/github/contributors/kdd-lab/LORE_sa)](https://github.com/kdd-lab/LORE_sa/contributors)
 
 
-![GitHub contributors](https://img.shields.io/github/contributors/kdd-lab/LORE_sa)
-![GitHub last commit](https://img.shields.io/github/last-commit/kdd-lab/LORE_sa)
 
 Stable & Actionable
 
 <!---
-![License](https://img.shields.io/github/license/valevalerio/LORE_sa?color=blue&label=License)
-"!|PyPi| "image:: https://img.shields.io/pypi/v/scikit-learn""
-[//]: # "[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/weiji14/deepbedmap/]"
+
+![GitHub last commit](https://img.shields.io/github/last-commit/kdd-lab/LORE_sa)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/weiji14/deepbedmap/]"
 [//]: # "LORE_Tutorial.ipynb"
 -->
 
