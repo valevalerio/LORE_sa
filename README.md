@@ -5,8 +5,11 @@
 [![IEEE](https://img.shields.io/badge/IEEE-LORE%20Paper-00629B.svg)](https://ieeexplore.ieee.org/document/8920138)
 [![arXiv](http://img.shields.io/badge/arXiv-1805.10820-B31B1B.svg)](https://arxiv.org/abs/1805.10820)
 
-Stable & Actionable
 
+![GitHub contributors](https://img.shields.io/github/contributors/kdd-lab/LORE_sa)
+![GitHub last commit](https://img.shields.io/github/last-commit/kdd-lab/LORE_sa)
+
+Stable & Actionable
 
 <!---
 ![License](https://img.shields.io/github/license/valevalerio/LORE_sa?color=blue&label=License)
