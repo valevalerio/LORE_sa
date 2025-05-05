@@ -1,5 +1,24 @@
-# LORE_sa
-This is the official repository of the LORE (Local Rule-Based Explanation) algorithm. 
+
+# LOcal Rule-based Explanation
+![Tests](https://github.com/valevalerio/LORE_sa/actions/workflows/test.yml/badge.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![IEEE](https://img.shields.io/badge/IEEE-8920138-00629B.svg)](https://ieeexplore.ieee.org/document/8920138)
+[![arXiv](http://img.shields.io/badge/arXiv-1805.10820-B31B1B.svg)](https://arxiv.org/abs/1805.10820)
+[![GitHub contributors](https://img.shields.io/github/contributors/kdd-lab/LORE_sa)](https://github.com/kdd-lab/LORE_sa/contributors)
+
+
+
+Stable & Actionable
+
+<!---
+
+![GitHub last commit](https://img.shields.io/github/last-commit/kdd-lab/LORE_sa)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/weiji14/deepbedmap/]"
+[//]: # "LORE_Tutorial.ipynb"
+-->
+
+Official repository of the LORE (Local Rule-Based Explanation) algorithm 
+
 
 ## Getting started
 
@@ -87,6 +106,7 @@ For any issue or bug, please open a new issue in the issue tracker available at:
 
 ## Contributing
 If you want to contribute to the library, please fork the repository and submit a pull request with the changes. The pull request will be reviewed by the maintainers and merged into the main branch if the changes are considered appropriate.
+The tests must pass before merging the pull request. 
 
 
 ## Documentation

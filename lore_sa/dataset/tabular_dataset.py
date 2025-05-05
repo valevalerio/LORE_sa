@@ -1,6 +1,6 @@
-from lore_sa.dataset import Dataset
+from ..dataset import Dataset
 
-from lore_sa.logger import logger
+from ..logger import logger
 import pandas as pd
 from pandas import DataFrame
 import numpy as np
