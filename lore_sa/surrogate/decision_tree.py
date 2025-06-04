@@ -79,6 +79,8 @@ class DecisionTreeSurrogate(Surrogate):
             self.dt.fit(Z, Yb)
 
         self.fidelity = self.dt.score(Z, Yb)
+        self.confusion_matrix = confusion_matrix(Yb, self.dt.predict(Z))
+        logger.info("Fidelity: {}".format(self.fidelity))
 
         return self.dt
 
