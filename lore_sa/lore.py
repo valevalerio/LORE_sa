@@ -56,6 +56,31 @@ class Lore(object):
         # or the modified version of SAME (Single tree Approximation MEthod <3 )
         self.surrogate.train(neighbour, neighb_train_yb)
 
+        # extract the feature importances from the decision tree in self.dt
+        if hasattr(self.surrogate, 'dt') and self.surrogate.dt is not None:
+            intervals = self.encoder.get_encoded_intervals()
+            features_ = self.encoder.encoded_descriptor
+            importances = self.surrogate.dt.feature_importances_
+            # construct a bitmap from the encoded values `z`
+            bm = z.copy()
+            # the numerical features takes zero values
+            for i, _ in enumerate(features_['numeric']):
+                bm[i] = 1;
+            # multiply the feature importances with the bitmap array
+            importances_ = importances * bm
+            feature_importances = []
+            for start, end in intervals:
+                slice_ = importances_[start:end]
+                non_zero = slice_[slice_ != 0]
+                if len(non_zero) > 0:
+                    feature_importances.append(non_zero[0])
+                else:
+                    feature_importances.append(0)
+            feature_names = [self.encoder.encoded_features[start] for start, _ in intervals ]
+            self.feature_importances = list(zip(feature_names, feature_importances))
+        else:
+            self.feature_importances = None # check if an alternative
+
         # get the rule for the instance `z`, decode using the encoder class
         rule = self.surrogate.get_rule(z, self.encoder)
         # print('rule', rule)
@@ -72,7 +97,8 @@ class Lore(object):
             'fidelity': self.surrogate.fidelity,
             'deltas': deltas,
             'counterfactual_samples': no_equal, # here are the cfs
-            'counterfactual_predictions': actual_class
+            'counterfactual_predictions': actual_class,
+            'feature_importances': self.feature_importances,
         }
 
 
