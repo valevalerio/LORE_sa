@@ -88,14 +88,14 @@ class Lore(object):
         crules, deltas = self.surrogate.get_counterfactual_rules(z, neighbour, neighb_train_yb, self.encoder)
         # I wants also the counterfactuals in the original space the so called "no_equal", as well the "equals"
         original_class = self.bbox.predict([x])
-        no_equal = [x_c for x_c,y_c in zip(dec_neighbor, neighb_train_y) if y_c != original_class]
+        no_equal = [x_c.tolist() for x_c,y_c in zip(dec_neighbor, neighb_train_y) if y_c != original_class]
         actual_class = [y_c for x_c,y_c in zip(dec_neighbor, neighb_train_y) if y_c != original_class]
         return {
             # 'x': x.tolist(),
             'rule': rule.to_dict(),
             'counterfactuals': [c.to_dict() for c in crules],
             'fidelity': self.surrogate.fidelity,
-            'deltas': deltas,
+            'deltas': [[dd.to_dict() for dd in d] for d  in deltas],
             'counterfactual_samples': no_equal, # here are the cfs
             'counterfactual_predictions': actual_class,
             'feature_importances': self.feature_importances,
