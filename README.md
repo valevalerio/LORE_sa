@@ -1,7 +1,7 @@
 
 # LOcal Rule-based Explanation
-![Tests](https://github.com/valevalerio/LORE_sa/actions/workflows/test.yml/badge.svg)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+![Tests](https://github.com/kdd-lab/LORE_sa/actions/workflows/test.yml/badge.svg)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![IEEE](https://img.shields.io/badge/IEEE-8920138-00629B.svg)](https://ieeexplore.ieee.org/document/8920138)
 [![arXiv](http://img.shields.io/badge/arXiv-1805.10820-B31B1B.svg)](https://arxiv.org/abs/1805.10820)
 [![GitHub contributors](https://img.shields.io/github/contributors/kdd-lab/LORE_sa)](https://github.com/kdd-lab/LORE_sa/contributors)
